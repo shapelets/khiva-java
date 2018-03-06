@@ -1,21 +1,15 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
+This is the TSA Library for Java.
+This project provides the Java wrapper for the original TSA library written in C++ programming language.
+ 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
+*This repository provides the full installable Java Package for using the TSA library with the target of 
+analyse time eries in a super-efficient fashion, giving a solution for time series analysis in the Big Data Ecosystem.
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* It is needed to set in the VM flags : -Djavalibrarypath="<dynamic-library-path>"
 
 ### Contribution guidelines ###
 
@@ -27,3 +21,4 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
