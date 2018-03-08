@@ -9,6 +9,7 @@
  */
 
 import tsa.MatrixProfile;
+import tsa.Sequence;
 import tsa.TSA;
 
 /**
@@ -30,6 +31,19 @@ public class main {
         }
         for (int i = 0; i < b.getProfile().length; i++) {
             System.out.println(b.getProfile()[i]);
+        }
+
+        Sequence motifs = tsa.findBestNMotifs(a.getProfile(),a.getIndex(),3);
+        for (int i = 0; i < motifs.getIndex().length; i++) {
+            System.out.println(motifs.getIndex()[i]);
+            System.out.println(motifs.getDistances()[i]);
+            System.out.println(motifs.getSubsequenceIndex()[i]);
+        }
+        Sequence discords = tsa.findBestNDiscords(a.getProfile(),a.getIndex(),3);
+        for (int i = 0; i < discords.getIndex().length; i++) {
+            System.out.println(discords.getIndex()[i]);
+            System.out.println(discords.getDistances()[i]);
+            System.out.println(discords.getSubsequenceIndex()[i]);
         }
     }
 }

@@ -10,12 +10,11 @@
 
 package tsa;
 
-import java.util.Arrays;
 
 import static java.lang.Math.toIntExact;
 
 /**
- *TSA class for exposing the C++ TSA Library
+ * TSA class for exposing the C++ TSA Library
  */
 public class TSA {
 
@@ -27,7 +26,8 @@ public class TSA {
     }
 
     /**
-     *getInstance function for using this class as a Singleton. Following the singleton Design Pattern.
+     * getInstance function for using this class as a Singleton.
+     *
      * @return TSA instance.
      */
     public static TSA getInstance() {
@@ -38,43 +38,69 @@ public class TSA {
     }
 
     /**
-     * Stomp TSA's native function exposed by using JNI.
-     * @param ta Array of doubles with the first time series.
-     * @param tb Array of doubles with the second time series.
+     * Stomp TSA's native function.
+     *
+     * @param ta  Array of doubles with the first time series.
+     * @param tb  Array of doubles with the second time series.
      * @param lta Integer with the ta length.
      * @param ltb Integer with the tb length.
-     * @param m Long with the subsequence length.
-     * @param p Array of doubles for storing the distances.
-     * @param i Array of integers for storing the indexes.
+     * @param m   Long with the subsequence length.
+     * @param p   Array of doubles for storing the distances.
+     * @param i   Array of integers for storing the indexes.
      */
     private native void stomp(double[] ta, double[] tb, int lta, int ltb, long m, double[] p, int[] i);
 
     /**
-     * StompSelfJoin TSA's native function exposed by using JNI.
-     * @param ta Array of doubles with the time series.
+     * StompSelfJoin TSA's native function.
+     *
+     * @param ta  Array of doubles with the time series.
      * @param lta Integer with the ta length.
-     * @param m Long with the subsequence length.
-     * @param p Array of doubles for storing the distances.
-     * @param i Array of integers for storing the indexes.
+     * @param m   Long with the subsequence length.
+     * @param p   Array of doubles for storing the distances.
+     * @param i   Array of integers for storing the indexes.
      */
     private native void stompSelfJoin(double[] ta, int lta, long m, double[] p, int[] i);
 
     /**
+     * findBestMotifs TSA's native function.
+     *
+     * @param profile            The matrix profile containing the minimum distance of each sequence.
+     * @param index              The matrix profile index containing where each minimum occurs
+     * @param lengthProfile      Length of the matrix profile
+     * @param n                  Number of motifs to extract
+     * @param motifDistances     The distance of the best N motifs
+     * @param motifIndices       The indices of the best N motifs
+     * @param subsequenceIndices The indices of the query sequences that produced the minimum reported in the motifs.
+     */
+    private native void findBestNMotifs(double[] profile, int[] index, long lengthProfile, long n,
+                                        double[] motifDistances, int[] motifIndices, int[] subsequenceIndices);
+
+    /**
+     * findBestNDiscords TSA's native function.
+     *
+     * @param profile            The matrix profile containing the minimum distance of each subsequence
+     * @param index              The matrix profile index containing where each maximum occurs
+     * @param lengthProfile      Length of the matrix profile
+     * @param n                  Number of discords to extract
+     * @param motifDistances     The distance of the best N discords
+     * @param motifIndices       The indices of the best N discords
+     * @param subsequenceIndices The indices of the query sequences that produced the "N" bigger discord.
+     */
+    private native void findBestNDiscords(double[] profile, int[] index, long lengthProfile, long n,
+                                          double[] motifDistances, int[] motifIndices, int[] subsequenceIndices);
+
+    /**
      * Stomp algorithm.
+     *
      * @param ta Array of doubles with the first time series.
      * @param tb Array of doubles with the second time series.
-     * @param m Long with the subsequence length.
+     * @param m  Long with the subsequence length.
      * @return MatrixProfile object.
      */
     public MatrixProfile stomp(double[] ta, double[] tb, long m) {
         int n = tb.length;
         double[] p = new double[n - toIntExact(m) + 1];
         int[] i = new int[n - toIntExact(m) + 1];
-
-
-        Arrays.fill(p, 0);
-        Arrays.fill(i, 0);
-
 
         stomp(ta, tb, ta.length, tb.length, m, p, i);
 
@@ -83,8 +109,9 @@ public class TSA {
 
     /**
      * Stomp Self Join algorithm.
+     *
      * @param ta Array of doubles with the first time series.
-     * @param m Long with the subsequence length.
+     * @param m  Long with the subsequence length.
      * @return MatrixProfile object.
      */
     public MatrixProfile stompSelfJoin(double[] ta, long m) {
@@ -92,11 +119,49 @@ public class TSA {
         double[] p = new double[n - toIntExact(m) + 1];
         int[] i = new int[n - toIntExact(m) + 1];
 
-        Arrays.fill(p, 0);
-        Arrays.fill(i, 0);
 
         stompSelfJoin(ta, ta.length, m, p, i);
 
         return new MatrixProfile(p, i);
+    }
+
+    /**
+     * findBestNMotifs function.
+     *
+     * @param profile The matrix profile containing the minimum distance of each subsequence.
+     * @param index   The matrix profile index
+     * @param n       Number of motifs to extract.
+     * @return Sequence object.
+     */
+    public Sequence findBestNMotifs(double[] profile, int[] index, long n) {
+        int nMotifs = toIntExact(n);
+
+        double[] motifDistances = new double[nMotifs];
+        int[] motifIndices = new int[nMotifs];
+        int[] subsequenceIndices = new int[nMotifs];
+
+        findBestNMotifs(profile, index, profile.length, n, motifDistances, motifIndices, subsequenceIndices);
+
+        return new Sequence(motifDistances, motifIndices, subsequenceIndices);
+
+    }
+
+    /**
+     * @param profile The matrix profile containing the minimum distance of each subsequence.
+     * @param index   The matrix profile index
+     * @param n       Number of discords to extract.
+     * @return Sequence Object.
+     */
+    public Sequence findBestNDiscords(double[] profile, int[] index, long n) {
+        int nMotifs = toIntExact(n);
+
+        double[] motifDistances = new double[nMotifs];
+        int[] motifIndices = new int[nMotifs];
+        int[] subsequenceIndices = new int[nMotifs];
+
+        findBestNDiscords(profile, index, profile.length, n, motifDistances, motifIndices, subsequenceIndices);
+
+        return new Sequence(motifDistances, motifIndices, subsequenceIndices);
+
     }
 }
