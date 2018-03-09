@@ -45,5 +45,10 @@ public class main {
             System.out.println(discords.getDistances()[i]);
             System.out.println(discords.getSubsequenceIndex()[i]);
         }
+        double[][] array_of_time_series = {ta,tb};
+        double [] absoluteSumOfChanges = tsa.absoluteSumOfChanges(array_of_time_series);
+        for(double i : absoluteSumOfChanges){
+            System.out.println (i);
+        }
     }
 }

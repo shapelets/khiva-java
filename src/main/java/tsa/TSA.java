@@ -10,6 +10,8 @@
 
 package tsa;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 
 import static java.lang.Math.toIntExact;
 
@@ -90,6 +92,18 @@ public class TSA {
                                           double[] motifDistances, int[] motifIndices, int[] subsequenceIndices);
 
     /**
+     * absoluteSumOfChanges TSA's native function.
+     *
+     * @param timeSeries                   Time series concatenated in a single row.
+     * @param concatenatedTimeSeriesLength length of timeSeries.
+     * @param timeSeriesLength             Length of each time series.
+     * @param numberOfTimeSeries           Number of time series into timeSeries.
+     * @param jResult                      Absolute sum of changes.
+     */
+    private native void absoluteSumOfChanges(double[] timeSeries, long concatenatedTimeSeriesLength,
+                                             long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
+
+    /**
      * Stomp algorithm.
      *
      * @param ta Array of doubles with the first time series.
@@ -147,6 +161,8 @@ public class TSA {
     }
 
     /**
+     * findBestNDiscords function.
+     *
      * @param profile The matrix profile containing the minimum distance of each subsequence.
      * @param index   The matrix profile index
      * @param n       Number of discords to extract.
@@ -163,5 +179,28 @@ public class TSA {
 
         return new Sequence(motifDistances, motifIndices, subsequenceIndices);
 
+    }
+
+    /**
+     * absoluteSumOfChanges function.
+     *
+     * @param timeSeriesMatrix Array of double arrays representing each Time Series.
+     * @return Double array with the absolute sum of changes.
+     */
+    public double[] absoluteSumOfChanges(double[][] timeSeriesMatrix) {
+        long timeSeriesLength = timeSeriesMatrix[0].length;
+        long numberOfTimeSeries = timeSeriesMatrix.length;
+
+        double[] concatenatedTimeSeries = new double[0];
+        double[] result = new double[toIntExact(numberOfTimeSeries)];
+
+        for (double[] time_series : timeSeriesMatrix) {
+            concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
+        }
+
+        absoluteSumOfChanges(concatenatedTimeSeries, concatenatedTimeSeries.length, timeSeriesLength, numberOfTimeSeries,
+                result);
+
+        return result;
     }
 }
