@@ -50,5 +50,10 @@ public class main {
         for(double i : absoluteSumOfChanges){
             System.out.println (i);
         }
+        double[][] array_of_time_series2 = {ta,tb};
+        double [] absoluteSumOfChanges2 = tsa.absEnergy(array_of_time_series2);
+        for(double i : absoluteSumOfChanges2){
+            System.out.println (i);
+        }
     }
 }

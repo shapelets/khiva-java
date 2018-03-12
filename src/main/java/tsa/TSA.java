@@ -94,14 +94,24 @@ public class TSA {
     /**
      * absoluteSumOfChanges TSA's native function.
      *
-     * @param timeSeries                   Time series concatenated in a single row.
-     * @param concatenatedTimeSeriesLength length of timeSeries.
-     * @param timeSeriesLength             Length of each time series.
-     * @param numberOfTimeSeries           Number of time series into timeSeries.
-     * @param jResult                      Absolute sum of changes.
+     * @param timeSeries         Time series concatenated in a single row.
+     * @param timeSeriesLength   Length of each time series.
+     * @param numberOfTimeSeries Number of time series into timeSeries.
+     * @param jResult            Absolute sum of changes.
      */
-    private native void absoluteSumOfChanges(double[] timeSeries, long concatenatedTimeSeriesLength,
+    private native void absoluteSumOfChanges(double[] timeSeries,
                                              long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
+
+    /**
+     * absEnergy TSA's native function.
+     *
+     * @param timeSeries         Time series concatenated in a single row.
+     * @param timeSeriesLength   Length of each time series.
+     * @param numberOfTimeSeries Number of time series into timeSeries.
+     * @param jResult            Absolute Energy
+     */
+    private native void absEnergy(double[] timeSeries,
+                                  long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
 
     /**
      * Stomp algorithm.
@@ -198,7 +208,30 @@ public class TSA {
             concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
         }
 
-        absoluteSumOfChanges(concatenatedTimeSeries, concatenatedTimeSeries.length, timeSeriesLength, numberOfTimeSeries,
+        absoluteSumOfChanges(concatenatedTimeSeries, timeSeriesLength, numberOfTimeSeries,
+                result);
+
+        return result;
+    }
+
+    /**
+     * absEnergy function.
+     *
+     * @param timeSeriesMatrix Array of double arrays representing each Time Series.
+     * @return Double array with the Absolute Energy.
+     */
+    public double[] absEnergy(double[][] timeSeriesMatrix) {
+        long timeSeriesLength = timeSeriesMatrix[0].length;
+        long numberOfTimeSeries = timeSeriesMatrix.length;
+
+        double[] concatenatedTimeSeries = new double[0];
+        double[] result = new double[toIntExact(numberOfTimeSeries)];
+
+        for (double[] time_series : timeSeriesMatrix) {
+            concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
+        }
+
+        absEnergy(concatenatedTimeSeries, timeSeriesLength, numberOfTimeSeries,
                 result);
 
         return result;
