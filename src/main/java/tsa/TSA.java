@@ -114,6 +114,30 @@ public class TSA {
                                   long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
 
     /**
+     * cidCe TSA's native function
+     *
+     * @param tssConcatenated Time series concatenated in a single row.
+     * @param tssLength       Length of each time series ( All the time series need to have the same length).
+     * @param tssNumberOfTS   Number of time series in tssConcatenated.
+     * @param zNormalize      Controls whether the time series should be z-normalized or not.
+     * @param result          The complexity value for the given time series.
+     */
+    private native void cidCe(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean zNormalize,
+                              double[] result);
+
+    /**
+     * c3 TSA's native function.
+     *
+     * @param tssConcatenated Time series concatenated in a single row.
+     * @param tssLength       Length of each time series (All the time series need to have the same length).
+     * @param tssNumberOfTS   Number of time series in tssConcatenated.
+     * @param lag             The lag.
+     * @param result          The non-linearity value for the given time series.
+     */
+    private native void c3(double[] tssConcatenated, long tssLength, long tssNumberOfTS, long lag, double[] result);
+
+
+    /**
      * Stomp algorithm.
      *
      * @param ta Array of doubles with the first time series.
@@ -192,9 +216,30 @@ public class TSA {
     }
 
     /**
+     * cidCe function.
+     *
+     * @param tss        Array of arrays with the time series.
+     * @param zNormalize Controls whether the time series should be z-normalized or not.
+     * @return The complexity value for the given time series.
+     */
+    public double[] cidCe(double[][] tss, Boolean zNormalize) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[toIntExact(tssNumberOfTS)];
+        cidCe(tssConcatenated, tssLength, tssNumberOfTS, zNormalize, result);
+
+        return result;
+    }
+
+    /**
      * absoluteSumOfChanges function.
      *
-     * @param timeSeriesMatrix Array of double arrays representing each Time Series.
+     * @param timeSeriesMatrix Array of double arrays representing each time series.
      * @return Double array with the absolute sum of changes.
      */
     public double[] absoluteSumOfChanges(double[][] timeSeriesMatrix) {
@@ -213,6 +258,7 @@ public class TSA {
 
         return result;
     }
+
 
     /**
      * absEnergy function.
@@ -236,4 +282,26 @@ public class TSA {
 
         return result;
     }
+
+    /**
+     * c3 function.
+     *
+     * @param tss Array of double arrays representing each time series.
+     * @param lag The lag
+     * @return The non-linearity value for the given time series.
+     */
+    public double[] c3(double[][] tss, long lag) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[toIntExact(tssNumberOfTS)];
+        c3(tssConcatenated, tssLength, tssNumberOfTS, lag, result);
+
+        return result;
+    }
+
 }

@@ -10,7 +10,7 @@
 package tsa;
 
 /**
- *Sequence Class
+ * Sequence Class
  */
 public class Sequence {
     private double[] distances;
@@ -20,7 +20,7 @@ public class Sequence {
     private int[] subsequenceIndex;
 
     /**
-     *Sequence Index constructor
+     * Sequence Index constructor
      *
      * @param distances
      * @param index
@@ -29,11 +29,12 @@ public class Sequence {
     public Sequence(double[] distances, int[] index, int[] subsequenceIndex) {
         this.distances = distances;
         this.index = index;
-        this.subsequenceIndex=subsequenceIndex;
+        this.subsequenceIndex = subsequenceIndex;
     }
 
     /**
      * Gets distances
+     *
      * @return distances
      */
     public double[] getDistances() {
@@ -41,8 +42,8 @@ public class Sequence {
     }
 
     /**
-     *
      * Sets the distances
+     *
      * @param distances
      */
     public void setDistances(double[] distances) {
@@ -50,8 +51,8 @@ public class Sequence {
     }
 
     /**
-     *
      * Gets index
+     *
      * @return index
      */
     public int[] getIndex() {
@@ -60,6 +61,7 @@ public class Sequence {
 
     /**
      * Sets index
+     *
      * @param index
      */
     public void setIndex(int[] index) {
@@ -68,6 +70,7 @@ public class Sequence {
 
     /**
      * GetsIndex
+     *
      * @return subsequenceIndex
      */
     public int[] getSubsequenceIndex() {
@@ -75,6 +78,7 @@ public class Sequence {
     }
 
     /**
+     * SetsIndex
      *
      * @param subsequenceIndex
      */

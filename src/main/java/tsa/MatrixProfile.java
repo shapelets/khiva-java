@@ -22,6 +22,7 @@ public class MatrixProfile {
 
     /**
      * MatrixProfile constructor.
+     *
      * @param p Array of double with the distances.
      * @param i Array of integers with the indexes.
      */
@@ -32,6 +33,7 @@ public class MatrixProfile {
 
     /**
      * Gets the distance profile.
+     *
      * @return Array of doubles with the distance profile.
      */
     public double[] getProfile() {
@@ -39,7 +41,8 @@ public class MatrixProfile {
     }
 
     /**
-     *  Sets the distance profile.
+     * Sets the distance profile.
+     *
      * @param profile
      */
     public void setProfile(double[] profile) {
@@ -48,6 +51,7 @@ public class MatrixProfile {
 
     /**
      * Gets the index profile.
+     *
      * @return Array of integers with the index profile.
      */
     public int[] getIndex() {
@@ -56,6 +60,7 @@ public class MatrixProfile {
 
     /**
      * Sets the index profile.
+     *
      * @param index
      */
     public void setIndex(int[] index) {

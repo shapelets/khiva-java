@@ -13,14 +13,16 @@ import tsa.Sequence;
 import tsa.TSA;
 
 /**
- * main class for checking the correct use of stomp and stomp_self_join.
+ * main class for checking the correct use of the bindings.
  */
 public class main {
     public static void main(String[] args) {
         double[] ta = {1, 2, 3, 5, 6, 7, 8, 10};
         double[] tb = {4, 5, 6, 24, 24, 24, 3, 3};
         long m = 3;
+
         TSA tsa = TSA.getInstance();
+
         MatrixProfile a = tsa.stomp(ta, tb, m);
         for (int i = 0; i < a.getIndex().length; i++) {
             System.out.println(a.getIndex()[i]);
@@ -39,20 +41,35 @@ public class main {
             System.out.println(motifs.getDistances()[i]);
             System.out.println(motifs.getSubsequenceIndex()[i]);
         }
+
         Sequence discords = tsa.findBestNDiscords(a.getProfile(),a.getIndex(),3);
+
         for (int i = 0; i < discords.getIndex().length; i++) {
             System.out.println(discords.getIndex()[i]);
             System.out.println(discords.getDistances()[i]);
             System.out.println(discords.getSubsequenceIndex()[i]);
         }
+
         double[][] array_of_time_series = {ta,tb};
         double [] absoluteSumOfChanges = tsa.absoluteSumOfChanges(array_of_time_series);
         for(double i : absoluteSumOfChanges){
             System.out.println (i);
         }
-        double[][] array_of_time_series2 = {ta,tb};
+
+        double[][] array_of_time_series2 = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
+
         double [] absoluteSumOfChanges2 = tsa.absEnergy(array_of_time_series2);
         for(double i : absoluteSumOfChanges2){
+            System.out.println (i);
+        }
+
+        double [] cidCe= tsa.cidCe(array_of_time_series2, Boolean.FALSE);
+        for(double i : cidCe){
+            System.out.println (i);
+        }
+
+        double [] c3= tsa.c3(array_of_time_series2, 2);
+        for(double i : c3){
             System.out.println (i);
         }
     }
