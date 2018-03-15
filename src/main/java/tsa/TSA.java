@@ -48,7 +48,7 @@ public class TSA {
      * @param p   Array of doubles for storing the distances.
      * @param i   Array of integers for storing the indexes.
      */
-    private native void stomp(double[] ta, double[] tb, int lta, int ltb, long m, double[] p, int[] i);
+    private native void stomp(double[] ta, double[] tb, long lta, long ltb, long m, double[] p, int[] i);
 
     /**
      * StompSelfJoin TSA's native function.
@@ -59,7 +59,7 @@ public class TSA {
      * @param p   Array of doubles for storing the distances.
      * @param i   Array of integers for storing the indexes.
      */
-    private native void stompSelfJoin(double[] ta, int lta, long m, double[] p, int[] i);
+    private native void stompSelfJoin(double[] ta, long lta, long m, double[] p, int[] i);
 
     /**
      * findBestMotifs TSA's native function.
@@ -148,7 +148,7 @@ public class TSA {
         double[] p = new double[n - (int) (m) + 1];
         int[] i = new int[n - (int) (m) + 1];
 
-        stomp(ta, tb, ta.length, tb.length, m, p, i);
+        stomp(ta, tb, (long) ta.length, (long) tb.length, m, p, i);
 
         return new MatrixProfile(p, i);
     }
@@ -166,7 +166,7 @@ public class TSA {
         int[] i = new int[n - (int) (m) + 1];
 
 
-        stompSelfJoin(ta, ta.length, m, p, i);
+        stompSelfJoin(ta, (long) ta.length, m, p, i);
 
         return new MatrixProfile(p, i);
     }
@@ -223,7 +223,7 @@ public class TSA {
     public double[] cidCe(double[][] tss, Boolean zNormalize) {
         long tssLength = tss[0].length;
         long tssNumberOfTS = tss.length;
-        double[] tssConcatenated = new double[(int) (tssLength * tssNumberOfTS)];
+        double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
@@ -244,7 +244,7 @@ public class TSA {
         long timeSeriesLength = timeSeriesMatrix[0].length;
         long numberOfTimeSeries = timeSeriesMatrix.length;
 
-        double[] concatenatedTimeSeries = new double[(int) (timeSeriesLength * numberOfTimeSeries)];
+        double[] concatenatedTimeSeries = new double[0];
         double[] result = new double[(int) (numberOfTimeSeries)];
 
         for (double[] time_series : timeSeriesMatrix) {
@@ -268,7 +268,7 @@ public class TSA {
         long timeSeriesLength = timeSeriesMatrix[0].length;
         long numberOfTimeSeries = timeSeriesMatrix.length;
 
-        double[] concatenatedTimeSeries = new double[(int) (timeSeriesLength * numberOfTimeSeries)];
+        double[] concatenatedTimeSeries = new double[0];
         double[] result = new double[(int) (numberOfTimeSeries)];
 
         for (double[] time_series : timeSeriesMatrix) {
@@ -291,7 +291,7 @@ public class TSA {
     public double[] c3(double[][] tss, long lag) {
         long tssLength = tss[0].length;
         long tssNumberOfTS = tss.length;
-        double[] tssConcatenated = new double[(int) (tssLength * tssNumberOfTS)];
+        double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
