@@ -13,8 +13,6 @@ package tsa;
 import org.apache.commons.lang3.ArrayUtils;
 
 
-import static java.lang.Math.toIntExact;
-
 /**
  * TSA class for exposing the C++ TSA Library
  */
@@ -147,8 +145,8 @@ public class TSA {
      */
     public MatrixProfile stomp(double[] ta, double[] tb, long m) {
         int n = tb.length;
-        double[] p = new double[n - toIntExact(m) + 1];
-        int[] i = new int[n - toIntExact(m) + 1];
+        double[] p = new double[n - (int) (m) + 1];
+        int[] i = new int[n - (int) (m) + 1];
 
         stomp(ta, tb, ta.length, tb.length, m, p, i);
 
@@ -164,8 +162,8 @@ public class TSA {
      */
     public MatrixProfile stompSelfJoin(double[] ta, long m) {
         int n = ta.length;
-        double[] p = new double[n - toIntExact(m) + 1];
-        int[] i = new int[n - toIntExact(m) + 1];
+        double[] p = new double[n - (int) (m) + 1];
+        int[] i = new int[n - (int) (m) + 1];
 
 
         stompSelfJoin(ta, ta.length, m, p, i);
@@ -182,7 +180,7 @@ public class TSA {
      * @return Sequence object.
      */
     public Sequence findBestNMotifs(double[] profile, int[] index, long n) {
-        int nMotifs = toIntExact(n);
+        int nMotifs = (int) (n);
 
         double[] motifDistances = new double[nMotifs];
         int[] motifIndices = new int[nMotifs];
@@ -203,7 +201,7 @@ public class TSA {
      * @return Sequence Object.
      */
     public Sequence findBestNDiscords(double[] profile, int[] index, long n) {
-        int nMotifs = toIntExact(n);
+        int nMotifs = (int) (n);
 
         double[] motifDistances = new double[nMotifs];
         int[] motifIndices = new int[nMotifs];
@@ -225,12 +223,12 @@ public class TSA {
     public double[] cidCe(double[][] tss, Boolean zNormalize) {
         long tssLength = tss[0].length;
         long tssNumberOfTS = tss.length;
-        double[] tssConcatenated = new double[0];
+        double[] tssConcatenated = new double[(int) (tssLength * tssNumberOfTS)];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[toIntExact(tssNumberOfTS)];
+        double[] result = new double[(int) (tssNumberOfTS)];
         cidCe(tssConcatenated, tssLength, tssNumberOfTS, zNormalize, result);
 
         return result;
@@ -246,8 +244,8 @@ public class TSA {
         long timeSeriesLength = timeSeriesMatrix[0].length;
         long numberOfTimeSeries = timeSeriesMatrix.length;
 
-        double[] concatenatedTimeSeries = new double[0];
-        double[] result = new double[toIntExact(numberOfTimeSeries)];
+        double[] concatenatedTimeSeries = new double[(int) (timeSeriesLength * numberOfTimeSeries)];
+        double[] result = new double[(int) (numberOfTimeSeries)];
 
         for (double[] time_series : timeSeriesMatrix) {
             concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
@@ -270,8 +268,8 @@ public class TSA {
         long timeSeriesLength = timeSeriesMatrix[0].length;
         long numberOfTimeSeries = timeSeriesMatrix.length;
 
-        double[] concatenatedTimeSeries = new double[0];
-        double[] result = new double[toIntExact(numberOfTimeSeries)];
+        double[] concatenatedTimeSeries = new double[(int) (timeSeriesLength * numberOfTimeSeries)];
+        double[] result = new double[(int) (numberOfTimeSeries)];
 
         for (double[] time_series : timeSeriesMatrix) {
             concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
@@ -293,12 +291,12 @@ public class TSA {
     public double[] c3(double[][] tss, long lag) {
         long tssLength = tss[0].length;
         long tssNumberOfTS = tss.length;
-        double[] tssConcatenated = new double[0];
+        double[] tssConcatenated = new double[(int) (tssLength * tssNumberOfTS)];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[toIntExact(tssNumberOfTS)];
+        double[] result = new double[(int) (tssNumberOfTS)];
         c3(tssConcatenated, tssLength, tssNumberOfTS, lag, result);
 
         return result;
