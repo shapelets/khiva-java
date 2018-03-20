@@ -19,30 +19,16 @@ public class Library {
         System.loadLibrary("TSALIB");
     }
 
-
     public enum BACKEND {
         TSA_BACKEND_CPU,
         TSA_BACKEND_OPENCL,
         TSA_BACKEND_CUDA,
     }
 
-    /**
-     * Back-end info.
-     */
     private native static void info();
 
-    /**
-     * Sets the back-end
-     *
-     * @param backend Back-end selected.
-     */
     private native static void setBackend(int backend);
 
-    /**
-     * Sets the device.
-     *
-     * @param device The desired device.
-     */
     private native static void setDevice(int device);
 
     /**

@@ -10,60 +10,20 @@
 package tsa;
 
 public class Matrix extends Library {
-    /**
-     * Stomp Library's native function.
-     *
-     * @param ta  Array of doubles with the first time series.
-     * @param tb  Array of doubles with the second time series.
-     * @param lta Integer with the ta length.
-     * @param ltb Integer with the tb length.
-     * @param m   Long with the subsequence length.
-     * @param p   Array of doubles for storing the distances.
-     * @param i   Array of integers for storing the indexes.
-     */
+
     private native static void stomp(double[] ta, double[] tb, long lta, long ltb, long m, double[] p, int[] i);
 
-    /**
-     * StompSelfJoin Library's native function.
-     *
-     * @param ta  Array of doubles with the time series.
-     * @param lta Integer with the ta length.
-     * @param m   Long with the subsequence length.
-     * @param p   Array of doubles for storing the distances.
-     * @param i   Array of integers for storing the indexes.
-     */
     private native static void stompSelfJoin(double[] ta, long lta, long m, double[] p, int[] i);
 
-    /**
-     * findBestMotifs Library's native function.
-     *
-     * @param profile            The matrix profile containing the minimum distance of each sequence.
-     * @param index              The matrix profile index containing where each minimum occurs
-     * @param lengthProfile      Length of the matrix profile
-     * @param n                  Number of motifs to extract
-     * @param motifDistances     The distance of the best N motifs
-     * @param motifIndices       The indices of the best N motifs
-     * @param subsequenceIndices The indices of the query sequences that produced the minimum reported in the motifs.
-     */
     private native static void findBestNMotifs(double[] profile, int[] index, long lengthProfile, long n,
                                                double[] motifDistances, int[] motifIndices, int[] subsequenceIndices);
 
-    /**
-     * findBestNDiscords Library's native function.
-     *
-     * @param profile            The matrix profile containing the minimum distance of each subsequence
-     * @param index              The matrix profile index containing where each maximum occurs
-     * @param lengthProfile      Length of the matrix profile
-     * @param n                  Number of discords to extract
-     * @param motifDistances     The distance of the best N discords
-     * @param motifIndices       The indices of the best N discords
-     * @param subsequenceIndices The indices of the query sequences that produced the "N" bigger discord.
-     */
     private native static void findBestNDiscords(double[] profile, int[] index, long lengthProfile, long n,
                                                  double[] motifDistances, int[] motifIndices, int[] subsequenceIndices);
 
     /**
-     * Stomp algorithm.
+     * STOMP algorithm to calculate the matrix profile between 'ta' and 'tb' using a subsequence length
+     * of 'm'.
      *
      * @param ta Array of doubles with the first time series.
      * @param tb Array of doubles with the second time series.
@@ -81,7 +41,8 @@ public class Matrix extends Library {
     }
 
     /**
-     * Stomp Self Join algorithm.
+     * STOMP algorithm to calculate the matrix profile between 't' and itself using a subsequence length
+     * of 'm'. This method filters the trivial matches.
      *
      * @param ta Array of doubles with the first time series.
      * @param m  Long with the subsequence length.
@@ -99,7 +60,7 @@ public class Matrix extends Library {
     }
 
     /**
-     * findBestNMotifs function.
+     * This function extracts the best N discords from a previously calculated matrix profile.
      *
      * @param profile The matrix profile containing the minimum distance of each subsequence.
      * @param index   The matrix profile index
@@ -120,7 +81,7 @@ public class Matrix extends Library {
     }
 
     /**
-     * findBestNDiscords function.
+     * This function extracts the best N motifs from a previously calculated matrix profile.
      *
      * @param profile The matrix profile containing the minimum distance of each subsequence.
      * @param index   The matrix profile index
@@ -139,6 +100,4 @@ public class Matrix extends Library {
         return new Sequence(motifDistances, motifIndices, subsequenceIndices);
 
     }
-
-
 }
