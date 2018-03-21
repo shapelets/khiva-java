@@ -16,20 +16,21 @@ package tsa;
 public class Library {
 
     static {
-        System.loadLibrary("TSALIB");
+        System.loadLibrary("tsa_jni");
     }
 
-    public enum BACKEND {
-        TSA_BACKEND_CPU,
-        TSA_BACKEND_OPENCL,
-        TSA_BACKEND_CUDA,
-    }
 
     private native static void info();
 
     private native static void setBackend(int backend);
 
     private native static void setDevice(int device);
+
+    private native static void getBackends(int backends);
+
+    private native static void getDevice(int device);
+
+    private native static void getBackend(int backend);
 
     /**
      * Gets the devices info.
@@ -43,8 +44,8 @@ public class Library {
      *
      * @param tsaBE Back-end selected.
      */
-    public static void setTSABackend(BACKEND tsaBE) {
-        setBackend(tsaBE.ordinal());
+    public static void setTSABackend(int tsaBE) {
+        setBackend(tsaBE);
     }
 
     /**
@@ -54,6 +55,27 @@ public class Library {
      */
     public static void setTSADevice(int device) {
         setDevice(device);
+    }
+
+    public static int getTSABackends() {
+        int backends = 0;
+
+        getBackends(backends);
+
+        return backends;
+    }
+
+    public static int getTSADevice() {
+        int device = 0;
+        getDevice(device);
+        return device;
+
+    }
+
+    public static int getTSABackend() {
+        int backend = 0;
+        getBackend(backend);
+        return backend;
     }
 
 }

@@ -58,17 +58,14 @@ public class FeaturesTest {
 
 
         float r = (float) 0.5;
-        float[] approximateEntropy = features.approximateEntropy(tss, 4, r);
+        double[] approximateEntropy = features.approximateEntropy(tss, 4, r);
 
         for (double a : approximateEntropy) {
             System.out.println(a);
         }
 
-        double[] expected = {0.13484275341033936, 0.13484275341033936};
-        Assert.assertEquals(approximateEntropy[0], expected[0], 1e-6);
-        Assert.assertEquals(approximateEntropy[1], expected[1], 1e-6);
-
-
+        Assert.assertEquals(approximateEntropy[0], 0.13484281753639338, DELTA);
+        Assert.assertEquals(approximateEntropy[1], 0.13484281753639338, DELTA);
     }
 
     @Test

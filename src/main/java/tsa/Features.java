@@ -26,7 +26,8 @@ public class Features extends Library {
                                   double[] result);
 
     private native static void approximateEntropy(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
-                                                  int m, float r, float[] result);
+                                                  int m, float r, double[] result);
+
 
     private native static void crossCovariance(double[] xssConcatenated, long xssLength, long xssNumberOfTS,
                                                double[] yssConcatenated, long yssLength, long yssNumberOfTS,
@@ -147,7 +148,9 @@ public class Features extends Library {
      * @param r   Filtering level, must be positive.
      * @return Float array with the vectorized approximate entropy for all the input time series in tss.
      */
-    public static float[] approximateEntropy(double[][] tss, int m, float r) {
+
+    public static double[] approximateEntropy(double[][] tss, int m, float r) {
+
         long tssLength = tss[0].length;
         long tssNumberOfTS = tss.length;
         double[] tssConcatenated = new double[0];
@@ -155,7 +158,9 @@ public class Features extends Library {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        float[] result = new float[(int) (tssNumberOfTS)];
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+
         approximateEntropy(tssConcatenated, tssLength, tssNumberOfTS, m, r, result);
 
         return result;

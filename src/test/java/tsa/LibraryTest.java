@@ -9,27 +9,61 @@
 
 package tsa;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class LibraryTest {
 
-    @Test
-    public void testInfo() {
-        Library.infoTSA();
-    }
-
 
     @Test
-    public void testDevice() {
-        Library.setTSADevice(1);
-        Library.infoTSA();
+    public void test_set_backend() {
+        int backends = Library.getTSABackends();
+        int cuda = backends & 2;
+        int opencl = backends & 4;
+        int cpu = backends & 1;
 
+        if (cuda != 0) {
+            Library.setTSABackend(2);
+            Assert.assertEquals(Library.getTSABackend(), 2);
+        }
+        if (opencl != 0) {
+            Library.setTSABackend(4);
+            Assert.assertEquals(Library.getTSABackend(), 4);
+        }
+        if (cpu != 0) {
+            Library.setTSABackend(1);
+            Assert.assertEquals(Library.getTSABackend(), 1);
+        }
     }
 
     @Test
-    public void testBE() {
-        Library.setTSABackend(Library.BACKEND.TSA_BACKEND_CPU);
-        Library.infoTSA();
+    public void test_get_device() {
+        int backends = Library.getTSABackends();
+        int cuda = backends & 2;
+        int opencl = backends & 4;
+        int cpu = backends & 1;
 
+        if (cuda != 0) {
+            Library.setTSABackend(2);
+            Library.setTSADevice(0);
+
+            Assert.assertEquals(Library.getTSADevice(), 0);
+        }
+        if (opencl != 0) {
+            Library.setTSABackend(2);
+            Library.setTSADevice(0);
+
+            Assert.assertEquals(Library.getTSADevice(), 0);
+            Library.setTSADevice(1);
+
+            Assert.assertEquals(Library.getTSADevice(), 1);
+        }
+        if (cpu != 0) {
+            Library.setTSABackend(1);
+            Library.setTSADevice(0);
+
+            Assert.assertEquals(Library.getTSADevice(), 0);
+        }
     }
+
 }
