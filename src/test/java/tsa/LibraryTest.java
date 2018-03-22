@@ -14,55 +14,59 @@ import org.junit.Test;
 
 public class LibraryTest {
 
-
     @Test
     public void test_set_backend() {
         int backends = Library.getTSABackends();
-        int cuda = backends & 2;
-        int opencl = backends & 4;
-        int cpu = backends & 1;
+        int cuda = backends & Library.Backend.TSA_BACKEND_CUDA.getTSAOrdinal();
+        int opencl = backends & Library.Backend.TSA_BACKEND_OPENCL.getTSAOrdinal();
+        int cpu = backends & Library.Backend.TSA_BACKEND_CPU.getTSAOrdinal();
+
 
         if (cuda != 0) {
-            Library.setTSABackend(2);
-            Assert.assertEquals(Library.getTSABackend(), 2);
+            Library.setTSABackend(Library.Backend.TSA_BACKEND_CUDA);
+            Assert.assertEquals(Library.getTSABackend(), Library.Backend.TSA_BACKEND_CUDA);
         }
+
         if (opencl != 0) {
-            Library.setTSABackend(4);
-            Assert.assertEquals(Library.getTSABackend(), 4);
+            Library.setTSABackend(Library.Backend.TSA_BACKEND_OPENCL);
+            Assert.assertEquals(Library.getTSABackend(), Library.Backend.TSA_BACKEND_OPENCL);
         }
         if (cpu != 0) {
-            Library.setTSABackend(1);
-            Assert.assertEquals(Library.getTSABackend(), 1);
+            Library.setTSABackend(Library.Backend.TSA_BACKEND_CPU);
+            Assert.assertEquals(Library.getTSABackend(), Library.Backend.TSA_BACKEND_CPU);
         }
     }
 
     @Test
     public void test_get_device() {
         int backends = Library.getTSABackends();
-        int cuda = backends & 2;
-        int opencl = backends & 4;
-        int cpu = backends & 1;
+        int cuda = backends & Library.Backend.TSA_BACKEND_CUDA.getTSAOrdinal();
+        int opencl = backends & Library.Backend.TSA_BACKEND_OPENCL.getTSAOrdinal();
+        int cpu = backends & Library.Backend.TSA_BACKEND_CPU.getTSAOrdinal();
 
         if (cuda != 0) {
-            Library.setTSABackend(2);
-            Library.setTSADevice(0);
+            Library.setTSABackend(Library.Backend.TSA_BACKEND_CUDA);
 
-            Assert.assertEquals(Library.getTSADevice(), 0);
+            for (int i = 0; i < Library.getTSADeviceCount(); i++) {
+                Library.setTSADevice(i);
+                Assert.assertEquals(Library.getTSADeviceID(), i);
+            }
+
         }
         if (opencl != 0) {
-            Library.setTSABackend(2);
-            Library.setTSADevice(0);
 
-            Assert.assertEquals(Library.getTSADevice(), 0);
-            Library.setTSADevice(1);
-
-            Assert.assertEquals(Library.getTSADevice(), 1);
+            Library.setTSABackend(Library.Backend.TSA_BACKEND_OPENCL);
+            for (int i = 0; i < Library.getTSADeviceCount(); i++) {
+                Library.setTSADevice(i);
+                Assert.assertEquals(Library.getTSADeviceID(), i);
+            }
         }
         if (cpu != 0) {
-            Library.setTSABackend(1);
-            Library.setTSADevice(0);
-
-            Assert.assertEquals(Library.getTSADevice(), 0);
+            Library.setTSABackend(Library.Backend.TSA_BACKEND_CPU);
+            for (int i = 0; i < Library.getTSADeviceCount(); i++) {
+                Library.setTSADevice(i);
+                Assert.assertEquals(Library.getTSADeviceID(), i);
+            }
         }
     }
 

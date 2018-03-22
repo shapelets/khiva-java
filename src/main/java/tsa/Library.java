@@ -20,17 +20,48 @@ public class Library {
     }
 
 
+    public enum Backend {
+        TSA_BACKEND_DEFAULT(0), TSA_BACKEND_CPU(1), TSA_BACKEND_CUDA(2), TSA_BACKEND_OPENCL(4);
+        private final int ordinal;
+
+        Backend(int ordinal) {
+            this.ordinal = ordinal;
+        }
+
+        public int getTSAOrdinal() {
+            return ordinal;
+        }
+
+        public static Backend getBackendFromOrdinal(int ordinal) {
+            switch (ordinal) {
+                case 0:
+                    return Backend.TSA_BACKEND_DEFAULT;
+                case 1:
+                    return Backend.TSA_BACKEND_CPU;
+                case 2:
+                    return Backend.TSA_BACKEND_CUDA;
+                case 4:
+                    return Backend.TSA_BACKEND_OPENCL;
+                default:
+                    return Backend.TSA_BACKEND_DEFAULT;
+            }
+        }
+    }
+
     private native static void info();
 
     private native static void setBackend(int backend);
 
     private native static void setDevice(int device);
 
-    private native static void getBackends(int backends);
+    private native static int getBackends();
 
-    private native static void getDevice(int device);
+    private native static int getDeviceID();
 
-    private native static void getBackend(int backend);
+    private native static int getBackend();
+
+    private native static int getDeviceCount();
+
 
     /**
      * Gets the devices info.
@@ -44,8 +75,8 @@ public class Library {
      *
      * @param tsaBE Back-end selected.
      */
-    public static void setTSABackend(int tsaBE) {
-        setBackend(tsaBE);
+    public static void setTSABackend(Backend tsaBE) {
+        setBackend(tsaBE.getTSAOrdinal());
     }
 
     /**
@@ -57,25 +88,47 @@ public class Library {
         setDevice(device);
     }
 
+
+    /**
+     * Get the available backends.
+     *
+     * @return The available backends.
+     */
     public static int getTSABackends() {
-        int backends = 0;
 
-        getBackends(backends);
-
-        return backends;
-    }
-
-    public static int getTSADevice() {
-        int device = 0;
-        getDevice(device);
-        return device;
+        return getBackends();
 
     }
 
-    public static int getTSABackend() {
-        int backend = 0;
-        getBackend(backend);
-        return backend;
+    /**
+     * Get the device id.
+     *
+     * @return The device id.
+     */
+    public static int getTSADeviceID() {
+        return getDeviceID();
+
+
+    }
+
+    /**
+     * Get the active backend.
+     *
+     * @return The active backend.
+     */
+    public static Backend getTSABackend() {
+        return Backend.getBackendFromOrdinal(getBackend());
+
+    }
+
+    /**
+     * Get the devices count.
+     *
+     * @return The devices count.
+     */
+    public static int getTSADeviceCount() {
+
+        return getDeviceCount();
     }
 
 }
