@@ -40,13 +40,28 @@ public class Features extends Library {
                                                 double[] yssConcatenated, long yssLength, long yssNumberOfTS,
                                                 boolean unbiased, double[] result);
 
+    private native static void autoCorrelation(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                               long maxLag, boolean unbiased, double[] result);
+
+    private native static void binnedEntropy(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                             long max_bins, double[] result);
+
+    private native static void countAboveMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                              int[] result);
+
+    private native static void countBelowMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                              int[] result);
+
+    private native static void energyRatioByChunks(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                   long numSegments, long segmentFocus, double[] result);
+
 
     /**
      * Calculates an estimate for the time series complexity defined by
      * Batista, Gustavo EAPA, et al (2014). (A more complex time series has more peaks,
      * valleys, etc.)
      *
-     * @param tss        Array of arrays with the time series.
+     * @param tss        Array of arrays of type double containing the input time series.
      * @param zNormalize Controls whether the time series should be z-normalized or not.
      * @return The complexity value for the given time series.
      */
@@ -69,7 +84,7 @@ public class Features extends Library {
      * (Compare to http://en.wikipedia.org/wiki/Autocorrelation#Estimation), taken over different all possible
      * lags (1 to length of x)
      *
-     * @param timeSeriesMatrix Array of double arrays representing each time series.
+     * @param timeSeriesMatrix Array of arrays of type double containing the input time series.
      * @return Double array with the absolute sum of changes.
      */
     public static double[] absoluteSumOfChanges(double[][] timeSeriesMatrix) {
@@ -93,7 +108,7 @@ public class Features extends Library {
     /**
      * Calculates the sum over the square values of the timeseries
      *
-     * @param timeSeriesMatrix Array of double arrays representing each Time Series.
+     * @param timeSeriesMatrix Array of arrays of type double containing the input time series.
      * @return Double array with the Absolute Energy.
      */
     public static double[] absEnergy(double[][] timeSeriesMatrix) {
@@ -117,7 +132,7 @@ public class Features extends Library {
      * Calculates the Schreiber, T. and Schmitz, A. (1997) measure of non-linearity
      * for the given time series
      *
-     * @param tss Array of double arrays representing each time series.
+     * @param tss Array of arrays of type double containing the input time series.
      * @param lag The lag
      * @return The non-linearity value for the given time series.
      */
@@ -143,7 +158,7 @@ public class Features extends Library {
      * Other shortcomings and alternatives discussed in:
      * Richman & Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy
      *
-     * @param tss Array of double arrays with the time series.
+     * @param tss Array of arrays of type double containing the input time series.
      * @param m   Length of compared run of data.
      * @param r   Filtering level, must be positive.
      * @return Float array with the vectorized approximate entropy for all the input time series in tss.
@@ -169,8 +184,8 @@ public class Features extends Library {
     /**
      * Calculates the cross-covariance of the given time series.
      *
-     * @param xss      Array of double arrays with the time series.
-     * @param yss      Array of double arrays with the time series.
+     * @param xss      Array of arrays of type double containing the input time series.
+     * @param yss      Array of arrays of type double containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Double array with the cross-covariance value for the given time series.
      */
@@ -197,7 +212,7 @@ public class Features extends Library {
     /**
      * Calculates the auto-covariance the given time series.
      *
-     * @param xss      Array of double arrays with the time series.
+     * @param xss      Array of arrays of type double containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Double array with the auto-covariance value for the given time series.
      */
@@ -218,8 +233,8 @@ public class Features extends Library {
     /**
      * Calculates the cross-correlation of the given time series.
      *
-     * @param xss      Array of double arrays with the time series.
-     * @param yss      Array of double arrays with the time series.
+     * @param xss      Array of arrays of type double containing the input time series.
+     * @param yss      Array of arrays of type double containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Double array with cross-correlation value for the given time series.
      */
@@ -240,6 +255,115 @@ public class Features extends Library {
         double[] result = new double[(int) (Long.max(yssLength, xssLength))];
         crossCorrelation(xssConcatenated, xssLength, xssNumberOfTS, yssConcatenated, yssLength, yssNumberOfTS,
                 unbiased, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the autocorrelation of the specified lag for the given time series.
+     *
+     * @param tss      Array of arrays of type double containing the input time series.
+     * @param maxLag   The maximum lag to compute.
+     * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
+     * @return The autocorrelation value for the given time series
+     */
+    public static double[] autoCorrelation(double[][] tss, long maxLag, Boolean unbiased) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS * tssLength)];
+        autoCorrelation(tssConcatenated, tssLength, tssNumberOfTS, maxLag, unbiased, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the binned entropy for the given time series and number of bins.
+     *
+     * @param tss      Array of arrays of type double containing the input time series.
+     * @param max_bins The number of bins
+     * @return The binned entropy value for the given time series.
+     */
+    public static double[] binnedEntropy(double[][] tss, int max_bins) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        binnedEntropy(tssConcatenated, tssLength, tssNumberOfTS, max_bins, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the number of values in the time series that are higher than
+     * the mean
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The number of values in the time series that are higher than the mean.
+     */
+    public static int[] countAboveMean(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        int[] result = new int[(int) (tssNumberOfTS)];
+        countAboveMean(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the number of values in the time series that are lower than
+     * the mean
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The number of values in the time series that are lower than the mean.
+     */
+    public static int[] countBelowMean(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        int[] result = new int[(int) (tssNumberOfTS)];
+        countBelowMean(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the sum of squares of chunk i out of N chunks expressed as a ratio
+     * with the sum of squares over the whole series. segmentFocus should be lower
+     * than the number of segments
+     *
+     * @param tss          Array of arrays of type double containing the input time series.
+     * @param numSegments  The number of segments to divide the series into.
+     * @param segmentFocus The segment number (starting at zero) to return a feature on.
+     * @return The energy ratio by chunk of the time series.
+     */
+    public static double[] energyRatioByChunks(double[][] tss, long numSegments, long segmentFocus) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        energyRatioByChunks(tssConcatenated, tssLength, tssNumberOfTS, numSegments, segmentFocus, result);
 
         return result;
     }

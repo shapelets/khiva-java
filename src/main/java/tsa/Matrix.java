@@ -25,8 +25,8 @@ public class Matrix extends Library {
      * STOMP algorithm to calculate the matrix profile between 'ta' and 'tb' using a subsequence length
      * of 'm'.
      *
-     * @param ta Array of doubles with the first time series.
-     * @param tb Array of doubles with the second time series.
+     * @param ta Array of arrays of type double containing the input time series.
+     * @param tb Array of arrays of type double containing the input time series.
      * @param m  Long with the subsequence length.
      * @return MatrixProfile object.
      */
@@ -44,7 +44,7 @@ public class Matrix extends Library {
      * STOMP algorithm to calculate the matrix profile between 't' and itself using a subsequence length
      * of 'm'. This method filters the trivial matches.
      *
-     * @param ta Array of doubles with the first time series.
+     * @param ta Array of arrays of type double containing the input time series.
      * @param m  Long with the subsequence length.
      * @return MatrixProfile object.
      */

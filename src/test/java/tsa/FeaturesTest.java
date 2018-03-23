@@ -60,10 +60,6 @@ public class FeaturesTest {
         float r = (float) 0.5;
         double[] approximateEntropy = features.approximateEntropy(tss, 4, r);
 
-        for (double a : approximateEntropy) {
-            System.out.println(a);
-        }
-
         Assert.assertEquals(approximateEntropy[0], 0.13484281753639338, DELTA);
         Assert.assertEquals(approximateEntropy[1], 0.13484281753639338, DELTA);
     }
@@ -110,5 +106,61 @@ public class FeaturesTest {
         Assert.assertEquals(crossCorrelation[2], 0.079056941, 1e-9);
         Assert.assertEquals(crossCorrelation[3], -0.395284707, 1e-9);
         Assert.assertEquals(crossCorrelation[4], -0.474341649, 1e-9);
+    }
+
+    @Test
+    public void testAutoCorrelation() {
+        double[][] tss = {{0, 1, 2, 3}, {10, 11, 12, 13}};
+        double[] autoCorrelationResult = Features.autoCorrelation(tss, 4, false);
+        Assert.assertEquals(autoCorrelationResult[0], 1, DELTA);
+        Assert.assertEquals(autoCorrelationResult[1], 0.25, DELTA);
+        Assert.assertEquals(autoCorrelationResult[2], -0.3, DELTA);
+        Assert.assertEquals(autoCorrelationResult[3], -0.45, DELTA);
+        Assert.assertEquals(autoCorrelationResult[4], 1.0, DELTA);
+        Assert.assertEquals(autoCorrelationResult[5], 0.25, DELTA);
+        Assert.assertEquals(autoCorrelationResult[6], -0.3, DELTA);
+        Assert.assertEquals(autoCorrelationResult[7], -0.45, DELTA);
+    }
+
+    @Test
+    public void testBinnedCorrelation() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                14, 15, 16, 17, 18, 19, 20}, {1, 1, 3, 10, 5, 6, 1, 8, 9, 10, 11, 1, 13, 14, 10, 16, 17, 10, 19, 20}};
+
+        double[] binnedEntropyResult = Features.binnedEntropy(tss, 5);
+        Assert.assertEquals(binnedEntropyResult[0], 1.6094379124341005, DELTA);
+        Assert.assertEquals(binnedEntropyResult[1], 1.5614694247763998, DELTA);
+
+    }
+
+    @Test
+    public void testCountAboveMean() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
+        int[] countAboveMeanResult = Features.countAboveMean(tss);
+        Assert.assertEquals(countAboveMeanResult[0], 3, DELTA);
+        Assert.assertEquals(countAboveMeanResult[1], 3, DELTA);
+    }
+
+    @Test
+    public void testCountBelowMean() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
+        int[] countBelowMeanResult = Features.countBelowMean(tss);
+
+        Assert.assertEquals(countBelowMeanResult[0], 3, DELTA);
+        Assert.assertEquals(countBelowMeanResult[1], 3, DELTA);
+
+    }
+
+    @Test
+    public void testEnergyRatioByChunks() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
+        double[] energyRatioByChunksResult = Features.energyRatioByChunks(tss, 2, 0);
+
+        Assert.assertEquals(energyRatioByChunksResult[0], 0.090909091, DELTA);
+        Assert.assertEquals(energyRatioByChunksResult[1], 0.330376940, DELTA);
+        energyRatioByChunksResult = Features.energyRatioByChunks(tss, 2, 1);
+        Assert.assertEquals(energyRatioByChunksResult[0], 0.909090909, DELTA);
+        Assert.assertEquals(energyRatioByChunksResult[1], 0.669623060, DELTA);
+
     }
 }
