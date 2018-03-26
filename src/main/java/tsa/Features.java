@@ -55,6 +55,15 @@ public class Features extends Library {
     private native static void energyRatioByChunks(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                    long numSegments, long segmentFocus, double[] result);
 
+    private native static void firstLocationOfMaximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS, double[] result);
+
+    private native static void firstLocationOfMinimum(double[] tssConcatenated, long tssLength, long tssNumberOfTS, double[] result);
+
+    private native static void hasDuplicates(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean[] result);
+
+    private native static void hasDuplicateMax(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean[] result);
+
+    private native static void indexMaxQuantile(double[] tssConcatenated, long tssLength, long tssNumberOfTS, float q, double[] result);
 
     /**
      * Calculates an estimate for the time series complexity defined by
@@ -368,5 +377,107 @@ public class Features extends Library {
         return result;
     }
 
+    /**
+     * Calculates the first relative location of the maximal value for each timeseries.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The first relative location of the maximum value to the length of the timeseries,
+     * for each time series.
+     */
+    public static double[] firstLocationOfMaximum(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
 
+        double[] result = new double[(int) (tssNumberOfTS)];
+        firstLocationOfMaximum(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the first location of the minimal value of each time series. The position
+     * is calculated relatively to the length of the series.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The first relative location of the minimal value of each series.
+     */
+    public static double[] firstLocationOfMinimum(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        firstLocationOfMinimum(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates if the input time series contain duplicated elements.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return Array containing True if the time series contains duplicated elements
+     * and false otherwise.
+     */
+    public static boolean[] hasDuplicates(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        boolean[] result = new boolean[(int) (tssNumberOfTS)];
+        hasDuplicates(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates if the maximum within input time series is duplicated.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return Calculates if the maximum within input time series is duplicated.
+     */
+    public static boolean[] hasDuplicateMax(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        boolean[] result = new boolean[(int) (tssNumberOfTS)];
+        hasDuplicateMax(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the index of the max quantile.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param q   The quantile.
+     * @return The index of the max quantile q.
+     */
+    public static double[] indexMaxQuantile(double[][] tss, float q) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        indexMaxQuantile(tssConcatenated, tssLength, tssNumberOfTS, q, result);
+
+        return result;
+    }
 }

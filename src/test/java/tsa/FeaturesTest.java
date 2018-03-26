@@ -12,18 +12,17 @@ package tsa;
 import org.junit.Assert;
 import org.junit.Test;
 
+
 public class FeaturesTest {
     private static final double DELTA = 1e-6;
-    Features features = new Features();
     double[][] arrayOfTimeSeries = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
-
-
+    
     @Test
     public void testCidCe() {
-        double[] cidCe = features.cidCe(arrayOfTimeSeries, Boolean.TRUE);
+        double[] cidCe = Features.cidCe(arrayOfTimeSeries, true);
         Assert.assertEquals(cidCe[0], 1.30930734141595, DELTA);
         Assert.assertEquals(cidCe[1], 1.30930734141595, DELTA);
-        cidCe = features.cidCe(arrayOfTimeSeries, Boolean.FALSE);
+        cidCe = Features.cidCe(arrayOfTimeSeries, false);
         Assert.assertEquals(cidCe[0], 2.23606797749979, DELTA);
         Assert.assertEquals(cidCe[1], 2.23606797749979, DELTA);
 
@@ -31,7 +30,7 @@ public class FeaturesTest {
 
     @Test
     public void testC3() {
-        double[] c3 = features.c3(arrayOfTimeSeries, 2);
+        double[] c3 = Features.c3(arrayOfTimeSeries, 2);
         Assert.assertEquals(c3[0], 7.5, DELTA);
         Assert.assertEquals(c3[1], 586.5, DELTA);
     }
@@ -39,7 +38,7 @@ public class FeaturesTest {
     @Test
     public void testAbsSumOfChanges() {
         double[][] tss = {{0, 1, 2, 3}, {4, 6, 8, 10}, {11, 14, 17, 20}};
-        double[] absSum = features.absoluteSumOfChanges(tss);
+        double[] absSum = Features.absoluteSumOfChanges(tss);
         Assert.assertEquals(absSum[0], 3, DELTA);
         Assert.assertEquals(absSum[1], 6, DELTA);
         Assert.assertEquals(absSum[2], 9, DELTA);
@@ -48,7 +47,7 @@ public class FeaturesTest {
     @Test
     public void testAbsEnergy() {
         double[][] tss = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}};
-        double[] absEnergy = features.absEnergy(tss);
+        double[] absEnergy = Features.absEnergy(tss);
         Assert.assertEquals(absEnergy[0], 385, DELTA);
     }
 
@@ -58,7 +57,7 @@ public class FeaturesTest {
 
 
         float r = (float) 0.5;
-        double[] approximateEntropy = features.approximateEntropy(tss, 4, r);
+        double[] approximateEntropy = Features.approximateEntropy(tss, 4, r);
 
         Assert.assertEquals(approximateEntropy[0], 0.13484281753639338, DELTA);
         Assert.assertEquals(approximateEntropy[1], 0.13484281753639338, DELTA);
@@ -68,7 +67,7 @@ public class FeaturesTest {
     public void testCrossCovariance() {
         double[][] tss1 = {{0, 1, 2, 3}, {10, 11, 12, 13}};
         double[][] tss2 = {{4, 6, 8, 10, 12}, {14, 16, 18, 20, 22}};
-        double[] crossCovariance = features.crossCovariance(tss1, tss2, false);
+        double[] crossCovariance = Features.crossCovariance(tss1, tss2, false);
         for (int i = 0; i < 4; i++) {
             Assert.assertEquals(crossCovariance[(i * 5)], 2.5, DELTA);
             Assert.assertEquals(crossCovariance[(i * 5) + 1], 2.5, DELTA);
@@ -100,7 +99,7 @@ public class FeaturesTest {
         double[][] tss1 = {{1, 2, 3, 4}};
         double[][] tss2 = {{4, 6, 8, 10, 12}};
 
-        double[] crossCorrelation = features.crossCorrelation(tss1, tss2, false);
+        double[] crossCorrelation = Features.crossCorrelation(tss1, tss2, false);
         Assert.assertEquals(crossCorrelation[0], 0.790569415, 1e-9);
         Assert.assertEquals(crossCorrelation[1], 0.790569415, 1e-9);
         Assert.assertEquals(crossCorrelation[2], 0.079056941, 1e-9);
@@ -161,6 +160,52 @@ public class FeaturesTest {
         energyRatioByChunksResult = Features.energyRatioByChunks(tss, 2, 1);
         Assert.assertEquals(energyRatioByChunksResult[0], 0.909090909, DELTA);
         Assert.assertEquals(energyRatioByChunksResult[1], 0.669623060, DELTA);
+
+    }
+
+    @Test
+    public void testFirstLocationOfMaximum() {
+        double[][] tss = {{5, 4, 3, 5, 0, 1, 5, 3, 2, 1}, {2, 4, 3, 5, 2, 5, 4, 3, 5, 2}};
+        double[] firstLocationOfMaximumResult = Features.firstLocationOfMaximum(tss);
+        Assert.assertEquals(firstLocationOfMaximumResult[0], 0.0, DELTA);
+        Assert.assertEquals(firstLocationOfMaximumResult[1], 0.3, DELTA);
+
+    }
+
+    @Test
+    public void testFirstLocationOfMinimum() {
+        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 3, 0, 2, 1}};
+        double[] firstLocationOfMinimumResult = Features.firstLocationOfMinimum(tss);
+        Assert.assertEquals(firstLocationOfMinimumResult[0], 0.5, DELTA);
+        Assert.assertEquals(firstLocationOfMinimumResult[1], 0.5, DELTA);
+
+    }
+
+    @Test
+    public void testHasDuplicates() {
+        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 3, 0, 2, 1}};
+        boolean[] hasDuplicatesResult = Features.hasDuplicates(tss);
+        Assert.assertEquals(hasDuplicatesResult[0], true);
+        Assert.assertEquals(hasDuplicatesResult[1], false);
+
+    }
+
+    @Test
+    public void testHasDuplicateMax() {
+        double[][] tss = {{5, 4, 3, 0, 5, 1}, {5, 4, 3, 0, 2, 1}};
+        boolean[] hasDuplicateMaxResult = Features.hasDuplicateMax(tss);
+        Assert.assertEquals(hasDuplicateMaxResult[0], true);
+        Assert.assertEquals(hasDuplicateMaxResult[1], false);
+
+    }
+
+    @Test
+    public void testIndexMaxQuantile() {
+        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 0, 0, 2, 1}};
+        float q = (float) 0.5;
+        double[] indexMaxQuantileResult = Features.indexMaxQuantile(tss, q);
+        Assert.assertEquals(indexMaxQuantileResult[0], 0.333333333, DELTA);
+        Assert.assertEquals(indexMaxQuantileResult[1], 0.333333333, DELTA);
 
     }
 }
