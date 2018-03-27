@@ -55,15 +55,39 @@ public class Features extends Library {
     private native static void energyRatioByChunks(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                    long numSegments, long segmentFocus, double[] result);
 
-    private native static void firstLocationOfMaximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS, double[] result);
+    private native static void firstLocationOfMaximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                      double[] result);
 
-    private native static void firstLocationOfMinimum(double[] tssConcatenated, long tssLength, long tssNumberOfTS, double[] result);
+    private native static void firstLocationOfMinimum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                      double[] result);
 
-    private native static void hasDuplicates(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean[] result);
+    private native static void hasDuplicates(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                             boolean[] result);
 
-    private native static void hasDuplicateMax(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean[] result);
+    private native static void hasDuplicateMax(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                               boolean[] result);
 
-    private native static void indexMaxQuantile(double[] tssConcatenated, long tssLength, long tssNumberOfTS, float q, double[] result);
+    private native static void indexMaxQuantile(double[] tssConcatenated, long tssLength, long tssNumberOfTS, float q,
+                                                double[] result);
+
+    private native static void kurtosis(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                        double[] result);
+
+    private native static void largeStandardDeviation(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                      float r, boolean[] result);
+
+    private native static void lastLocationOfMaximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                     double[] result);
+
+    private native static void lastLocationOfMinimum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                     double[] result);
+
+    private native static void length(double[] tssConcatenated, long tssLength, long tssNumberOfTS, int[] result);
+
+    private native static void linearTrend(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                           double[] pvalue, double[] rvalue, double[] intercept, double[] slope,
+                                           double[] stdrr);
+
 
     /**
      * Calculates an estimate for the time series complexity defined by
@@ -115,7 +139,7 @@ public class Features extends Library {
 
 
     /**
-     * Calculates the sum over the square values of the timeseries
+     * Calculates the sum over the square values of the time series
      *
      * @param timeSeriesMatrix Array of arrays of type double containing the input time series.
      * @return Double array with the Absolute Energy.
@@ -378,10 +402,10 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the first relative location of the maximal value for each timeseries.
+     * Calculates the first relative location of the maximal value for each time series.
      *
      * @param tss Array of arrays of type double containing the input time series.
-     * @return The first relative location of the maximum value to the length of the timeseries,
+     * @return The first relative location of the maximum value to the length of the times eries,
      * for each time series.
      */
     public static double[] firstLocationOfMaximum(double[][] tss) {
@@ -479,5 +503,132 @@ public class Features extends Library {
         indexMaxQuantile(tssConcatenated, tssLength, tssNumberOfTS, q, result);
 
         return result;
+    }
+
+    /**
+     * Returns the kurtosis of tss (calculated with the adjusted Fisher-Pearson
+     * standardized moment coefficient G2).
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The kurtosis of each tss.
+     */
+    public static double[] kurtosis(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        kurtosis(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Checks if the time series within tss have a large standard deviation.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param r   The threshold.
+     * @return Array containing True for those time series in tss that have a large standard deviation.
+     */
+    public static boolean[] largeStandardDeviation(double[][] tss, float r) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        boolean[] result = new boolean[(int) (tssNumberOfTS)];
+        largeStandardDeviation(tssConcatenated, tssLength, tssNumberOfTS, r, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the last location of the maximum value of each time series. The position
+     * is calculated relatively to the length of the series.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The last relative location of the maximum value of each series.
+     */
+    public static double[] lastLocationOfMaximum(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        lastLocationOfMaximum(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the last location of the minimum value of each time series. The position
+     * is calculated relatively to the length of the series.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The last relative location of the minimum value of each series.
+     */
+    public static double[] lastLocationOfMinimum(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        lastLocationOfMinimum(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Returns the length of the input time series.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The length of tss.
+     */
+    public static int[] length(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        int[] result = new int[(int) (tssNumberOfTS)];
+        length(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculate a linear least-squares regression for the values of the time series versus the sequence from 0 to
+     * length of the time series minus one.
+     *
+     * @param tss       Array of arrays of type double containing the input time series.
+     * @param pvalue    The pvalues for all time series.
+     * @param rvalue    The rvalues for all time series.
+     * @param intercept The intercept values for all time series.
+     * @param slope     The slope for all time series.
+     * @param stdrr     The stdrr values for all time series.
+     */
+    public static void linearTrend(double[][] tss, double[] pvalue, double[] rvalue, double[] intercept,
+                                   double[] slope, double[] stdrr) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+        linearTrend(tssConcatenated, tssLength, tssNumberOfTS, pvalue, rvalue, intercept, slope, stdrr);
     }
 }

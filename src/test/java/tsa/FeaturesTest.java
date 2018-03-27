@@ -16,7 +16,7 @@ import org.junit.Test;
 public class FeaturesTest {
     private static final double DELTA = 1e-6;
     double[][] arrayOfTimeSeries = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
-    
+
     @Test
     public void testCidCe() {
         double[] cidCe = Features.cidCe(arrayOfTimeSeries, true);
@@ -206,6 +206,75 @@ public class FeaturesTest {
         double[] indexMaxQuantileResult = Features.indexMaxQuantile(tss, q);
         Assert.assertEquals(indexMaxQuantileResult[0], 0.333333333, DELTA);
         Assert.assertEquals(indexMaxQuantileResult[1], 0.333333333, DELTA);
+    }
 
+    @Test
+    public void testKurtosis() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {2, 2, 2, 20, 30, 25}};
+        double[] kurtosisResult = Features.kurtosis(tss);
+        Assert.assertEquals(kurtosisResult[0], -1.2, DELTA);
+        Assert.assertEquals(kurtosisResult[1], -2.66226722, DELTA);
+    }
+
+    @Test
+    public void testLargeStandardDeviation() {
+        double[][] tss = {{-1, -1, -1, 1, 1, 1}, {4, 6, 8, 4, 5, 4}};
+        float r = (float) 0.4;
+        boolean[] largeStandardDeviationResult = Features.largeStandardDeviation(tss, r);
+        Assert.assertEquals(largeStandardDeviationResult[0], true);
+        Assert.assertEquals(largeStandardDeviationResult[1], false);
+    }
+
+    @Test
+    public void testLastLocationOfMaximum() {
+        double[][] tss = {{0, 4, 3, 5, 5, 1}, {0, 4, 3, 2, 5, 1}};
+        double[] locationOfMaximumResult = Features.lastLocationOfMaximum(tss);
+        Assert.assertEquals(locationOfMaximumResult[0], 0.8333333333333334, DELTA);
+        Assert.assertEquals(locationOfMaximumResult[1], 0.8333333333333334, DELTA);
+    }
+
+    @Test
+    public void testLastLocationOfMinimum() {
+        double[][] tss = {{0, 4, 3, 5, 5, 1, 0, 4}, {3, 2, 5, 1, 4, 5, 1, 2}};
+        double[] locationOfMinimumResult = Features.lastLocationOfMinimum(tss);
+        Assert.assertEquals(locationOfMinimumResult[0], 0.875, DELTA);
+        Assert.assertEquals(locationOfMinimumResult[1], 0.875, DELTA);
+    }
+
+    @Test
+    public void testLength() {
+        double[][] tss = {{0, 4, 3, 5, 5, 1}, {0, 4, 3, 2, 5, 1}};
+        int[] lengthResult = Features.length(tss);
+        Assert.assertEquals(lengthResult[0], 6, DELTA);
+        Assert.assertEquals(lengthResult[1], 6, DELTA);
+    }
+
+    @Test
+    public void testLinearTrend() {
+        double[][] tss = {{0, 4, 3, 5, 5, 1}, {2, 4, 1, 2, 5, 3}};
+
+        double[] pvalue = new double[tss.length];
+        double[] rvalue = new double[tss.length];
+        double[] intercept = new double[tss.length];
+        double[] slope = new double[tss.length];
+        double[] stdrr = new double[tss.length];
+
+
+        Features.linearTrend(tss, pvalue, rvalue, intercept, slope, stdrr);
+
+        Assert.assertEquals(pvalue[0], 0.6260380997892747, DELTA);
+        Assert.assertEquals(pvalue[1], 0.5272201945463578, DELTA);
+
+        Assert.assertEquals(rvalue[0], 0.2548235957188128, DELTA);
+        Assert.assertEquals(rvalue[1], 0.3268228676411533, DELTA);
+
+        Assert.assertEquals(intercept[0], 2.2857142857142856, DELTA);
+        Assert.assertEquals(intercept[1], 2.1904761904761907, DELTA);
+
+        Assert.assertEquals(slope[0], 0.2857142857142857, DELTA);
+        Assert.assertEquals(slope[1], 0.2571428571428572, DELTA);
+
+        Assert.assertEquals(stdrr[0], 0.5421047417431507, DELTA);
+        Assert.assertEquals(stdrr[1], 0.37179469135129783, DELTA);
     }
 }
