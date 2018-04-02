@@ -88,6 +88,24 @@ public class Features extends Library {
                                            double[] pvalue, double[] rvalue, double[] intercept, double[] slope,
                                            double[] stdrr);
 
+    private native static void hasDuplicateMin(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                               boolean[] result);
+
+    private native static void longestStrikeAboveMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                      double[] result);
+
+    private native static void longestStrikeBelowMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                      double[] result);
+
+    private native static void maximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                       double[] result);
+
+    private native static void meanAbsoluteChange(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                                  double[] result);
+
+    private native static void fftCoefficient(double[] tssConcatenated, long tssL, long tssN, long coefficient,
+                                              double[] real, double[] imag, double[] abs, double[] angle);
+
 
     /**
      * Calculates an estimate for the time series complexity defined by
@@ -136,7 +154,6 @@ public class Features extends Library {
 
         return result;
     }
-
 
     /**
      * Calculates the sum over the square values of the time series
@@ -630,5 +647,129 @@ public class Features extends Library {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
         linearTrend(tssConcatenated, tssLength, tssNumberOfTS, pvalue, rvalue, intercept, slope, stdrr);
+    }
+
+    /**
+     * Calculates if the minimum of the input time series is duplicated.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return Array containing True if the minimum of the time series is duplicated
+     * and False otherwise.
+     */
+    public static boolean[] hasDuplicateMin(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        boolean[] result = new boolean[(int) (tssNumberOfTS)];
+        hasDuplicateMin(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the length of the longest consecutive subsequence in tss that is bigger than the mean of tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The length of the longest consecutive subsequence in the input time series that is bigger than the
+     * mean.
+     */
+    public static double[] longestStrikeAboveMean(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        longestStrikeAboveMean(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the length of the longest consecutive subsequence in tss that is below the mean of tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The length of the longest consecutive subsequence in the input time series that is below the mean.
+     */
+    public static double[] longestStrikeBelowMean(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        longestStrikeBelowMean(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the maximum value for each time series within tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The maximum value of each time series within tss.
+     */
+    public static double[] maximum(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        maximum(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the mean over the absolute differences between subsequent time series values in tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The mean over the absolute differences between subsequent time series values.
+     */
+    public static double[] meanAbsoluteChange(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        meanAbsoluteChange(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates the fourier coefficients of the one-dimensional discrete
+     * Fourier Transform for real input by fast fourier transformation algorithm.
+     *
+     * @param tss         Array of arrays of type double containing the input time series.
+     * @param coefficient The coefficient to extract from the FFT.
+     * @param real        The real part of the coefficient.
+     * @param imag        The imaginary part of the coefficient.
+     * @param abs         The absolute value of the coefficient.
+     * @param angle       The angle of the coefficient.
+     */
+    public static void fftCoefficient(double[][] tss, long coefficient, double[] real, double[] imag, double[] abs, double[] angle) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        fftCoefficient(tssConcatenated, tssL, tssN, coefficient, real, imag, abs, angle);
     }
 }

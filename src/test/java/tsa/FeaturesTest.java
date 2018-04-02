@@ -25,7 +25,6 @@ public class FeaturesTest {
         cidCe = Features.cidCe(arrayOfTimeSeries, false);
         Assert.assertEquals(cidCe[0], 2.23606797749979, DELTA);
         Assert.assertEquals(cidCe[1], 2.23606797749979, DELTA);
-
     }
 
     @Test
@@ -74,7 +73,6 @@ public class FeaturesTest {
             Assert.assertEquals(crossCovariance[(i * 5) + 2], 0.25, DELTA);
             Assert.assertEquals(crossCovariance[(i * 5) + 3], -1.25, DELTA);
             Assert.assertEquals(crossCovariance[(i * 5) + 4], -1.5, DELTA);
-
         }
     }
 
@@ -91,7 +89,6 @@ public class FeaturesTest {
         Assert.assertEquals(autoCovariance[5], 0.3125, DELTA);
         Assert.assertEquals(autoCovariance[6], -0.375, DELTA);
         Assert.assertEquals(autoCovariance[7], -0.5625, DELTA);
-
     }
 
     @Test
@@ -129,7 +126,6 @@ public class FeaturesTest {
         double[] binnedEntropyResult = Features.binnedEntropy(tss, 5);
         Assert.assertEquals(binnedEntropyResult[0], 1.6094379124341005, DELTA);
         Assert.assertEquals(binnedEntropyResult[1], 1.5614694247763998, DELTA);
-
     }
 
     @Test
@@ -147,7 +143,6 @@ public class FeaturesTest {
 
         Assert.assertEquals(countBelowMeanResult[0], 3, DELTA);
         Assert.assertEquals(countBelowMeanResult[1], 3, DELTA);
-
     }
 
     @Test
@@ -160,7 +155,6 @@ public class FeaturesTest {
         energyRatioByChunksResult = Features.energyRatioByChunks(tss, 2, 1);
         Assert.assertEquals(energyRatioByChunksResult[0], 0.909090909, DELTA);
         Assert.assertEquals(energyRatioByChunksResult[1], 0.669623060, DELTA);
-
     }
 
     @Test
@@ -169,7 +163,6 @@ public class FeaturesTest {
         double[] firstLocationOfMaximumResult = Features.firstLocationOfMaximum(tss);
         Assert.assertEquals(firstLocationOfMaximumResult[0], 0.0, DELTA);
         Assert.assertEquals(firstLocationOfMaximumResult[1], 0.3, DELTA);
-
     }
 
     @Test
@@ -178,7 +171,6 @@ public class FeaturesTest {
         double[] firstLocationOfMinimumResult = Features.firstLocationOfMinimum(tss);
         Assert.assertEquals(firstLocationOfMinimumResult[0], 0.5, DELTA);
         Assert.assertEquals(firstLocationOfMinimumResult[1], 0.5, DELTA);
-
     }
 
     @Test
@@ -187,7 +179,6 @@ public class FeaturesTest {
         boolean[] hasDuplicatesResult = Features.hasDuplicates(tss);
         Assert.assertEquals(hasDuplicatesResult[0], true);
         Assert.assertEquals(hasDuplicatesResult[1], false);
-
     }
 
     @Test
@@ -196,7 +187,6 @@ public class FeaturesTest {
         boolean[] hasDuplicateMaxResult = Features.hasDuplicateMax(tss);
         Assert.assertEquals(hasDuplicateMaxResult[0], true);
         Assert.assertEquals(hasDuplicateMaxResult[1], false);
-
     }
 
     @Test
@@ -276,5 +266,79 @@ public class FeaturesTest {
 
         Assert.assertEquals(stdrr[0], 0.5421047417431507, DELTA);
         Assert.assertEquals(stdrr[1], 0.37179469135129783, DELTA);
+    }
+
+    @Test
+    public void testHasDuplicateMin() {
+        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 3, 0, 2, 1}};
+
+        boolean[] hasDuplicateMinResult = Features.hasDuplicateMin(tss);
+        Assert.assertEquals(hasDuplicateMinResult[0], true);
+        Assert.assertEquals(hasDuplicateMinResult[1], false);
+    }
+
+    @Test
+    public void testLongestStrikeAboveMean() {
+        double[][] tss = {{20, 20, 20, 1, 1, 1, 20, 20, 20, 20, 1, 1, 1, 1,
+                1, 1, 1, 1, 20, 20}, {20, 20, 20, 1, 1, 1, 20, 20,
+                20, 1, 1, 1, 1, 1, 1, 1, 1,
+                1, 20, 20}};
+
+        double[] longestStrikeAboveMeanResult = Features.longestStrikeAboveMean(tss);
+        Assert.assertEquals(longestStrikeAboveMeanResult[0], 4, DELTA);
+        Assert.assertEquals(longestStrikeAboveMeanResult[1], 3, DELTA);
+    }
+
+    @Test
+    public void testLongestStrikeBelowMean() {
+        double[][] tss = {{20, 20, 20, 1, 1, 1, 20, 20, 20, 20, 1, 1, 1, 1,
+                1, 1, 1, 1, 20, 20}, {20, 20, 20, 1, 1, 1, 20, 20,
+                20, 1, 1, 1, 1, 1, 1, 1, 1,
+                1, 20, 20}};
+
+        double[] longestStrikeBelowMeanResult = Features.longestStrikeBelowMean(tss);
+        Assert.assertEquals(longestStrikeBelowMeanResult[0], 8, DELTA);
+        Assert.assertEquals(longestStrikeBelowMeanResult[1], 9, DELTA);
+    }
+
+    @Test
+    public void testMaximum() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20},
+                {20, 20, 20, 2, 19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20}};
+
+        double[] maximumResult = Features.maximum(tss);
+        Assert.assertEquals(maximumResult[0], 50, DELTA);
+        Assert.assertEquals(maximumResult[1], 30, DELTA);
+    }
+
+    @Test
+    public void testMeanAbsoluteChange() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {8, 10, 12, 14, 16, 18}};
+        double[] meanAbsoluteResult = Features.meanAbsoluteChange(tss);
+        Assert.assertEquals(meanAbsoluteResult[0], (float) 5 / 6, DELTA);
+        Assert.assertEquals(meanAbsoluteResult[1], (float) 10 / 6, DELTA);
+    }
+
+    @Test
+    public void testFftCoefficient() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
+        double[] real = new double[2];
+        double[] imag = new double[2];
+        double[] abs = new double[2];
+        double[] angle = new double[2];
+
+        Features.fftCoefficient(tss, 0, real, imag, abs, angle);
+
+        Assert.assertEquals(real[0], 15, DELTA);
+        Assert.assertEquals(real[1], 51, DELTA);
+
+        Assert.assertEquals(imag[0], 0, DELTA);
+        Assert.assertEquals(imag[1], 0, DELTA);
+
+        Assert.assertEquals(abs[0], 15, DELTA);
+        Assert.assertEquals(abs[1], 51, DELTA);
+
+        Assert.assertEquals(angle[0], 0, DELTA);
+        Assert.assertEquals(angle[1], 0, DELTA);
     }
 }
