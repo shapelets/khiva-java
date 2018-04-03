@@ -341,4 +341,139 @@ public class FeaturesTest {
         Assert.assertEquals(angle[0], 0, DELTA);
         Assert.assertEquals(angle[1], 0, DELTA);
     }
+
+    @Test
+    public void testAggregatedAutocorrelationMean() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
+
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 0);
+        Assert.assertEquals(aggregatedAutocorrelationResult[0], -0.6571428571428571, DELTA);
+        Assert.assertEquals(aggregatedAutocorrelationResult[1], -0.6571428571428571, DELTA);
+
+    }
+
+    @Test
+    public void testAggregatedAutocorrelationMedian() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
+
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 1);
+        Assert.assertEquals(aggregatedAutocorrelationResult[0], -0.54285717010498047, DELTA);
+        Assert.assertEquals(aggregatedAutocorrelationResult[1], -0.54285717010498047, DELTA);
+
+    }
+
+    @Test
+    public void testAggregatedAutocorrelationMin() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
+
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 2);
+        Assert.assertEquals(aggregatedAutocorrelationResult[0], -2.142857142857143, DELTA);
+        Assert.assertEquals(aggregatedAutocorrelationResult[1], -2.142857142857143, DELTA);
+
+    }
+
+    @Test
+    public void testAggregatedAutocorrelationMax() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
+
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 3);
+        Assert.assertEquals(aggregatedAutocorrelationResult[0], 0.6, DELTA);
+        Assert.assertEquals(aggregatedAutocorrelationResult[1], 0.6, DELTA);
+
+    }
+
+    @Test
+    public void testAggregatedAutocorrelationStdev() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
+
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 4);
+        Assert.assertEquals(aggregatedAutocorrelationResult[0], 0.9744490855905009, DELTA);
+        Assert.assertEquals(aggregatedAutocorrelationResult[1], 0.9744490855905009, DELTA);
+
+    }
+
+    @Test
+    public void testAggregatedAutocorrelationVar() {
+        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
+
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 5);
+        Assert.assertEquals(aggregatedAutocorrelationResult[0], 0.9495510204081633, DELTA);
+        Assert.assertEquals(aggregatedAutocorrelationResult[1], 0.9495510204081633, DELTA);
+
+    }
+
+    @Test
+    public void testAggregatedLinearTrendMean() {
+        double[][] tss = {{2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5}};
+
+        double[] pvalue = new double[tss.length];
+        double[] rvalue = new double[tss.length];
+        double[] intercept = new double[tss.length];
+        double[] slope = new double[tss.length];
+        double[] stdrr = new double[tss.length];
+
+
+        Features.aggregatedLinearTrend(tss, 3, 0, pvalue, rvalue, intercept, slope, stdrr);
+
+        Assert.assertEquals(pvalue[0], 1, DELTA);
+        Assert.assertEquals(rvalue[0], 2, DELTA);
+        Assert.assertEquals(intercept[0], 1, DELTA);
+        Assert.assertEquals(slope[0], 0, DELTA);
+        Assert.assertEquals(stdrr[0], 0, DELTA);
+    }
+
+    @Test
+    public void testAggregatedLinearTrendMin() {
+        double[][] tss = {{2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5}};
+
+        double[] pvalue = new double[tss.length];
+        double[] rvalue = new double[tss.length];
+        double[] intercept = new double[tss.length];
+        double[] slope = new double[tss.length];
+        double[] stdrr = new double[tss.length];
+
+
+        Features.aggregatedLinearTrend(tss, 3, 1, pvalue, rvalue, intercept, slope, stdrr);
+
+        Assert.assertEquals(pvalue[0], 1, DELTA);
+        Assert.assertEquals(rvalue[0], 2, DELTA);
+        Assert.assertEquals(intercept[0], 1, DELTA);
+        Assert.assertEquals(slope[0], 0, DELTA);
+        Assert.assertEquals(stdrr[0], 0, DELTA);
+    }
+
+    @Test
+    public void testCwtCoefficients() {
+        double[][] tss = {{0.1, 0.2, 0.3}, {0.1, 0.2, 0.3}};
+        int[][] width = {{1, 2, 3}};
+        double[] cwtCoefficientsResult = Features.cwtCoefficients(tss, width, 2, 2);
+        Assert.assertEquals(cwtCoefficientsResult[0], 0.26517161726951599, DELTA);
+        Assert.assertEquals(cwtCoefficientsResult[1], 0.26517161726951599, DELTA);
+    }
+
+    @Test
+    public void testMeanSecondDerivativeCentral() {
+        double[][] tss = {{1, 3, 7, 4, 8}, {2, 5, 1, 7, 4}};
+        double[] meanSecondDerivativeCentralResult = Features.meanSecondDerivativeCentral(tss);
+        Assert.assertEquals(meanSecondDerivativeCentralResult[0], (float) 1.0 / 5.0, DELTA);
+        Assert.assertEquals(meanSecondDerivativeCentralResult[1], (float) -3.0 / 5.0, DELTA);
+    }
+
+    @Test
+    public void testMinimum() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 13, 15, 5, 16, 20, 20},
+                {20, 20, 20, 2, 19, 4, 20, 20, 20, 4, 15, 6, 30, 7, 9, 18, 4, 10, 20, 20}};
+        double[] minimumResult = Features.minimum(tss);
+        Assert.assertEquals(minimumResult[0], 1, DELTA);
+        Assert.assertEquals(minimumResult[1], 2, DELTA);
+    }
+
+    @Test
+    public void testNumberCrossingM() {
+        double[][] tss = {{1, 2, 1, 1, -3, -4, 7, 8, 9, 10, -2, 1, -3, 5, 6, 7, -10},
+                {1, 2, 1, 1, -3, -4, 7, 8, 9, 10, -2, 1, -3, 5, 6, 7, -10}};
+        double[] numberCrossingMResult = Features.numberCrossingM(tss, 0);
+        Assert.assertEquals(numberCrossingMResult[0], 7, DELTA);
+        Assert.assertEquals(numberCrossingMResult[1], 7, DELTA);
+    }
 }

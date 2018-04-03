@@ -106,6 +106,23 @@ public class Features extends Library {
     private native static void fftCoefficient(double[] tssConcatenated, long tssL, long tssN, long coefficient,
                                               double[] real, double[] imag, double[] abs, double[] angle);
 
+    private native static void aggregatedAutocorrelation(double[] tssConcatenated, long tss_l, long tss_n,
+                                                         int aggregationFunction, double[] result);
+
+    private native static void aggregatedLinearTrend(double[] tssConcatenated, long tss_l, long tss_n, long chunkSize,
+                                                     int aggregationFunction, double[] slope, double[] intercept,
+                                                     double[] rvalue, double[] pvalue, double[] stderrest);
+
+    private native static void cwtCoefficients(double[] tssConcatenated, long tss_l, long tss_n,
+                                               int[] widthsConcatenated, long widths_l, long widths_n,
+                                               int coeff, int w, double[] result);
+
+    private native static void meanSecondDerivativeCentral(double[] tssConcatenated, long tss_l,
+                                                           long tss_n, double[] result);
+
+    private native static void minimum(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+
+    private native static void numberCrossingM(double[] tssConcatenated, long tss_l, long tss_n, int m, double[] result);
 
     /**
      * Calculates an estimate for the time series complexity defined by
@@ -771,5 +788,162 @@ public class Features extends Library {
         }
 
         fftCoefficient(tssConcatenated, tssL, tssN, coefficient, real, imag, abs, angle);
+    }
+
+    /**
+     * Calculates a linear least-squares regression for values of the time series that were aggregated
+     * over chunks versus the sequence from 0 up to the number of chunks minus one.
+     *
+     * @param tss                 Array of arrays of type double containing the input time series.
+     * @param aggregationFunction Function to be used in the aggregation. It receives an integer which indicates the
+     *                            function to be applied:
+     *                            {
+     *                            0 : mean,
+     *                            1 : median
+     *                            2 : min,
+     *                            3 : max,
+     *                            4 : stdev,
+     *                            5 : var,
+     *                            default : mean
+     *                            }
+     * @return Array whose values contains the aggregated correlation for each time series.
+     */
+    public static double[] aggregatedAutocorrelation(double[][] tss, int aggregationFunction) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        aggregatedAutocorrelation(tssConcatenated, tssL, tssN, aggregationFunction, result);
+        return result;
+    }
+
+    /**
+     * Calculates a linear least-squares regression for values of the time series that were aggregated
+     * over chunks versus the sequence from 0 up to the number of chunks minus one.
+     *
+     * @param tss                 Array of arrays of type double containing the input time series.
+     * @param chunkSize           The chunk size used to aggregate the data.
+     * @param aggregationFunction Function to be used in the aggregation. It receives an integer which indicates the
+     *                            function to be applied:
+     *                            {
+     *                            0 : mean,
+     *                            1 : median
+     *                            2 : min,
+     *                            3 : max,
+     *                            4 : stdev,
+     *                            default : mean
+     *                            }
+     * @param slope               The slope for all time series.
+     * @param intercept           The intercept values for all time series.
+     * @param rvalue              The rvalues for all time series.
+     * @param pvalue              The pvalues for all time series.
+     * @param stderrest           The stderr values for all time series.
+     */
+    public static void aggregatedLinearTrend(double[][] tss, long chunkSize, int aggregationFunction,
+                                             double[] slope, double[] intercept, double[] rvalue,
+                                             double[] pvalue, double[] stderrest) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        aggregatedLinearTrend(tssConcatenated, tssL, tssN, chunkSize, aggregationFunction, slope,
+                intercept, rvalue, pvalue, stderrest);
+
+    }
+
+    /**
+     * Calculates a Continuous wavelet transform for the Ricker wavelet, also known as
+     * the "Mexican hat wavelet".
+     *
+     * @param tss    Array of arrays of type double containing the input time series.
+     * @param widths Widths. It accepts a list of lists or a numpy array with one or several widths.
+     * @param coeff  Coefficient of interest.
+     * @param w      Width of interest.
+     * @return Result of calculated coefficients.
+     */
+    public static double[] cwtCoefficients(double[][] tss, int[][] widths, int coeff, int w) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+        long widthsL = widths[0].length;
+        long widthsN = widths.length;
+        int[] widthsConcatenated = new int[0];
+        for (int[] width : widths) {
+            widthsConcatenated = ArrayUtils.addAll(widthsConcatenated, width);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        cwtCoefficients(tssConcatenated, tssL, tssN, widthsConcatenated, widthsL, widthsN, coeff, w, result);
+        return result;
+    }
+
+    /**
+     * Calculates mean value of a central approximation of the second derivative for each time series in tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The mean value of a central approximation of the second derivative for each time series.
+     */
+    public static double[] meanSecondDerivativeCentral(double[][] tss) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        meanSecondDerivativeCentral(tssConcatenated, tssL, tssN, result);
+        return result;
+    }
+
+    /**
+     * Calculates the minimum value for each time series within tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The minimum value of each time series within tss.
+     */
+    public static double[] minimum(double[][] tss) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        minimum(tssConcatenated, tssL, tssN, result);
+        return result;
+    }
+
+    /**
+     * Calculates the number of m-crossings. A m-crossing is defined as two sequential values where the first
+     * value is lower than m and the next is greater, or viceversa. If you set m to zero, you will get the number of
+     * zero crossings.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param m   The m value.
+     * @return The number of m-crossings of each time series within tss.
+     */
+    public static double[] numberCrossingM(double[][] tss, int m) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        numberCrossingM(tssConcatenated, tssL, tssN, m, result);
+        return result;
     }
 }
