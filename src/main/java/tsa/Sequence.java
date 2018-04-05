@@ -22,9 +22,9 @@ public class Sequence {
     /**
      * Sequence Index constructor
      *
-     * @param distances
-     * @param index
-     * @param subsequenceIndex
+     * @param distances The distances
+     * @param index The index
+     * @param subsequenceIndex The subsequence indices
      */
     public Sequence(double[] distances, int[] index, int[] subsequenceIndex) {
         this.distances = distances;
@@ -44,7 +44,7 @@ public class Sequence {
     /**
      * Sets the distances
      *
-     * @param distances
+     * @param distances The distances
      */
     public void setDistances(double[] distances) {
         this.distances = distances;
@@ -62,7 +62,7 @@ public class Sequence {
     /**
      * Sets index
      *
-     * @param index
+     * @param index The index
      */
     public void setIndex(int[] index) {
         this.index = index;
@@ -80,7 +80,7 @@ public class Sequence {
     /**
      * SetsIndex
      *
-     * @param subsequenceIndex
+     * @param subsequenceIndex The subsequence indices
      */
     public void setSubsequenceIndex(int[] subsequenceIndex) {
         this.subsequenceIndex = subsequenceIndex;

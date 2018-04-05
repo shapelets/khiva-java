@@ -476,4 +476,38 @@ public class FeaturesTest {
         Assert.assertEquals(numberCrossingMResult[0], 7, DELTA);
         Assert.assertEquals(numberCrossingMResult[1], 7, DELTA);
     }
+
+    @Test
+    public void testMedian() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 13, 15, 5, 16, 20, 20},
+                {20, 20, 20, 2, 19, 4, 20, 20, 20, 4, 15, 6, 30, 7, 9, 18, 4, 10, 20, 20}};
+        double[] medianResult = Features.median(tss);
+        Assert.assertEquals(medianResult[0], 20, DELTA);
+        Assert.assertEquals(medianResult[1], 18.5, DELTA);
+    }
+
+    @Test
+    public void testMean() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20},
+                {20, 20, 20, 2, 19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20}};
+        double[] Result = Features.mean(tss);
+        Assert.assertEquals(Result[0], 18.55, DELTA);
+        Assert.assertEquals(Result[1], 12.7, DELTA);
+    }
+
+    @Test
+    public void testMeanChange() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {8, 10, 12, 14, 16, 18}};
+        double[] Result = Features.meanChange(tss);
+        Assert.assertEquals(Result[0], (float) 5 / 6, DELTA);
+        Assert.assertEquals(Result[1], (float) 10 / 6, DELTA);
+    }
+
+    @Test
+    public void testMaxLangevinFixedPoint() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5}, {0, 1, 2, 3, 4, 5}};
+        double[] Result = Features.maxLangevinFixedPoint(tss, 7, 2);
+        Assert.assertEquals(Result[0], 4.562970585, 1e-4);
+        Assert.assertEquals(Result[1], 4.562970585, 1e-4);
+    }
 }

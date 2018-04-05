@@ -11,23 +11,26 @@ package tsa;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+/**
+ * \(ax^2 + bx + c\)
+ */
 public class Features extends Library {
-
-    private native static void absoluteSumOfChanges(double[] timeSeries,
-                                                    long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
 
     private native static void absEnergy(double[] timeSeries,
                                          long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
 
-    private native static void cidCe(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean zNormalize,
-                                     double[] result);
+    private native static void absoluteSumOfChanges(double[] timeSeries,
+                                                    long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
 
-    private native static void c3(double[] tssConcatenated, long tssLength, long tssNumberOfTS, long lag,
-                                  double[] result);
+    private native static void aggregatedAutocorrelation(double[] tssConcatenated, long tss_l, long tss_n,
+                                                         int aggregationFunction, double[] result);
+
+    private native static void aggregatedLinearTrend(double[] tssConcatenated, long tss_l, long tss_n, long chunkSize,
+                                                     int aggregationFunction, double[] slope, double[] intercept,
+                                                     double[] rvalue, double[] pvalue, double[] stderrest);
 
     private native static void approximateEntropy(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                   int m, float r, double[] result);
-
 
     private native static void crossCovariance(double[] xssConcatenated, long xssLength, long xssNumberOfTS,
                                                double[] yssConcatenated, long yssLength, long yssNumberOfTS,
@@ -46,14 +49,27 @@ public class Features extends Library {
     private native static void binnedEntropy(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                              long max_bins, double[] result);
 
+    private native static void c3(double[] tssConcatenated, long tssLength, long tssNumberOfTS, long lag,
+                                  double[] result);
+
+    private native static void cidCe(double[] tssConcatenated, long tssLength, long tssNumberOfTS, boolean zNormalize,
+                                     double[] result);
+
     private native static void countAboveMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                               int[] result);
 
     private native static void countBelowMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                               int[] result);
 
+    private native static void cwtCoefficients(double[] tssConcatenated, long tss_l, long tss_n,
+                                               int[] widthsConcatenated, long widths_l, long widths_n,
+                                               int coeff, int w, double[] result);
+
     private native static void energyRatioByChunks(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                    long numSegments, long segmentFocus, double[] result);
+
+    private native static void fftCoefficient(double[] tssConcatenated, long tssL, long tssN, long coefficient,
+                                              double[] real, double[] imag, double[] abs, double[] angle);
 
     private native static void firstLocationOfMaximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                       double[] result);
@@ -65,6 +81,9 @@ public class Features extends Library {
                                              boolean[] result);
 
     private native static void hasDuplicateMax(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
+                                               boolean[] result);
+
+    private native static void hasDuplicateMin(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                boolean[] result);
 
     private native static void indexMaxQuantile(double[] tssConcatenated, long tssLength, long tssNumberOfTS, float q,
@@ -88,61 +107,54 @@ public class Features extends Library {
                                            double[] pvalue, double[] rvalue, double[] intercept, double[] slope,
                                            double[] stdrr);
 
-    private native static void hasDuplicateMin(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
-                                               boolean[] result);
-
     private native static void longestStrikeAboveMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                       double[] result);
 
     private native static void longestStrikeBelowMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                       double[] result);
 
+    private native static void maxLangevinFixedPoint(double[] tssConcatenated, long tss_l, long tss_n, int m, float r,
+                                                     double[] result);
+
     private native static void maximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                        double[] result);
+
+    private native static void mean(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
 
     private native static void meanAbsoluteChange(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                   double[] result);
 
-    private native static void fftCoefficient(double[] tssConcatenated, long tssL, long tssN, long coefficient,
-                                              double[] real, double[] imag, double[] abs, double[] angle);
-
-    private native static void aggregatedAutocorrelation(double[] tssConcatenated, long tss_l, long tss_n,
-                                                         int aggregationFunction, double[] result);
-
-    private native static void aggregatedLinearTrend(double[] tssConcatenated, long tss_l, long tss_n, long chunkSize,
-                                                     int aggregationFunction, double[] slope, double[] intercept,
-                                                     double[] rvalue, double[] pvalue, double[] stderrest);
-
-    private native static void cwtCoefficients(double[] tssConcatenated, long tss_l, long tss_n,
-                                               int[] widthsConcatenated, long widths_l, long widths_n,
-                                               int coeff, int w, double[] result);
+    private native static void meanChange(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
 
     private native static void meanSecondDerivativeCentral(double[] tssConcatenated, long tss_l,
                                                            long tss_n, double[] result);
 
+    private native static void median(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+
     private native static void minimum(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
 
-    private native static void numberCrossingM(double[] tssConcatenated, long tss_l, long tss_n, int m, double[] result);
+    private native static void numberCrossingM(double[] tssConcatenated, long tss_l, long tss_n, int m,
+                                               double[] result);
 
     /**
-     * Calculates an estimate for the time series complexity defined by
-     * Batista, Gustavo EAPA, et al (2014). (A more complex time series has more peaks,
-     * valleys, etc.)
+     * Calculates the sum over the square values of the time series
      *
-     * @param tss        Array of arrays of type double containing the input time series.
-     * @param zNormalize Controls whether the time series should be z-normalized or not.
-     * @return The complexity value for the given time series.
+     * @param timeSeriesMatrix Array of arrays of type double containing the input time series.
+     * @return Double array with the Absolute Energy.
      */
-    public static double[] cidCe(double[][] tss, Boolean zNormalize) {
-        long tssLength = tss[0].length;
-        long tssNumberOfTS = tss.length;
-        double[] tssConcatenated = new double[0];
-        for (double[] time_series : tss) {
-            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+    public static double[] absEnergy(double[][] timeSeriesMatrix) {
+        long timeSeriesLength = timeSeriesMatrix[0].length;
+        long numberOfTimeSeries = timeSeriesMatrix.length;
+
+        double[] concatenatedTimeSeries = new double[0];
+        double[] result = new double[(int) (numberOfTimeSeries)];
+
+        for (double[] time_series : timeSeriesMatrix) {
+            concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
         }
 
-        double[] result = new double[(int) (tssNumberOfTS)];
-        cidCe(tssConcatenated, tssLength, tssNumberOfTS, zNormalize, result);
+        absEnergy(concatenatedTimeSeries, timeSeriesLength, numberOfTimeSeries,
+                result);
 
         return result;
     }
@@ -173,57 +185,80 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the sum over the square values of the time series
+     * Calculates a linear least-squares regression for values of the time series that were aggregated
+     * over chunks versus the sequence from 0 up to the number of chunks minus one.
      *
-     * @param timeSeriesMatrix Array of arrays of type double containing the input time series.
-     * @return Double array with the Absolute Energy.
+     * @param tss                 Array of arrays of type double containing the input time series.
+     * @param aggregationFunction Function to be used in the aggregation. It receives an integer which indicates the
+     *                            function to be applied:
+     *                            {
+     *                            0 : mean,
+     *                            1 : median
+     *                            2 : min,
+     *                            3 : max,
+     *                            4 : stdev,
+     *                            5 : var,
+     *                            default : mean
+     *                            }
+     * @return Array whose values contains the aggregated correlation for each time series.
      */
-    public static double[] absEnergy(double[][] timeSeriesMatrix) {
-        long timeSeriesLength = timeSeriesMatrix[0].length;
-        long numberOfTimeSeries = timeSeriesMatrix.length;
-
-        double[] concatenatedTimeSeries = new double[0];
-        double[] result = new double[(int) (numberOfTimeSeries)];
-
-        for (double[] time_series : timeSeriesMatrix) {
-            concatenatedTimeSeries = ArrayUtils.addAll(concatenatedTimeSeries, time_series);
-        }
-
-        absEnergy(concatenatedTimeSeries, timeSeriesLength, numberOfTimeSeries,
-                result);
-
-        return result;
-    }
-
-    /**
-     * Calculates the Schreiber, T. and Schmitz, A. (1997) measure of non-linearity
-     * for the given time series
-     *
-     * @param tss Array of arrays of type double containing the input time series.
-     * @param lag The lag
-     * @return The non-linearity value for the given time series.
-     */
-    public static double[] c3(double[][] tss, long lag) {
-        long tssLength = tss[0].length;
-        long tssNumberOfTS = tss.length;
+    public static double[] aggregatedAutocorrelation(double[][] tss, int aggregationFunction) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[(int) (tssNumberOfTS)];
-        c3(tssConcatenated, tssLength, tssNumberOfTS, lag, result);
-
+        double[] result = new double[(int) (tssN)];
+        aggregatedAutocorrelation(tssConcatenated, tssL, tssN, aggregationFunction, result);
         return result;
+    }
+
+    /**
+     * Calculates a linear least-squares regression for values of the time series that were aggregated
+     * over chunks versus the sequence from 0 up to the number of chunks minus one.
+     *
+     * @param tss                 Array of arrays of type double containing the input time series.
+     * @param chunkSize           The chunk size used to aggregate the data.
+     * @param aggregationFunction Function to be used in the aggregation. It receives an integer which indicates the
+     *                            function to be applied:
+     *                            {
+     *                            0 : mean,
+     *                            1 : median
+     *                            2 : min,
+     *                            3 : max,
+     *                            4 : stdev,
+     *                            default : mean
+     *                            }
+     * @param slope               The slope for all time series.
+     * @param intercept           The intercept values for all time series.
+     * @param rvalue              The rvalues for all time series.
+     * @param pvalue              The pvalues for all time series.
+     * @param stderrest           The stderr values for all time series.
+     */
+    public static void aggregatedLinearTrend(double[][] tss, long chunkSize, int aggregationFunction,
+                                             double[] slope, double[] intercept, double[] rvalue,
+                                             double[] pvalue, double[] stderrest) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        aggregatedLinearTrend(tssConcatenated, tssL, tssN, chunkSize, aggregationFunction, slope,
+                intercept, rvalue, pvalue, stderrest);
+
     }
 
     /**
      * Calculates a vectorized Approximate entropy algorithm.
      * https://en.wikipedia.org/wiki/Approximate_entropy
-     * For short time-series this method is highly dependent on the parameters, but should be stable for N > 2000,
+     * For short time-series this method is highly dependent on the parameters, but should be stable for N greater than 2000,
      * see: Yentes et al. (2012) - The Appropriate Use of Approximate Entropy and Sample Entropy with Short Data Sets
      * Other shortcomings and alternatives discussed in:
-     * Richman & Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy
+     * Richman and Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy
      *
      * @param tss Array of arrays of type double containing the input time series.
      * @param m   Length of compared run of data.
@@ -370,6 +405,51 @@ public class Features extends Library {
     }
 
     /**
+     * Calculates the Schreiber, T. and Schmitz, A. (1997) measure of non-linearity
+     * for the given time series
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param lag The lag
+     * @return The non-linearity value for the given time series.
+     */
+    public static double[] c3(double[][] tss, long lag) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        c3(tssConcatenated, tssLength, tssNumberOfTS, lag, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates an estimate for the time series complexity defined by
+     * Batista, Gustavo EAPA, et al (2014). (A more complex time series has more peaks,
+     * valleys, etc.)
+     *
+     * @param tss        Array of arrays of type double containing the input time series.
+     * @param zNormalize Controls whether the time series should be z-normalized or not.
+     * @return The complexity value for the given time series.
+     */
+    public static double[] cidCe(double[][] tss, Boolean zNormalize) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssNumberOfTS)];
+        cidCe(tssConcatenated, tssLength, tssNumberOfTS, zNormalize, result);
+
+        return result;
+    }
+
+    /**
      * Calculates the number of values in the time series that are higher than
      * the mean
      *
@@ -412,6 +492,35 @@ public class Features extends Library {
     }
 
     /**
+     * Calculates a Continuous wavelet transform for the Ricker wavelet, also known as
+     * the "Mexican hat wavelet".
+     *
+     * @param tss    Array of arrays of type double containing the input time series.
+     * @param widths Widths. It accepts a list of lists or a numpy array with one or several widths.
+     * @param coeff  Coefficient of interest.
+     * @param w      Width of interest.
+     * @return Result of calculated coefficients.
+     */
+    public static double[] cwtCoefficients(double[][] tss, int[][] widths, int coeff, int w) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+        long widthsL = widths[0].length;
+        long widthsN = widths.length;
+        int[] widthsConcatenated = new int[0];
+        for (int[] width : widths) {
+            widthsConcatenated = ArrayUtils.addAll(widthsConcatenated, width);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        cwtCoefficients(tssConcatenated, tssL, tssN, widthsConcatenated, widthsL, widthsN, coeff, w, result);
+        return result;
+    }
+
+    /**
      * Calculates the sum of squares of chunk i out of N chunks expressed as a ratio
      * with the sum of squares over the whole series. segmentFocus should be lower
      * than the number of segments
@@ -433,6 +542,28 @@ public class Features extends Library {
         energyRatioByChunks(tssConcatenated, tssLength, tssNumberOfTS, numSegments, segmentFocus, result);
 
         return result;
+    }
+
+    /**
+     * Calculates the fourier coefficients of the one-dimensional discrete
+     * Fourier Transform for real input by fast fourier transformation algorithm.
+     *
+     * @param tss         Array of arrays of type double containing the input time series.
+     * @param coefficient The coefficient to extract from the FFT.
+     * @param real        The real part of the coefficient.
+     * @param imag        The imaginary part of the coefficient.
+     * @param abs         The absolute value of the coefficient.
+     * @param angle       The angle of the coefficient.
+     */
+    public static void fftCoefficient(double[][] tss, long coefficient, double[] real, double[] imag, double[] abs, double[] angle) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        fftCoefficient(tssConcatenated, tssL, tssN, coefficient, real, imag, abs, angle);
     }
 
     /**
@@ -514,6 +645,27 @@ public class Features extends Library {
 
         boolean[] result = new boolean[(int) (tssNumberOfTS)];
         hasDuplicateMax(tssConcatenated, tssLength, tssNumberOfTS, result);
+
+        return result;
+    }
+
+    /**
+     * Calculates if the minimum of the input time series is duplicated.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return Array containing True if the minimum of the time series is duplicated
+     * and False otherwise.
+     */
+    public static boolean[] hasDuplicateMin(double[][] tss) {
+        long tssLength = tss[0].length;
+        long tssNumberOfTS = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        boolean[] result = new boolean[(int) (tssNumberOfTS)];
+        hasDuplicateMin(tssConcatenated, tssLength, tssNumberOfTS, result);
 
         return result;
     }
@@ -667,27 +819,6 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates if the minimum of the input time series is duplicated.
-     *
-     * @param tss Array of arrays of type double containing the input time series.
-     * @return Array containing True if the minimum of the time series is duplicated
-     * and False otherwise.
-     */
-    public static boolean[] hasDuplicateMin(double[][] tss) {
-        long tssLength = tss[0].length;
-        long tssNumberOfTS = tss.length;
-        double[] tssConcatenated = new double[0];
-        for (double[] time_series : tss) {
-            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
-        }
-
-        boolean[] result = new boolean[(int) (tssNumberOfTS)];
-        hasDuplicateMin(tssConcatenated, tssLength, tssNumberOfTS, result);
-
-        return result;
-    }
-
-    /**
      * Calculates the length of the longest consecutive subsequence in tss that is bigger than the mean of tss.
      *
      * @param tss Array of arrays of type double containing the input time series.
@@ -729,6 +860,33 @@ public class Features extends Library {
     }
 
     /**
+     * Largest fixed point of dynamics \(\max_x {h(x)=0}\) estimated from polynomial
+     * \(h(x)\), which has been fitted to the deterministic dynamics of Langevin model
+     * \[
+     * \dot(x)(t) = h(x(t)) + R \mathcal(N)(0,1)
+     * \]
+     * as described by
+     * Friedrich et al. (2000): Physics Letters A 271, p. 217-222 *Extracting model equations from experimental data.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param m   Order of polynom to fit for estimating fixed points of dynamics.
+     * @param r   Number of quantiles to use for averaging.
+     * @return Largest fixed point of deterministic dynamics.
+     */
+    public static double[] maxLangevinFixedPoint(double[][] tss, int m, float r) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        maxLangevinFixedPoint(tssConcatenated, tss_l, tss_n, m, r, result);
+        return result;
+    }
+
+    /**
      * Calculates the maximum value for each time series within tss.
      *
      * @param tss Array of arrays of type double containing the input time series.
@@ -745,6 +903,25 @@ public class Features extends Library {
         double[] result = new double[(int) (tssNumberOfTS)];
         maximum(tssConcatenated, tssLength, tssNumberOfTS, result);
 
+        return result;
+    }
+
+    /**
+     * Calculates the mean value for each time series within tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The mean value of each time series within tss.
+     */
+    public static double[] mean(double[][] tss) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        mean(tssConcatenated, tss_l, tss_n, result);
         return result;
     }
 
@@ -769,121 +946,21 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the fourier coefficients of the one-dimensional discrete
-     * Fourier Transform for real input by fast fourier transformation algorithm.
+     * Calculates the mean over the differences between subsequent time series values in tss.
      *
-     * @param tss         Array of arrays of type double containing the input time series.
-     * @param coefficient The coefficient to extract from the FFT.
-     * @param real        The real part of the coefficient.
-     * @param imag        The imaginary part of the coefficient.
-     * @param abs         The absolute value of the coefficient.
-     * @param angle       The angle of the coefficient.
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The mean over the differences between subsequent time series values.
      */
-    public static void fftCoefficient(double[][] tss, long coefficient, double[] real, double[] imag, double[] abs, double[] angle) {
-        long tssL = tss[0].length;
-        long tssN = tss.length;
+    public static double[] meanChange(double[][] tss) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        fftCoefficient(tssConcatenated, tssL, tssN, coefficient, real, imag, abs, angle);
-    }
-
-    /**
-     * Calculates a linear least-squares regression for values of the time series that were aggregated
-     * over chunks versus the sequence from 0 up to the number of chunks minus one.
-     *
-     * @param tss                 Array of arrays of type double containing the input time series.
-     * @param aggregationFunction Function to be used in the aggregation. It receives an integer which indicates the
-     *                            function to be applied:
-     *                            {
-     *                            0 : mean,
-     *                            1 : median
-     *                            2 : min,
-     *                            3 : max,
-     *                            4 : stdev,
-     *                            5 : var,
-     *                            default : mean
-     *                            }
-     * @return Array whose values contains the aggregated correlation for each time series.
-     */
-    public static double[] aggregatedAutocorrelation(double[][] tss, int aggregationFunction) {
-        long tssL = tss[0].length;
-        long tssN = tss.length;
-        double[] tssConcatenated = new double[0];
-        for (double[] time_series : tss) {
-            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
-        }
-
-        double[] result = new double[(int) (tssN)];
-        aggregatedAutocorrelation(tssConcatenated, tssL, tssN, aggregationFunction, result);
-        return result;
-    }
-
-    /**
-     * Calculates a linear least-squares regression for values of the time series that were aggregated
-     * over chunks versus the sequence from 0 up to the number of chunks minus one.
-     *
-     * @param tss                 Array of arrays of type double containing the input time series.
-     * @param chunkSize           The chunk size used to aggregate the data.
-     * @param aggregationFunction Function to be used in the aggregation. It receives an integer which indicates the
-     *                            function to be applied:
-     *                            {
-     *                            0 : mean,
-     *                            1 : median
-     *                            2 : min,
-     *                            3 : max,
-     *                            4 : stdev,
-     *                            default : mean
-     *                            }
-     * @param slope               The slope for all time series.
-     * @param intercept           The intercept values for all time series.
-     * @param rvalue              The rvalues for all time series.
-     * @param pvalue              The pvalues for all time series.
-     * @param stderrest           The stderr values for all time series.
-     */
-    public static void aggregatedLinearTrend(double[][] tss, long chunkSize, int aggregationFunction,
-                                             double[] slope, double[] intercept, double[] rvalue,
-                                             double[] pvalue, double[] stderrest) {
-        long tssL = tss[0].length;
-        long tssN = tss.length;
-        double[] tssConcatenated = new double[0];
-        for (double[] time_series : tss) {
-            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
-        }
-
-        aggregatedLinearTrend(tssConcatenated, tssL, tssN, chunkSize, aggregationFunction, slope,
-                intercept, rvalue, pvalue, stderrest);
-
-    }
-
-    /**
-     * Calculates a Continuous wavelet transform for the Ricker wavelet, also known as
-     * the "Mexican hat wavelet".
-     *
-     * @param tss    Array of arrays of type double containing the input time series.
-     * @param widths Widths. It accepts a list of lists or a numpy array with one or several widths.
-     * @param coeff  Coefficient of interest.
-     * @param w      Width of interest.
-     * @return Result of calculated coefficients.
-     */
-    public static double[] cwtCoefficients(double[][] tss, int[][] widths, int coeff, int w) {
-        long tssL = tss[0].length;
-        long tssN = tss.length;
-        double[] tssConcatenated = new double[0];
-        for (double[] time_series : tss) {
-            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
-        }
-        long widthsL = widths[0].length;
-        long widthsN = widths.length;
-        int[] widthsConcatenated = new int[0];
-        for (int[] width : widths) {
-            widthsConcatenated = ArrayUtils.addAll(widthsConcatenated, width);
-        }
-
-        double[] result = new double[(int) (tssN)];
-        cwtCoefficients(tssConcatenated, tssL, tssN, widthsConcatenated, widthsL, widthsN, coeff, w, result);
+        double[] result = new double[(int) (tss_n)];
+        meanChange(tssConcatenated, tss_l, tss_n, result);
         return result;
     }
 
@@ -903,6 +980,25 @@ public class Features extends Library {
 
         double[] result = new double[(int) (tssN)];
         meanSecondDerivativeCentral(tssConcatenated, tssL, tssN, result);
+        return result;
+    }
+
+    /**
+     * Calculates the median value for each time series within tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The median value of each time series within tss.
+     */
+    public static double[] median(double[][] tss) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        median(tssConcatenated, tss_l, tss_n, result);
         return result;
     }
 
@@ -946,4 +1042,5 @@ public class Features extends Library {
         numberCrossingM(tssConcatenated, tssL, tssN, m, result);
         return result;
     }
+
 }

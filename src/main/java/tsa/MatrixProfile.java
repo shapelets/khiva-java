@@ -43,7 +43,7 @@ public class MatrixProfile {
     /**
      * Sets the distance profile.
      *
-     * @param profile
+     * @param profile The profile
      */
     public void setProfile(double[] profile) {
         this.profile = profile;
@@ -61,7 +61,7 @@ public class MatrixProfile {
     /**
      * Sets the index profile.
      *
-     * @param index
+     * @param index The index
      */
     public void setIndex(int[] index) {
         this.index = index;
