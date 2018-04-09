@@ -13,13 +13,13 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class Linalg extends Library {
 
-    private native static void lls(double[] aConcatenated, long a_l, long a_n, double[] b, long b_l, double[] result);
+    private native static void lls(double[] aConcatenated, long aL, long aN, double[] b, long bL, double[] result);
 
     /**
-     * Calculates the minimum norm least squares solution \f$x\f$ \f$(\left\lVert{A·x − b}\right\rVert^2)\f$ to
-     * \f$A·x = b\f$. This function uses the singular value decomposition function of Arrayfire. The actual formula that
-     * this function computes is \f$x = V·D\dagger·U^T·b\f$. Where \f$U\f$ and \f$V\f$ are orthogonal matrices and
-     * \f$D\dagger\f$ contains the inverse values of the singular values contained in D if they are not zero, and zero
+     * Calculates the minimum norm least squares solution \(x\) \((\left\lVert{A·x − b}\right\rVert^2)\) to
+     * \(A·x = b\). This function uses the singular value decomposition function of Arrayfire. The actual formula that
+     * this function computes is \(x = V·D\dagger·U^T·b\). Where \(U\) and \(V\) are orthogonal matrices and
+     * \(D\dagger\) contains the inverse values of the singular values contained in D if they are not zero, and zero
      * otherwise.
      *
      * @param a Coefficients of the linear equation problem to solve.
@@ -27,15 +27,15 @@ public class Linalg extends Library {
      * @return Contains the solution to the linear equation problem minimizing the norm 2.
      */
     public static double[] lls(double[][] a, double[] b) {
-        long a_l = a[0].length;
-        long a_n = a.length;
+        long aL = a[0].length;
+        long aN = a.length;
         double[] aConcatenated = new double[0];
         for (double[] time_series : a) {
             aConcatenated = ArrayUtils.addAll(aConcatenated, time_series);
         }
-        long b_l = b.length;
-        double[] result = new double[(int) (a_n)];
-        lls(aConcatenated, a_l, a_n, b, b_l, result);
+        long bL = b.length;
+        double[] result = new double[(int) (aN)];
+        lls(aConcatenated, aL, aN, b, bL, result);
         return result;
     }
 }

@@ -13,10 +13,10 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class Normalization extends Library {
 
-    private native static void znorm(double[] tssConcatenated, long tss_l, long tss_n, double epsilon, double[] result);
+    private native static void znorm(double[] tssConcatenated, long tssL, long tssN, double epsilon, double[] result);
 
     /**
-     * Calculates a new set of timeseries with zero mean and standard deviation one.
+     * Calculates a new set of time series with zero mean and standard deviation one.
      *
      * @param tss Array of arrays of type double containing the input time series.
      * @return Array with the same dimensions as tss where the time series have been adjusted for zero mean and
@@ -27,7 +27,7 @@ public class Normalization extends Library {
     }
 
     /**
-     * Calculates a new set of timeseries with zero mean and standard deviation one.
+     * Calculates a new set of time series with zero mean and standard deviation one.
      *
      * @param tss     Array of arrays of type double containing the input time series.
      * @param epsilon Minimum standard deviation to consider.  It acts a a gatekeeper for
@@ -36,15 +36,15 @@ public class Normalization extends Library {
      * one as standard deviation.
      */
     public static double[] znorm(double[][] tss, double epsilon) {
-        long tss_l = tss[0].length;
-        long tss_n = tss.length;
+        long tssL = tss[0].length;
+        long tssN = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[(int) (tss_n * tss_l)];
-        znorm(tssConcatenated, tss_l, tss_n, epsilon, result);
+        double[] result = new double[(int) (tssN * tssL)];
+        znorm(tssConcatenated, tssL, tssN, epsilon, result);
         return result;
     }
 }

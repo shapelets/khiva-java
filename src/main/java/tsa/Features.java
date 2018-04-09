@@ -11,9 +11,6 @@ package tsa;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-/**
- * \(ax^2 + bx + c\)
- */
 public class Features extends Library {
 
     private native static void absEnergy(double[] timeSeries,
@@ -22,10 +19,10 @@ public class Features extends Library {
     private native static void absoluteSumOfChanges(double[] timeSeries,
                                                     long timeSeriesLength, long numberOfTimeSeries, double[] jResult);
 
-    private native static void aggregatedAutocorrelation(double[] tssConcatenated, long tss_l, long tss_n,
+    private native static void aggregatedAutocorrelation(double[] tssConcatenated, long tssL, long tssN,
                                                          int aggregationFunction, double[] result);
 
-    private native static void aggregatedLinearTrend(double[] tssConcatenated, long tss_l, long tss_n, long chunkSize,
+    private native static void aggregatedLinearTrend(double[] tssConcatenated, long tssL, long tssN, long chunkSize,
                                                      int aggregationFunction, double[] slope, double[] intercept,
                                                      double[] rvalue, double[] pvalue, double[] stderrest);
 
@@ -61,7 +58,7 @@ public class Features extends Library {
     private native static void countBelowMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                               int[] result);
 
-    private native static void cwtCoefficients(double[] tssConcatenated, long tss_l, long tss_n,
+    private native static void cwtCoefficients(double[] tssConcatenated, long tssL, long tssN,
                                                int[] widthsConcatenated, long widths_l, long widths_n,
                                                int coeff, int w, double[] result);
 
@@ -113,27 +110,27 @@ public class Features extends Library {
     private native static void longestStrikeBelowMean(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                       double[] result);
 
-    private native static void maxLangevinFixedPoint(double[] tssConcatenated, long tss_l, long tss_n, int m, float r,
+    private native static void maxLangevinFixedPoint(double[] tssConcatenated, long tssL, long tssN, int m, float r,
                                                      double[] result);
 
     private native static void maximum(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                        double[] result);
 
-    private native static void mean(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+    private native static void mean(double[] tssConcatenated, long tssL, long tssN, double[] result);
 
     private native static void meanAbsoluteChange(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                   double[] result);
 
-    private native static void meanChange(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+    private native static void meanChange(double[] tssConcatenated, long tssL, long tssN, double[] result);
 
     private native static void meanSecondDerivativeCentral(double[] tssConcatenated, long tss_l,
-                                                           long tss_n, double[] result);
+                                                           long tssN, double[] result);
 
-    private native static void median(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+    private native static void median(double[] tssConcatenated, long tssL, long tssN, double[] result);
 
-    private native static void minimum(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+    private native static void minimum(double[] tssConcatenated, long tssL, long tssN, double[] result);
 
-    private native static void numberCrossingM(double[] tssConcatenated, long tss_l, long tss_n, int m,
+    private native static void numberCrossingM(double[] tssConcatenated, long tssL, long tssN, int m,
                                                double[] result);
 
     /**
@@ -874,15 +871,15 @@ public class Features extends Library {
      * @return Largest fixed point of deterministic dynamics.
      */
     public static double[] maxLangevinFixedPoint(double[][] tss, int m, float r) {
-        long tss_l = tss[0].length;
-        long tss_n = tss.length;
+        long tssL = tss[0].length;
+        long tssN = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[(int) (tss_n)];
-        maxLangevinFixedPoint(tssConcatenated, tss_l, tss_n, m, r, result);
+        double[] result = new double[(int) (tssN)];
+        maxLangevinFixedPoint(tssConcatenated, tssL, tssN, m, r, result);
         return result;
     }
 
@@ -913,15 +910,15 @@ public class Features extends Library {
      * @return The mean value of each time series within tss.
      */
     public static double[] mean(double[][] tss) {
-        long tss_l = tss[0].length;
-        long tss_n = tss.length;
+        long tssL = tss[0].length;
+        long tssN = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[(int) (tss_n)];
-        mean(tssConcatenated, tss_l, tss_n, result);
+        double[] result = new double[(int) (tssN)];
+        mean(tssConcatenated, tssL, tssN, result);
         return result;
     }
 
@@ -952,15 +949,15 @@ public class Features extends Library {
      * @return The mean over the differences between subsequent time series values.
      */
     public static double[] meanChange(double[][] tss) {
-        long tss_l = tss[0].length;
-        long tss_n = tss.length;
+        long tssL = tss[0].length;
+        long tssN = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[(int) (tss_n)];
-        meanChange(tssConcatenated, tss_l, tss_n, result);
+        double[] result = new double[(int) (tssN)];
+        meanChange(tssConcatenated, tssL, tssN, result);
         return result;
     }
 
@@ -990,15 +987,15 @@ public class Features extends Library {
      * @return The median value of each time series within tss.
      */
     public static double[] median(double[][] tss) {
-        long tss_l = tss[0].length;
-        long tss_n = tss.length;
+        long tssL = tss[0].length;
+        long tssN = tss.length;
         double[] tssConcatenated = new double[0];
         for (double[] time_series : tss) {
             tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
         }
 
-        double[] result = new double[(int) (tss_n)];
-        median(tssConcatenated, tss_l, tss_n, result);
+        double[] result = new double[(int) (tssN)];
+        median(tssConcatenated, tssL, tssN, result);
         return result;
     }
 
