@@ -25,4 +25,19 @@ public class NormalizationTest {
             Assert.assertEquals(result[i + 4], expected[i], DELTA);
         }
     }
+
+    @Test
+    public void testZnormInPlace() {
+        double[][] tss = {{0, 1, 2, 3}, {4, 5, 6, 7}};
+        Normalization.znormInPlace(tss);
+        Assert.assertEquals(tss[0][0], -1.341640786499870, DELTA);
+        Assert.assertEquals(tss[0][1], -0.447213595499958, DELTA);
+        Assert.assertEquals(tss[0][2], 0.447213595499958, DELTA);
+        Assert.assertEquals(tss[0][3], 1.341640786499870, DELTA);
+
+        Assert.assertEquals(tss[1][0], -1.341640786499870, DELTA);
+        Assert.assertEquals(tss[1][1], -0.447213595499958, DELTA);
+        Assert.assertEquals(tss[1][2], 0.447213595499958, DELTA);
+        Assert.assertEquals(tss[1][3], 1.341640786499870, DELTA);
+    }
 }

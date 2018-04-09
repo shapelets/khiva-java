@@ -11,9 +11,13 @@ package tsa;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Arrays;
+
 public class Normalization extends Library {
 
     private native static void znorm(double[] tssConcatenated, long tssL, long tssN, double epsilon, double[] result);
+
+    private native static void znormInPlace(double[] tssConcatenated, long tssL, long tssN, double epsilon);
 
     /**
      * Calculates a new set of time series with zero mean and standard deviation one.
@@ -46,5 +50,37 @@ public class Normalization extends Library {
         double[] result = new double[(int) (tssN * tssL)];
         znorm(tssConcatenated, tssL, tssN, epsilon, result);
         return result;
+    }
+
+    /**
+     * Adjusts the time series in the given input and performs z-norm
+     * inplace (without allocating further memory).
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     */
+    public static void znormInPlace(double[][] tss) {
+        znormInPlace(tss, 0.00000001);
+    }
+
+    /**
+     * Adjusts the time series in the given input and performs z-norm
+     * inplace (without allocating further memory).
+     *
+     * @param tss     Array of arrays of type double containing the input time series.
+     * @param epsilon epsilon Minimum standard deviation to consider.  It acts as a gatekeeper for
+     *                those time series that may be constant or near constant.
+     */
+    public static void znormInPlace(double[][] tss, double epsilon) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+        znormInPlace(tssConcatenated, tssL, tssN, epsilon);
+
+        for (int i = 0; i < tssN; i++) {
+            tss[i] = Arrays.copyOfRange(tssConcatenated, (int) (i * tssL), (int) ((i + 1) * tssL));
+        }
     }
 }

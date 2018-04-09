@@ -65,6 +65,8 @@ public class Features extends Library {
     private native static void energyRatioByChunks(double[] tssConcatenated, long tssLength, long tssNumberOfTS,
                                                    long numSegments, long segmentFocus, double[] result);
 
+    private native static void fftAggregated(double[] tssConcatenated, long tssL, long tssN, double[] result);
+
     private native static void fftCoefficient(double[] tssConcatenated, long tssL, long tssN, long coefficient,
                                               double[] real, double[] imag, double[] abs, double[] angle);
 
@@ -132,6 +134,18 @@ public class Features extends Library {
 
     private native static void numberCrossingM(double[] tssConcatenated, long tssL, long tssN, int m,
                                                double[] result);
+
+    private native static void numberPeaks(double[] tssConcatenated, long tssL, long tssN, int n, double[] result);
+
+    private native static void percentageOfReoccurringDatapointsToAllDatapoints(double[] tssConcatenated,
+                                                                                long tssL, long tssN, boolean isSorted,
+                                                                                double[] result);
+
+    private native static void quantile(double[] tssConcatenated, long tssL, long tssN, double[] qConcatenated, long qL,
+                                        float precision, double[] result);
+
+    private native static void ratioBeyondRSigma(double[] tssConcatenated, long tssL, long tssN, float r,
+                                                 double[] result);
 
     /**
      * Calculates the sum over the square values of the time series
@@ -538,6 +552,27 @@ public class Features extends Library {
         double[] result = new double[(int) (tssNumberOfTS)];
         energyRatioByChunks(tssConcatenated, tssLength, tssNumberOfTS, numSegments, segmentFocus, result);
 
+        return result;
+    }
+
+    /**
+     * Calculates the spectral centroid(mean), variance, skew, and kurtosis of the absolute fourier transform
+     * spectrum.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The spectral centroid (mean), variance, skew, and kurtosis of the absolute fourier transform
+     * spectrum.
+     */
+    public static double[] fftAggregated(double[][] tss) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN * tssL)];
+        fftAggregated(tssConcatenated, tssL, tssN, result);
         return result;
     }
 
@@ -1040,4 +1075,105 @@ public class Features extends Library {
         return result;
     }
 
+    /**
+     * Calculates the number of peaks of at least support \(n\) in the time series \(tss\). A peak of support
+     * \(n\) is defined as a subsequence of \(tss\) where a value occurs, which is bigger than
+     * its \(n\) neighbours to the left and to the right.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param n   The support of the peak.
+     * @return The number of peaks of at least support \(n\).
+     */
+    public static double[] numberPeaks(double[][] tss, int n) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        numberPeaks(tssConcatenated, tssL, tssN, n, result);
+        return result;
+    }
+
+    /**
+     * Calculates the percentage of unique values, that are present in the time series more than once.
+     * \[
+     * len(different values occurring more than once) / len(different values)
+     * \]
+     * This means the percentage is normalized to the number of unique values, in contrast to the
+     * percentageOfReoccurringValuesToAllValues.
+     *
+     * @param tss      Array of arrays of type double containing the input time series.
+     * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
+     * @return Returns the percentage of unique values, that are present in the time series more than once.
+     */
+    public static double[] percentageOfReoccurringDatapointsToAllDatapoints(double[][] tss, boolean isSorted) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        percentageOfReoccurringDatapointsToAllDatapoints(tssConcatenated, tssL, tssN, isSorted, result);
+        return result;
+    }
+
+    /**
+     * Returns values at the given quantile.
+     *
+     * @param tss Time series. It accepts a list of lists or a numpy array with one or several time series.
+     * @param q   Percentile(s) at which to extract score(s). One or many.
+     * @return Values at the given quantile.
+     */
+    public static double[] quantile(double[][] tss, double[] q) {
+        return quantile(tss, q, (float) 1e8);
+    }
+
+    /**
+     * Returns values at the given quantile.
+     *
+     * @param tss:      Time series. It accepts a list of lists or a numpy array with one or several time series.
+     * @param q         Percentile(s) at which to extract score(s). One or many.
+     * @param precision Number of decimals expected.
+     * @return Values at the given quantile.
+     */
+    public static double[] quantile(double[][] tss, double[] q, float precision) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+        long q_l = q.length;
+
+        double[] result = new double[(int) (tssN)];
+        quantile(tssConcatenated, tssL, tssN, q, q_l, precision, result);
+        return result;
+    }
+
+    /**
+     * Calculates the ratio of values that are more than  \(r*std(x)\] (so \(r\) sigma) away from the mean of
+     * \(x\).
+     *
+     * @param tss: Time series. It accepts a list of lists or a numpy array with one or several time series.
+     * @param r    Number of times that the values should be away from.
+     * @return The ratio of values that are more than \(r*std(x)\) (so \(r\) sigma) away from the mean of
+     * \(x\).
+     */
+    public static double[] ratioBeyondRSigma(double[][] tss, float r) {
+        long tssL = tss[0].length;
+        long tssN = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tssN)];
+        ratioBeyondRSigma(tssConcatenated, tssL, tssN, r, result);
+        return result;
+    }
 }

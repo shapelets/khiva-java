@@ -490,24 +490,72 @@ public class FeaturesTest {
     public void testMean() {
         double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20},
                 {20, 20, 20, 2, 19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20}};
-        double[] Result = Features.mean(tss);
-        Assert.assertEquals(Result[0], 18.55, DELTA);
-        Assert.assertEquals(Result[1], 12.7, DELTA);
+        double[] result = Features.mean(tss);
+        Assert.assertEquals(result[0], 18.55, DELTA);
+        Assert.assertEquals(result[1], 12.7, DELTA);
     }
 
     @Test
     public void testMeanChange() {
         double[][] tss = {{0, 1, 2, 3, 4, 5}, {8, 10, 12, 14, 16, 18}};
-        double[] Result = Features.meanChange(tss);
-        Assert.assertEquals(Result[0], (float) 5 / 6, DELTA);
-        Assert.assertEquals(Result[1], (float) 10 / 6, DELTA);
+        double[] result = Features.meanChange(tss);
+        Assert.assertEquals(result[0], (float) 5 / 6, DELTA);
+        Assert.assertEquals(result[1], (float) 10 / 6, DELTA);
     }
 
     @Test
     public void testMaxLangevinFixedPoint() {
         double[][] tss = {{0, 1, 2, 3, 4, 5}, {0, 1, 2, 3, 4, 5}};
-        double[] Result = Features.maxLangevinFixedPoint(tss, 7, 2);
-        Assert.assertEquals(Result[0], 4.562970585, 1e-4);
-        Assert.assertEquals(Result[1], 4.562970585, 1e-4);
+        double[] result = Features.maxLangevinFixedPoint(tss, 7, 2);
+        Assert.assertEquals(result[0], 4.562970585, 1e-4);
+        Assert.assertEquals(result[1], 4.562970585, 1e-4);
+    }
+
+    @Test
+    public void testNumberPeaks() {
+        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
+        double[] result = Features.numberPeaks(tss, 2);
+        Assert.assertEquals(result[0], 1, DELTA);
+        Assert.assertEquals(result[1], 1, DELTA);
+    }
+
+    @Test
+    public void testFftAggregated() {
+        double[][] tss = {{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}};
+        double[] result = Features.fftAggregated(tss);
+        Assert.assertEquals(result[0], 1.135143, DELTA);
+        Assert.assertEquals(result[1], 2.368324, DELTA);
+        Assert.assertEquals(result[2], 1.248777, DELTA);
+        Assert.assertEquals(result[3], 3.642666, DELTA);
+
+        Assert.assertEquals(result[4], 1.135143, DELTA);
+        Assert.assertEquals(result[5], 2.368324, DELTA);
+        Assert.assertEquals(result[6], 1.248777, DELTA);
+        Assert.assertEquals(result[7], 3.642666, DELTA);
+    }
+
+    @Test
+    public void testPercentageOfReocurringDatapointsToAllDatapoints() {
+        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
+        double[] result = Features.percentageOfReoccurringDatapointsToAllDatapoints(tss, false);
+        Assert.assertEquals(result[0], 0.25, DELTA);
+        Assert.assertEquals(result[1], 0.25, DELTA);
+    }
+
+    @Test
+    public void testQuantile() {
+        double[][] tss = {{0, 0, 0, 0, 3, 4, 13}, {0, 0, 0, 0, 3, 4, 13}};
+        double[] q = {0.6};
+        double[] result = Features.quantile(tss, q);
+        Assert.assertEquals(result[0], 1.79999999, DELTA);
+        Assert.assertEquals(result[1], 1.79999999, DELTA);
+    }
+
+    @Test
+    public void testRatioBeyondRSigma() {
+        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
+        double[] result = Features.ratioBeyondRSigma(tss, (float) 0.5);
+        Assert.assertEquals(result[0], 0.7142857142857143, DELTA);
+        Assert.assertEquals(result[1], 0.7142857142857143, DELTA);
     }
 }
