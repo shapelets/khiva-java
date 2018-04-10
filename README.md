@@ -9,7 +9,7 @@ This project provides the Java wrapper for the original TSA library written in C
 analyse time eries in a super-efficient fashion, giving a solution for time series analysis in the Big Data Ecosystem.
 ### How do I get set up? ###
 
-* It is needed to set in the VM flags : -Djavalibrarypath="<dynamic-library-path>"
+* You need to install the ArrayFire and the TSA libraries first.
 
 ### Contribution guidelines ###
 
