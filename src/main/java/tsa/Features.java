@@ -147,6 +147,21 @@ public class Features extends Library {
     private native static void ratioBeyondRSigma(double[] tssConcatenated, long tssL, long tssN, float r,
                                                  double[] result);
 
+    private native static void sampleEntropy(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+
+    private native static void skewness(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+
+    private native static void standardDeviation(double[] tssConcatenated, long tss_l, long tss_n, double[] result);
+
+    private native static void sumOfReoccurringDatapoints(double[] tssConcatenated, long tss_l, long tss_n,
+                                                          boolean isSorted, double[] result);
+
+    private native static void symmetryLooking(double[] tssConcatenated, long tss_l, long tss_n, float r,
+                                               boolean[] result);
+
+    private native static void valueCount(double[] tssConcatenated, long tss_l, long tss_n, float v, int[] result);
+
+
     /**
      * Calculates the sum over the square values of the time series
      *
@@ -1125,7 +1140,7 @@ public class Features extends Library {
     /**
      * Returns values at the given quantile.
      *
-     * @param tss Time series. It accepts a list of lists or a numpy array with one or several time series.
+     * @param tss Array of arrays of type double containing the input time series.
      * @param q   Percentile(s) at which to extract score(s). One or many.
      * @return Values at the given quantile.
      */
@@ -1136,7 +1151,7 @@ public class Features extends Library {
     /**
      * Returns values at the given quantile.
      *
-     * @param tss:      Time series. It accepts a list of lists or a numpy array with one or several time series.
+     * @param tss       Array of arrays of type double containing the input time series.
      * @param q         Percentile(s) at which to extract score(s). One or many.
      * @param precision Number of decimals expected.
      * @return Values at the given quantile.
@@ -1159,8 +1174,8 @@ public class Features extends Library {
      * Calculates the ratio of values that are more than  \(r*std(x)\] (so \(r\) sigma) away from the mean of
      * \(x\).
      *
-     * @param tss: Time series. It accepts a list of lists or a numpy array with one or several time series.
-     * @param r    Number of times that the values should be away from.
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param r   Number of times that the values should be away from.
      * @return The ratio of values that are more than \(r*std(x)\) (so \(r\) sigma) away from the mean of
      * \(x\).
      */
@@ -1174,6 +1189,144 @@ public class Features extends Library {
 
         double[] result = new double[(int) (tssN)];
         ratioBeyondRSigma(tssConcatenated, tssL, tssN, r, result);
+        return result;
+    }
+
+    /**
+     * Calculates a vectorized sample entropy algorithm.
+     * https://en.wikipedia.org/wiki/Sample_entropy
+     * https://www.ncbi.nlm.nih.gov/pubmed/10843903?dopt=Abstract
+     * For short time-series this method is highly dependent on the parameters, but should be stable for N > 2000,
+     * see: Yentes et al. (2012) - The Appropriate Use of Approximate Entropy and Sample Entropy with Short Data Sets
+     * Other shortcomings and alternatives discussed in:
+     * Richman & Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return An array with the same dimensions as tss, whose values (time series in dimension 0)
+     * contains the vectorized sample entropy for all the input time series in tss.
+     */
+    public static double[] sampleEntropy(double[][] tss) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        sampleEntropy(tssConcatenated, tss_l, tss_n, result);
+        return result;
+    }
+
+    /**
+     * Calculates the sample skewness of tss (calculated with the adjusted Fisher-Pearson standardized
+     * moment coefficient G1).
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return Array containing the skewness of each time series in tss.
+     */
+    public static double[] skewness(double[][] tss) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        skewness(tssConcatenated, tss_l, tss_n, result);
+        return result;
+    }
+
+    /**
+     * Calculates the standard deviation of each time series within tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return The standard deviation of each time series within tss.
+     */
+    public static double[] standardDeviation(double[][] tss) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        standardDeviation(tssConcatenated, tss_l, tss_n, result);
+        return result;
+    }
+
+    /**
+     * Calculates the sum of all data points, that are present in the time series more than once.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @return Returns the sum of all data points, that are present in the time series more than once.
+     */
+    public static double[] sumOfReoccurringDatapoints(double[][] tss) {
+        return sumOfReoccurringDatapoints(tss, false);
+    }
+
+    /**
+     * Calculates the sum of all data points, that are present in the time series more than once.
+     *
+     * @param tss      Array of arrays of type double containing the input time series.
+     * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
+     * @return Returns the sum of all data points, that are present in the time series more than once.
+     */
+    public static double[] sumOfReoccurringDatapoints(double[][] tss, boolean isSorted) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        double[] result = new double[(int) (tss_n)];
+        sumOfReoccurringDatapoints(tssConcatenated, tss_l, tss_n, isSorted, result);
+        return result;
+    }
+
+    /**
+     * Calculates if the distribution of tss *looks symmetric*. This is the case if
+     * \[
+     * | mean(tss)-median(tss)| < r * (max(tss)-min(tss))
+     * \]
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param r   The percentage of the range to compare with.
+     * @return An array denoting if the input time series look symmetric.
+     */
+    public static boolean[] symmetryLooking(double[][] tss, float r) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        boolean[] result = new boolean[(int) (tss_n)];
+        symmetryLooking(tssConcatenated, tss_l, tss_n, r, result);
+        return result;
+    }
+
+    /**
+     * Counts occurrences of value in the time series tss.
+     *
+     * @param tss Array of arrays of type double containing the input time series.
+     * @param v   The value to be counted.
+     * @return An array containing the count of the given value in each time series.
+     */
+    public static int[] valueCount(double[][] tss, float v) {
+        long tss_l = tss[0].length;
+        long tss_n = tss.length;
+        double[] tssConcatenated = new double[0];
+        for (double[] time_series : tss) {
+            tssConcatenated = ArrayUtils.addAll(tssConcatenated, time_series);
+        }
+
+        int[] result = new int[(int) (tss_n)];
+        valueCount(tssConcatenated, tss_l, tss_n, v, result);
         return result;
     }
 }

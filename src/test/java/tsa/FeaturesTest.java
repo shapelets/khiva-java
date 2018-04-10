@@ -558,4 +558,55 @@ public class FeaturesTest {
         Assert.assertEquals(result[0], 0.7142857142857143, DELTA);
         Assert.assertEquals(result[1], 0.7142857142857143, DELTA);
     }
+
+    @Test
+    public void testSampleEntropy() {
+        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
+        double[] result = Features.sampleEntropy(tss);
+        Assert.assertEquals(result[0], 1.252762968495368, DELTA);
+        Assert.assertEquals(result[1], 1.252762968495368, DELTA);
+    }
+
+    @Test
+    public void testSkewness() {
+        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
+        double[] result = Features.skewness(tss);
+        Assert.assertEquals(result[0], 2.038404735373753, DELTA);
+        Assert.assertEquals(result[1], 2.038404735373753, DELTA);
+    }
+
+    @Test
+    public void testStandardDeviation() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1,  50, 1, 1,  5, 1, 20, 20},
+                {20, 20, 20, 2,  19, 1,  20, 20, 20, 1,  15, 1,  30, 1,  1, 18, 4, 1, 20, 20}};
+        double[] result = Features.standardDeviation(tss);
+        Assert.assertEquals(result[0], 12.363150892875165, DELTA);
+        Assert.assertEquals(result[1], 9.51367436903324, DELTA);
+    }
+
+    @Test
+    public void testSumOfReoccurringDatapoints() {
+        double[][] tss = {{3, 3, 0, 4, 0, 13, 13}, {3, 3, 0, 4, 0, 13, 13}};
+        double[] result = Features.sumOfReoccurringDatapoints(tss, false);
+        Assert.assertEquals(result[0], 32, DELTA);
+        Assert.assertEquals(result[1], 32, DELTA);
+    }
+
+    @Test
+    public void testSymmetryLooking() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1,  50, 1, 1,  5, 1, 20, 20},
+                {20, 20, 20, 2,  19, 1,  20, 20, 20, 1,  15, 1,  30, 1,  1, 18, 4, 1, 20, 20}};
+        boolean[] result = Features.symmetryLooking(tss, (float)0.1);
+        Assert.assertEquals(result[0], true);
+        Assert.assertEquals(result[1], false);
+    }
+
+    @Test
+    public void testValueCount() {
+        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1,  50, 1, 1,  5, 1, 20, 20},
+                {20, 20, 20, 2,  19, 1,  20, 20, 20, 1,  15, 1,  30, 1,  1, 18, 4, 1, 20, 20}};
+        int[] result = Features.valueCount(tss, 20);
+        Assert.assertEquals(result[0], 9, DELTA);
+        Assert.assertEquals(result[1], 8, DELTA);
+    }
 }
