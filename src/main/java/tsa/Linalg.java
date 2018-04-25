@@ -13,7 +13,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class Linalg extends Library {
 
-    private native static void lls(double[] aConcatenated, long aL, long aN, double[] b, long bL, double[] result);
+    private native static long[] lls(long refA, long refB);
 
     /**
      * Calculates the minimum norm least squares solution \(x\) \((\left\lVert{A·x − b}\right\rVert^2)\) to
@@ -22,20 +22,14 @@ public class Linalg extends Library {
      * \(D\dagger\) contains the inverse values of the singular values contained in D if they are not zero, and zero
      * otherwise.
      *
-     * @param a Coefficients of the linear equation problem to solve.
-     * @param b Array with the measured values.
+     * @param arrA Coefficients of the linear equation problem to solve.
+     * @param arrB Array with the measured values.
      * @return Contains the solution to the linear equation problem minimizing the norm 2.
      */
-    public static double[] lls(double[][] a, double[] b) {
-        long aL = a[0].length;
-        long aN = a.length;
-        double[] aConcatenated = new double[0];
-        for (double[] time_series : a) {
-            aConcatenated = ArrayUtils.addAll(aConcatenated, time_series);
-        }
-        long bL = b.length;
-        double[] result = new double[(int) (aN)];
-        lls(aConcatenated, aL, aN, b, bL, result);
-        return result;
+    public static Array lls(Array arrA, Array arrB) {
+        long[] refs = lls(arrA.getReference(), arrB.getReference());
+        arrA.setReference(refs[0]);
+        arrB.setReference(refs[1]);
+        return new Array(refs[2]);
     }
 }

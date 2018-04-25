@@ -15,58 +15,75 @@ import org.junit.Test;
 
 public class FeaturesTest {
     private static final double DELTA = 1e-6;
-    double[][] arrayOfTimeSeries = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
+    float[] timeserie = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+    long[] dims = {6, 2, 1, 1};
+
 
     @Test
-    public void testCidCe() {
-        double[] cidCe = Features.cidCe(arrayOfTimeSeries, true);
+    public void testCidCe() throws Exception {
+        Array arrayOfTimeSeries = new Array(timeserie, dims);
+
+        float[] cidCe = Features.cidCe(arrayOfTimeSeries, true).getData();
         Assert.assertEquals(cidCe[0], 1.30930734141595, DELTA);
         Assert.assertEquals(cidCe[1], 1.30930734141595, DELTA);
-        cidCe = Features.cidCe(arrayOfTimeSeries, false);
+        cidCe = Features.cidCe(arrayOfTimeSeries, false).getData();
         Assert.assertEquals(cidCe[0], 2.23606797749979, DELTA);
         Assert.assertEquals(cidCe[1], 2.23606797749979, DELTA);
     }
 
     @Test
-    public void testC3() {
-        double[] c3 = Features.c3(arrayOfTimeSeries, 2);
+    public void testC3() throws Exception {
+        Array arrayOfTimeSeries = new Array(timeserie, dims);
+
+        float[] c3 = Features.c3(arrayOfTimeSeries, 2).getData();
         Assert.assertEquals(c3[0], 7.5, DELTA);
         Assert.assertEquals(c3[1], 586.5, DELTA);
     }
 
     @Test
-    public void testAbsSumOfChanges() {
-        double[][] tss = {{0, 1, 2, 3}, {4, 6, 8, 10}, {11, 14, 17, 20}};
-        double[] absSum = Features.absoluteSumOfChanges(tss);
-        Assert.assertEquals(absSum[0], 3, DELTA);
-        Assert.assertEquals(absSum[1], 6, DELTA);
-        Assert.assertEquals(absSum[2], 9, DELTA);
+    public void testAbsSumOfChanges() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 6, 8, 10,
+                11, 14, 17, 20};
+        long[] dims = {4, 3, 1, 1};
+        Array a = new Array(tss, dims);
+        Array absSum = Features.absoluteSumOfChanges(a);
+        double[] absSumR = absSum.getData();
+        Assert.assertEquals(absSumR[0], 3, DELTA);
+        Assert.assertEquals(absSumR[1], 6, DELTA);
+        Assert.assertEquals(absSumR[2], 9, DELTA);
     }
 
     @Test
-    public void testAbsEnergy() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}};
-        double[] absEnergy = Features.absEnergy(tss);
-        Assert.assertEquals(absEnergy[0], 385, DELTA);
+    public void testAbsEnergy() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        long[] dims = {10, 1, 1, 1};
+        Array tsa = new Array(tss, dims);
+        Array absEnergy = Features.absEnergy(tsa);
+        double[] result = absEnergy.getData();
+        Assert.assertEquals(result[0], 385, DELTA);
     }
 
     @Test
-    public void testApproximateEntropy() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}};
-
-
+    public void testApproximateEntropy() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+        long[] dims = {10, 2, 1, 1};
+        Array a = new Array(tss, dims);
         float r = (float) 0.5;
-        double[] approximateEntropy = Features.approximateEntropy(tss, 4, r);
+        double[] approximateEntropy = Features.approximateEntropy(a, 4, r).getData();
 
         Assert.assertEquals(approximateEntropy[0], 0.13484281753639338, DELTA);
         Assert.assertEquals(approximateEntropy[1], 0.13484281753639338, DELTA);
     }
 
     @Test
-    public void testCrossCovariance() {
-        double[][] tss1 = {{0, 1, 2, 3}, {10, 11, 12, 13}};
-        double[][] tss2 = {{4, 6, 8, 10, 12}, {14, 16, 18, 20, 22}};
-        double[] crossCovariance = Features.crossCovariance(tss1, tss2, false);
+    public void testCrossCovariance() throws Exception {
+        double[] tss1 = {0, 1, 2, 3, 10, 11, 12, 13};
+        double[] tss2 = {4, 6, 8, 10, 12, 14, 16, 18, 20, 22};
+        long[] dims1 = {4, 2, 1, 1};
+        long[] dims2 = {5, 2, 1, 1};
+        Array a = new Array(tss1, dims1);
+        Array b = new Array(tss2, dims2);
+        double[] crossCovariance = Features.crossCovariance(a, b, false).getData();
         for (int i = 0; i < 4; i++) {
             Assert.assertEquals(crossCovariance[(i * 5)], 2.5, DELTA);
             Assert.assertEquals(crossCovariance[(i * 5) + 1], 2.5, DELTA);
@@ -77,10 +94,11 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testAutoCovariance() {
-        double[][] tss = {{0, 1, 2, 3}, {10, 11, 12, 13}};
-
-        double[] autoCovariance = Features.autoCovariance(tss, false);
+    public void testAutoCovariance() throws Exception {
+        double[] tss = {0, 1, 2, 3, 10, 11, 12, 13};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] autoCovariance = Features.autoCovariance(a, false).getData();
         Assert.assertEquals(autoCovariance[0], 1.25, DELTA);
         Assert.assertEquals(autoCovariance[1], 0.3125, DELTA);
         Assert.assertEquals(autoCovariance[2], -0.375, DELTA);
@@ -92,11 +110,14 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testCrossCorrelation() {
-        double[][] tss1 = {{1, 2, 3, 4}};
-        double[][] tss2 = {{4, 6, 8, 10, 12}};
-
-        double[] crossCorrelation = Features.crossCorrelation(tss1, tss2, false);
+    public void testCrossCorrelation() throws Exception {
+        double[] tss1 = {1, 2, 3, 4};
+        double[] tss2 = {4, 6, 8, 10, 12};
+        long[] dims1 = {4, 1, 1, 1};
+        long[] dims2 = {5, 1, 1, 1};
+        Array a = new Array(tss1, dims1);
+        Array b = new Array(tss2, dims2);
+        double[] crossCorrelation = Features.crossCorrelation(a, b, false).getData();
         Assert.assertEquals(crossCorrelation[0], 0.790569415, 1e-9);
         Assert.assertEquals(crossCorrelation[1], 0.790569415, 1e-9);
         Assert.assertEquals(crossCorrelation[2], 0.079056941, 1e-9);
@@ -105,9 +126,11 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testAutoCorrelation() {
-        double[][] tss = {{0, 1, 2, 3}, {10, 11, 12, 13}};
-        double[] autoCorrelationResult = Features.autoCorrelation(tss, 4, false);
+    public void testAutoCorrelation() throws Exception {
+        double[] tss = {0, 1, 2, 3, 10, 11, 12, 13};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] autoCorrelationResult = Features.autoCorrelation(a, 4, false).getData();
         Assert.assertEquals(autoCorrelationResult[0], 1, DELTA);
         Assert.assertEquals(autoCorrelationResult[1], 0.25, DELTA);
         Assert.assertEquals(autoCorrelationResult[2], -0.3, DELTA);
@@ -119,138 +142,167 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testBinnedCorrelation() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                14, 15, 16, 17, 18, 19, 20}, {1, 1, 3, 10, 5, 6, 1, 8, 9, 10, 11, 1, 13, 14, 10, 16, 17, 10, 19, 20}};
+    public void testBinnedCorrelation() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                14, 15, 16, 17, 18, 19, 20, 1, 1, 3, 10, 5, 6, 1, 8, 9, 10, 11, 1, 13, 14, 10, 16, 17, 10, 19, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
 
-        double[] binnedEntropyResult = Features.binnedEntropy(tss, 5);
+        double[] binnedEntropyResult = Features.binnedEntropy(a, 5).getData();
         Assert.assertEquals(binnedEntropyResult[0], 1.6094379124341005, DELTA);
         Assert.assertEquals(binnedEntropyResult[1], 1.5614694247763998, DELTA);
     }
 
     @Test
-    public void testCountAboveMean() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
-        int[] countAboveMeanResult = Features.countAboveMean(tss);
+    public void testCountAboveMean() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        int[] countAboveMeanResult = Features.countAboveMean(a).getData();
         Assert.assertEquals(countAboveMeanResult[0], 3, DELTA);
         Assert.assertEquals(countAboveMeanResult[1], 3, DELTA);
     }
 
     @Test
-    public void testCountBelowMean() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
-        int[] countBelowMeanResult = Features.countBelowMean(tss);
+    public void testCountBelowMean() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        int[] countBelowMeanResult = Features.countBelowMean(a).getData();
 
         Assert.assertEquals(countBelowMeanResult[0], 3, DELTA);
         Assert.assertEquals(countBelowMeanResult[1], 3, DELTA);
     }
 
     @Test
-    public void testEnergyRatioByChunks() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
-        double[] energyRatioByChunksResult = Features.energyRatioByChunks(tss, 2, 0);
+    public void testEnergyRatioByChunks() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] energyRatioByChunksResult = Features.energyRatioByChunks(a, 2, 0).getData();
 
         Assert.assertEquals(energyRatioByChunksResult[0], 0.090909091, DELTA);
         Assert.assertEquals(energyRatioByChunksResult[1], 0.330376940, DELTA);
-        energyRatioByChunksResult = Features.energyRatioByChunks(tss, 2, 1);
+        energyRatioByChunksResult = Features.energyRatioByChunks(a, 2, 1).getData();
         Assert.assertEquals(energyRatioByChunksResult[0], 0.909090909, DELTA);
         Assert.assertEquals(energyRatioByChunksResult[1], 0.669623060, DELTA);
     }
 
     @Test
-    public void testFirstLocationOfMaximum() {
-        double[][] tss = {{5, 4, 3, 5, 0, 1, 5, 3, 2, 1}, {2, 4, 3, 5, 2, 5, 4, 3, 5, 2}};
-        double[] firstLocationOfMaximumResult = Features.firstLocationOfMaximum(tss);
+    public void testFirstLocationOfMaximum() throws Exception {
+        double[] tss = {5, 4, 3, 5, 0, 1, 5, 3, 2, 1, 2, 4, 3, 5, 2, 5, 4, 3, 5, 2};
+        long[] dims = {10, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] firstLocationOfMaximumResult = Features.firstLocationOfMaximum(a).getData();
         Assert.assertEquals(firstLocationOfMaximumResult[0], 0.0, DELTA);
         Assert.assertEquals(firstLocationOfMaximumResult[1], 0.3, DELTA);
     }
 
     @Test
-    public void testFirstLocationOfMinimum() {
-        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 3, 0, 2, 1}};
-        double[] firstLocationOfMinimumResult = Features.firstLocationOfMinimum(tss);
+    public void testFirstLocationOfMinimum() throws Exception {
+        double[] tss = {5, 4, 3, 0, 0, 1, 5, 4, 3, 0, 2, 1};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] firstLocationOfMinimumResult = Features.firstLocationOfMinimum(a).getData();
         Assert.assertEquals(firstLocationOfMinimumResult[0], 0.5, DELTA);
         Assert.assertEquals(firstLocationOfMinimumResult[1], 0.5, DELTA);
     }
 
     @Test
-    public void testHasDuplicates() {
-        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 3, 0, 2, 1}};
-        boolean[] hasDuplicatesResult = Features.hasDuplicates(tss);
+    public void testHasDuplicates() throws Exception {
+        double[] tss = {5, 4, 3, 0, 0, 1, 5, 4, 3, 0, 2, 1};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        boolean[] hasDuplicatesResult = Features.hasDuplicates(a).getData();
         Assert.assertEquals(hasDuplicatesResult[0], true);
         Assert.assertEquals(hasDuplicatesResult[1], false);
     }
 
     @Test
-    public void testHasDuplicateMax() {
-        double[][] tss = {{5, 4, 3, 0, 5, 1}, {5, 4, 3, 0, 2, 1}};
-        boolean[] hasDuplicateMaxResult = Features.hasDuplicateMax(tss);
+    public void testHasDuplicateMax() throws Exception {
+        double[] tss = {5, 4, 3, 0, 5, 1, 5, 4, 3, 0, 2, 1};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        boolean[] hasDuplicateMaxResult = Features.hasDuplicateMax(a).getData();
         Assert.assertEquals(hasDuplicateMaxResult[0], true);
         Assert.assertEquals(hasDuplicateMaxResult[1], false);
     }
 
     @Test
-    public void testIndexMaxQuantile() {
-        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 0, 0, 2, 1}};
+    public void testIndexMaxQuantile() throws Exception {
+        double[] tss = {5, 4, 3, 0, 0, 1, 5, 4, 0, 0, 2, 1};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
         float q = (float) 0.5;
-        double[] indexMaxQuantileResult = Features.indexMaxQuantile(tss, q);
+        double[] indexMaxQuantileResult = Features.indexMaxQuantile(a, q).getData();
         Assert.assertEquals(indexMaxQuantileResult[0], 0.333333333, DELTA);
         Assert.assertEquals(indexMaxQuantileResult[1], 0.333333333, DELTA);
     }
 
     @Test
-    public void testKurtosis() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {2, 2, 2, 20, 30, 25}};
-        double[] kurtosisResult = Features.kurtosis(tss);
+    public void testKurtosis() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 2, 2, 2, 20, 30, 25};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] kurtosisResult = Features.kurtosis(a).getData();
         Assert.assertEquals(kurtosisResult[0], -1.2, DELTA);
         Assert.assertEquals(kurtosisResult[1], -2.66226722, DELTA);
     }
 
     @Test
-    public void testLargeStandardDeviation() {
-        double[][] tss = {{-1, -1, -1, 1, 1, 1}, {4, 6, 8, 4, 5, 4}};
+    public void testLargeStandardDeviation() throws Exception {
+        double[] tss = {-1, -1, -1, 1, 1, 1, 4, 6, 8, 4, 5, 4};
+        long[] dims = {6, 2, 1, 1};
         float r = (float) 0.4;
-        boolean[] largeStandardDeviationResult = Features.largeStandardDeviation(tss, r);
+        Array a = new Array(tss, dims);
+        boolean[] largeStandardDeviationResult = Features.largeStandardDeviation(a, r).getData();
         Assert.assertEquals(largeStandardDeviationResult[0], true);
         Assert.assertEquals(largeStandardDeviationResult[1], false);
     }
 
     @Test
-    public void testLastLocationOfMaximum() {
-        double[][] tss = {{0, 4, 3, 5, 5, 1}, {0, 4, 3, 2, 5, 1}};
-        double[] locationOfMaximumResult = Features.lastLocationOfMaximum(tss);
+    public void testLastLocationOfMaximum() throws Exception {
+        double[] tss = {0, 4, 3, 5, 5, 1, 0, 4, 3, 2, 5, 1};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] locationOfMaximumResult = Features.lastLocationOfMaximum(a).getData();
         Assert.assertEquals(locationOfMaximumResult[0], 0.8333333333333334, DELTA);
         Assert.assertEquals(locationOfMaximumResult[1], 0.8333333333333334, DELTA);
     }
 
     @Test
-    public void testLastLocationOfMinimum() {
-        double[][] tss = {{0, 4, 3, 5, 5, 1, 0, 4}, {3, 2, 5, 1, 4, 5, 1, 2}};
-        double[] locationOfMinimumResult = Features.lastLocationOfMinimum(tss);
+    public void testLastLocationOfMinimum() throws Exception {
+        double[] tss = {0, 4, 3, 5, 5, 1, 0, 4, 3, 2, 5, 1, 4, 5, 1, 2};
+        long[] dims = {8, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] locationOfMinimumResult = Features.lastLocationOfMinimum(a).getData();
         Assert.assertEquals(locationOfMinimumResult[0], 0.875, DELTA);
         Assert.assertEquals(locationOfMinimumResult[1], 0.875, DELTA);
     }
 
     @Test
-    public void testLength() {
-        double[][] tss = {{0, 4, 3, 5, 5, 1}, {0, 4, 3, 2, 5, 1}};
-        int[] lengthResult = Features.length(tss);
+    public void testLength() throws Exception {
+        double[] tss = {0, 4, 3, 5, 5, 1, 0, 4, 3, 2, 5, 1};
+        long dims[] = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        int[] lengthResult = Features.length(a).getData();
         Assert.assertEquals(lengthResult[0], 6, DELTA);
         Assert.assertEquals(lengthResult[1], 6, DELTA);
     }
 
     @Test
-    public void testLinearTrend() {
-        double[][] tss = {{0, 4, 3, 5, 5, 1}, {2, 4, 1, 2, 5, 3}};
+    public void testLinearTrend() throws Exception {
+        double[] tss = {0, 4, 3, 5, 5, 1, 2, 4, 1, 2, 5, 3};
+        long dims[] = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        Array[] b = Features.linearTrend(a);
 
-        double[] pvalue = new double[tss.length];
-        double[] rvalue = new double[tss.length];
-        double[] intercept = new double[tss.length];
-        double[] slope = new double[tss.length];
-        double[] stdrr = new double[tss.length];
+        double[] pvalue = b[0].getData();
+        double[] rvalue = b[1].getData();
+        double[] intercept = b[2].getData();
+        double[] slope = b[3].getData();
+        double[] stdrr = b[4].getData();
 
-
-        Features.linearTrend(tss, pvalue, rvalue, intercept, slope, stdrr);
 
         Assert.assertEquals(pvalue[0], 0.6260380997892747, DELTA);
         Assert.assertEquals(pvalue[1], 0.5272201945463578, DELTA);
@@ -269,65 +321,74 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testHasDuplicateMin() {
-        double[][] tss = {{5, 4, 3, 0, 0, 1}, {5, 4, 3, 0, 2, 1}};
-
-        boolean[] hasDuplicateMinResult = Features.hasDuplicateMin(tss);
+    public void testHasDuplicateMin() throws Exception {
+        double[] tss = {5, 4, 3, 0, 0, 1, 5, 4, 3, 0, 2, 1};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        boolean[] hasDuplicateMinResult = Features.hasDuplicateMin(a).getData();
         Assert.assertEquals(hasDuplicateMinResult[0], true);
         Assert.assertEquals(hasDuplicateMinResult[1], false);
     }
 
     @Test
-    public void testLongestStrikeAboveMean() {
-        double[][] tss = {{20, 20, 20, 1, 1, 1, 20, 20, 20, 20, 1, 1, 1, 1,
-                1, 1, 1, 1, 20, 20}, {20, 20, 20, 1, 1, 1, 20, 20,
+    public void testLongestStrikeAboveMean() throws Exception {
+        double[] tss = {20, 20, 20, 1, 1, 1, 20, 20, 20, 20, 1, 1, 1, 1,
+                1, 1, 1, 1, 20, 20, 20, 20, 20, 1, 1, 1, 20, 20,
                 20, 1, 1, 1, 1, 1, 1, 1, 1,
-                1, 20, 20}};
-
-        double[] longestStrikeAboveMeanResult = Features.longestStrikeAboveMean(tss);
+                1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] longestStrikeAboveMeanResult = Features.longestStrikeAboveMean(a).getData();
         Assert.assertEquals(longestStrikeAboveMeanResult[0], 4, DELTA);
         Assert.assertEquals(longestStrikeAboveMeanResult[1], 3, DELTA);
     }
 
     @Test
-    public void testLongestStrikeBelowMean() {
-        double[][] tss = {{20, 20, 20, 1, 1, 1, 20, 20, 20, 20, 1, 1, 1, 1,
-                1, 1, 1, 1, 20, 20}, {20, 20, 20, 1, 1, 1, 20, 20,
+    public void testLongestStrikeBelowMean() throws Exception {
+        double[] tss = {20, 20, 20, 1, 1, 1, 20, 20, 20, 20, 1, 1, 1, 1,
+                1, 1, 1, 1, 20, 20, 20, 20, 20, 1, 1, 1, 20, 20,
                 20, 1, 1, 1, 1, 1, 1, 1, 1,
-                1, 20, 20}};
-
-        double[] longestStrikeBelowMeanResult = Features.longestStrikeBelowMean(tss);
+                1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] longestStrikeBelowMeanResult = Features.longestStrikeBelowMean(a).getData();
         Assert.assertEquals(longestStrikeBelowMeanResult[0], 8, DELTA);
         Assert.assertEquals(longestStrikeBelowMeanResult[1], 9, DELTA);
     }
 
     @Test
-    public void testMaximum() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20},
-                {20, 20, 20, 2, 19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20}};
-
-        double[] maximumResult = Features.maximum(tss);
+    public void testMaximum() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20, 20, 20, 20,
+                2, 19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] maximumResult = Features.maximum(a).getData();
         Assert.assertEquals(maximumResult[0], 50, DELTA);
         Assert.assertEquals(maximumResult[1], 30, DELTA);
     }
 
     @Test
-    public void testMeanAbsoluteChange() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {8, 10, 12, 14, 16, 18}};
-        double[] meanAbsoluteResult = Features.meanAbsoluteChange(tss);
+    public void testMeanAbsoluteChange() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 8, 10, 12, 14, 16, 18};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] meanAbsoluteResult = Features.meanAbsoluteChange(a).getData();
         Assert.assertEquals(meanAbsoluteResult[0], (float) 5 / 6, DELTA);
         Assert.assertEquals(meanAbsoluteResult[1], (float) 10 / 6, DELTA);
     }
 
     @Test
-    public void testFftCoefficient() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {6, 7, 8, 9, 10, 11}};
-        double[] real = new double[2];
-        double[] imag = new double[2];
-        double[] abs = new double[2];
-        double[] angle = new double[2];
+    public void testFftCoefficient() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        Array[] b = Features.fftCoefficient(a, 0);
 
-        Features.fftCoefficient(tss, 0, real, imag, abs, angle);
+        double[] real = b[0].getData();
+        double[] imag = b[1].getData();
+        double[] abs = b[2].getData();
+        double[] angle = b[3].getData();
+
 
         Assert.assertEquals(real[0], 15, DELTA);
         Assert.assertEquals(real[1], 51, DELTA);
@@ -343,77 +404,84 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testAggregatedAutocorrelationMean() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
-
-        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 0);
+    public void testAggregatedAutocorrelationMean() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(a, 0).getData();
         Assert.assertEquals(aggregatedAutocorrelationResult[0], -0.6571428571428571, DELTA);
         Assert.assertEquals(aggregatedAutocorrelationResult[1], -0.6571428571428571, DELTA);
 
     }
 
     @Test
-    public void testAggregatedAutocorrelationMedian() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
-
-        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 1);
+    public void testAggregatedAutocorrelationMedian() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(a, 1).getData();
         Assert.assertEquals(aggregatedAutocorrelationResult[0], -0.54285717010498047, DELTA);
         Assert.assertEquals(aggregatedAutocorrelationResult[1], -0.54285717010498047, DELTA);
 
     }
 
     @Test
-    public void testAggregatedAutocorrelationMin() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
-
-        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 2);
+    public void testAggregatedAutocorrelationMin() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(a, 2).getData();
         Assert.assertEquals(aggregatedAutocorrelationResult[0], -2.142857142857143, DELTA);
         Assert.assertEquals(aggregatedAutocorrelationResult[1], -2.142857142857143, DELTA);
 
     }
 
     @Test
-    public void testAggregatedAutocorrelationMax() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
-
-        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 3);
+    public void testAggregatedAutocorrelationMax() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(a, 3).getData();
         Assert.assertEquals(aggregatedAutocorrelationResult[0], 0.6, DELTA);
         Assert.assertEquals(aggregatedAutocorrelationResult[1], 0.6, DELTA);
 
     }
 
     @Test
-    public void testAggregatedAutocorrelationStdev() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
-
-        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 4);
+    public void testAggregatedAutocorrelationStdev() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(a, 4).getData();
         Assert.assertEquals(aggregatedAutocorrelationResult[0], 0.9744490855905009, DELTA);
         Assert.assertEquals(aggregatedAutocorrelationResult[1], 0.9744490855905009, DELTA);
 
     }
 
     @Test
-    public void testAggregatedAutocorrelationVar() {
-        double[][] tss = {{1, 2, 3, 4, 5, 6}, {7, 8, 9, 10, 11, 12}};
-
-        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(tss, 5);
+    public void testAggregatedAutocorrelationVar() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] aggregatedAutocorrelationResult = Features.aggregatedAutocorrelation(a, 5).getData();
         Assert.assertEquals(aggregatedAutocorrelationResult[0], 0.9495510204081633, DELTA);
         Assert.assertEquals(aggregatedAutocorrelationResult[1], 0.9495510204081633, DELTA);
 
     }
 
     @Test
-    public void testAggregatedLinearTrendMean() {
-        double[][] tss = {{2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5}};
+    public void testAggregatedLinearTrendMean() throws Exception {
+        double[] tss = {2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5};
+        long[] dims = {12, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array[] b = Features.aggregatedLinearTrend(a, 3, 0);
 
-        double[] pvalue = new double[tss.length];
-        double[] rvalue = new double[tss.length];
-        double[] intercept = new double[tss.length];
-        double[] slope = new double[tss.length];
-        double[] stdrr = new double[tss.length];
+        double[] pvalue = b[0].getData();
+        double[] rvalue = b[1].getData();
+        double[] intercept = b[2].getData();
+        double[] slope = b[3].getData();
+        double[] stdrr = b[4].getData();
 
-
-        Features.aggregatedLinearTrend(tss, 3, 0, pvalue, rvalue, intercept, slope, stdrr);
 
         Assert.assertEquals(pvalue[0], 1, DELTA);
         Assert.assertEquals(rvalue[0], 2, DELTA);
@@ -423,17 +491,18 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testAggregatedLinearTrendMin() {
-        double[][] tss = {{2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5}};
+    public void testAggregatedLinearTrendMin() throws Exception {
+        double[] tss = {2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5};
+        long[] dims = {12, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array[] b = Features.aggregatedLinearTrend(a, 3, 1);
 
-        double[] pvalue = new double[tss.length];
-        double[] rvalue = new double[tss.length];
-        double[] intercept = new double[tss.length];
-        double[] slope = new double[tss.length];
-        double[] stdrr = new double[tss.length];
+        double[] pvalue = b[0].getData();
+        double[] rvalue = b[1].getData();
+        double[] intercept = b[2].getData();
+        double[] slope = b[3].getData();
+        double[] stdrr = b[4].getData();
 
-
-        Features.aggregatedLinearTrend(tss, 3, 1, pvalue, rvalue, intercept, slope, stdrr);
 
         Assert.assertEquals(pvalue[0], 1, DELTA);
         Assert.assertEquals(rvalue[0], 2, DELTA);
@@ -443,86 +512,108 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testCwtCoefficients() {
-        double[][] tss = {{0.1, 0.2, 0.3}, {0.1, 0.2, 0.3}};
-        int[][] width = {{1, 2, 3}};
-        double[] cwtCoefficientsResult = Features.cwtCoefficients(tss, width, 2, 2);
-        Assert.assertEquals(cwtCoefficientsResult[0], 0.26517161726951599, DELTA);
-        Assert.assertEquals(cwtCoefficientsResult[1], 0.26517161726951599, DELTA);
+    public void testCwtCoefficients() throws Exception {
+        float[] tss = {0.1f, 0.2f, 0.3f, 0.1f, 0.2f, 0.3f};
+        long[] dims = {3, 2, 1, 1};
+        int[] width = {1, 2, 3};
+        long[] dimsW = {3, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array w = new Array(width, dimsW);
+        float[] cwtCoefficientsResult = Features.cwtCoefficients(a, w, 2, 2).getData();
+        Assert.assertEquals(cwtCoefficientsResult[0], 0.26, 1e-2);
+        Assert.assertEquals(cwtCoefficientsResult[1], 0.26, 1e-2);
     }
 
     @Test
-    public void testMeanSecondDerivativeCentral() {
-        double[][] tss = {{1, 3, 7, 4, 8}, {2, 5, 1, 7, 4}};
-        double[] meanSecondDerivativeCentralResult = Features.meanSecondDerivativeCentral(tss);
+    public void testMeanSecondDerivativeCentral() throws Exception {
+        double[] tss = {1, 3, 7, 4, 8, 2, 5, 1, 7, 4};
+        long[] dims = {5, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] meanSecondDerivativeCentralResult = Features.meanSecondDerivativeCentral(a).getData();
         Assert.assertEquals(meanSecondDerivativeCentralResult[0], (float) 1.0 / 5.0, DELTA);
         Assert.assertEquals(meanSecondDerivativeCentralResult[1], (float) -3.0 / 5.0, DELTA);
     }
 
     @Test
-    public void testMinimum() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 13, 15, 5, 16, 20, 20},
-                {20, 20, 20, 2, 19, 4, 20, 20, 20, 4, 15, 6, 30, 7, 9, 18, 4, 10, 20, 20}};
-        double[] minimumResult = Features.minimum(tss);
+    public void testMinimum() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 13, 15, 5, 16, 20, 20, 20, 20,
+                20, 2, 19, 4, 20, 20, 20, 4, 15, 6, 30, 7, 9, 18, 4, 10, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] minimumResult = Features.minimum(a).getData();
         Assert.assertEquals(minimumResult[0], 1, DELTA);
         Assert.assertEquals(minimumResult[1], 2, DELTA);
     }
 
     @Test
-    public void testNumberCrossingM() {
-        double[][] tss = {{1, 2, 1, 1, -3, -4, 7, 8, 9, 10, -2, 1, -3, 5, 6, 7, -10},
-                {1, 2, 1, 1, -3, -4, 7, 8, 9, 10, -2, 1, -3, 5, 6, 7, -10}};
-        double[] numberCrossingMResult = Features.numberCrossingM(tss, 0);
+    public void testNumberCrossingM() throws Exception {
+        double[] tss = {1, 2, 1, 1, -3, -4, 7, 8, 9, 10, -2, 1, -3, 5, 6, 7, -10, 1, 2, 1, 1, -3, -4, 7, 8, 9,
+                10, -2, 1, -3, 5, 6, 7, -10};
+        long[] dims = {17, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] numberCrossingMResult = Features.numberCrossingM(a, 0).getData();
         Assert.assertEquals(numberCrossingMResult[0], 7, DELTA);
         Assert.assertEquals(numberCrossingMResult[1], 7, DELTA);
     }
 
     @Test
-    public void testMedian() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 13, 15, 5, 16, 20, 20},
-                {20, 20, 20, 2, 19, 4, 20, 20, 20, 4, 15, 6, 30, 7, 9, 18, 4, 10, 20, 20}};
-        double[] medianResult = Features.median(tss);
+    public void testMedian() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 13, 15, 5, 16, 20, 20, 20, 20, 20,
+                2, 19, 4, 20, 20, 20, 4, 15, 6, 30, 7, 9, 18, 4, 10, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] medianResult = Features.median(a).getData();
         Assert.assertEquals(medianResult[0], 20, DELTA);
         Assert.assertEquals(medianResult[1], 18.5, DELTA);
     }
 
     @Test
-    public void testMean() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20},
-                {20, 20, 20, 2, 19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20}};
-        double[] result = Features.mean(tss);
+    public void testMean() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20, 20, 20, 20, 2,
+                19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.mean(a).getData();
         Assert.assertEquals(result[0], 18.55, DELTA);
         Assert.assertEquals(result[1], 12.7, DELTA);
     }
 
     @Test
-    public void testMeanChange() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {8, 10, 12, 14, 16, 18}};
-        double[] result = Features.meanChange(tss);
+    public void testMeanChange() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 8, 10, 12, 14, 16, 18};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.meanChange(a).getData();
         Assert.assertEquals(result[0], (float) 5 / 6, DELTA);
         Assert.assertEquals(result[1], (float) 10 / 6, DELTA);
     }
 
     @Test
-    public void testMaxLangevinFixedPoint() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5}, {0, 1, 2, 3, 4, 5}};
-        double[] result = Features.maxLangevinFixedPoint(tss, 7, 2);
+    public void testMaxLangevinFixedPoint() throws Exception {
+        float[] tss = {0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5};
+        long[] dims = {6, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        float[] result = Features.maxLangevinFixedPoint(a, 7, 2).getData();
         Assert.assertEquals(result[0], 4.562970585, 1e-4);
         Assert.assertEquals(result[1], 4.562970585, 1e-4);
     }
 
     @Test
-    public void testNumberPeaks() {
-        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
-        double[] result = Features.numberPeaks(tss, 2);
+    public void testNumberPeaks() throws Exception {
+        double[] tss = {3, 0, 0, 4, 0, 0, 13, 3, 0, 0, 4, 0, 0, 13};
+        long[] dims = {7, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.numberPeaks(a, 2).getData();
         Assert.assertEquals(result[0], 1, DELTA);
         Assert.assertEquals(result[1], 1, DELTA);
     }
 
     @Test
-    public void testFftAggregated() {
-        double[][] tss = {{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}};
-        double[] result = Features.fftAggregated(tss);
+    public void testFftAggregated() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        long[] dims = {10, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.fftAggregated(a).getData();
         Assert.assertEquals(result[0], 1.135143, DELTA);
         Assert.assertEquals(result[1], 2.368324, DELTA);
         Assert.assertEquals(result[2], 1.248777, DELTA);
@@ -535,77 +626,97 @@ public class FeaturesTest {
     }
 
     @Test
-    public void testPercentageOfReocurringDatapointsToAllDatapoints() {
-        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
-        double[] result = Features.percentageOfReoccurringDatapointsToAllDatapoints(tss, false);
+    public void testPercentageOfReocurringDatapointsToAllDatapoints() throws Exception {
+        double[] tss = {3, 0, 0, 4, 0, 0, 13, 3, 0, 0, 4, 0, 0, 13};
+        long[] dims = {7, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.percentageOfReoccurringDatapointsToAllDatapoints(a, false).getData();
         Assert.assertEquals(result[0], 0.25, DELTA);
         Assert.assertEquals(result[1], 0.25, DELTA);
     }
 
     @Test
-    public void testQuantile() {
-        double[][] tss = {{0, 0, 0, 0, 3, 4, 13}, {0, 0, 0, 0, 3, 4, 13}};
+    public void testQuantile() throws Exception {
+        double[] tss = {0, 0, 0, 0, 3, 4, 13, 0, 0, 0, 0, 3, 4, 13};
         double[] q = {0.6};
-        double[] result = Features.quantile(tss, q);
+        long[] dims = {7, 2, 1, 1};
+        long[] dimsQ = {1, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array arrayQ = new Array(q, dimsQ);
+        double[] result = Features.quantile(a, arrayQ).getData();
         Assert.assertEquals(result[0], 1.79999999, DELTA);
         Assert.assertEquals(result[1], 1.79999999, DELTA);
     }
 
     @Test
-    public void testRatioBeyondRSigma() {
-        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
-        double[] result = Features.ratioBeyondRSigma(tss, (float) 0.5);
+    public void testRatioBeyondRSigma() throws Exception {
+        double[] tss = {3, 0, 0, 4, 0, 0, 13, 3, 0, 0, 4, 0, 0, 13};
+        long[] dims = {7, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.ratioBeyondRSigma(a, (float) 0.5).getData();
         Assert.assertEquals(result[0], 0.7142857142857143, DELTA);
         Assert.assertEquals(result[1], 0.7142857142857143, DELTA);
     }
 
     @Test
-    public void testSampleEntropy() {
-        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
-        double[] result = Features.sampleEntropy(tss);
+    public void testSampleEntropy() throws Exception {
+        double[] tss = {3, 0, 0, 4, 0, 0, 13, 3, 0, 0, 4, 0, 0, 13};
+        long[] dims = {7, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.sampleEntropy(a).getData();
         Assert.assertEquals(result[0], 1.252762968495368, DELTA);
         Assert.assertEquals(result[1], 1.252762968495368, DELTA);
     }
 
     @Test
-    public void testSkewness() {
-        double[][] tss = {{3, 0, 0, 4, 0, 0, 13}, {3, 0, 0, 4, 0, 0, 13}};
-        double[] result = Features.skewness(tss);
+    public void testSkewness() throws Exception {
+        double[] tss = {3, 0, 0, 4, 0, 0, 13, 3, 0, 0, 4, 0, 0, 13};
+        long[] dims = {7, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.skewness(a).getData();
         Assert.assertEquals(result[0], 2.038404735373753, DELTA);
         Assert.assertEquals(result[1], 2.038404735373753, DELTA);
     }
 
     @Test
-    public void testStandardDeviation() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1,  50, 1, 1,  5, 1, 20, 20},
-                {20, 20, 20, 2,  19, 1,  20, 20, 20, 1,  15, 1,  30, 1,  1, 18, 4, 1, 20, 20}};
-        double[] result = Features.standardDeviation(tss);
+    public void testStandardDeviation() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20, 20, 20, 20, 2,
+                19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.standardDeviation(a).getData();
         Assert.assertEquals(result[0], 12.363150892875165, DELTA);
         Assert.assertEquals(result[1], 9.51367436903324, DELTA);
     }
 
     @Test
-    public void testSumOfReoccurringDatapoints() {
-        double[][] tss = {{3, 3, 0, 4, 0, 13, 13}, {3, 3, 0, 4, 0, 13, 13}};
-        double[] result = Features.sumOfReoccurringDatapoints(tss, false);
+    public void testSumOfReoccurringDatapoints() throws Exception {
+        double[] tss = {3, 3, 0, 4, 0, 13, 13, 3, 3, 0, 4, 0, 13, 13};
+        long[] dims = {7, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Features.sumOfReoccurringDatapoints(a, false).getData();
         Assert.assertEquals(result[0], 32, DELTA);
         Assert.assertEquals(result[1], 32, DELTA);
     }
 
     @Test
-    public void testSymmetryLooking() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1,  50, 1, 1,  5, 1, 20, 20},
-                {20, 20, 20, 2,  19, 1,  20, 20, 20, 1,  15, 1,  30, 1,  1, 18, 4, 1, 20, 20}};
-        boolean[] result = Features.symmetryLooking(tss, (float)0.1);
+    public void testSymmetryLooking() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20, 20, 20, 20, 2,
+                19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        boolean[] result = Features.symmetryLooking(a, (float) 0.1).getData();
         Assert.assertEquals(result[0], true);
         Assert.assertEquals(result[1], false);
     }
 
     @Test
-    public void testValueCount() {
-        double[][] tss = {{20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1,  50, 1, 1,  5, 1, 20, 20},
-                {20, 20, 20, 2,  19, 1,  20, 20, 20, 1,  15, 1,  30, 1,  1, 18, 4, 1, 20, 20}};
-        int[] result = Features.valueCount(tss, 20);
+    public void testValueCount() throws Exception {
+        double[] tss = {20, 20, 20, 18, 25, 19, 20, 20, 20, 20, 40, 30, 1, 50, 1, 1, 5, 1, 20, 20, 20, 20, 20, 2,
+                19, 1, 20, 20, 20, 1, 15, 1, 30, 1, 1, 18, 4, 1, 20, 20};
+        long[] dims = {20, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        int[] result = Features.valueCount(a, 20).getData();
         Assert.assertEquals(result[0], 9, DELTA);
         Assert.assertEquals(result[1], 8, DELTA);
     }

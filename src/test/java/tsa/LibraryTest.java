@@ -15,7 +15,7 @@ import org.junit.Test;
 public class LibraryTest {
 
     @Test
-    public void test_set_backend() {
+    public void testSetBackend() {
         int backends = Library.getTSABackends();
         int cuda = backends & Library.Backend.TSA_BACKEND_CUDA.getTSAOrdinal();
         int opencl = backends & Library.Backend.TSA_BACKEND_OPENCL.getTSAOrdinal();
@@ -23,6 +23,7 @@ public class LibraryTest {
 
 
         if (cuda != 0) {
+
             Library.setTSABackend(Library.Backend.TSA_BACKEND_CUDA);
             Assert.assertEquals(Library.getTSABackend(), Library.Backend.TSA_BACKEND_CUDA);
         }
@@ -38,7 +39,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void test_get_device() {
+    public void testGetDevice() {
         int backends = Library.getTSABackends();
         int cuda = backends & Library.Backend.TSA_BACKEND_CUDA.getTSAOrdinal();
         int opencl = backends & Library.Backend.TSA_BACKEND_OPENCL.getTSAOrdinal();
@@ -69,5 +70,4 @@ public class LibraryTest {
             }
         }
     }
-
 }

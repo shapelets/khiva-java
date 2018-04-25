@@ -16,9 +16,11 @@ public class NormalizationTest {
     private static final double DELTA = 1e-6;
 
     @Test
-    public void testZnorm() {
-        double[][] tss = {{0, 1, 2, 3}, {4, 5, 6, 7}};
-        double[] result = Normalization.znorm(tss);
+    public void testZnorm() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Normalization.znorm(a).getData();
         double[] expected = {-1.341640786499870, -0.447213595499958, 0.447213595499958, 1.341640786499870};
         for (int i = 0; i < expected.length; i++) {
             Assert.assertEquals(result[i], expected[i], DELTA);
@@ -27,17 +29,20 @@ public class NormalizationTest {
     }
 
     @Test
-    public void testZnormInPlace() {
-        double[][] tss = {{0, 1, 2, 3}, {4, 5, 6, 7}};
-        Normalization.znormInPlace(tss);
-        Assert.assertEquals(tss[0][0], -1.341640786499870, DELTA);
-        Assert.assertEquals(tss[0][1], -0.447213595499958, DELTA);
-        Assert.assertEquals(tss[0][2], 0.447213595499958, DELTA);
-        Assert.assertEquals(tss[0][3], 1.341640786499870, DELTA);
+    public void testZnormInPlace() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        Normalization.znormInPlace(a);
+        double[] result = a.getData();
+        Assert.assertEquals(result[0], -1.341640786499870, DELTA);
+        Assert.assertEquals(result[1], -0.447213595499958, DELTA);
+        Assert.assertEquals(result[2], 0.447213595499958, DELTA);
+        Assert.assertEquals(result[3], 1.341640786499870, DELTA);
 
-        Assert.assertEquals(tss[1][0], -1.341640786499870, DELTA);
-        Assert.assertEquals(tss[1][1], -0.447213595499958, DELTA);
-        Assert.assertEquals(tss[1][2], 0.447213595499958, DELTA);
-        Assert.assertEquals(tss[1][3], 1.341640786499870, DELTA);
+        Assert.assertEquals(result[4], -1.341640786499870, DELTA);
+        Assert.assertEquals(result[5], -0.447213595499958, DELTA);
+        Assert.assertEquals(result[6], 0.447213595499958, DELTA);
+        Assert.assertEquals(result[7], 1.341640786499870, DELTA);
     }
 }

@@ -16,10 +16,14 @@ public class LinalgTest {
     private static final double DELTA = 1e-6;
 
     @Test
-    public void testLls() {
-        double[][] tss = {{4, 3}, {-1, -2}};
+    public void testLls() throws Exception {
+        double[] tss = {4, 3, -1, -2};
+        long[] dims = {2, 2, 1, 1};
         double[] b = {3, 1};
-        double[] result = Linalg.lls(tss, b);
+        long[] dimsB = {2, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array c = new Array(b, dimsB);
+        double[] result = Linalg.lls(a, c).getData();
         Assert.assertEquals(result[0], 1, DELTA);
         Assert.assertEquals(result[1], 1, DELTA);
     }

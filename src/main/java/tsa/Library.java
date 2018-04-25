@@ -29,7 +29,6 @@ public class Library {
         }
     }
 
-
     public enum Backend {
         TSA_BACKEND_DEFAULT(0), TSA_BACKEND_CPU(1), TSA_BACKEND_CUDA(2), TSA_BACKEND_OPENCL(4);
         private final int ordinal;

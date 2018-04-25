@@ -16,52 +16,78 @@ public class MatrixTest {
     private static final double DELTA = 1e-6;
 
     @Test
-    public void testStompSelfJoin() {
+    public void testStompSelfJoin() throws Exception {
         double[] ta = {10, 10, 10, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 10};
-        MatrixProfile stompSelfJoinResult = Matrix.stompSelfJoin(ta, 3);
+        long[] dims = {14, 1, 1, 1};
+        Array a = new Array(ta, dims);
+        Array[] stompSelfJoinResult = Matrix.stompSelfJoin(a, 3);
         double[] expectedIndex = {11, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 0};
+        double[] matrix = stompSelfJoinResult[0].getData();
+        int[] index = stompSelfJoinResult[1].getData();
 
         for (int i = 0; i < expectedIndex.length; i++) {
-            Assert.assertEquals(stompSelfJoinResult.getProfile()[i], 0, DELTA);
-            Assert.assertEquals(stompSelfJoinResult.getIndex()[i], expectedIndex[i], DELTA);
+            Assert.assertEquals(matrix[i], 0, DELTA);
+            Assert.assertEquals(index[i], expectedIndex[i], DELTA);
         }
     }
 
     @Test
-    public void testStomp() {
-        double[][] tss = {{10, 10, 10, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 10},
-                {10, 10, 10, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 10}};
+    public void testStomp() throws Exception {
+        double[] tss = {10, 10, 11, 11, 10, 11, 10, 10};
 
-        double[] expectedIndex = {11, 1, 2, 8, 9, 10, 1, 2, 8, 9, 10, 11};
-        MatrixProfile stompResult = Matrix.stomp(tss[0], tss[1], 3);
+        long[] dims = {8, 1, 1, 1};
+
+        Array a = new Array(tss, dims);
+        Array b = new Array(tss, dims);
+
+        double[] expectedIndex = {0, 1, 2, 3, 4, 5};
+        Array[] stompResult = Matrix.stomp(a, b, 3);
+        double[] matrix = stompResult[0].getData();
+        int[] index = stompResult[1].getData();
         for (int i = 0; i < expectedIndex.length; i++) {
-            Assert.assertEquals(stompResult.getProfile()[i], 0, DELTA);
-            Assert.assertEquals(stompResult.getIndex()[i], expectedIndex[i], DELTA);
+            Assert.assertEquals(matrix[i], 0, DELTA);
+            Assert.assertEquals(index[i], expectedIndex[i], DELTA);
         }
     }
 
     @Test
-    public void testFindBestNMotifs() {
-        double[][] tss = {{10, 11, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10},
-                {10, 11, 10, 300, 20, 30, 40, 50, 60, 70, 80, 90, 80, 90}};
-        MatrixProfile stompResult = Matrix.stomp(tss[0], tss[1], 3);
-        Sequence findMotifs = Matrix.findBestNMotifs(stompResult.getProfile(), stompResult.getIndex(), 3);
+    public void testFindBestNMotifs() throws Exception {
+        float[][] tss = {{10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9},
+                {10, 11, 10, 9}};
+        long[] dims = {15, 1, 1, 1};
+        long[] dimsB = {4, 1, 1, 1};
 
-        Assert.assertEquals(findMotifs.getIndex()[0], 0, DELTA);
-        Assert.assertEquals(findMotifs.getIndex()[1], 0, DELTA);
+        Array a = new Array(tss[0], dims);
+        Array b = new Array(tss[1], dimsB);
 
-        Assert.assertEquals(findMotifs.getSubsequenceIndex()[0], 0, DELTA);
-        Assert.assertEquals(findMotifs.getSubsequenceIndex()[1], 10, DELTA);
+        Array[] stompResult = Matrix.stomp(a, b, 3);
+        Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 2);
+
+        int[] index = findMotifs[1].getData();
+        int[] subsequenceIndex = findMotifs[2].getData();
+
+        Assert.assertEquals(index[0], 12, DELTA);
+        Assert.assertEquals(index[1], 11, DELTA);
+
+        Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
+        Assert.assertEquals(subsequenceIndex[1], 0, DELTA);
+
     }
 
     @Test
-    public void testFindBestNDiscords() {
-        double[][] tss = {{10, 11, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 10},
-                {10, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 10}};
-        MatrixProfile stompResult = Matrix.stomp(tss[0], tss[1], 3);
-        Sequence findMotifs = Matrix.findBestNDiscords(stompResult.getProfile(), stompResult.getIndex(), 3);
+    public void testFindBestNDiscords() throws Exception {
+        double[][] tss = {{11, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11},
+                {9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9}};
 
-        Assert.assertEquals(findMotifs.getSubsequenceIndex()[0], 0, DELTA);
-        Assert.assertEquals(findMotifs.getSubsequenceIndex()[1], 11, DELTA);
+        long[] dims = {12, 1, 1, 1};
+        Array a = new Array(tss[0], dims);
+        Array b = new Array(tss[1], dims);
+
+        Array[] stompResult = Matrix.stomp(a, b, 3);
+        Array[] findMotifs = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 2);
+
+        int[] subsequenceIndex = findMotifs[1].getData();
+        Assert.assertEquals(subsequenceIndex[0], 9, DELTA);
+        Assert.assertEquals(subsequenceIndex[1], 4, DELTA);
     }
 }
