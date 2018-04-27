@@ -59,7 +59,7 @@ public class Features extends Library {
 
     private native static long[] hasDuplicateMin(long ref);
 
-    private native static long[] indexMaxQuantile(long ref, float q);
+    private native static long[] indexMassQuantile(long ref, float q);
 
     private native static long[] kurtosis(long ref);
 
@@ -520,14 +520,14 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the index of the max quantile.
+     * Calculates the index of the mass quantile.
      *
      * @param arr Array containing the input time series.
      * @param q   The quantile.
-     * @return The index of the max quantile q.
+     * @return The index of the mass quantile q.
      */
-    public static Array indexMaxQuantile(Array arr, float q) {
-        long[] refs = indexMaxQuantile(arr.getReference(), q);
+    public static Array indexMassQuantile(Array arr, float q) {
+        long[] refs = indexMassQuantile(arr.getReference(), q);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }

@@ -45,4 +45,46 @@ public class NormalizationTest {
         Assert.assertEquals(result[6], 0.447213595499958, DELTA);
         Assert.assertEquals(result[7], 1.341640786499870, DELTA);
     }
+
+    @Test
+    public void testMaxMinNorm() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Normalization.maxMinNorm(a, 2.0, 1.0).getData();
+        double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
+        Assert.assertArrayEquals(result, expected, DELTA);
+    }
+
+    @Test
+    public void testMaxMinNormInPlace() throws Exception {
+        double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        Normalization.maxMinNormInPlace(a, 2.0, 1.0);
+        double [] result = a.getData();
+        double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
+        Assert.assertArrayEquals(result, expected, DELTA);
+    }
+
+    @Test
+    public void decimalScalingNorm() throws Exception {
+        double[] tss = {0, 1, -2, 3, 40, 50, 60, -70};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        double[] result = Normalization.decimalScalingNorm(a).getData();
+        double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
+        Assert.assertArrayEquals(result, expected, DELTA);
+    }
+
+    @Test
+    public void decimalScalingNormInPlace() throws Exception {
+        double[] tss = {0, 1, -2, 3, 40, 50, 60, -70};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        Normalization.decimalScalingNormInPlace(a);
+        double [] result = a.getData();
+        double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
+        Assert.assertArrayEquals(result, expected, DELTA);
+    }
 }

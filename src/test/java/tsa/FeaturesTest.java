@@ -228,7 +228,7 @@ public class FeaturesTest {
         Array a = new Array(tss, dims);
         boolean[] hasDuplicatesResult = Features.hasDuplicates(a).getData();
         Assert.assertTrue(hasDuplicatesResult[0]);
-        Assert.assertTrue(hasDuplicatesResult[1]);
+        Assert.assertFalse(hasDuplicatesResult[1]);
     }
 
     @Test
@@ -247,7 +247,7 @@ public class FeaturesTest {
         long[] dims = {6, 2, 1, 1};
         Array a = new Array(tss, dims);
         float q = (float) 0.5;
-        double[] indexMaxQuantileResult = Features.indexMaxQuantile(a, q).getData();
+        double[] indexMaxQuantileResult = Features.indexMassQuantile(a, q).getData();
         Assert.assertEquals(indexMaxQuantileResult[0], 0.333333333, DELTA);
         Assert.assertEquals(indexMaxQuantileResult[1], 0.333333333, DELTA);
     }
