@@ -51,6 +51,8 @@ public class Features extends Library {
 
     private native static long[] firstLocationOfMinimum(long ref);
 
+    private native static long[] friedrichCoefficients(long ref, int m, float r);
+
     private native static long[] hasDuplicates(long ref);
 
     private native static long[] hasDuplicateMax(long ref);
@@ -71,6 +73,8 @@ public class Features extends Library {
     private native static long[] length(long ref);
 
     private native static long[] linearTrend(long ref);
+
+    private native static long[] localMaximals(long ref);
 
     private native static long[] longestStrikeAboveMean(long ref);
 
@@ -94,26 +98,47 @@ public class Features extends Library {
 
     private native static long[] numberCrossingM(long ref, int m);
 
+    private native static long[] numberCwtPeaks(long ref, int maxW);
+
     private native static long[] numberPeaks(long ref, int n);
+
+    private native static long[] partialAutocorrelation(long ref, long refLags);
 
     private native static long[] percentageOfReoccurringDatapointsToAllDatapoints(long ref, boolean isSorted);
 
+    private native static long[] percentageOfReoccurringValuesToAllValues(long ref, boolean isSorted);
+
     private native static long[] quantile(long ref, long refQ, float precision);
 
+    private native static long[] rangeCount(long ref, float min, float max);
+
     private native static long[] ratioBeyondRSigma(long ref, float r);
+
+    private native static long[] ratioValueNumberToTimeSeriesLength(long ref);
 
     private native static long[] sampleEntropy(long ref);
 
     private native static long[] skewness(long ref);
 
+    private native static long[] spktWelchDensity(long ref, int coeff);
+
     private native static long[] standardDeviation(long ref);
 
     private native static long[] sumOfReoccurringDatapoints(long ref, boolean isSorted);
 
+    private native static long[] sumOfReoccurringValues(long ref, boolean isSorted);
+
+    private native static long[] sumValues(long ref);
+
     private native static long[] symmetryLooking(long ref, float r);
+
+    private native static long[] timeReversalAsymmetryStatistic(long ref, int lag);
 
     private native static long[] valueCount(long ref, float v);
 
+    private native static long[] variance(long ref);
+
+    private native static long[] varianceLargerThanStandardDeviation(long ref);
 
     /**
      * Calculates the sum over the square values of the time series.
@@ -186,8 +211,7 @@ public class Features extends Library {
     public static Array[] aggregatedLinearTrend(Array arr, long chunkSize, int aggregationFunction) {
         long[] refs = aggregatedLinearTrend(arr.getReference(), chunkSize, aggregationFunction);
         arr.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
-        return result;
+        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
 
     }
 
@@ -384,7 +408,6 @@ public class Features extends Library {
      * spectrum.
      */
     public static Array fftAggregated(Array arr) {
-
         long[] refs = fftAggregated(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -406,8 +429,7 @@ public class Features extends Library {
     public static Array[] fftCoefficient(Array arr, long coefficient) {
         long[] refs = fftCoefficient(arr.getReference(), coefficient);
         arr.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
-        return result;
+        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
     }
 
     /**
@@ -432,6 +454,28 @@ public class Features extends Library {
      */
     public static Array firstLocationOfMinimum(Array arr) {
         long[] refs = firstLocationOfMinimum(arr.getReference());
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Coefficients of polynomial \(h(x)\), which has been fitted to the deterministic
+     * dynamics of Langevin model:
+     * \[
+     * \dot(x)(t) = h(x(t)) + R \mathcal(N)(0,1)
+     * \]
+     * as described by [1]. For short time series this method is highly dependent on the parameters.
+     * *
+     * [1] Friedrich et al. (2000): Physics Letters A 271, p. 217-222
+     * Extracting model equations from experimental data.
+     *
+     * @param arr Array containing the input time series.
+     * @param m   Order of polynom to fit for estimating fixed points of dynamics.
+     * @param r   Number of quantils to use for averaging.
+     * @return Array containing the coefficients for each time series.
+     */
+    public static Array friedrichCoefficients(Array arr, int m, float r) {
+        long[] refs = friedrichCoefficients(arr.getReference(), m, r);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
@@ -569,8 +613,19 @@ public class Features extends Library {
     public static Array[] linearTrend(Array arr) {
         long[] refs = linearTrend(arr.getReference());
         arr.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
-        return result;
+        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
+    }
+
+    /**
+     * Calculates all Local Maximals fot the time series in arr.
+     *
+     * @param arr Array containing the input time series.
+     * @return The calculated local maximals for each time series in array.
+     */
+    public static Array localMaximals(Array arr) {
+        long[] refs = localMaximals(arr.getReference());
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
     }
 
     /**
@@ -721,6 +776,21 @@ public class Features extends Library {
     }
 
     /**
+     * This feature calculator searches for different peaks. To do so, the time series is smoothed by a ricker
+     * wavelet and for widths ranging from 1 to maxW. This feature calculator returns the number of peaks that occur at
+     * enough width scales and with sufficiently high Signal-to-Noise-Ratio (SNR).
+     *
+     * @param arr  Array containing the input time series.
+     * @param maxW The maximum width to consider.
+     * @return The number of peaks for each time series.
+     */
+    public static Array numberCwtPeaks(Array arr, int maxW) {
+        long[] refs = numberCwtPeaks(arr.getReference(), maxW);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
      * Calculates the number of peaks of at least support \(n\) in the time series \(arr\). A peak of support
      * \(n\) is defined as a subsequence of \(arr\) where a value occurs, which is bigger than
      * its \(n\) neighbours to the left and to the right.
@@ -733,6 +803,38 @@ public class Features extends Library {
         long[] refs = numberPeaks(arr.getReference(), n);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates the value of the partial autocorrelation function at the given lag. The lag \(k\) partial
+     * autocorrelation of a time series \(\lbrace x_t, t = 1 \ldots T \rbrace\) equals the partial correlation of
+     * \(x_t\) and \(x_{t-k}\), adjusted for the intermediate variables \(\lbrace x_{t-1}, \ldots, x_{t-k+1}
+     * \rbrace\) ([1]). Following [2], it can be defined as:
+     * <p>
+     * \[
+     * \alpha_k = \frac{ Cov(x_t, x_{t-k} | x_{t-1}, \ldots, x_{t-k+1})}
+     * {\sqrt{ Var(x_t | x_{t-1}, \ldots, x_{t-k+1}) Var(x_{t-k} | x_{t-1}, \ldots, x_{t-k+1} )}}
+     * \]
+     * with (a) \(x_t = f(x_{t-1}, \ldots, x_{t-k+1})\) and (b) \( x_{t-k} = f(x_{t-1}, \ldots, x_{t-k+1})\)
+     * being AR(k-1) models that can be fitted by OLS. Be aware that in (a), the regression is done on past values to
+     * predict \( x_t \) whereas in (b), future values are used to calculate the past value \(x_{t-k}\).
+     * It is said in [1] that "for an AR(p), the partial autocorrelations \( \alpha_k \) will be nonzero for \( k<=p \)
+     * and zero for \( k>p \)."
+     * With this property, it is used to determine the lag of an AR-Process.
+     * <p>
+     * [1] Box, G. E., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015).
+     * Time series analysis: forecasting and control. John Wiley & Sons.
+     * [2] https://onlinecourses.science.psu.edu/stat510/node/62
+     *
+     * @param arr     Array containing the input time series.
+     * @param arrLags Array containing the lags to be calculated.
+     * @return Returns the partial autocorrelation for each time series for the given lags.
+     */
+    public static Array partialAutocorrelation(Array arr, Array arrLags) {
+        long[] refs = partialAutocorrelation(arr.getReference(), arrLags.getReference());
+        arr.setReference(refs[0]);
+        arrLags.setReference(refs[1]);
+        return new Array(refs[2]);
     }
 
     /**
@@ -749,6 +851,24 @@ public class Features extends Library {
      */
     public static Array percentageOfReoccurringDatapointsToAllDatapoints(Array arr, boolean isSorted) {
         long[] refs = percentageOfReoccurringDatapointsToAllDatapoints(arr.getReference(), isSorted);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates the percentage of unique values, that are present in the time series more than once.
+     * \[
+     * \frac{\textit{number of data points occurring more than once}}{\textit{number of all data points})}
+     * \]
+     * This means the percentage is normalized to the number of unique values, in contrast to the
+     * percentageOfReoccurringDatapointsToAllDatapoints.
+     *
+     * @param arr      Array containing the input time series.
+     * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
+     * @return Returns the percentage of unique values, that are present in the time series more than once.
+     */
+    public static Array percentageOfReoccurringValuesToAllValues(Array arr, boolean isSorted) {
+        long[] refs = percentageOfReoccurringValuesToAllValues(arr.getReference(), isSorted);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
@@ -780,6 +900,20 @@ public class Features extends Library {
     }
 
     /**
+     * Counts observed values within the interval [min, max).
+     *
+     * @param arr Array containing the input time series.
+     * @param min Value that sets the lower limit.
+     * @param max Value that sets the upper limit.
+     * @return Values at the given range.
+     */
+    public static Array rangeCount(Array arr, float min, float max) {
+        long[] refs = rangeCount(arr.getReference(), min, max);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
      * Calculates the ratio of values that are more than  \(r*std(x)\] (so \(r\) sigma) away from the mean of
      * \(x\).
      *
@@ -789,8 +923,24 @@ public class Features extends Library {
      * \(x\).
      */
     public static Array ratioBeyondRSigma(Array arr, float r) {
-
         long[] refs = ratioBeyondRSigma(arr.getReference(), r);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates a factor which is 1 if all values in the time series occur only once, and below one if this is
+     * not the case. In principle, it just returns:
+     * <p>
+     * \[
+     * \frac{\textit{number_unique_values}}{\textit{number_values}}
+     * \]
+     *
+     * @param arr Array containing the input time series.
+     * @return The ratio of unique values with respect to the total number of values.
+     */
+    public static Array ratioValueNumberToTimeSeriesLength(Array arr) {
+        long[] refs = ratioValueNumberToTimeSeriesLength(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
@@ -823,6 +973,28 @@ public class Features extends Library {
      */
     public static Array skewness(Array arr) {
         long[] refs = skewness(arr.getReference());
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Estimates the cross power spectral density of the time series array at different frequencies. To do so, the
+     * time series is first shifted from the time domain to the frequency domain.
+     * <p>
+     * Welch's method computes an estimate of the power spectral density by dividing the data into overlapping
+     * segments, computing a modified periodogram for each segment and averaging the periodograms.
+     * [1] P. Welch, "The use of the fast Fourier transform for the estimation of power spectra: A method based on time
+     * averaging over short, modified periodograms", IEEE Trans. Audio Electroacoust. vol. 15, pp. 70-73, 1967.
+     * [2] M.S. Bartlett, "Periodogram Analysis and Continuous Spectra", Biometrika, vol. 37, pp. 1-16, 1950.
+     * [3] Rabiner, Lawrence R., and B. Gold. "Theory and Application of Digital Signal Processing" Prentice-Hall, pp.
+     * 414-419, 1975.
+     *
+     * @param arr   Array containing the input time series.
+     * @param coeff The coefficient to be returned.
+     * @return Array containing the power spectrum of the different frequencies for each time series in array.
+     */
+    public static Array spktWelchDensity(Array arr, int coeff) {
+        long[] refs = spktWelchDensity(arr.getReference(), coeff);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
@@ -863,6 +1035,43 @@ public class Features extends Library {
     }
 
     /**
+     * Calculates the sum of all values, that are present in the time series more than once.
+     *
+     * @param arr Array containing the input time series.
+     * @return Array containing the the sum of all values, that are present in the time series more than once.
+     */
+    public static Array sumOfReoccurringValues(Array arr) {
+        long[] refs = sumOfReoccurringValues(arr.getReference(), false);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates the sum of all values, that are present in the time series more than once.
+     *
+     * @param arr      Array containing the input time series.
+     * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
+     * @return Array containing the the sum of all values, that are present in the time series more than once.
+     */
+    public static Array sumOfReoccurringValues(Array arr, boolean isSorted) {
+        long[] refs = sumOfReoccurringValues(arr.getReference(), isSorted);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates the sum over the time series array.
+     *
+     * @param arr Array containing the input time series.
+     * @return Srray containing the sum of values in each time series.
+     */
+    public static Array sumValues(Array arr) {
+        long[] refs = sumValues(arr.getReference());
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
      * Calculates if the distribution of arr *looks symmetric*. This is the case if
      * \[
      * | mean(arr)-median(arr)| < r * (max(arr)-min(arr))
@@ -879,6 +1088,31 @@ public class Features extends Library {
     }
 
     /**
+     * This function calculates the value of:
+     * \[
+     * \frac{1}{n-2lag} \sum_{i=0}^{n-2lag} x_{i + 2 \cdot lag}^2 \cdot x_{i + lag} - x_{i + lag} \cdot  x_{i}^2
+     * \]
+     * which is
+     * \[
+     * \mathbb{E}[L^2(X)^2 \cdot L(X) - L(X) \cdot X^2]
+     * \]
+     * where \f$ \mathbb{E} \f$ is the mean and \f$ L \f$ is the lag operator. It was proposed in [1] as a promising
+     * feature to extract from time series.
+     * <p>
+     * [1] Fulcher, B.D., Jones, N.S. (2014). Highly comparative feature-based time-series classification.
+     * Knowledge and Data Engineering, IEEE Transactions on 26, 3026–3037.
+     *
+     * @param arr Array containing the input time series.
+     * @param lag The lag to be computed.
+     * @return An array containing the time reversal asymetry statistic value in each time series.
+     */
+    public static Array timeReversalAsymmetryStatistic(Array arr, int lag) {
+        long[] refs = timeReversalAsymmetryStatistic(arr.getReference(), lag);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
      * Counts occurrences of value in the time series arr.
      *
      * @param arr Array containing the input time series.
@@ -887,6 +1121,31 @@ public class Features extends Library {
      */
     public static Array valueCount(Array arr, float v) {
         long[] refs = valueCount(arr.getReference(), v);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Computes the variance for the time series array.
+     *
+     * @param arr Array containing the input time series.
+     * @return An array containing the variance in each time series.
+     */
+    public static Array variance(Array arr) {
+        long[] refs = variance(arr.getReference());
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates if the variance of array is greater than the standard deviation. In other words, if the variance of
+     * array is larger than 1.
+     *
+     * @param arr Array containing the input time series.
+     * @return An array denoting if the variance of array is greater than the standard deviation.
+     */
+    public static Array varianceLargerThanStandardDeviation(Array arr) {
+        long[] refs = varianceLargerThanStandardDeviation(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
