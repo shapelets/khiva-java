@@ -9,10 +9,6 @@
 
 package tsa;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Arrays;
-
 public class Normalization extends Library {
 
     private native static long[] znorm(long ref, double epsilon);

@@ -73,6 +73,7 @@ public class FloatComplex {
      *
      * @return String with the Object representation.
      */
+    @Override
     public String toString() {
         String str = String.valueOf(real);
 
@@ -80,5 +81,20 @@ public class FloatComplex {
         else str = str + " + ";
 
         return str + String.valueOf(Math.abs(imag)) + "i";
+    }
+
+    /**
+     * equals function.
+     *
+     * @return True if obj is an instance of this class and the values are equal to the ones of the current object.
+     * False otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        FloatComplex fc = null;
+        if(obj instanceof FloatComplex) {
+            fc = (FloatComplex) obj;
+        }
+        return fc != null && this.real == fc.real && this.imag == fc.imag;
     }
 }

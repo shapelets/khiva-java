@@ -86,8 +86,8 @@ public class MatrixTest {
         Array[] stompResult = Matrix.stomp(a, b, 3);
         Array[] findMotifs = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 2);
 
-        int[] subsequenceIndex = findMotifs[1].getData();
-        Assert.assertEquals(subsequenceIndex[0], 9, DELTA);
-        Assert.assertEquals(subsequenceIndex[1], 4, DELTA);
+        int[] subsequenceIndex = findMotifs[2].getData();
+        Assert.assertEquals(subsequenceIndex[0], 0, DELTA);
+        Assert.assertEquals(subsequenceIndex[1], 9, DELTA);
     }
 }

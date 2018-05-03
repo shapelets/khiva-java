@@ -73,6 +73,7 @@ public class DoubleComplex {
      *
      * @return String with the Object representation.
      */
+    @Override
     public String toString() {
         String str = String.valueOf(real);
 
@@ -80,5 +81,20 @@ public class DoubleComplex {
         else str = str + " + ";
 
         return str + String.valueOf(Math.abs(imag)) + "i";
+    }
+
+    /**
+     * equals function.
+     *
+     * @return True if obj is an instance of this class and the values are equal to the ones of the current object.
+     * False otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        DoubleComplex dc = null;
+        if(obj instanceof DoubleComplex) {
+            dc = (DoubleComplex) obj;
+        }
+        return dc != null && this.real == dc.real && this.imag == dc.imag;
     }
 }

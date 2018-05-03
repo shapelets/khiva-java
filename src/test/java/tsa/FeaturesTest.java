@@ -761,9 +761,9 @@ public class FeaturesTest {
         double[] tss = {0, 1, 1, 3, 4, 5, 6, 7, 8, 9, 0, 1, 1, 3, 4, 5, 6, 7, 8, 9};
         long[] dims = {10, 2, 1, 1};
         Array a = new Array(tss, dims);
-        double[] result = Features.spktWelchDensity(a, 0).getData();
-        Assert.assertEquals(result[0], 3.3333334922790527, DELTA);
-        Assert.assertEquals(result[1], 3.3333334922790527, DELTA);
+        float[] result = Features.spktWelchDensity(a, 0).getData();
+        Assert.assertEquals(result[0], 1.6666667461395264, DELTA);
+        Assert.assertEquals(result[1], 1.6666667461395264, DELTA);
     }
 
     @Test
