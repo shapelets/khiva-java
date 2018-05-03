@@ -15,13 +15,12 @@ import org.junit.Test;
 
 public class FeaturesTest {
     private static final double DELTA = 1e-6;
-    private float[] timeseries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-    private long[] dims = {6, 2, 1, 1};
-
 
     @Test
     public void testCidCe() throws Exception {
-        Array arrayOfTimeSeries = new Array(timeseries, dims);
+        float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        long[] dims = {6, 2, 1, 1};
+        Array arrayOfTimeSeries = new Array(timeSeries, dims);
 
         float[] cidCe = Features.cidCe(arrayOfTimeSeries, true).getData();
         Assert.assertEquals(cidCe[0], 1.30930734141595, DELTA);
@@ -33,7 +32,9 @@ public class FeaturesTest {
 
     @Test
     public void testC3() throws Exception {
-        Array arrayOfTimeSeries = new Array(timeseries, dims);
+        float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        long[] dims = {6, 2, 1, 1};
+        Array arrayOfTimeSeries = new Array(timeSeries, dims);
 
         float[] c3 = Features.c3(arrayOfTimeSeries, 2).getData();
         Assert.assertEquals(c3[0], 7.5, DELTA);
