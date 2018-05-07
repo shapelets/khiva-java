@@ -71,6 +71,8 @@ public class Library {
 
     private native static int getDeviceCount();
 
+    private native static byte[] version();
+
 
     /**
      * Gets the devices info.
@@ -104,9 +106,7 @@ public class Library {
      * @return The available backends.
      */
     public static int getTSABackends() {
-
         return getBackends();
-
     }
 
     /**
@@ -116,8 +116,6 @@ public class Library {
      */
     public static int getTSADeviceID() {
         return getDeviceID();
-
-
     }
 
     /**
@@ -127,7 +125,6 @@ public class Library {
      */
     public static Backend getTSABackend() {
         return Backend.getBackendFromOrdinal(getBackend());
-
     }
 
     /**
@@ -136,8 +133,11 @@ public class Library {
      * @return The devices count.
      */
     public static int getTSADeviceCount() {
-
         return getDeviceCount();
+    }
+
+    public static String getTSAVersion() {
+        return new String(version());
     }
 
 }

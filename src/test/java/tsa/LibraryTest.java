@@ -23,7 +23,6 @@ public class LibraryTest {
 
 
         if (cuda != 0) {
-
             Library.setTSABackend(Library.Backend.TSA_BACKEND_CUDA);
             Assert.assertEquals(Library.getTSABackend(), Library.Backend.TSA_BACKEND_CUDA);
         }
@@ -47,7 +46,6 @@ public class LibraryTest {
 
         if (cuda != 0) {
             Library.setTSABackend(Library.Backend.TSA_BACKEND_CUDA);
-
             for (int i = 0; i < Library.getTSADeviceCount(); i++) {
                 Library.setTSADevice(i);
                 Assert.assertEquals(Library.getTSADeviceID(), i);
@@ -55,7 +53,6 @@ public class LibraryTest {
 
         }
         if (opencl != 0) {
-
             Library.setTSABackend(Library.Backend.TSA_BACKEND_OPENCL);
             for (int i = 0; i < Library.getTSADeviceCount(); i++) {
                 Library.setTSADevice(i);
@@ -69,5 +66,10 @@ public class LibraryTest {
                 Assert.assertEquals(Library.getTSADeviceID(), i);
             }
         }
+    }
+
+    @Test
+    public void testGetTSAVersion() {
+        Assert.assertEquals(Library.getTSAVersion(), "0.0.1");
     }
 }
