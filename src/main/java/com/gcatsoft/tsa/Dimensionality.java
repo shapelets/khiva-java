@@ -7,7 +7,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 public class Dimensionality extends Library {
 
@@ -29,7 +29,7 @@ public class Dimensionality extends Library {
      * [1] Urs Ramer, "An iterative procedure for the polygonal approximation of plane curves", Computer Graphics and
      * Image Processing, 1(3), 244–256 (1972) doi:10.1016/S0146-664X(72)80017-0.
      * <p>
-     * [2] David Douglas & Thomas Peucker, "Algorithms for the reduction of the number of points required to represent a
+     * [2] David Douglas {@literal &} Thomas Peucker, "Algorithms for the reduction of the number of points required to represent a
      * digitized line or its caricature", The Canadian Cartographer 10(2), 112–122 (1973)
      * doi:10.3138/FM57-6770-U75U-7727
      *
@@ -93,7 +93,7 @@ public class Dimensionality extends Library {
      * data-structures and string-manipulation algorithms in computer science such as hashing, regular expression, pattern
      * matching, suffix trees, and grammatical inference.
      * <p>
-     * [1] Lin, J., Keogh, E., Lonardi, S. & Chiu, B. (2003) A Symbolic Representation of Time Series, with Implications for
+     * [1] Lin, J., Keogh, E., Lonardi, S. {@literal &} Chiu, B. (2003) A Symbolic Representation of Time Series, with Implications for
      * Streaming Algorithms. In proceedings of the 8th ACM SIGMOD Workshop on Research Issues in Data Mining and Knowledge
      * Discovery. San Diego, CA. June 13.
      *

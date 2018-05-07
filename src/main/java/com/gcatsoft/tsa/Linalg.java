@@ -7,9 +7,7 @@
  *
  */
 
-package tsa;
-
-import org.apache.commons.lang3.ArrayUtils;
+package com.gcatsoft.tsa;
 
 public class Linalg extends Library {
 

@@ -7,7 +7,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 import org.junit.Assert;
 import org.junit.Test;

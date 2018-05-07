@@ -7,7 +7,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 public class Features extends Library {
 
@@ -818,12 +818,12 @@ public class Features extends Library {
      * with (a) \(x_t = f(x_{t-1}, \ldots, x_{t-k+1})\) and (b) \( x_{t-k} = f(x_{t-1}, \ldots, x_{t-k+1})\)
      * being AR(k-1) models that can be fitted by OLS. Be aware that in (a), the regression is done on past values to
      * predict \( x_t \) whereas in (b), future values are used to calculate the past value \(x_{t-k}\).
-     * It is said in [1] that "for an AR(p), the partial autocorrelations \( \alpha_k \) will be nonzero for \( k<=p \)
-     * and zero for \( k>p \)."
+     * It is said in [1] that "for an AR(p), the partial autocorrelations \( \alpha_k \) will be nonzero for
+     * \( k \leq p \) and zero for \( k&gt;p \)."
      * With this property, it is used to determine the lag of an AR-Process.
      * <p>
-     * [1] Box, G. E., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015).
-     * Time series analysis: forecasting and control. John Wiley & Sons.
+     * [1] Box, G. E., Jenkins, G. M., Reinsel, G. C., {@literal &} Ljung, G. M. (2015).
+     * Time series analysis: forecasting and control. John Wiley {@literal &} Sons.
      * [2] https://onlinecourses.science.psu.edu/stat510/node/62
      *
      * @param arr     Array containing the input time series.
@@ -949,10 +949,10 @@ public class Features extends Library {
      * Calculates a vectorized sample entropy algorithm.
      * https://en.wikipedia.org/wiki/Sample_entropy
      * https://www.ncbi.nlm.nih.gov/pubmed/10843903?dopt=Abstract
-     * For short time-series this method is highly dependent on the parameters, but should be stable for N > 2000,
+     * For short time-series this method is highly dependent on the parameters, but should be stable for N &gt; 2000,
      * see: Yentes et al. (2012) - The Appropriate Use of Approximate Entropy and Sample Entropy with Short Data Sets
      * Other shortcomings and alternatives discussed in:
-     * Richman & Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy.
+     * Richman {@literal &} Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy.
      *
      * @param arr Array containing the input time series.
      * @return An array with the same dimensions as arr, whose values (time series in dimension 0)
@@ -1074,7 +1074,7 @@ public class Features extends Library {
     /**
      * Calculates if the distribution of arr *looks symmetric*. This is the case if
      * \[
-     * | mean(arr)-median(arr)| < r * (max(arr)-min(arr))
+     * | mean(arr)-median(arr)| &lt; r * (max(arr)-min(arr))
      * \]
      *
      * @param arr Array containing the input time series.

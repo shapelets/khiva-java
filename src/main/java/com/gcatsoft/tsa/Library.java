@@ -8,7 +8,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 /**
  * Library class for loading the C++ Library Library, gets information and sets devices and back-end.

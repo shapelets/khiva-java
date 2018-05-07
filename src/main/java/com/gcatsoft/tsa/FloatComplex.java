@@ -7,17 +7,17 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
-public class DoubleComplex {
-    private double real;
-    private double imag;
+public class FloatComplex {
+    private float real;
+    private float imag;
 
-    public DoubleComplex(double re, double im) {
+    public FloatComplex(float re, float im) {
         set(re, im);
     }
 
-    public DoubleComplex() {
+    public FloatComplex() {
         set(0, 0);
     }
 
@@ -27,7 +27,7 @@ public class DoubleComplex {
      * @param re Real value.
      * @param im Imaginary value.
      */
-    public void set(double re, double im) {
+    public void set(float re, float im) {
         real = re;
         imag = im;
     }
@@ -37,7 +37,7 @@ public class DoubleComplex {
      *
      * @param re Real value.
      */
-    public void setReal(double re) {
+    public void setReal(float re) {
         real = re;
     }
 
@@ -46,7 +46,7 @@ public class DoubleComplex {
      *
      * @param im Imaginary value.
      */
-    public void setImag(double im) {
+    public void setImag(float im) {
         imag = im;
     }
 
@@ -55,7 +55,7 @@ public class DoubleComplex {
      *
      * @return The real value.
      */
-    public double getReal() {
+    public float getReal() {
         return real;
     }
 
@@ -64,7 +64,7 @@ public class DoubleComplex {
      *
      * @return The imaginary value.
      */
-    public double getImag() {
+    public float getImag() {
         return imag;
     }
 
@@ -91,10 +91,10 @@ public class DoubleComplex {
      */
     @Override
     public boolean equals(Object obj) {
-        DoubleComplex dc = null;
-        if(obj instanceof DoubleComplex) {
-            dc = (DoubleComplex) obj;
+        FloatComplex fc = null;
+        if(obj instanceof FloatComplex) {
+            fc = (FloatComplex) obj;
         }
-        return dc != null && this.real == dc.real && this.imag == dc.imag;
+        return fc != null && this.real == fc.real && this.imag == fc.imag;
     }
 }

@@ -7,7 +7,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 public class Normalization extends Library {
 

@@ -7,7 +7,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 public class Regularization extends Library {
 

@@ -7,7 +7,7 @@
  *
  */
 
-package tsa;
+package com.gcatsoft.tsa;
 
 public class Array extends Library implements AutoCloseable {
 
@@ -265,6 +265,8 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param dims The dimensions.
      * @return The dim4.
+     * @throws java.lang.Exception When the input parameter is null or the length is greater than 4, because ArrayFire
+     *                             supports up to 4 dimension.
      */
     protected static long[] dim4(long[] dims) throws Exception {
 
@@ -284,6 +286,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Gets the data stored in the array.
      *
+     * @param <Any> The data type to be returned.
      * @return The data to an array of its type.
      */
     public <Any> Any getData() {
