@@ -15,6 +15,9 @@ public class Distances {
 
     private native static long[] squaredEuclidean(long ref);
 
+    private native static long[] dtw(long ref);
+
+
     /**
      * Calculates euclidean distances between time series.
      *
@@ -39,6 +42,21 @@ public class Distances {
      */
     public static Array squaredEuclidean(Array tss) {
         long[] refs = squaredEuclidean(tss.getReference());
+        tss.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates the Dynamic Time Warping Distance.
+     *
+     * @param tss Expects an input array whose dimension zero is the length of the time series (all the same) and
+     *            dimension one indicates the number of time series.
+     * @return Array with an An upper triangular matrix where each position corresponds to the distance between
+     * two time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the
+     * distance between time series 0 and time series 1.
+     */
+    public static Array dtw(Array tss) {
+        long[] refs = dtw(tss.getReference());
         tss.setReference(refs[0]);
         return new Array(refs[1]);
     }

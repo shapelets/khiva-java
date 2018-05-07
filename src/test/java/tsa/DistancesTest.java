@@ -50,4 +50,17 @@ public class DistancesTest {
         Assert.assertEquals(result[8], 0, DELTA);
     }
 
+    @Test
+    public void testDwt() throws Exception {
+        float[] timeSeries = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
+        long[] dims = {5, 5, 1, 1};
+        Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        Array resultArray = Distances.dtw(arrayOfTimeSeries);
+        float[] result = resultArray.getData();
+        float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 10, 5, 0, 0, 0, 15, 10, 5, 0, 0, 20, 15, 10, 5, 0};
+        Assert.assertEquals(expectedResult.length, result.length, DELTA) ;
+        for(int i = 0; i<result.length; i++) {
+            Assert.assertEquals(expectedResult[i], result[i], DELTA);
+        }
+    }
 }
