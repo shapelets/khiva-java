@@ -9,7 +9,7 @@
 
 package com.gcatsoft.tsa;
 
-public class Regression {
+public class Regression extends Library {
 
     private native static long[] linear(long xssRef, long yssRef);
 

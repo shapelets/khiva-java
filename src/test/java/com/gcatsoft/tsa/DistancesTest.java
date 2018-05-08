@@ -63,4 +63,30 @@ public class DistancesTest {
             Assert.assertEquals(expectedResult[i], result[i], DELTA);
         }
     }
+
+    @Test
+    public void testHamming() throws Exception {
+        float[] timeSeries = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
+        long[] dims = {5, 5, 1, 1};
+        Array a = new Array(timeSeries, dims);
+        float[] result = Distances.hamming(a).getData();
+        float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 5, 0, 0, 0, 5, 5, 5, 0, 0, 5, 5, 5, 5, 0};
+        Assert.assertEquals(expectedResult.length, result.length, DELTA) ;
+        for(int i = 0; i<result.length; i++) {
+            Assert.assertEquals(expectedResult[i], result[i], DELTA);
+        }
+    }
+
+    @Test
+    public void testManhattan() throws Exception {
+        float[] timeSeries = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
+        long[] dims = {5, 5, 1, 1};
+        Array a = new Array(timeSeries, dims);
+        float[] result = Distances.manhattan(a).getData();
+        float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 10, 5, 0, 0, 0, 15, 10, 5, 0, 0, 20, 15, 10, 5, 0};
+        Assert.assertEquals(expectedResult.length, result.length, DELTA) ;
+        for(int i = 0; i<result.length; i++) {
+            Assert.assertEquals(expectedResult[i], result[i], DELTA);
+        }
+    }
 }

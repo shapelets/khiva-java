@@ -23,52 +23,31 @@ public class Normalization extends Library {
 
     private native static long decimalScalingNormInPlace(long ref);
 
-    /**
-     * Calculates a new set of time series with zero mean and standard deviation one.
-     *
-     * @param arr Array containing the input time series.
-     * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
-     * one as standard deviation.
-     */
-    public static Array znorm(Array arr) {
-        return znorm(arr, 0.00000001);
-    }
+    private native static long[] meanNorm(long ref);
+
+    private native static long meanNormInPlace(long ref);
+
 
     /**
-     * Calculates a new set of time series with zero mean and standard deviation one.
+     * Normalizes the given time series according to its maximum value and adjusts each value within the range (-1, 1).
      *
-     * @param arr     Array containing the input time series.
-     * @param epsilon Minimum standard deviation to consider.  It acts a a gatekeeper for
-     *                those time series that may be constant or near constant.
-     * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
-     * one as standard deviation.
+     * @param arr Array containing the input time series.
+     * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have been normalized by
+     * dividing each number by \(10^j\), where j is the number of integer digits of the max number in the time series.
      */
-    public static Array znorm(Array arr, double epsilon) {
-        long[] refs = znorm(arr.getReference(), epsilon);
+    public static Array decimalScalingNorm(Array arr) {
+        long[] refs = decimalScalingNorm(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
 
     /**
-     * Adjusts the time series in the given input and performs z-norm
-     * inplace (without allocating further memory).
+     * Same as decimalScalingNorm, but it performs the operation in place, without allocating further memory.
      *
      * @param arr Array containing the input time series.
      */
-    public static void znormInPlace(Array arr) {
-        znormInPlace(arr, 0.00000001);
-    }
-
-    /**
-     * Adjusts the time series in the given input and performs z-norm
-     * inplace (without allocating further memory).
-     *
-     * @param arr     Array containing the input time series.
-     * @param epsilon epsilon Minimum standard deviation to consider.  It acts as a gatekeeper for
-     *                those time series that may be constant or near constant.
-     */
-    public static void znormInPlace(Array arr, double epsilon) {
-        long ref = znormInPlace(arr.getReference(), epsilon);
+    public static void decimalScalingNormInPlace(Array arr) {
+        long ref = decimalScalingNormInPlace(arr.getReference());
         arr.setReference(ref);
     }
 
@@ -174,26 +153,83 @@ public class Normalization extends Library {
     }
 
     /**
-     * Normalizes the given time series according to its maximum value and adjusts each value within the range (-1, 1).
+     * Normalizes the given time series according to its maximum-minimum value and its mean. It follows the following
+     * formulae:
+     * \[
+     * \acute{x} = \frac{x - mean(x)}{max(x) - min(x)}.
+     * \]
      *
      * @param arr Array containing the input time series.
-     * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have been normalized by
-     * dividing each number by 10^j, where j is the number of integer digits of the max number in the time
-     * series.
+     * @return An array with the same dimensions as tss, whose values (time series in dimension 0) have been
+     * normalized by substracting the mean from each number and dividing each number by \(max(x) - min(x)\), in the
+     * time series.
      */
-    public static Array decimalScalingNorm(Array arr) {
-        long[] refs = decimalScalingNorm(arr.getReference());
+    public static Array meanNorm(Array arr) {
+        long[] refs = meanNorm(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
     }
 
     /**
-     * Same as decimalScalingNorm, but it performs the operation in place, without allocating further memory.
+     * Normalizes the given time series according to its maximum-minimum value and its mean. It follows the following
+     * formulae:
+     * \[
+     * \acute{x} = \frac{x - mean(x)}{max(x) - min(x)}.
+     * \]
      *
      * @param arr Array containing the input time series.
      */
-    public static void decimalScalingNormInPlace(Array arr) {
-        long ref = decimalScalingNormInPlace(arr.getReference());
+    public static void meanNormInPlace(Array arr) {
+        long ref = meanNormInPlace(arr.getReference());
+        arr.setReference(ref);
+    }
+
+    /**
+     * Calculates a new set of time series with zero mean and standard deviation one.
+     *
+     * @param arr Array containing the input time series.
+     * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
+     * one as standard deviation.
+     */
+    public static Array znorm(Array arr) {
+        return znorm(arr, 0.00000001);
+    }
+
+    /**
+     * Calculates a new set of time series with zero mean and standard deviation one.
+     *
+     * @param arr     Array containing the input time series.
+     * @param epsilon Minimum standard deviation to consider. It acts a a gatekeeper for
+     *                those time series that may be constant or near constant.
+     * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
+     * one as standard deviation.
+     */
+    public static Array znorm(Array arr, double epsilon) {
+        long[] refs = znorm(arr.getReference(), epsilon);
+        arr.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Adjusts the time series in the given input and performs z-norm
+     * in place (without allocating further memory).
+     *
+     * @param arr Array containing the input time series.
+     */
+    public static void znormInPlace(Array arr) {
+        znormInPlace(arr, 0.00000001);
+    }
+
+    /**
+     * Adjusts the time series in the given input and performs z-norm
+     * in place (without allocating further memory).
+     *
+     * @param arr     Array containing the input time series.
+     * @param epsilon epsilon Minimum standard deviation to consider. It acts as a gatekeeper for
+     *                those time series that may be constant or near constant.
+     */
+    public static void znormInPlace(Array arr, double epsilon) {
+        long ref = znormInPlace(arr.getReference(), epsilon);
         arr.setReference(ref);
     }
 }

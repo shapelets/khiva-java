@@ -9,7 +9,7 @@
 
 package com.gcatsoft.tsa;
 
-public class Statistics {
+public class Statistics extends Library {
 
     private native static long[] covariance(long ref, boolean unbiased);
 

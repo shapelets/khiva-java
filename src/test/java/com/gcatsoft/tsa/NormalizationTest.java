@@ -62,7 +62,7 @@ public class NormalizationTest {
         long[] dims = {4, 2, 1, 1};
         Array a = new Array(tss, dims);
         Normalization.maxMinNormInPlace(a, 2.0, 1.0);
-        double [] result = a.getData();
+        double[] result = a.getData();
         double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
         Assert.assertArrayEquals(result, expected, DELTA);
     }
@@ -83,8 +83,36 @@ public class NormalizationTest {
         long[] dims = {4, 2, 1, 1};
         Array a = new Array(tss, dims);
         Normalization.decimalScalingNormInPlace(a);
-        double [] result = a.getData();
+        double[] result = a.getData();
         double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
         Assert.assertArrayEquals(result, expected, DELTA);
     }
+
+    @Test
+    public void testMeanNorm() throws Exception {
+        float[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        float[] result = Normalization.meanNorm(a).getData();
+        float[] expectedResult = {-0.5f, -0.166666667f, 0.166666667f, 0.5f, -0.5f, -0.166666667f, 0.166666667f, 0.5f};
+        Assert.assertEquals(expectedResult.length, result.length, DELTA);
+        for (int i = 0; i < result.length; i++) {
+            Assert.assertEquals(expectedResult[i], result[i], DELTA);
+        }
+    }
+
+    @Test
+    public void testMeanNormInPlace() throws Exception {
+        float[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
+        long[] dims = {4, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        Normalization.meanNormInPlace(a);
+        float[] result = a.getData();
+        float[] expectedResult = {-0.5f, -0.166666667f, 0.166666667f, 0.5f, -0.5f, -0.166666667f, 0.166666667f, 0.5f};
+        Assert.assertEquals(expectedResult.length, result.length, DELTA);
+        for (int i = 0; i < result.length; i++) {
+            Assert.assertEquals(expectedResult[i], result[i], DELTA);
+        }
+    }
+
 }
