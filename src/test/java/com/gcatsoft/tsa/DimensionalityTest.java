@@ -65,7 +65,7 @@ public class DimensionalityTest {
         long[] dims = {10, 2, 1, 1};
         Array a = new Array(tss, dims);
         float[] result = Dimensionality.pip(a, 6).getData();
-        float[] expected = {0.0f, 2.0f, 4.0f, 5.0f, 6.0f, 9.0f, 0.0f, -0.1f, 6.0f, 7.0f, 8.1f, 9.0f};
+        float[] expected = {0.0f, 2.0f, 3.0f, 6.0f, 7.0f, 9.0f, 0.0f, -0.1f, 5.0f, 8.1f, 9.0f, 9.0f};
         Assert.assertArrayEquals(result, expected, 1e-6f);
     }
 }
