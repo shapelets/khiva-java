@@ -68,4 +68,26 @@ public class DimensionalityTest {
         float[] expected = {0.0f, 2.0f, 3.0f, 6.0f, 7.0f, 9.0f, 0.0f, -0.1f, 5.0f, 8.1f, 9.0f, 9.0f};
         Assert.assertArrayEquals(result, expected, 1e-6f);
     }
+
+    @Test
+    public void testPLABottomUp() throws Exception {
+        float[] tss = {0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 0.0f, 0.1f, -0.1f, 5.0f, 6.0f, 7.0f,
+                8.1f, 9.0f, 9.0f, 9.0f};
+        long[] dims = {10, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        float[] result = Dimensionality.PLABottomUp(a, 1f).getData();
+        float[] expected = {0f, 1f, 2f, 3f, 4f, 7f, 8f, 9f, 0f, 0.1f, -0.1f, 5f, 6f, 9f, 9f, 9f};
+        Assert.assertArrayEquals(result, expected, 1e-6f);
+    }
+
+    @Test
+    public void testPLASlidingWindow() throws Exception {
+        float[] tss = {0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 0.0f, 0.1f, -0.1f, 5.0f, 6.0f, 7.0f,
+                8.1f, 9.0f, 9.0f, 9.0f};
+        long[] dims = {10, 2, 1, 1};
+        Array a = new Array(tss, dims);
+        float[] result = Dimensionality.PLASlidingWindow(a, 1f).getData();
+        float[] expected = {0f, 2f, 3f, 7f, 8f, 9f, 0f, -0.1f, 5f, 9f, 9f, 9f};
+        Assert.assertArrayEquals(result, expected, 1e-6f);
+    }
 }
