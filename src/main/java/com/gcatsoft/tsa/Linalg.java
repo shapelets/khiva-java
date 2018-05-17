@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Linear Algebra class containing linear algebra methods.
+ */
 public class Linalg extends Library {
 
     private native static long[] lls(long refA, long refB);

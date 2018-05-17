@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Statistics class containing statistics methods.
+ */
 public class Statistics extends Library {
 
     private native static long[] covariance(long ref, boolean unbiased);

@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Regression class containing regression methods.
+ */
 public class Regression extends Library {
 
     private native static long[] linear(long xssRef, long yssRef);

@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * DoubleComplex Class.
+ */
 public class DoubleComplex {
     private double real;
     private double imag;

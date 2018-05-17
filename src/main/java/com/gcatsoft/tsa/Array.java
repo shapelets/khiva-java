@@ -9,22 +9,64 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Array Class.
+ */
 public class Array extends Library implements AutoCloseable {
 
     private long reference;
 
+    /**
+     * Data type of the Array
+     */
     public enum Dtype {
+        /**
+         * Floating point of single precision. tsa.dtype.
+         */
         f32,
+        /**
+         * Complex floating point of single precision. tsa.dtype.
+         */
         c32,
+        /**
+         * Floating point of double precision. tsa.dtype.
+         */
         f64,
+        /**
+         * Complex floating point of double precision. tsa.dtype.
+         */
         c64,
+        /**
+         * Boolean. tsa.dtype.
+         */
         b8,
+        /**
+         * 32 bits Int. tsa.dtype.
+         */
         s32,
+        /**
+         * 32 bits Unsigned Int. tsa.dtype.
+         */
         u32,
+        /**
+         * 32 bits Unsigned Int. tsa.dtype.
+         */
         u8,
+        /**
+         * 64 bits Integer. tsa.dtype.
+         */
         s64,
+        /**
+         * 64 bits Unsigned Int. tsa.dtype.
+         */
         u64,
+        /**
+         * 16 bits Int. tsa.dtype.
+         */
         s16,
+        /**
+         * 16 bits Unsigned Int. tsa.dtype.
+         */
         u16
     }
 

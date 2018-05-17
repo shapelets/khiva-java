@@ -11,7 +11,7 @@
 package com.gcatsoft.tsa;
 
 /**
- * Library class for loading the C++ Library Library, gets information and sets devices and back-end.
+ * Class to change internal properties of the TSA library.
  */
 public class Library {
 
@@ -28,18 +28,48 @@ public class Library {
         }
     }
 
+    /**
+     * TSA Backend.
+     */
     public enum Backend {
-        TSA_BACKEND_DEFAULT(0), TSA_BACKEND_CPU(1), TSA_BACKEND_CUDA(2), TSA_BACKEND_OPENCL(4);
+        /**
+         * DEFAULT Backend.
+         */
+        TSA_BACKEND_DEFAULT(0),
+        /**
+         * CPU Backend.
+         */
+        TSA_BACKEND_CPU(1),
+        /**
+         * CUDA Backend.
+         */
+        TSA_BACKEND_CUDA(2),
+        /**
+         * OPENCL Backend.
+         */
+        TSA_BACKEND_OPENCL(4);
+
         private final int ordinal;
 
         Backend(int ordinal) {
             this.ordinal = ordinal;
         }
 
+        /**
+         * Gets the ordinal from the TSA Backend.
+         *
+         * @return The ordinal of the TSA Backend.
+         */
         public int getTSAOrdinal() {
             return ordinal;
         }
 
+        /**
+         * Gets the backend from the ordinal.
+         *
+         * @param ordinal Integer representing the Backend ordinal.
+         * @return The corresponding TSA BACKEND.
+         */
         public static Backend getBackendFromOrdinal(int ordinal) {
             switch (ordinal) {
                 case 0:

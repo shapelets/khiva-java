@@ -9,6 +9,11 @@
 
 package com.gcatsoft.tsa;
 
+
+/**
+ * TSA Features class containing a number of features that can be extracted from time series. All the methods
+ * operate with instances of the ARRAY class as input and output.
+ */
 public class Features extends Library {
 
     private native static long[] absEnergy(long ref);

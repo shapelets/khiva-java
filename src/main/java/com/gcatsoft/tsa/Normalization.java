@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Normalization class containing several normalization methods.
+ */
 public class Normalization extends Library {
 
     private native static long[] znorm(long ref, double epsilon);

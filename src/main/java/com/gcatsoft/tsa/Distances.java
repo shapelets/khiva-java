@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Distances class containing distances methods.
+ */
 public class Distances extends Library {
 
     private native static long[] euclidean(long ref);

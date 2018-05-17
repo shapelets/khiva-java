@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Matrix Profile class containing matrix profile methods.
+ */
 public class Matrix extends Library {
 
     private native static long[] stomp(long a, long b, long m);

@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * FloatComplex Class.
+ */
 public class FloatComplex {
     private float real;
     private float imag;

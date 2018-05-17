@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Polynomial class containing a number of polynomial methods.
+ */
 public class Polynomial extends Library {
 
     private native static long[] polyfit(long refX, long refY, int deg);

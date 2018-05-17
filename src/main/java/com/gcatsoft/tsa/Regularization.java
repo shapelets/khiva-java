@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Regularization class containing different regularization methods.
+ */
 public class Regularization extends Library {
 
     private native static long[] groupBy(long ref, int aggregationFunction, int nColumnsKey, int nColumnsValue);

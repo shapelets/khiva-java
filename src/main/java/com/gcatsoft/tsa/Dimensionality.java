@@ -9,6 +9,9 @@
 
 package com.gcatsoft.tsa;
 
+/**
+ * TSA Dimensionality class containing several dimensionality reduction methods.
+ */
 public class Dimensionality extends Library {
 
     private native static long[] paa(long ref, int bins);
