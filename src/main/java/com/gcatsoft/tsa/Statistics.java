@@ -73,9 +73,7 @@ public class Statistics extends Library {
      * The test statistic is:
      * <p>
      * \[
-     * <p>
-     * Q = n\left(n+2\right)\sum_{k=1}^h\frac{\hat{\rho}^2_k}{n-k} </math>
-     * <p>
+     * Q = n\left(n+2\right)\sum_{k=1}^h\frac{\hat{\rho}^2_k}{n-k}
      * \]
      * <p>
      * where ''n'' is the sample size, \(\hat{\rho}k \) is the sample autocorrelation at lag ''k'', and ''h'' is the
@@ -83,9 +81,7 @@ public class Statistics extends Library {
      * \(\alpha\), the \(critical region\) for rejection of the hypothesis of randomness is:
      * <p>
      * \[
-     * <p>
-     * Q > \chi_{1-\alpha,h}^2
-     * <p>
+     * Q &gt; \chi_{1-\alpha,h}^2
      * \]
      * <p>
      * where \( \chi_{1-\alpha,h}^2 \) is the \(\alpha\)-quantile of the chi-squared distribution with ''h'' degrees of
