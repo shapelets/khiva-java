@@ -22,6 +22,8 @@ public class Statistics extends Library {
 
     private native static long[] kurtosis(long ref);
 
+    private native static long[] ljungBox(long ref, long lags);
+
     private native static long[] skewness(long ref);
 
     private native static long[] quantile(long ref, long refQ, float precision);
@@ -52,31 +54,6 @@ public class Statistics extends Library {
     }
 
     /**
-     * Returns the kth moment of the given time series.
-     *
-     * @param tss Array containing the input time series.
-     * @param k   The specific moment to be calculated.
-     * @return The kth moment of the given time series.
-     */
-    public static Array moment(Array tss, int k) {
-        long[] refs = moment(tss.getReference(), k);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
-    }
-
-    /**
-     * Estimates standard deviation based on a sample. The standard deviation is calculated using the "n-1" method.
-     *
-     * @param tss Array containing the input time series.
-     * @return The sample standard deviation.
-     */
-    public static Array sampleStdev(Array tss) {
-        long[] refs = sampleStdev(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
-    }
-
-    /**
      * Returns the kurtosis of tss (calculated with the adjusted Fisher-Pearson standardized moment coefficient G2).
      *
      * @param tss Array containing the input time series.
@@ -89,14 +66,54 @@ public class Statistics extends Library {
     }
 
     /**
-     * Calculates the sample skewness of tss (calculated with the adjusted Fisher-Pearson standardized moment
-     * coefficient G1).
+     * The Ljung–Box test checks that data whithin the time series are independently distributed (i.e. the correlations in
+     * the population from which the sample is taken are 0, so that any observed correlations in the data result from
+     * randomness of the sampling process). Data are no independently distributed, if they exhibit serial correlation.
+     * <p>
+     * The test statistic is:
+     * <p>
+     * \[
+     * <p>
+     * Q = n\left(n+2\right)\sum_{k=1}^h\frac{\hat{\rho}^2_k}{n-k} </math>
+     * <p>
+     * \]
+     * <p>
+     * where ''n'' is the sample size, \(\hat{\rho}k \) is the sample autocorrelation at lag ''k'', and ''h'' is the
+     * number of lags being tested. Under \( H_0 \) the statistic Q follows a \(\chi^2{(h)} \). For significance level
+     * \(\alpha\), the \(critical region\) for rejection of the hypothesis of randomness is:
+     * <p>
+     * \[
+     * <p>
+     * Q > \chi_{1-\alpha,h}^2
+     * <p>
+     * \]
+     * <p>
+     * where \( \chi_{1-\alpha,h}^2 \) is the \(\alpha\)-quantile of the chi-squared distribution with ''h'' degrees of
+     * freedom.
+     * <p>
+     * [1] G. M. Ljung  G. E. P. Box (1978). On a measure of lack of fit in time series models.
+     * Biometrika, Volume 65, Issue 2, 1 August 1978, Pages 297–303.
+     *
+     * @param tss  Expects an input array whose dimension zero is the length of the time series (all the same) and dimension
+     *             one indicates the number of time series.
+     * @param lags Number of lags being tested.
+     * @return The updated ref and the Ljung-Box statistic test.
+     */
+    public static Array ljungBox(Array tss, long lags) {
+        long[] refs = ljungBox(tss.getReference(), lags);
+        tss.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Returns the kth moment of the given time series.
      *
      * @param tss Array containing the input time series.
-     * @return Array containing the skewness of each time series in tss.
+     * @param k   The specific moment to be calculated.
+     * @return The kth moment of the given time series.
      */
-    public static Array skewness(Array tss) {
-        long[] refs = skewness(tss.getReference());
+    public static Array moment(Array tss, int k) {
+        long[] refs = moment(tss.getReference(), k);
         tss.setReference(refs[0]);
         return new Array(refs[1]);
     }
@@ -153,5 +170,30 @@ public class Statistics extends Library {
         long[] refs = quantilesCut(tss.getReference(), quantiles, precision);
         tss.setReference(refs[0]);
         return new Array((refs[1]));
+    }
+
+    /**
+     * Estimates standard deviation based on a sample. The standard deviation is calculated using the "n-1" method.
+     *
+     * @param tss Array containing the input time series.
+     * @return The sample standard deviation.
+     */
+    public static Array sampleStdev(Array tss) {
+        long[] refs = sampleStdev(tss.getReference());
+        tss.setReference(refs[0]);
+        return new Array(refs[1]);
+    }
+
+    /**
+     * Calculates the sample skewness of tss (calculated with the adjusted Fisher-Pearson standardized moment
+     * coefficient G1).
+     *
+     * @param tss Array containing the input time series.
+     * @return Array containing the skewness of each time series in tss.
+     */
+    public static Array skewness(Array tss) {
+        long[] refs = skewness(tss.getReference());
+        tss.setReference(refs[0]);
+        return new Array(refs[1]);
     }
 }
