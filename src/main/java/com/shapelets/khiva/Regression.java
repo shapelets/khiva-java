@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,10 +7,10 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 /**
- * TSA Regression class containing regression methods.
+ * Khiva Regression class containing regression methods.
  */
 public class Regression extends Library {
 
@@ -22,7 +22,7 @@ public class Regression extends Library {
      *
      * @param xss Array containing the input time series.
      * @param yss Array containing the input time series.
-     * @return An Array of TSA Arrays whose components are:
+     * @return An Array of Khiva Arrays whose components are:
      * {
      * slope Slope of the regression line.
      * intercept Intercept of the regression line.

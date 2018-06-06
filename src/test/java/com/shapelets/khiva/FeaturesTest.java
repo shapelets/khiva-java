@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,7 +7,7 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,8 +58,8 @@ public class FeaturesTest {
     public void testAbsEnergy() throws Exception {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         long[] dims = {10, 1, 1, 1};
-        Array tsa = new Array(tss, dims);
-        Array absEnergy = Features.absEnergy(tsa);
+        Array a = new Array(tss, dims);
+        Array absEnergy = Features.absEnergy(a);
         double[] result = absEnergy.getData();
         Assert.assertEquals(result[0], 385, DELTA);
     }

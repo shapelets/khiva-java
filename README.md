@@ -1,15 +1,15 @@
 # README #
-This is the TSA binding for connecting the Java programming language and the TSA library.
+This is the Khiva binding for connecting the Java programming language and the Khiva library.
 
 ## License
 This project is licensed under [MPL-v2](https://www.mozilla.org/en-US/MPL/2.0/).
  
 ## Quick Summary
-This Java package called 'tsa' provides all the functionalities of the TSA library for time series analytics.
+This Java package called 'khiva' provides all the functionalities of the Khiva library for time series analytics.
 
 ## Requirements
 * Arrayfire
-* TSA library
+* Khiva library
 
 ## Set up
 It is just needed to execute the next command in the root directory of the project:
@@ -37,7 +37,7 @@ mvn javadoc:javadoc
 ### Branching model
 Our branching model has two permanent branches, **develop** and **master**. 
 We aim at using `develop` as the main branch, where all features are merged. 
-In this sense, we use the master branch to push the release versions of the binding for the TSA library.
+In this sense, we use the master branch to push the release versions of the binding for the Khiva library.
 
 ### Contribution process
 In order to contribute to the code base, we follow the next process:

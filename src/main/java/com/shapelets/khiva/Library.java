@@ -1,6 +1,6 @@
 
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,10 +8,10 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 /**
- * Class to change internal properties of the TSA library.
+ * Class to change internal properties of the Khiva library.
  */
 public class Library {
 
@@ -20,34 +20,34 @@ public class Library {
     static {
         OS = System.getProperty("os.name").toLowerCase();
         if (OS.indexOf("mac") >= 0) {
-            System.load("/usr/local/lib/libtsa_jni.dylib");
+            System.load("/usr/local/lib/libkhiva_jni.dylib");
         } else if (OS.indexOf("win") >= 0) {
-            System.load("C:\\Program Files\\TSA\\lib\\tsa_jni.dll");
+            System.load("C:\\Program Files\\Khiva\\v0\\lib\\khiva_jni.dll");
         } else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0) {
-            System.load("/usr/local/lib/libtsa_jni.so");
+            System.load("/usr/local/lib/libkhiva_jni.so");
         }
     }
 
     /**
-     * TSA Backend.
+     * Khiva Backend.
      */
     public enum Backend {
         /**
          * DEFAULT Backend.
          */
-        TSA_BACKEND_DEFAULT(0),
+        KHIVA_BACKEND_DEFAULT(0),
         /**
          * CPU Backend.
          */
-        TSA_BACKEND_CPU(1),
+        KHIVA_BACKEND_CPU(1),
         /**
          * CUDA Backend.
          */
-        TSA_BACKEND_CUDA(2),
+        KHIVA_BACKEND_CUDA(2),
         /**
          * OPENCL Backend.
          */
-        TSA_BACKEND_OPENCL(4);
+        KHIVA_BACKEND_OPENCL(4);
 
         private final int ordinal;
 
@@ -56,11 +56,11 @@ public class Library {
         }
 
         /**
-         * Gets the ordinal from the TSA Backend.
+         * Gets the ordinal from the Khiva Backend.
          *
-         * @return The ordinal of the TSA Backend.
+         * @return The ordinal of the Khiva Backend.
          */
-        public int getTSAOrdinal() {
+        public int getKhivaOrdinal() {
             return ordinal;
         }
 
@@ -68,20 +68,20 @@ public class Library {
          * Gets the backend from the ordinal.
          *
          * @param ordinal Integer representing the Backend ordinal.
-         * @return The corresponding TSA BACKEND.
+         * @return The corresponding Khiva BACKEND.
          */
         public static Backend getBackendFromOrdinal(int ordinal) {
             switch (ordinal) {
                 case 0:
-                    return Backend.TSA_BACKEND_DEFAULT;
+                    return Backend.KHIVA_BACKEND_DEFAULT;
                 case 1:
-                    return Backend.TSA_BACKEND_CPU;
+                    return Backend.KHIVA_BACKEND_CPU;
                 case 2:
-                    return Backend.TSA_BACKEND_CUDA;
+                    return Backend.KHIVA_BACKEND_CUDA;
                 case 4:
-                    return Backend.TSA_BACKEND_OPENCL;
+                    return Backend.KHIVA_BACKEND_OPENCL;
                 default:
-                    return Backend.TSA_BACKEND_DEFAULT;
+                    return Backend.KHIVA_BACKEND_DEFAULT;
             }
         }
     }
@@ -106,25 +106,25 @@ public class Library {
     /**
      * Gets the devices info.
      */
-    public static void infoTSA() {
+    public static void infoKhiva() {
         info();
     }
 
     /**
-     * Sets the TSA back-end.
+     * Sets the Khiva back-end.
      *
-     * @param tsaBE Back-end selected.
+     * @param khivaBE Back-end selected.
      */
-    public static void setTSABackend(Backend tsaBE) {
-        setBackend(tsaBE.getTSAOrdinal());
+    public static void setKhivaBackend(Backend khivaBE) {
+        setBackend(khivaBE.getKhivaOrdinal());
     }
 
     /**
-     * Sets the TSA device.
+     * Sets the Khiva device.
      *
      * @param device Device selected.
      */
-    public static void setTSADevice(int device) {
+    public static void setKhivaDevice(int device) {
         setDevice(device);
     }
 
@@ -134,7 +134,7 @@ public class Library {
      *
      * @return The available backends.
      */
-    public static int getTSABackends() {
+    public static int getKhivaBackends() {
         return getBackends();
     }
 
@@ -143,7 +143,7 @@ public class Library {
      *
      * @return The device id.
      */
-    public static int getTSADeviceID() {
+    public static int getKhivaDeviceID() {
         return getDeviceID();
     }
 
@@ -152,7 +152,7 @@ public class Library {
      *
      * @return The active backend.
      */
-    public static Backend getTSABackend() {
+    public static Backend getKhivaBackend() {
         return Backend.getBackendFromOrdinal(getBackend());
     }
 
@@ -161,11 +161,11 @@ public class Library {
      *
      * @return The devices count.
      */
-    public static int getTSADeviceCount() {
+    public static int getKhivaDeviceCount() {
         return getDeviceCount();
     }
 
-    public static String getTSAVersion() {
+    public static String getKhivaVersion() {
         return new String(version());
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,10 +7,10 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 /**
- * TSA Array Class.
+ * Khiva Array Class.
  */
 public class Array extends Library implements AutoCloseable {
 
@@ -21,51 +21,51 @@ public class Array extends Library implements AutoCloseable {
      */
     public enum Dtype {
         /**
-         * Floating point of single precision. tsa.dtype.
+         * Floating point of single precision. khiva.dtype.
          */
         f32,
         /**
-         * Complex floating point of single precision. tsa.dtype.
+         * Complex floating point of single precision. khiva.dtype.
          */
         c32,
         /**
-         * Floating point of double precision. tsa.dtype.
+         * Floating point of double precision. khiva.dtype.
          */
         f64,
         /**
-         * Complex floating point of double precision. tsa.dtype.
+         * Complex floating point of double precision. khiva.dtype.
          */
         c64,
         /**
-         * Boolean. tsa.dtype.
+         * Boolean. khiva.dtype.
          */
         b8,
         /**
-         * 32 bits Int. tsa.dtype.
+         * 32 bits Int. khiva.dtype.
          */
         s32,
         /**
-         * 32 bits Unsigned Int. tsa.dtype.
+         * 32 bits Unsigned Int. khiva.dtype.
          */
         u32,
         /**
-         * 32 bits Unsigned Int. tsa.dtype.
+         * 32 bits Unsigned Int. khiva.dtype.
          */
         u8,
         /**
-         * 64 bits Integer. tsa.dtype.
+         * 64 bits Integer. khiva.dtype.
          */
         s64,
         /**
-         * 64 bits Unsigned Int. tsa.dtype.
+         * 64 bits Unsigned Int. khiva.dtype.
          */
         u64,
         /**
-         * 16 bits Int. tsa.dtype.
+         * 16 bits Int. khiva.dtype.
          */
         s16,
         /**
-         * 16 bits Unsigned Int. tsa.dtype.
+         * 16 bits Unsigned Int. khiva.dtype.
          */
         u16
     }

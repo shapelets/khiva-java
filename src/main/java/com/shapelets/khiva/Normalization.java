@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,10 +7,10 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 /**
- * TSA Normalization class containing several normalization methods.
+ * Khiva Normalization class containing several normalization methods.
  */
 public class Normalization extends Library {
 

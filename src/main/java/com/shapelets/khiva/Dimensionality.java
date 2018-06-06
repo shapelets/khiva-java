@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,10 +7,10 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 /**
- * TSA Dimensionality class containing several dimensionality reduction methods.
+ * Khiva Dimensionality class containing several dimensionality reduction methods.
  */
 public class Dimensionality extends Library {
 
@@ -71,7 +71,7 @@ public class Dimensionality extends Library {
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
      * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
-     * @param ts Expects a tsa array containing the set of points to be reduced. The first component of the points in
+     * @param ts Expects a khiva array containing the set of points to be reduced. The first component of the points in
      * the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
@@ -88,7 +88,7 @@ public class Dimensionality extends Library {
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
      * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
-     * @param ts Expects a tsa array containing the set of points to be reduced. The first component of the points in
+     * @param ts Expects a khiva array containing the set of points to be reduced. The first component of the points in
      * the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.

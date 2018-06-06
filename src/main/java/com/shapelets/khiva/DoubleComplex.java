@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Grumpy Cat Software S.L.
+ * Copyright (c) 2018 Shapelets.io
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7,20 +7,20 @@
  *
  */
 
-package com.gcatsoft.tsa;
+package com.shapelets.khiva;
 
 /**
- * FloatComplex Class.
+ * DoubleComplex Class.
  */
-public class FloatComplex {
-    private float real;
-    private float imag;
+public class DoubleComplex {
+    private double real;
+    private double imag;
 
-    public FloatComplex(float re, float im) {
+    public DoubleComplex(double re, double im) {
         set(re, im);
     }
 
-    public FloatComplex() {
+    public DoubleComplex() {
         set(0, 0);
     }
 
@@ -30,7 +30,7 @@ public class FloatComplex {
      * @param re Real value.
      * @param im Imaginary value.
      */
-    public void set(float re, float im) {
+    public void set(double re, double im) {
         real = re;
         imag = im;
     }
@@ -40,7 +40,7 @@ public class FloatComplex {
      *
      * @param re Real value.
      */
-    public void setReal(float re) {
+    public void setReal(double re) {
         real = re;
     }
 
@@ -49,7 +49,7 @@ public class FloatComplex {
      *
      * @param im Imaginary value.
      */
-    public void setImag(float im) {
+    public void setImag(double im) {
         imag = im;
     }
 
@@ -58,7 +58,7 @@ public class FloatComplex {
      *
      * @return The real value.
      */
-    public float getReal() {
+    public double getReal() {
         return real;
     }
 
@@ -67,7 +67,7 @@ public class FloatComplex {
      *
      * @return The imaginary value.
      */
-    public float getImag() {
+    public double getImag() {
         return imag;
     }
 
@@ -94,10 +94,10 @@ public class FloatComplex {
      */
     @Override
     public boolean equals(Object obj) {
-        FloatComplex fc = null;
-        if(obj instanceof FloatComplex) {
-            fc = (FloatComplex) obj;
+        DoubleComplex dc = null;
+        if(obj instanceof DoubleComplex) {
+            dc = (DoubleComplex) obj;
         }
-        return fc != null && this.real == fc.real && this.imag == fc.imag;
+        return dc != null && this.real == dc.real && this.imag == dc.imag;
     }
 }
