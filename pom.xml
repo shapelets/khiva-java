@@ -85,7 +85,7 @@
         <artifactId>oss-parent</artifactId>
         <version>9</version>
     </parent>
-    
+
   <scm>
     <connection>scm:svn:http://svn.sonatype.org/spice/tags/khiva-0.1.0</connection>
     <developerConnection>scm:svn:https://svn.sonatype.org/spice/tags/khiva-0.1.0</developerConnection>
