@@ -41,7 +41,7 @@ In this sense, we use the master branch to push the release versions of the bind
 
 ### Contribution process
 In order to contribute to the code base, we follow the next process:
-1. The main branch is develop, every developer should pull the current status of the branch before stating to develop any new feature.
+1. The main branch is `develop`, every developer should pull the current status of the branch before starting to develop any new feature.
 `git pull`
 2. Create a new branch with the following pattern "feature/[name_of_the_feature]"
 `git checkout -b feature/exampleFeature`
