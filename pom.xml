@@ -4,8 +4,23 @@
 
     <groupId>io.shapelets</groupId>
     <artifactId>khiva</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
+    <name>khiva-java</name>
+    <url>https://github.com/shapelets/khiva-java</url>
+    <scm>
+        <url>https://github.com/shapelets/khiva/java</url>
+        <connection>scm:git:git@github.com:shapelets/khiva-java.git</connection>
+        <developerConnection>scm:git:git@github.com:shapelets/khiva-java.git</developerConnection>
+        <tag>khiva-0.1.2</tag>
+    </scm>
 
+    <licenses>
+        <license>
+            <name>Mozilla Public License, version 2.0</name>
+            <url>https://www.mozilla.org/en-US/MPL/2.0/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <build>
         <pluginManagement>
             <plugins>
@@ -85,10 +100,4 @@
         <artifactId>oss-parent</artifactId>
         <version>9</version>
     </parent>
-
-  <scm>
-    <connection>scm:svn:http://svn.sonatype.org/spice/tags/khiva-0.1.0</connection>
-    <developerConnection>scm:svn:https://svn.sonatype.org/spice/tags/khiva-0.1.0</developerConnection>
-    <url>http://svn.sonatype.org/spice/tags/khiva-0.1.0</url>
-  </scm>
 </project>
