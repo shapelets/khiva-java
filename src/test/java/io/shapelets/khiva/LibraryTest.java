@@ -68,6 +68,6 @@ public class LibraryTest {
 
     @Test
     public void testGetKhivaVersion() {
-        Assert.assertEquals(Library.getKhivaVersion(), "0.0.1");
+        Assert.assertEquals(Library.getKhivaVersion(), "0.1.0");
     }
 }
