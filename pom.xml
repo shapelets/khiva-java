@@ -4,7 +4,7 @@
 
     <groupId>io.shapelets</groupId>
     <artifactId>khiva</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
     <name>khiva-java</name>
     <url>https://github.com/shapelets/khiva-java</url>
 
@@ -163,6 +163,6 @@
         <url>https://github.com/shapelets/khiva-java</url>
         <connection>scm:git:git@github.com:shapelets/khiva-java.git</connection>
         <developerConnection>scm:git:git@github.com:shapelets/khiva-java.git</developerConnection>
-        <tag>khiva-0.1.4</tag>
+        <tag>khiva-0.1.1</tag>
     </scm>
 </project>
