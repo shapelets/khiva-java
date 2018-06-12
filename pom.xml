@@ -163,6 +163,6 @@
         <url>https://github.com/shapelets/khiva-java</url>
         <connection>scm:git:git@github.com:shapelets/khiva-java.git</connection>
         <developerConnection>scm:git:git@github.com:shapelets/khiva-java.git</developerConnection>
-        <tag>khiva-0.1.1</tag>
+        <tag>khiva-0.1.4</tag>
     </scm>
 </project>
