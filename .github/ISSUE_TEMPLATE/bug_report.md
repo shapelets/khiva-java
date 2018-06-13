@@ -19,7 +19,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment information:**
  - OS: [e.g. Mac OS]
  - Version [e.g. 10.13]
- - Khiva dependencies versions.
+ - Khiva dependencies versions [e.g. junit 4.12]
 
 **Additional context**
 Add any other context about the problem here.
