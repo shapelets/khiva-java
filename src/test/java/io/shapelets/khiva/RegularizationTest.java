@@ -10,10 +10,16 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class RegularizationTest {
     private static final double DELTA = 1e-6;
+
+    @Before
+    public void setUp(){
+        Array.setKhivaBackend(Array.Backend.KHIVA_BACKEND_CPU);
+    }
 
     @Test
     public void testGroupBySingleColumn() throws Exception {
