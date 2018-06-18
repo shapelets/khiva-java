@@ -14,13 +14,14 @@ import org.junit.Test;
 
 public class LibraryTest {
 
+
     @Test
     public void testSetBackend() {
         int backends = Library.getKhivaBackends();
         int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
         int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
         int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
-
+        Library.Backend b = Library.getKhivaBackend();
 
         if (cuda != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
@@ -34,6 +35,7 @@ public class LibraryTest {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
             Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CPU);
         }
+        Library.setKhivaBackend(b);
     }
 
     @Test
@@ -42,6 +44,7 @@ public class LibraryTest {
         int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
         int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
         int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
+        Library.Backend b = Library.getKhivaBackend();
 
         if (cuda != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
@@ -64,6 +67,8 @@ public class LibraryTest {
                 Assert.assertEquals(Library.getKhivaDeviceID(), i);
             }
         }
+        Library.setKhivaBackend(b);
+
     }
 
     @Test

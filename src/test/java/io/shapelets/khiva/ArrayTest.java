@@ -10,17 +10,37 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+import java.util.Arrays;
+
+@RunWith(Parameterized.class)
 public class ArrayTest {
     private static final double DELTA = 1e-6;
 
+    @Parameters()
+    public static Iterable<Object[]> backends() {
+        String OS;
 
-    @Before
-    public void setUp(){
-        Array.setKhivaBackend(Array.Backend.KHIVA_BACKEND_CPU);
+        OS = System.getProperty("os.name").toLowerCase();
+
+        if (OS.indexOf("mac") >= 0) {
+            return Arrays.asList(new Object[][]{
+                    {Array.Backend.KHIVA_BACKEND_CPU}
+            });
+        } else
+            return Arrays.asList(new Object[][]{
+                    {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
+            });
     }
+
+    public ArrayTest(Library.Backend back) {
+        Library.setKhivaBackend(back);
+    }
+
 
     @Test
     public void testReal1D() throws Exception {
