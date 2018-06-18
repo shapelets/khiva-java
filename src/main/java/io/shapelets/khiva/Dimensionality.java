@@ -30,7 +30,7 @@ public class Dimensionality extends Library {
 
     /**
      * Piecewise Aggregate Approximation (PAA) approximates a time series \(X\) of length \(n\) into vector
-     * \(\bar{X}=(\bar{x}_{1},…,\bar{x}_{M})\) of any arbitrary length \(M \leq n\) where each of \(\bar{x_{i}}\) is
+     * \(\bar{X}=(\bar{x}_{1},{@literal ...},\bar{x}_{M})\) of any arbitrary length \(M \leq n\) where each of \(\bar{x_{i}}\) is
      * calculated as follows:
      * \[
      * \bar{x}_{i} = \frac{M}{n} \sum_{j=n/M(i{@literal -}1)+1}^{(n/M)i} x_{j}.
@@ -100,15 +100,15 @@ public class Dimensionality extends Library {
     }
 
     /**
-     * The Ramer–Douglas–Peucker algorithm (RDP) is an algorithm for reducing the number of points in a curve that is
+     * The Ramer{@literal -}Douglas{@literal -}Peucker algorithm (RDP) is an algorithm for reducing the number of points in a curve that is
      * approximated by a series of points. It reduces a set of points depending on the perpendicular distance of the
      * points and epsilon, the greater epsilon, more points are deleted.
      * <p>
      * [1] Urs Ramer, "An iterative procedure for the polygonal approximation of plane curves", Computer Graphics and
-     * Image Processing, 1(3), 244–256 (1972) doi:10.1016/S0146{@literal -}664X(72)80017{@literal -}0.
+     * Image Processing, 1(3), 244{@literal -}256 (1972) doi:10.1016/S0146{@literal -}664X(72)80017{@literal -}0.
      * <p>
      * [2] David Douglas {@literal &} Thomas Peucker, "Algorithms for the reduction of the number of points required to represent a
-     * digitized line or its caricature", The Canadian Cartographer 10(2), 112–122 (1973)
+     * digitized line or its caricature", The Canadian Cartographer 10(2), 112{@literal -}122 (1973)
      * doi:10.3138/FM57{@literal -}6770{@literal -}U75U-7727
      *
      * @param arr     Array with the x{@literal -}coordinates and y{@literal -}coordinates of the input points (x in column 0 and y in
