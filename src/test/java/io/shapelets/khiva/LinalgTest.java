@@ -32,7 +32,5 @@ public class LinalgTest {
         double[] result = Linalg.lls(a, c).getData();
         Assert.assertEquals(result[0], 1, DELTA);
         Assert.assertEquals(result[1], 1, DELTA);
-        a.close();
-        c.close();
     }
 }
