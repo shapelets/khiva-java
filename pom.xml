@@ -63,8 +63,8 @@
                     <jdkToolchain>
                         <version>[1.5,9)</version>
                     </jdkToolchain>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <source>1.5</source>
+                    <target>1.5</target>
                 </configuration>
             </plugin>
             <plugin>
