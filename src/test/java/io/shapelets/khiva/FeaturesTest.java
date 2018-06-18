@@ -17,26 +17,19 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 @RunWith(Parameterized.class)
 public class FeaturesTest {
+    Logger logger = Logger.getGlobal();
 
     private static final double DELTA = 1e-6;
 
     @Parameters()
     public static Iterable<Object[]> backends() {
-        String OS;
-
-        OS = System.getProperty("os.name").toLowerCase();
-
-        if (OS.indexOf("mac") >= 0) {
-            return Arrays.asList(new Object[][]{
-                    {Array.Backend.KHIVA_BACKEND_CPU}
-            });
-        } else
-            return Arrays.asList(new Object[][]{
-                    {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
-            });
+        return Arrays.asList(new Object[][]{
+                {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
+        });
     }
 
     public FeaturesTest(Library.Backend back) {
@@ -238,6 +231,7 @@ public class FeaturesTest {
 
     @Test
     public void testFriedrichCoefficients() throws Exception {
+        if (Library.getKhivaBackend() == Array.Backend.KHIVA_BACKEND_CPU) {
         double[] tss = {0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5};
         long[] dims = {6, 2, 1, 1};
         Array a = new Array(tss, dims);
@@ -247,6 +241,10 @@ public class FeaturesTest {
                 0.10512571036815643, 0.89872437715530396};
         double[] friedrichCoefficientsResult = Features.friedrichCoefficients(a, 4, 2).getData();
         Assert.assertArrayEquals(friedrichCoefficientsResult, expected, DELTA);
+        } else {
+            logger.warning("testFriedrichCoefficients only executed in CPU backend because of problems with " +
+                    "OpenMP while changing the backend");
+        }
     }
 
     @Test
@@ -631,13 +629,18 @@ public class FeaturesTest {
 
     @Test
     public void testMaxLangevinFixedPoint() throws Exception {
-        float[] tss = {0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5};
-        long[] dims = {6, 2, 1, 1};
-        Array a = new Array(tss, dims);
-        float[] result = Features.maxLangevinFixedPoint(a, 7, 2).getData();
-        Assert.assertEquals(result[0], 4.562970585, 1e-4);
-        Assert.assertEquals(result[1], 4.562970585, 1e-4);
 
+        if (Library.getKhivaBackend() == Array.Backend.KHIVA_BACKEND_CPU) {
+            float[] tss = {0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5};
+            long[] dims = {6, 2, 1, 1};
+            Array a = new Array(tss, dims);
+            float[] result = Features.maxLangevinFixedPoint(a, 7, 2).getData();
+            Assert.assertEquals(result[0], 4.562970585, 1e-4);
+            Assert.assertEquals(result[1], 4.562970585, 1e-4);
+        } else {
+            logger.warning("testMaxLangevinFixedPoint only executed in CPU backend because of problems with " +
+                    "OpenMP while changing the backend");
+        }
 
     }
 

@@ -24,18 +24,9 @@ public class MatrixTest {
 
     @Parameters()
     public static Iterable<Object[]> backends() {
-        String OS;
-
-        OS = System.getProperty("os.name").toLowerCase();
-
-        if (OS.indexOf("mac") >= 0) {
-            return Arrays.asList(new Object[][]{
-                    {Array.Backend.KHIVA_BACKEND_CPU}
-            });
-        } else
-            return Arrays.asList(new Object[][]{
-                    {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
-            });
+        return Arrays.asList(new Object[][]{
+                {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
+        });
     }
 
     public MatrixTest(Library.Backend back) {
