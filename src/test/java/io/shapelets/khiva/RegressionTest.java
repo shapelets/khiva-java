@@ -10,7 +10,7 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class RegressionTest {
@@ -18,8 +18,8 @@ public class RegressionTest {
     private static final double DELTA = 1e-6;
 
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
