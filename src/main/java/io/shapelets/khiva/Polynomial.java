@@ -22,8 +22,8 @@ public class Polynomial extends Library {
      * Least squares polynomial fit. Fit a polynomial \(p(x) = p[0] * x^{deg} + ... + p[deg]\) of degree \(deg\)
      * to points \((x, y)\). Returns a vector of coefficients \(p\) that minimises the squared error.
      *
-     * @param x   Array containing the x{@literal -}coordinates of the M sample points \((x[i], y[i])\).
-     * @param y   Array containing the y{@literal -}coordinates of the sample points.
+     * @param x   Array containing the x-coordinates of the M sample points \((x[i], y[i])\).
+     * @param y   Array containing the y-coordinates of the sample points.
      * @param deg Degree of the fitting polynomial.
      * @return Array with the polynomial coefficients, highest power first.
      */
@@ -35,11 +35,11 @@ public class Polynomial extends Library {
     }
 
     /**
-     * Calculates the roots of a polynomial with coefficients given in \(ref\). The values in the rank{@literal -}1 array
+     * Calculates the roots of a polynomial with coefficients given in \(ref\). The values in the rank-1 array
      * \(ref\) are coefficients of a polynomial. If the length of \(ref\) is \(n+1\) then the polynomial is described
      * by:
      * \[
-     * ref[0] * x^n + ref[1] * x^{n{@literal -}1} + ... + ref[n{@literal -}1] * x + ref[n]
+     * ref[0] * x^n + ref[1] * x^{n-1} + ... + ref[n-1] * x + ref[n]
      * \]
      *
      * @param p Array of polynomial coefficients.

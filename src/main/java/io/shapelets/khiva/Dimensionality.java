@@ -33,7 +33,7 @@ public class Dimensionality extends Library {
      * \(\bar{X}=(\bar{x}_{1},{@literal ...},\bar{x}_{M})\) of any arbitrary length \(M \leq n\) where each of \(\bar{x_{i}}\) is
      * calculated as follows:
      * \[
-     * \bar{x}_{i} = \frac{M}{n} \sum_{j=n/M(i{@literal -}1)+1}^{(n/M)i} x_{j}.
+     * \bar{x}_{i} = \frac{M}{n} \sum_{j=n/M(i-1)+1}^{(n/M)i} x_{j}.
      * \]
      * Which simply means that in order to reduce the dimensionality from \f$n\f$ to \f$M\f$, we first divide the original
      * time series into \f$M\f$ equally sized frames and secondly compute the mean values for each frame. The sequence
@@ -53,7 +53,7 @@ public class Dimensionality extends Library {
      * Calculates the number of Perceptually Important Points (PIP) in the time series.
      * <p>
      * [1] Fu TC, Chung FL, Luk R, and Ng CM. Representing financial time series based on data point importance.
-     * Engineering Applications of Artificial Intelligence, 21(2):277{@literal -}300, 2008.
+     * Engineering Applications of Artificial Intelligence, 21(2):277-300, 2008.
      *
      * @param arr       Expects an input array whose dimension zero is the length of the time series.
      * @param numberIPs The number of points to be returned.
@@ -69,7 +69,7 @@ public class Dimensionality extends Library {
      * Applies the Piecewise Linear Approximation (PLA BottomUP) to the time series.
      *
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
-     * Knowledge{@literal -}Based Intelligent Information and Engineering Systems 4693:1066{@literal -}1072.
+     * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
      * @param ts Expects a khiva array containing the set of points to be reduced. The first component of the points in
      * the first column and the second component of the points in the second column.
@@ -86,7 +86,7 @@ public class Dimensionality extends Library {
      * Applies the Piecewise Linear Approximation (PLA Sliding Window) to the time series.
      *
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
-     * Knowledge{@literal -}Based Intelligent Information and Engineering Systems 4693:1066{@literal -}1072.
+     * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
      * @param ts Expects a khiva array containing the set of points to be reduced. The first component of the points in
      * the first column and the second component of the points in the second column.
@@ -100,18 +100,18 @@ public class Dimensionality extends Library {
     }
 
     /**
-     * The Ramer{@literal -}Douglas{@literal -}Peucker algorithm (RDP) is an algorithm for reducing the number of points in a curve that is
+     * The Ramer-Douglas-Peucker algorithm (RDP) is an algorithm for reducing the number of points in a curve that is
      * approximated by a series of points. It reduces a set of points depending on the perpendicular distance of the
      * points and epsilon, the greater epsilon, more points are deleted.
      * <p>
      * [1] Urs Ramer, "An iterative procedure for the polygonal approximation of plane curves", Computer Graphics and
-     * Image Processing, 1(3), 244{@literal -}256 (1972) doi:10.1016/S0146{@literal -}664X(72)80017{@literal -}0.
+     * Image Processing, 1(3), 244-256 (1972) doi:10.1016/S0146-664X(72)80017-0.
      * <p>
      * [2] David Douglas {@literal &} Thomas Peucker, "Algorithms for the reduction of the number of points required to represent a
-     * digitized line or its caricature", The Canadian Cartographer 10(2), 112{@literal -}122 (1973)
-     * doi:10.3138/FM57{@literal -}6770{@literal -}U75U-7727
+     * digitized line or its caricature", The Canadian Cartographer 10(2), 112-122 (1973)
+     * doi:10.3138/FM57-6770-U75U-7727
      *
-     * @param arr     Array with the x{@literal -}coordinates and y{@literal -}coordinates of the input points (x in column 0 and y in
+     * @param arr     Array with the x-coordinates and y-coordinates of the input points (x in column 0 and y in
      *                column 1).
      * @param epsilon It acts as the threshold value to decide which points should be considered meaningful or not.
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
@@ -125,10 +125,10 @@ public class Dimensionality extends Library {
 
     /**
      * Symbolic Aggregate approXimation (SAX). It transforms a numeric time series into a time series of symbols with
-     * the same size. The algorithm was proposed by Lin et al.) and extends the PAA{@literal -}based approach inheriting the original
+     * the same size. The algorithm was proposed by Lin et al.) and extends the PAA-based approach inheriting the original
      * algorithm simplicity and low computational complexity while providing satisfactory sensitivity and selectivity in
      * range query processing. Moreover, the use of a symbolic representation opened a door to the existing wealth of
-     * data{@literal -}structures and string{@literal -}manipulation algorithms in computer science such as hashing, regular expression, pattern
+     * data-structures and string-manipulation algorithms in computer science such as hashing, regular expression, pattern
      * matching, suffix trees, and grammatical inference.
      * <p>
      * [1] Lin, J., Keogh, E., Lonardi, S. {@literal &} Chiu, B. (2003) A Symbolic Representation of Time Series, with Implications for
@@ -152,10 +152,10 @@ public class Dimensionality extends Library {
      * [1] M. Visvalingam and J. D. Whyatt, Line generalisation by repeated elimination of points,
      * The Cartographic Journal, 1993.
      *
-     * @param arr       Array with the x{@literal -}coordinates and y{@literal -}coordinates of the input points (x in column 0 and y in
+     * @param arr       Array with the x-coordinates and y-coordinates of the input points (x in column 0 and y in
      *                  column 1).
      * @param numPoints Sets the number of points returned after the execution of the method.
-     * @return Array with the x{@literal -}coordinates and y{@literal -}coordinates of the selected points (x in column 0
+     * @return Array with the x-coordinates and y-coordinates of the selected points (x in column 0
      * and y in column 1).
      */
     public static Array visvalingam(Array arr, int numPoints) {

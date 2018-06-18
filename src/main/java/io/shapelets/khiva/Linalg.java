@@ -17,9 +17,9 @@ public class Linalg extends Library {
     private native static long[] lls(long refA, long refB);
 
     /**
-     * Calculates the minimum norm least squares solution \(x\) \((\left\lVert{A{@literal ·}x {@literal -} b}\right\rVert^2)\) to
-     * \(A{@literal ·}x = b\). This function uses the singular value decomposition function of Arrayfire. The actual formula that
-     * this function computes is \(x = V{@literal ·}D\dagger{@literal ·}U^T{@literal ·}b\). Where \(U\) and \(V\) are orthogonal matrices and
+     * Calculates the minimum norm least squares solution \(x\) \((\left\lVert{A·x - b}\right\rVert^2)\) to
+     * \(A·x = b\). This function uses the singular value decomposition function of Arrayfire. The actual formula that
+     * this function computes is \(x = V·D\dagger·U^T·b\). Where \(U\) and \(V\) are orthogonal matrices and
      * \(D\dagger\) contains the inverse values of the singular values contained in D if they are not zero, and zero
      * otherwise.
      *

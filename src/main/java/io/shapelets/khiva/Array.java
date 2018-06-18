@@ -437,7 +437,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Adds this array with the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The sum of both arrays.
      */
     public Array add(Array rhs) {
@@ -449,7 +449,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Multiplies this array with the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The product of both arrays.
      */
     public Array mul(Array rhs) {
@@ -461,7 +461,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Subtracts this array with the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The subtraction of both arrays.
      */
     public Array sub(Array rhs) {
@@ -473,7 +473,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Divides this array with the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The division of both arrays.
      */
     public Array div(Array rhs) {
@@ -485,7 +485,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Performs the modulo operation of this array with the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The modulo of this array with the one passed as parameter.
      */
     public Array mod(Array rhs) {
@@ -507,9 +507,9 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Compares (element{@literal -}wise) if this array is lower than the one passed as parameter.
+     * Compares (element-wise) if this array is lower than the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array lt(Array rhs) {
@@ -519,9 +519,9 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Compares (element{@literal -}wise) if this array is greater than the one passed as parameter.
+     * Compares (element-wise) if this array is greater than the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array gt(Array rhs) {
@@ -531,10 +531,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Compares (element{@literal -}wise) if this array is lower or equal than the one passed as parameter.
+     * Compares (element-wise) if this array is lower or equal than the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
-     * @return The result of comparing element{@literal -}wise this array with the one passed as parameter.
+     * @param rhs Right-hand side array for the operation.
+     * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array le(Array rhs) {
         long[] refs = le(rhs.reference);
@@ -543,10 +543,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Compares (element{@literal -}wise) if this array is greater or equal than the one passed as parameter.
+     * Compares (element-wise) if this array is greater or equal than the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
-     * @return The result of comparing element{@literal -}wise this array with the one passed as parameter.
+     * @param rhs Right-hand side array for the operation.
+     * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array ge(Array rhs) {
         long[] refs = ge(rhs.reference);
@@ -555,10 +555,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Compares (element{@literal -}wise) if this array is equal to the one passed as parameter.
+     * Compares (element-wise) if this array is equal to the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
-     * @return The result of comparing element{@literal -}wise this array with the one passed as parameter.
+     * @param rhs Right-hand side array for the operation.
+     * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array eq(Array rhs) {
         long[] refs = eq(rhs.reference);
@@ -567,10 +567,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Compares (element{@literal -}wise) if this array is not equal to the one passed as parameter.
+     * Compares (element-wise) if this array is not equal to the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
-     * @return The result of comparing element{@literal -}wise this array with the one passed as parameter.
+     * @param rhs Right-hand side array for the operation.
+     * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array ne(Array rhs) {
         long[] refs = ne(rhs.reference);
@@ -581,7 +581,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Performs an AND operation with this array and the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The result of an AND operation of this array with the one passed as parameter.
      */
     public Array bitAnd(Array rhs) {
@@ -593,7 +593,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Performs an OR operation with this array and the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
+     * @param rhs Right-hand side array for the operation.
      * @return The result of an OR operation of this array with the one passed as parameter.
      */
     public Array bitOr(Array rhs) {
@@ -603,10 +603,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Performs an eXclusive{@literal -}OR operation with this array and the one passed as parameter.
+     * Performs an eXclusive-OR operation with this array and the one passed as parameter.
      *
-     * @param rhs Right{@literal -}hand side array for the operation.
-     * @return The result of an eXclusive{@literal -}OR operation of this array with the one passed as parameter.
+     * @param rhs Right-hand side array for the operation.
+     * @return The result of an eXclusive-OR operation of this array with the one passed as parameter.
      */
     public Array bitXor(Array rhs) {
         long[] refs = bitXor(rhs.reference);
@@ -615,7 +615,7 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Performs a left bit shift operation to this array (element{@literal -}wise) as many times as specified in the parameter n.
+     * Performs a left bit shift operation to this array (element-wise) as many times as specified in the parameter n.
      *
      * @param n Number of bits to be shifted.
      * @return The result of a left bit shift operation to this array as many times as specified in the

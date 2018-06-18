@@ -44,7 +44,7 @@ public class Statistics extends Library {
      * Returns the covariance matrix of the time series contained in tss.
      *
      * @param tss      Array containing the input time series.
-     * @param unbiased Determines whether it divides by n {@literal -} 1 (if false) or n (if true).
+     * @param unbiased Determines whether it divides by n - 1 (if false) or n (if true).
      * @return The covariance matrix of the time series.
      */
     public static Array covariance(Array tss, boolean unbiased) {
@@ -54,7 +54,7 @@ public class Statistics extends Library {
     }
 
     /**
-     * Returns the kurtosis of tss (calculated with the adjusted Fisher{@literal -}Pearson standardized moment coefficient G2).
+     * Returns the kurtosis of tss (calculated with the adjusted Fisher-Pearson standardized moment coefficient G2).
      *
      * @param tss Array containing the input time series.
      * @return The kurtosis of tss.
@@ -66,14 +66,14 @@ public class Statistics extends Library {
     }
 
     /**
-     * The Ljung{@literal -}Box test checks that data whithin the time series are independently distributed (i.e. the correlations in
+     * The Ljung-Box test checks that data whithin the time series are independently distributed (i.e. the correlations in
      * the population from which the sample is taken are 0, so that any observed correlations in the data result from
      * randomness of the sampling process). Data are no independently distributed, if they exhibit serial correlation.
      * <p>
      * The test statistic is:
      * <p>
      * \[
-     * Q = n\left(n+2\right)\sum_{k=1}^h\frac{\hat{\rho}^2_k}{n{@literal -}k}
+     * Q = n\left(n+2\right)\sum_{k=1}^h\frac{\hat{\rho}^2_k}{n-k}
      * \]
      * <p>
      * where ''n'' is the sample size, \(\hat{\rho}k \) is the sample autocorrelation at lag ''k'', and ''h'' is the
@@ -81,19 +81,19 @@ public class Statistics extends Library {
      * \(\alpha\), the \(critical region\) for rejection of the hypothesis of randomness is:
      * <p>
      * \[
-     * Q &gt; \chi_{1{@literal -}\alpha,h}^2
+     * Q &gt; \chi_{1-\alpha,h}^2
      * \]
      * <p>
-     * where \( \chi_{1{@literal -}\alpha,h}^2 \) is the \(\alpha\){@literal -}quantile of the ch{@literal -}-squared distribution with ''h'' degrees of
+     * where \( \chi_{1-\alpha,h}^2 \) is the \(\alpha\)-quantile of the ch--squared distribution with ''h'' degrees of
      * freedom.
      * <p>
      * [1] G. M. Ljung  G. E. P. Box (1978). On a measure of lack of fit in time series models.
-     * Biometrika, Volume 65, Issue 2, 1 August 1978, Pages 297{@literal -}303.
+     * Biometrika, Volume 65, Issue 2, 1 August 1978, Pages 297-303.
      *
      * @param tss  Expects an input array whose dimension zero is the length of the time series (all the same) and dimension
      *             one indicates the number of time series.
      * @param lags Number of lags being tested.
-     * @return The updated ref and the Ljung{@literal -}Box statistic test.
+     * @return The updated ref and the Ljung-Box statistic test.
      */
     public static Array ljungBox(Array tss, long lags) {
         long[] refs = ljungBox(tss.getReference(), lags);
@@ -141,7 +141,7 @@ public class Statistics extends Library {
     }
 
     /**
-     * Discretizes the time series into equal{@literal -}sized buckets based on sample quantiles.
+     * Discretizes the time series into equal-sized buckets based on sample quantiles.
      *
      * @param tss       Array containing the input time series.
      * @param quantiles Number of quantiles to extract. From 0 to 1, step 1/quantiles.
@@ -154,7 +154,7 @@ public class Statistics extends Library {
     }
 
     /**
-     * Discretizes the time series into equal{@literal -}sized buckets based on sample quantiles.
+     * Discretizes the time series into equal-sized buckets based on sample quantiles.
      *
      * @param tss       Array containing the input time series.
      * @param quantiles Number of quantiles to extract. From 0 to 1, step 1/quantiles.
@@ -169,7 +169,7 @@ public class Statistics extends Library {
     }
 
     /**
-     * Estimates standard deviation based on a sample. The standard deviation is calculated using the "n{@literal -}1" method.
+     * Estimates standard deviation based on a sample. The standard deviation is calculated using the "n-1" method.
      *
      * @param tss Array containing the input time series.
      * @return The sample standard deviation.
@@ -181,7 +181,7 @@ public class Statistics extends Library {
     }
 
     /**
-     * Calculates the sample skewness of tss (calculated with the adjusted Fisher{@literal -}Pearson standardized moment
+     * Calculates the sample skewness of tss (calculated with the adjusted Fisher-Pearson standardized moment
      * coefficient G1).
      *
      * @param tss Array containing the input time series.

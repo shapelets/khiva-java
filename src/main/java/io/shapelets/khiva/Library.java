@@ -111,9 +111,9 @@ public class Library {
     }
 
     /**
-     * Sets the Khiva back{@literal -}end.
+     * Sets the Khiva back-end.
      *
-     * @param khivaBE Back{@literal -}end selected.
+     * @param khivaBE Back-end selected.
      */
     public static void setKhivaBackend(Backend khivaBE) {
         setBackend(khivaBE.getKhivaOrdinal());

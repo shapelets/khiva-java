@@ -172,7 +172,7 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates a linear least{@literal -}squares regression for values of the time series that were aggregated
+     * Calculates a linear least-squares regression for values of the time series that were aggregated
      * over chunks versus the sequence from 0 up to the number of chunks minus one.
      *
      * @param arr                 Array containing the input time series.
@@ -196,7 +196,7 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates a linear least{@literal -}squares regression for values of the time series that were aggregated
+     * Calculates a linear least-squares regression for values of the time series that were aggregated
      * over chunks versus the sequence from 0 up to the number of chunks minus one.
      *
      * @param arr                 Array containing the input time series.
@@ -223,10 +223,10 @@ public class Features extends Library {
     /**
      * Calculates a vectorized Approximate entropy algorithm.
      * https://en.wikipedia.org/wiki/Approximate_entropy
-     * For short time{@literal -}series this method is highly dependent on the parameters, but should be stable for N greater than 2000,
+     * For short time-series this method is highly dependent on the parameters, but should be stable for N greater than 2000,
      * see: Yentes et al. (2012) - The Appropriate Use of Approximate Entropy and Sample Entropy with Short Data Sets
      * Other shortcomings and alternatives discussed in:
-     * Richman and Moorman (2000) {@literal -} Physiological time{@literal -}series analysis using approximate entropy and sample entropy
+     * Richman and Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy
      *
      * @param arr Array containing the input time series.
      * @param m   Length of compared run of data.
@@ -241,12 +241,12 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the cross{@literal -}covariance of the given time series.
+     * Calculates the cross-covariance of the given time series.
      *
      * @param arrXss   Array containing the input time series.
      * @param arrYss   Array containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
-     * @return Array with the cross{@literal -}covariance value for the given time series.
+     * @return Array with the cross-covariance value for the given time series.
      */
     public static Array crossCovariance(Array arrXss, Array arrYss, Boolean unbiased) {
         long[] refs = crossCovariance(arrXss.getReference(), arrYss.getReference(), unbiased);
@@ -256,11 +256,11 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the auto{@literal -}covariance the given time series.
+     * Calculates the auto-covariance the given time series.
      *
      * @param arr      Array containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
-     * @return Array with the auto{@literal -}covariance value for the given time series.
+     * @return Array with the auto-covariance value for the given time series.
      */
     public static Array autoCovariance(Array arr, Boolean unbiased) {
         long[] refs = autoCovariance(arr.getReference(), unbiased);
@@ -269,12 +269,12 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the cross{@literal -}correlation of the given time series.
+     * Calculates the cross-correlation of the given time series.
      *
      * @param arrXss   Array containing the input time series.
      * @param arrYss   Array containing the input time series.
-     * @param unbiased Determines whether it divides by n {@literal -} lag (if true) or n (if false).
-     * @return Double array with cross{@literal -}correlation value for the given time series.
+     * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
+     * @return Double array with cross-correlation value for the given time series.
      */
     public static Array crossCorrelation(Array arrXss, Array arrYss, Boolean unbiased) {
 
@@ -291,7 +291,7 @@ public class Features extends Library {
      *
      * @param arr      Array containing the input time series.
      * @param maxLag   The maximum lag to compute.
-     * @param unbiased Determines whether it divides by n {@literal -} lag (if true) or n (if false).
+     * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return The autocorrelation value for the given time series.
      */
     public static Array autoCorrelation(Array arr, long maxLag, Boolean unbiased) {
@@ -314,12 +314,12 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the Schreiber, T. and Schmitz, A. (1997) measure of non{@literal -}linearity
+     * Calculates the Schreiber, T. and Schmitz, A. (1997) measure of non-linearity
      * for the given time series.
      *
      * @param arr Array containing the input time series.
      * @param lag The lag.
-     * @return The non{@literal -}linearity value for the given time series.
+     * @return The non-linearity value for the given time series.
      */
     public static Array c3(Array arr, long lag) {
         long[] refs = c3(arr.getReference(), lag);
@@ -333,7 +333,7 @@ public class Features extends Library {
      * valleys, etc.)
      *
      * @param arr        Array containing the input time series.
-     * @param zNormalize Controls whether the time series should be z{@literal -}normalized or not.
+     * @param zNormalize Controls whether the time series should be z-normalized or not.
      * @return The complexity value for the given time series.
      */
     public static Array cidCe(Array arr, Boolean zNormalize) {
@@ -419,7 +419,7 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the fourier coefficients of the one{@literal -}dimensional discrete
+     * Calculates the fourier coefficients of the one-dimensional discrete
      * Fourier Transform for real input by fast fourier transformation algorithm.
      *
      * @param arr         Array containing the input time series.
@@ -471,7 +471,7 @@ public class Features extends Library {
      * \]
      * as described by [1]. For short time series this method is highly dependent on the parameters.
      * *
-     * [1] Friedrich et al. (2000): Physics Letters A 271, p. 217{@literal -}222
+     * [1] Friedrich et al. (2000): Physics Letters A 271, p. 217-222
      * Extracting model equations from experimental data.
      *
      * @param arr Array containing the input time series.
@@ -538,7 +538,7 @@ public class Features extends Library {
     }
 
     /**
-     * Returns the kurtosis of arr (calculated with the adjusted Fisher{@literal -}Pearson standardized moment coefficient G2).
+     * Returns the kurtosis of arr (calculated with the adjusted Fisher-Pearson standardized moment coefficient G2).
      *
      * @param arr Array containing the input time series.
      * @return The kurtosis of each arr.
@@ -604,7 +604,7 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates a linear least{@literal -}squares regression for the values of the time series versus the sequence from 0 to
+     * Calculates a linear least-squares regression for the values of the time series versus the sequence from 0 to
      * length of the time series minus one.
      *
      * @param arr Array containing the input time series.
@@ -666,7 +666,7 @@ public class Features extends Library {
      * \dot(x)(t) = h(x(t)) + R \mathcal(N)(0,1)
      * \]
      * as described by
-     * Friedrich et al. (2000): Physics Letters A 271, p. 217{@literal -}222 *Extracting model equations from experimental data.
+     * Friedrich et al. (2000): Physics Letters A 271, p. 217-222 *Extracting model equations from experimental data.
      *
      * @param arr Array containing the input time series.
      * @param m   Order of polynom to fit for estimating fixed points of dynamics.
@@ -766,13 +766,13 @@ public class Features extends Library {
     }
 
     /**
-     * Calculates the number of m{@literal -}crossings. A m{@literal -}crossing is defined as two sequential values where the first
+     * Calculates the number of m-crossings. A m-crossing is defined as two sequential values where the first
      * value is lower than m and the next is greater, or viceversa. If you set m to zero, you will get the number of
      * zero crossings.
      *
      * @param arr Array containing the input time series.
      * @param m   The m value.
-     * @return The number of m{@literal -}crossings of each time series within arr.
+     * @return The number of m-crossings of each time series within arr.
      */
     public static Array numberCrossingM(Array arr, int m) {
         long[] refs = numberCrossingM(arr.getReference(), m);
@@ -783,7 +783,7 @@ public class Features extends Library {
     /**
      * This feature calculator searches for different peaks. To do so, the time series is smoothed by a ricker
      * wavelet and for widths ranging from 1 to maxW. This feature calculator returns the number of peaks that occur at
-     * enough width scales and with sufficiently high Signal{@literal -}to{@literal -}Noise{@literal -}Ratio (SNR).
+     * enough width scales and with sufficiently high Signal-to-Noise-Ratio (SNR).
      *
      * @param arr  Array containing the input time series.
      * @param maxW The maximum width to consider.
@@ -813,19 +813,19 @@ public class Features extends Library {
     /**
      * Calculates the value of the partial autocorrelation function at the given lag. The lag \(k\) partial
      * autocorrelation of a time series \(\lbrace x_t, t = 1 \ldots T \rbrace\) equals the partial correlation of
-     * \(x_t\) and \(x_{t{@literal -}k}\), adjusted for the intermediate variables \(\lbrace x_{t{@literal -}1}, \ldots, x_{t{@literal -}k+1}
+     * \(x_t\) and \(x_{t-k}\), adjusted for the intermediate variables \(\lbrace x_{t-1}, \ldots, x_{t-k+1}
      * \rbrace\) ([1]). Following [2], it can be defined as:
      * <p>
      * \[
-     * \alpha_k = \frac{ Cov(x_t, x_{t{@literal -}k} | x_{t{@literal -}1}, \ldots, x_{t{@literal -}k+1})}
-     * {\sqrt{ Var(x_t | x_{t{@literal -}1}, \ldots, x_{t{@literal -}k+1}) Var(x_{t{@literal -}k} | x_{t{@literal -}1}, \ldots, x_{t{@literal -}k+1} )}}
+     * \alpha_k = \frac{ Cov(x_t, x_{t-k} | x_{t-1}, \ldots, x_{t-k+1})}
+     * {\sqrt{ Var(x_t | x_{t-1}, \ldots, x_{t-k+1}) Var(x_{t-k} | x_{t-1}, \ldots, x_{t-k+1} )}}
      * \]
-     * with (a) \(x_t = f(x_{t{@literal -}1}, \ldots, x_{t{@literal -}k+1})\) and (b) \( x_{t{@literal -}k} = f(x_{t{@literal -}1}, \ldots, x_{t{@literal -}k+1})\)
-     * being AR(k{@literal -}1) models that can be fitted by OLS. Be aware that in (a), the regression is done on past values to
-     * predict \( x_t \) whereas in (b), future values are used to calculate the past value \(x_{t{@literal -}k}\).
+     * with (a) \(x_t = f(x_{t-1}, \ldots, x_{t-k+1})\) and (b) \( x_{t-k} = f(x_{t-1}, \ldots, x_{t-k+1})\)
+     * being AR(k-1) models that can be fitted by OLS. Be aware that in (a), the regression is done on past values to
+     * predict \( x_t \) whereas in (b), future values are used to calculate the past value \(x_{t-k}\).
      * It is said in [1] that "for an AR(p), the partial autocorrelations \( \alpha_k \) will be nonzero for
      * \( k \leq p \) and zero for \( k&gt;p \)."
-     * With this property, it is used to determine the lag of an AR{@literal -}Process.
+     * With this property, it is used to determine the lag of an AR-Process.
      * <p>
      * [1] Box, G. E., Jenkins, G. M., Reinsel, G. C., {@literal &} Ljung, G. M. (2015).
      * Time series analysis: forecasting and control. John Wiley {@literal &} Sons.
@@ -1105,7 +1105,7 @@ public class Features extends Library {
      * feature to extract from time series.
      * <p>
      * [1] Fulcher, B.D., Jones, N.S. (2014). Highly comparative feature-based time-series classification.
-     * Knowledge and Data Engineering, IEEE Transactions on 26, 3026{@literal -}3037.
+     * Knowledge and Data Engineering, IEEE Transactions on 26, 3026-3037.
      *
      * @param arr Array containing the input time series.
      * @param lag The lag to be computed.

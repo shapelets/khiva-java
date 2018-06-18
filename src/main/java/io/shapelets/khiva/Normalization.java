@@ -32,7 +32,7 @@ public class Normalization extends Library {
 
 
     /**
-     * Normalizes the given time series according to its maximum value and adjusts each value within the range ({@literal -}1, 1).
+     * Normalizes the given time series according to its maximum value and adjusts each value within the range (-1, 1).
      *
      * @param arr Array containing the input time series.
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have been normalized by
@@ -156,15 +156,15 @@ public class Normalization extends Library {
     }
 
     /**
-     * Normalizes the given time series according to its maximum{@literal -}minimum value and its mean. It follows the following
+     * Normalizes the given time series according to its maximum-minimum value and its mean. It follows the following
      * formulae:
      * \[
-     * \acute{x} = \frac{x {@literal -} mean(x)}{max(x) {@literal -} min(x)}.
+     * \acute{x} = \frac{x - mean(x)}{max(x) - min(x)}.
      * \]
      *
      * @param arr Array containing the input time series.
      * @return An array with the same dimensions as tss, whose values (time series in dimension 0) have been
-     * normalized by substracting the mean from each number and dividing each number by \(max(x) {@literal -} min(x)\), in the
+     * normalized by substracting the mean from each number and dividing each number by \(max(x) - min(x)\), in the
      * time series.
      */
     public static Array meanNorm(Array arr) {
@@ -174,10 +174,10 @@ public class Normalization extends Library {
     }
 
     /**
-     * Normalizes the given time series according to its maximum{@literal -}minimum value and its mean. It follows the following
+     * Normalizes the given time series according to its maximum-minimum value and its mean. It follows the following
      * formulae:
      * \[
-     * \acute{x} = \frac{x {@literal -} mean(x)}{max(x) {@literal -} min(x)}.
+     * \acute{x} = \frac{x - mean(x)}{max(x) - min(x)}.
      * \]
      *
      * @param arr Array containing the input time series.
@@ -214,7 +214,7 @@ public class Normalization extends Library {
     }
 
     /**
-     * Adjusts the time series in the given input and performs z{@literal -}norm
+     * Adjusts the time series in the given input and performs z-norm
      * in place (without allocating further memory).
      *
      * @param arr Array containing the input time series.
@@ -224,7 +224,7 @@ public class Normalization extends Library {
     }
 
     /**
-     * Adjusts the time series in the given input and performs z{@literal -}norm
+     * Adjusts the time series in the given input and performs z-norm
      * in place (without allocating further memory).
      *
      * @param arr     Array containing the input time series.
