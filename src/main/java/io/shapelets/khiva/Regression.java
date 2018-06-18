@@ -17,7 +17,7 @@ public class Regression extends Library {
     private native static long[] linear(long xssRef, long yssRef);
 
     /**
-     * Calculates a linear least-squares regression for two sets of measurements. Both arrays should have the same
+     * Calculates a linear least{@literal -}squares regression for two sets of measurements. Both arrays should have the same
      * length.
      *
      * @param xss Array containing the input time series.
@@ -27,8 +27,8 @@ public class Regression extends Library {
      * slope Slope of the regression line.
      * intercept Intercept of the regression line.
      * rvalue Correlation coefficient.
-     * pvalue Two-sided p-value for a hypothesis test whose null hypothesis is that the slope is zero, using Wald
-     * Test with t-distribution of the test statistic.
+     * pvalue Two{@literal -}sided p{@literal -}value for a hypothesis test whose null hypothesis is that the slope is zero, using Wald
+     * Test with t{@literal -}distribution of the test statistic.
      * stderrest Standard error of the estimated gradient.
      * }
      */
