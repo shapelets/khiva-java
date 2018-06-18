@@ -10,50 +10,29 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
-import java.util.Arrays;
-import java.util.logging.Logger;
-
-@RunWith(Parameterized.class)
 public class LinalgTest {
-    Logger logger = Logger.getGlobal();
-
     private static final double DELTA = 1e-6;
 
-    @Parameters()
-    public static Iterable<Object[]> backends() {
-        return Arrays.asList(new Object[][]{
-                {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
-        });
-    }
-
-    public LinalgTest(Library.Backend back) {
-        Library.setKhivaBackend(back);
+    @Before
+    public void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test
     public void testLls() throws Exception {
-        if (Library.getKhivaBackend() == Array.Backend.KHIVA_BACKEND_CPU) {
-            double[] tss = {4, 3, -1, -2};
-            long[] dims = {2, 2, 1, 1};
-            double[] b = {3, 1};
-            long[] dimsB = {2, 1, 1, 1};
-            Array a = new Array(tss, dims);
-            Array c = new Array(b, dimsB);
-            double[] result = Linalg.lls(a, c).getData();
-            Assert.assertEquals(result[0], 1, DELTA);
-            Assert.assertEquals(result[1], 1, DELTA);
-            a.close();
-            c.close();
-        } else {
-            logger.warning("testLls only executed in CPU backend because of problems with " +
-                    "OpenMP while changing the backend");
-        }
-
+        double[] tss = {4, 3, -1, -2};
+        long[] dims = {2, 2, 1, 1};
+        double[] b = {3, 1};
+        long[] dimsB = {2, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array c = new Array(b, dimsB);
+        double[] result = Linalg.lls(a, c).getData();
+        Assert.assertEquals(result[0], 1, DELTA);
+        Assert.assertEquals(result[1], 1, DELTA);
+        a.close();
+        c.close();
     }
-
 }

@@ -10,27 +10,15 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import java.util.Arrays;
-
-@RunWith(Parameterized.class)
 public class StatisticsTest {
     private static final double DELTA = 1e-6;
 
-    @Parameters()
-    public static Iterable<Object[]> backends() {
-        return Arrays.asList(new Object[][]{
-                {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
-        });
-    }
-
-    public StatisticsTest(Library.Backend back) {
-        Library.setKhivaBackend(back);
+    @Before
+    public void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test
@@ -202,5 +190,4 @@ public class StatisticsTest {
             Assert.assertEquals(expected[i], result[i], 1e-2);
         }
     }
-
 }

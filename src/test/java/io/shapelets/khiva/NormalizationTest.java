@@ -10,30 +10,16 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import java.util.Arrays;
-
-@RunWith(Parameterized.class)
 public class NormalizationTest {
     private static final double DELTA = 1e-6;
 
-
-    @Parameters()
-    public static Iterable<Object[]> backends() {
-        return Arrays.asList(new Object[][]{
-                {Array.Backend.KHIVA_BACKEND_OPENCL}, {Array.Backend.KHIVA_BACKEND_CPU}
-        });
+    @Before
+    public void setUp(){
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
-
-    public NormalizationTest(Library.Backend back) {
-        Library.setKhivaBackend(back);
-    }
-
 
     @Test
     public void testZnorm() throws Exception {
@@ -134,5 +120,4 @@ public class NormalizationTest {
             Assert.assertEquals(expectedResult[i], result[i], DELTA);
         }
     }
-
 }

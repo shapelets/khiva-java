@@ -84,7 +84,7 @@ public class Statistics extends Library {
      * Q &gt; \chi_{1-\alpha,h}^2
      * \]
      * <p>
-     * where \( \chi_{1-\alpha,h}^2 \) is the \(\alpha\)-quantile of the ch--squared distribution with ''h'' degrees of
+     * where \( \chi_{1-\alpha,h}^2 \) is the \(\alpha\)-quantile of the chi-squared distribution with ''h'' degrees of
      * freedom.
      * <p>
      * [1] G. M. Ljung  G. E. P. Box (1978). On a measure of lack of fit in time series models.
