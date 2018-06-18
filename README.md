@@ -1,7 +1,4 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://github.com/shapelets/khiva-python/blob/master/LICENSE.txt)  
-
-
-
 Build Master Branch [![Build Status](https://travis-ci.com/shapelets/khiva-java.svg?branch=master)](https://travis-ci.com/shapelets/khiva-java)
 Code Coverance Master Branch: [![codecov.io](https://codecov.io/github/shapelets/khiva-java/coverage.svg?branch=master)](https://codecov.io/github/shapelets/khiva-java)
 Build Develop Branch [![Build Status](https://travis-ci.com/shapelets/khiva-java.svg?branch=develop)](https://travis-ci.com/shapelets/khiva-java)
