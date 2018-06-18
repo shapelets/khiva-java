@@ -1,0 +1,27 @@
+# Copyright (c) 2018 Shapelets.io
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+language: java
+services:
+  - docker
+
+before_install:
+  - docker pull shapelets/khiva
+  - docker run -i -t -d --name CI shapelets/khiva
+  - docker exec -it CI /bin/bash -c "mkdir -p /home/travis/build/shapelets/khiva-java"
+  - docker cp . CI:/home/travis/build/shapelets/khiva-java
+
+install:
+  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; apt-get update"
+  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; apt-get install -y maven"
+
+script:
+  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; mvn test"
+  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; mvn javadoc:javadoc"
+
+after_success:
+  - docker cp CI:/home/travis/build/shapelets/khiva-java/target .
+  - bash <(curl -s https://codecov.io/bash)

@@ -14,13 +14,13 @@ import org.junit.Test;
 
 public class LibraryTest {
 
+
     @Test
     public void testSetBackend() {
         int backends = Library.getKhivaBackends();
         int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
         int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
         int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
-
 
         if (cuda != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
@@ -64,6 +64,7 @@ public class LibraryTest {
                 Assert.assertEquals(Library.getKhivaDeviceID(), i);
             }
         }
+
     }
 
     @Test

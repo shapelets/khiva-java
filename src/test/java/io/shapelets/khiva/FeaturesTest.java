@@ -10,11 +10,16 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
 
 public class FeaturesTest {
     private static final double DELTA = 1e-6;
+
+    @BeforeClass
+    public static void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+    }
 
     @Test
     public void testCidCe() throws Exception {
@@ -610,6 +615,7 @@ public class FeaturesTest {
         float[] result = Features.maxLangevinFixedPoint(a, 7, 2).getData();
         Assert.assertEquals(result[0], 4.562970585, 1e-4);
         Assert.assertEquals(result[1], 4.562970585, 1e-4);
+
     }
 
     @Test

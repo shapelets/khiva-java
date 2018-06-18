@@ -10,11 +10,17 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DistancesTest {
 
     private static final double DELTA = 1e-6;
+
+    @BeforeClass
+    public static void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+    }
 
     @Test
     public void testEuclidean() throws Exception {
@@ -58,8 +64,8 @@ public class DistancesTest {
         Array resultArray = Distances.dtw(arrayOfTimeSeries);
         float[] result = resultArray.getData();
         float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 10, 5, 0, 0, 0, 15, 10, 5, 0, 0, 20, 15, 10, 5, 0};
-        Assert.assertEquals(expectedResult.length, result.length, DELTA) ;
-        for(int i = 0; i<result.length; i++) {
+        Assert.assertEquals(expectedResult.length, result.length, DELTA);
+        for (int i = 0; i < result.length; i++) {
             Assert.assertEquals(expectedResult[i], result[i], DELTA);
         }
     }
@@ -71,8 +77,8 @@ public class DistancesTest {
         Array a = new Array(timeSeries, dims);
         float[] result = Distances.hamming(a).getData();
         float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 5, 0, 0, 0, 5, 5, 5, 0, 0, 5, 5, 5, 5, 0};
-        Assert.assertEquals(expectedResult.length, result.length, DELTA) ;
-        for(int i = 0; i<result.length; i++) {
+        Assert.assertEquals(expectedResult.length, result.length, DELTA);
+        for (int i = 0; i < result.length; i++) {
             Assert.assertEquals(expectedResult[i], result[i], DELTA);
         }
     }
@@ -84,8 +90,8 @@ public class DistancesTest {
         Array a = new Array(timeSeries, dims);
         float[] result = Distances.manhattan(a).getData();
         float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 10, 5, 0, 0, 0, 15, 10, 5, 0, 0, 20, 15, 10, 5, 0};
-        Assert.assertEquals(expectedResult.length, result.length, DELTA) ;
-        for(int i = 0; i<result.length; i++) {
+        Assert.assertEquals(expectedResult.length, result.length, DELTA);
+        for (int i = 0; i < result.length; i++) {
             Assert.assertEquals(expectedResult[i], result[i], DELTA);
         }
     }
