@@ -23,7 +23,7 @@ before_build:
     - ps: if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S }
     - start /wait choco install maven
     - java -version
-    - dir C:\Program Files\Khiva\v0\lib
+    - dir "C:\Program Files\Khiva\v0\lib"
 build_script:
     - mvn install
     - mvn javadoc:javadoc
