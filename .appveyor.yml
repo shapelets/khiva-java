@@ -1,0 +1,35 @@
+image:
+    - Visual Studio 2017
+environment:
+    BOOST_ROOT: C:\Libraries\boost_1_67_0
+    PATH: $(JAVA_HOME)\bin;$(PATH)
+    KHIVA_PATH: C:\Program Files\Khiva\v0
+    matrix:
+        - JAVA_HOME: C:\Program Files\Java\jdk9
+        - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+        - JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+        - JAVA_HOME: C:\Program Files\Java\jdk1.7.0\bin
+cache:
+    - C:\Program Files\ArrayFire
+    - C:\Program Files\Khiva
+clone_folder: C:\khiva-java
+platform:
+    - x64
+before_build:
+    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "https://www.dropbox.com/s/ndt1eaouriiu4qi/ArrayFire-v3.5.1.zip?dl=1" -FileName ArrayFire-v3.5.1.zip }
+    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ 7z x ArrayFire-v3.5.1.zip -o"C:\Program Files" }
+    - reg add HKCU\Software\Kitware\CMake\Packages\ArrayFire /v ArrayFire_CMake_DIR /d "C:\Program Files\ArrayFire\v3\cmake" /f
+    - ps: if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-unattended.exe" -FileName khiva-v0.1.0-unattended.exe }
+    - ps: if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S }
+    - start /wait choco install maven
+build_script:
+    - mvn install
+    - mvn javadoc:javadoc
+test_script:
+    - mvn test
+on_finish:
+    - ps: |
+        $files = Get-ChildItem -Path .\target\surefire-reports -File -Filter *.xml
+        foreach ($file in $files) {
+            (New-Object System.Net.WebClient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $file.FullName)
+        }
