@@ -1,9 +1,9 @@
 image:
     - Visual Studio 2017
 environment:
-    BOOST_ROOT: C:\Libraries\boost_1_67_0
-    PATH: $(JAVA_HOME)\bin;$(PATH)
+    AF_PATH: C:\Program Files\ArrayFire\v3
     KHIVA_PATH: C:\Program Files\Khiva\v0
+    PATH: $(AF_PATH)\lib;$(KHIVA_PATH)\lib;$(PATH)
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk9
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
@@ -23,7 +23,7 @@ before_build:
     - ps: if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S }
     - start /wait choco install maven
     - java -version
-    - dir $(KHIVA_PATH)\lib
+    - dir C:\Program Files\Khiva\v0\lib
 build_script:
     - mvn install
     - mvn javadoc:javadoc
