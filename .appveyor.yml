@@ -8,7 +8,7 @@ environment:
         - JAVA_HOME: C:\Program Files\Java\jdk9
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
         - JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
-        - JAVA_HOME: C:\Program Files\Java\jdk1.7.0\bin
+        - JAVA_HOME: C:\Program Files\Java\jdk1.7.0
 cache:
     - C:\Program Files\ArrayFire
     - C:\Program Files\Khiva
@@ -22,6 +22,8 @@ before_build:
     - ps: if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-unattended.exe" -FileName khiva-v0.1.0-unattended.exe }
     - ps: if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S }
     - start /wait choco install maven
+    - java -version
+    - dir $(KHIVA_PATH)\lib
 build_script:
     - mvn install
     - mvn javadoc:javadoc
