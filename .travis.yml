@@ -15,10 +15,10 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      env: JDK='Open JDK 8'
-      jdk: openjdk8
+      env: JDK='Oracle JDK 8'
+      jdk: oraclejdk8
       before_install:
-        - jdk_switcher use openjdk8
+        - jdk_switcher use oraclejdk8
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh

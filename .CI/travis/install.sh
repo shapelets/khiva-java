@@ -8,8 +8,8 @@
 
 set -euv
 
-if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+# if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 
-else
+# else
 
-fi
+# fi
