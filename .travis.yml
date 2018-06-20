@@ -34,4 +34,4 @@ matrix:
         - source .CI/travis/install.sh
 
 script:
-  - source .CI/travis/build_and_test.sh
+  - source .CI/travis/build-and-test.sh
