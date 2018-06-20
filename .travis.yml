@@ -25,4 +25,5 @@ before_install:
 install:
   - source .CI/travis/install.sh
 script:
+  - jdk_switcher use openjdk10
   - source .CI/travis/build_and_test.sh
