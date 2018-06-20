@@ -13,13 +13,11 @@ matrix:
       dist: trusty
       jdk:
         - oraclejdk8
-        - oraclejdk9
 
     - os: osx
       osx_image: xcode9.3
       jdk:
         - oraclejdk8
-        - oraclejdk9
 
 before_install:
   - source .CI/travis/install-arrayfire.sh
