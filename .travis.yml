@@ -8,6 +8,10 @@ language: java
 jdk:
   - oraclejdk8
 
+cache:
+   directories:
+     - ${TRAVIS_BUILD_DIR}/installers
+
 matrix:
   fast_finish: true
   include:
