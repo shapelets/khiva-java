@@ -5,6 +5,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+mkdir -p installers
+
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     if [ ! -e "installers/ArrayFire-no-gl-v3.5.1_OSX.pkg" ]; then
         wget http://arrayfire.s3.amazonaws.com/3.5.1/ArrayFire-no-gl-v3.5.1_OSX.pkg -O installers/ArrayFire-no-gl-v3.5.1_OSX.pkg
