@@ -16,8 +16,8 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      jdk:
-        - oraclejdk8
+      - env: JDK='Oracle JDK 8'
+        jdk: oraclejdk8
       before_install:
         - jdk_switcher use openjdk8
       install:
