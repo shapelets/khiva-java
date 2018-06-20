@@ -5,23 +5,26 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 language: java
-services:
-  - docker
+
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+      dist: trusty
+      jdk:
+        - oraclejdk8
+        - oraclejdk9
+
+    - os: osx
+      osx_image: xcode9.3
+      jdk:
+        - oraclejdk8
+        - oraclejdk9
 
 before_install:
-  - docker pull shapelets/khiva
-  - docker run -i -t -d --name CI shapelets/khiva
-  - docker exec -it CI /bin/bash -c "mkdir -p /home/travis/build/shapelets/khiva-java"
-  - docker cp . CI:/home/travis/build/shapelets/khiva-java
-
+  - source .CI/travis/install-arrayfire.sh
+  - source .CI/travis/install-khiva.sh
 install:
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; apt-get update"
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; apt-get install -y maven"
-
+  - source .CI/travis/install.sh
 script:
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; mvn test"
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; mvn javadoc:javadoc"
-
-after_success:
-  - docker cp CI:/home/travis/build/shapelets/khiva-java/target .
-  - bash <(curl -s https://codecov.io/bash)
+  - source .CI/travis/build_and_test.sh
