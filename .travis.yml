@@ -12,7 +12,6 @@ cache:
      - ${TRAVIS_BUILD_DIR}/installers
 
 matrix:
-  fast_finish: true
   include:
     - os: linux
       dist: trusty
@@ -20,20 +19,6 @@ matrix:
         jdk: oraclejdk8
       before_install:
         - jdk_switcher use oraclejdk8
-      install:
-        - source .CI/travis/install-arrayfire.sh
-        - source .CI/travis/install-khiva.sh
-      script:
-        - source .CI/travis/build-and-test.sh
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
-
-    - os: linux
-      dist: trusty
-      - env: JDK='Open JDK 8'
-        jdk: openjdk8
-      before_install:
-        - jdk_switcher use openjdk8
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
