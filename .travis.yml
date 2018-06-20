@@ -19,16 +19,19 @@ matrix:
   include:
     - os: linux
       dist: trusty
+      before_install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      install:
+        - jdk_switcher use openjdk8
 
     - os: osx
       osx_image: xcode9.3
+      before_install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      install:
+        - source .CI/travis/install.sh
 
-
-before_install:
-  - source .CI/travis/install-arrayfire.sh
-  - source .CI/travis/install-khiva.sh
-install:
-  - source .CI/travis/install.sh
 script:
-  - jdk_switcher use openjdk8
   - source .CI/travis/build_and_test.sh
