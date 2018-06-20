@@ -5,23 +5,17 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 language: java
+jdk:
+  - oraclejdk8
 
 matrix:
   fast_finish: true
   include:
     - os: linux
-      dist: trusty
-      addons:
-        apt:
-          packages:
-            - oracle-java8-installer
-      jdk:
-        - oraclejdk8
+      dist: trusty   
 
     - os: osx
       osx_image: xcode9.3
-      jdk:
-        - oraclejdk8
 
 before_install:
   - source .CI/travis/install-arrayfire.sh
@@ -29,5 +23,5 @@ before_install:
 install:
   - source .CI/travis/install.sh
 script:
-  - jdk_switcher use openjdk10
+  - jdk_switcher use openjdk8
   - source .CI/travis/build_and_test.sh
