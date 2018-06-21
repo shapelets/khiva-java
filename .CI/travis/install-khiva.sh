@@ -11,7 +11,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 
     #update python
     brew upgrade python
-    brew install fftw
+    brew install fftw freeimage
     #brew install --force doxygen graphviz
 
     # Installing conan
