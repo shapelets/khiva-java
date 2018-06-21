@@ -64,7 +64,6 @@ public class LibraryTest {
                 Assert.assertEquals(Library.getKhivaDeviceID(), i);
             }
         }
-
     }
 
     @Test

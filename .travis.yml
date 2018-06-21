@@ -5,23 +5,69 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 language: java
-services:
-  - docker
+sudo: required
 
-before_install:
-  - docker pull shapelets/khiva
-  - docker run -i -t -d --name CI shapelets/khiva
-  - docker exec -it CI /bin/bash -c "mkdir -p /home/travis/build/shapelets/khiva-java"
-  - docker cp . CI:/home/travis/build/shapelets/khiva-java
+cache:
+ directories:
+   - ${TRAVIS_BUILD_DIR}/installers
+   - ${HOME}/.m2
 
-install:
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; apt-get update"
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; apt-get install -y maven"
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      env: JDK='Oracle JDK 8'
+      jdk: oraclejdk8
+      before_install:
+        - jdk_switcher use oraclejdk8
+      install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      script:
+        - source .CI/travis/build-and-test.sh
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
 
-script:
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; mvn test"
-  - docker exec -it CI /bin/bash -c "cd /home/travis/build/shapelets/khiva-java; mvn javadoc:javadoc"
+    - os: linux
+      dist: trusty
+      env: JDK='Oracle JDK 9'
+      jdk: oraclejdk9
+      before_install:
+        - jdk_switcher use oraclejdk9
+      install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      script:
+        - source .CI/travis/build-and-test.sh
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
 
-after_success:
-  - docker cp CI:/home/travis/build/shapelets/khiva-java/target .
-  - bash <(curl -s https://codecov.io/bash)
+    - os: osx
+      osx_image: xcode9.3
+      env: JDK='Oracle JDK 8'
+      before_install:
+        - brew update
+        - brew tap caskroom/cask
+        - brew tap caskroom/versions
+        - brew cask info java8
+        - brew cask install java8
+      install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      script:
+        - source .CI/travis/build-and-test.sh
+
+    - os: osx
+      osx_image: xcode9.3
+      env: JDK='Oracle JDK 9'
+      before_install:
+        - brew update
+        - brew tap caskroom/cask
+        - brew tap caskroom/versions
+        - brew cask info java
+        - brew cask install java
+      install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      script:
+        - source .CI/travis/build-and-test.sh
