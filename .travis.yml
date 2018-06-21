@@ -7,11 +7,6 @@
 language: java
 sudo: required
 
-cache:
-   directories:
-     - ${TRAVIS_BUILD_DIR}/installers
-     - ${HOME}/.m2
-
 matrix:
   include:
     - os: linux
@@ -45,6 +40,13 @@ matrix:
     - os: osx
       osx_image: xcode9.3
       env: JDK='Oracle JDK 8'
+      before_install:
+        - brew update
+        - brew tap caskroom/cask
+        - brew tap caskroom/versions
+        - brew cask info java8           ## For Java 8 
+        - brew cask info java
+        - brew cask install java8
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
