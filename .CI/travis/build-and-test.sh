@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Copyright (c) 2018 Shapelets.io
 #

@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Copyright (c) 2018 Shapelets.io
 #
@@ -9,9 +8,11 @@
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update
     brew install fftw freeimage
+
     if [ ! -e "installers/khiva-v0.1.0-OnlyCPU.pkg" ]; then
         wget https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-OnlyCPU.pkg -O installers/khiva-v0.1.0-OnlyCPU.pkg
     fi
+
     sudo installer -pkg installers/khiva-v0.1.0-OnlyCPU.pkg -target /
 else
     if [ ! -e "installers/khiva-v0.1.0-ci.sh" ]; then
@@ -22,4 +23,3 @@ else
     sudo ./installers/khiva-v0.1.0-ci.sh --prefix=/usr/local --skip-license
     sudo ldconfig
 fi
-
