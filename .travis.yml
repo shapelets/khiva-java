@@ -10,6 +10,7 @@ sudo: required
 cache:
    directories:
      - ${TRAVIS_BUILD_DIR}/installers
+     - ${HOME}/.m2
 
 matrix:
   include:
@@ -30,7 +31,7 @@ matrix:
     - os: linux
       dist: trusty
       env: JDK='Oracle JDK 9'
-      jdk: oraclejdk8
+      jdk: oraclejdk9
       before_install:
         - jdk_switcher use oraclejdk9
       install:
@@ -40,6 +41,15 @@ matrix:
         - source .CI/travis/build-and-test.sh
       after_success:
         - bash <(curl -s https://codecov.io/bash)
+
+    - os: osx
+      osx_image: xcode9.3
+      env: JDK='Oracle JDK 8'
+      install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      script:
+        - source .CI/travis/build-and-test.sh
 
     - os: osx
       osx_image: xcode9.3
