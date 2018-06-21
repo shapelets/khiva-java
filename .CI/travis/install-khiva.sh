@@ -28,8 +28,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     conan install .. -s compiler=apple-clang -s compiler.version=9.1 -s compiler.libcxx=libc++ --build missing
     cmake ..  -DKHIVA_ONLY_CPU_BACKEND=ON -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_BENCHMARKS=OFF
     make install
-    cd ..
-    cd ..
+    cd ${TRAVIS_BUILD_DIR}
 else
     if [ ! -e "installers/khiva-v0.1.0-ci.sh" ]; then
         wget https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-ci.sh -O installers/khiva-v0.1.0-ci.sh
