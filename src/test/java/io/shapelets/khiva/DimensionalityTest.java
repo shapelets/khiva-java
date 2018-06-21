@@ -10,10 +10,15 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DimensionalityTest {
-    private static final double DELTA = 1e-6;
+
+    @BeforeClass
+    public static void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+    }
 
     @Test
     public void testRamerDouglasPeucker() throws Exception {

@@ -10,10 +10,16 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class NormalizationTest {
     private static final double DELTA = 1e-6;
+
+    @BeforeClass
+    public static void setUp(){
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+    }
 
     @Test
     public void testZnorm() throws Exception {
@@ -114,5 +120,4 @@ public class NormalizationTest {
             Assert.assertEquals(expectedResult[i], result[i], DELTA);
         }
     }
-
 }

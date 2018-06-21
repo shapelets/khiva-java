@@ -1105,7 +1105,7 @@ public class Features extends Library {
      * feature to extract from time series.
      * <p>
      * [1] Fulcher, B.D., Jones, N.S. (2014). Highly comparative feature-based time-series classification.
-     * Knowledge and Data Engineering, IEEE Transactions on 26, 3026–3037.
+     * Knowledge and Data Engineering, IEEE Transactions on 26, 3026-3037.
      *
      * @param arr Array containing the input time series.
      * @param lag The lag to be computed.

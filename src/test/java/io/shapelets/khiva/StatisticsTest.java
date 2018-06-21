@@ -10,10 +10,16 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class StatisticsTest {
     private static final double DELTA = 1e-6;
+
+    @BeforeClass
+    public static void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+    }
 
     @Test
     public void testCovarianceUnbiased() throws Exception {
@@ -184,5 +190,4 @@ public class StatisticsTest {
             Assert.assertEquals(expected[i], result[i], 1e-2);
         }
     }
-
 }

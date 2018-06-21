@@ -10,10 +10,17 @@
 package io.shapelets.khiva;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MatrixTest {
     private static final double DELTA = 1e-6;
+
+    @BeforeClass
+    public static void setUp() {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+    }
+
 
     @Test
     public void testStompSelfJoin() throws Exception {
@@ -84,9 +91,8 @@ public class MatrixTest {
         Array b = new Array(tss[1], dims);
 
         Array[] stompResult = Matrix.stomp(a, b, 3);
-        Array[] findMotifs = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 2);
-
-        int[] subsequenceIndex = findMotifs[2].getData();
+        Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 2);
+        int[] subsequenceIndex = findDiscords[2].getData();
         Assert.assertEquals(subsequenceIndex[0], 0, DELTA);
         Assert.assertEquals(subsequenceIndex[1], 9, DELTA);
     }
