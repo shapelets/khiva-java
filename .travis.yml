@@ -49,14 +49,13 @@ matrix:
         - brew update
         - brew tap caskroom/cask
         - brew tap caskroom/versions
-        - brew cask info java8           ## For Java 8 
+        - brew cask info java8
         - brew cask info java
         - brew cask install java8
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
-        - cd ${TRAVIS_BUILD_DIR}
         - source .CI/travis/build-and-test.sh
 
     - os: osx
@@ -66,12 +65,11 @@ matrix:
         - brew update
         - brew tap caskroom/cask
         - brew tap caskroom/versions
-        - brew cask info java8           ## For Java 8 
+        - brew cask info java8
         - brew cask info java
-        - brew cask install java8
+        - brew cask install java
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
-        - cd ${TRAVIS_BUILD_DIR}
         - source .CI/travis/build-and-test.sh
