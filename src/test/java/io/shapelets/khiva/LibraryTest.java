@@ -17,7 +17,6 @@ public class LibraryTest {
 
     @Test
     public void testSetBackend() {
-        System.out.println("Enter: testSetBackend");
         int backends = Library.getKhivaBackends();
         int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
         int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
@@ -35,23 +34,14 @@ public class LibraryTest {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
             Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CPU);
         }
-        System.out.println("Exit: testSetBackend");
     }
 
     @Test
     public void testGetDevice() {
-        System.out.println("Enter: testGetDevice");
         int backends = Library.getKhivaBackends();
-        System.out.println("backends: " + backends);
-        System.out.println("Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal(): " + Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal());
-        System.out.println("Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal(): " + Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal());
-        System.out.println("Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal(): " + Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal());
         int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
-        System.out.println("cuda: " + cuda);
         int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
-        System.out.println("opencl: " + opencl);
         int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
-        System.out.println("cpu: " + cpu);
 
         if (cuda != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
@@ -74,7 +64,6 @@ public class LibraryTest {
                 Assert.assertEquals(Library.getKhivaDeviceID(), i);
             }
         }
-        System.out.println("Exit: testGetDevice");
     }
 
     @Test
