@@ -11,7 +11,6 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         wget https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0.pkg -O installers/khiva-v0.1.0.pkg
     fi
 
-    # Installs arrayfire
     sudo installer -pkg installers/khiva-v0.1.0.pkg -target /
 else
     if [ ! -e "installers/khiva-v0.1.0-ci.sh" ]; then
