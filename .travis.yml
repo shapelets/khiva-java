@@ -68,5 +68,3 @@ matrix:
         - source .CI/travis/install-khiva.sh
       script:
         - source .CI/travis/build-and-test.sh
-
-
