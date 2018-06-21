@@ -7,11 +7,11 @@
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     if [ ! -e "installers/ArrayFire-no-gl-v3.5.1_OSX.pkg" ]; then
-        wget https://github.com/shapelets/arrayfire/releases/download/v3.5.1/arrayfire-unified-3.5.1.pkg -O installers/ArrayFire-no-gl-v3.5.1_OSX.pkg
+        wget https://github.com/shapelets/arrayfire/releases/download/v3.5.1/arrayfire-unified-3.5.1.pkg -O installers/arrayfire-unified-3.5.1.pkg
     fi
 
     # Installs arrayfire
-    sudo installer -pkg installers/ArrayFire-no-gl-v3.5.1_OSX.pkg -target /
+    sudo installer -pkg installers/arrayfire-unified-3.5.1.pkg -target /
 else
     if [ ! -e "installers/ArrayFire-no-gl-v3.5.1_Linux_x86_64.sh" ]; then
         wget http://arrayfire.s3.amazonaws.com/3.5.1/ArrayFire-no-gl-v3.5.1_Linux_x86_64.sh -O installers/ArrayFire-no-gl-v3.5.1_Linux_x86_64.sh

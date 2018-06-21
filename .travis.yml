@@ -50,7 +50,6 @@ matrix:
         - brew tap caskroom/cask
         - brew tap caskroom/versions
         - brew cask info java8
-        - brew cask info java
         - brew cask install java8
       install:
         - source .CI/travis/install-arrayfire.sh
@@ -65,7 +64,6 @@ matrix:
         - brew update
         - brew tap caskroom/cask
         - brew tap caskroom/versions
-        - brew cask info java8
         - brew cask info java
         - brew cask install java
       install:
