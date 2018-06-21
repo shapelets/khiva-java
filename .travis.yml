@@ -42,6 +42,7 @@ matrix:
       env: JDK='Oracle JDK 8'
       before_install:
         - brew update
+        - brew install freeimage fftw
         - brew tap caskroom/cask
         - brew tap caskroom/versions
         - brew cask info java8           ## For Java 8 
