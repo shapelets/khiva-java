@@ -37,7 +37,7 @@ build_script:
 test_script:
     - mvn test
 on_finish:
-    - codecov -F Windows
+    - codecov -F Windows -f target/site/jacoco/jacoco.xml
     - ps: |
         $files = Get-ChildItem -Path .\target\surefire-reports -File -Filter *.xml
         foreach ($file in $files) {
