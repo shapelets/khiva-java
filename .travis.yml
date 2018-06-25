@@ -26,7 +26,7 @@ matrix:
       script:
         - source .CI/travis/build-and-test.sh
       after_success:
-        - bash <(curl -s https://codecov.io/bash)
+        - bash <(curl -s https://codecov.io/bash) -cF Linux
 
     - os: linux
       dist: trusty
@@ -39,8 +39,6 @@ matrix:
         - source .CI/travis/install-khiva.sh
       script:
         - source .CI/travis/build-and-test.sh
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
 
     - os: osx
       osx_image: xcode9.3
@@ -56,6 +54,8 @@ matrix:
         - source .CI/travis/install-khiva.sh
       script:
         - source .CI/travis/build-and-test.sh
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -cF MacOS
 
     - os: osx
       osx_image: xcode9.3
