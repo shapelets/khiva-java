@@ -6,7 +6,7 @@
     </properties>
     <groupId>io.shapelets</groupId>
     <artifactId>khiva</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 
     <name>khiva-java</name>
     <url>https://github.com/shapelets/khiva-java</url>
