@@ -49,7 +49,7 @@ public class Array extends Library implements AutoCloseable {
          */
         u32,
         /**
-         * 32 bits Unsigned Int. khiva.dtype.
+         * 8 bits Unsigned Int. khiva.dtype.
          */
         u8,
         /**
@@ -388,30 +388,30 @@ public class Array extends Library implements AutoCloseable {
      * @return The data to an array of its type.
      */
     public <Any> Any getData() {
-        switch (getType().ordinal()) {
-            case 0:
+        switch (getType()) {
+            case f32:
                 return (Any) getFloatFromArray();
-            case 1:
+            case c32:
                 return (Any) getFloatComplexFromArray();
-            case 2:
+            case f64:
                 return (Any) getDoubleFromArray();
-            case 3:
+            case c64:
                 return (Any) getDoubleComplexFromArray();
-            case 4:
+            case b8:
                 return (Any) getBooleanFromArray();
-            case 5:
+            case s32:
                 return (Any) getIntFromArray();
-            case 6:
+            case u32:
                 return (Any) getIntFromArray();
-            case 7:
+            case u8:
                 return (Any) getByteFromArray();
-            case 8:
+            case s64:
                 return (Any) getLongFromArray();
-            case 9:
+            case u64:
                 return (Any) getLongFromArray();
-            case 10:
+            case s16:
                 return (Any) getShortFromArray();
-            case 11:
+            case u16:
                 return (Any) getShortFromArray();
             default:
                 return (Any) getFloatFromArray();
