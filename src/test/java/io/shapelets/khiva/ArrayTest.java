@@ -21,6 +21,284 @@ public class ArrayTest {
         Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
+    @Test
+    public void testDoubleNull() {
+        double[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testDoubleMismatchingDims() {
+        double[] tss = {1, 2};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testFloatNull() {
+        float[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testFloatMismatchingDims() {
+        float[] tss = {1, 2};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testIntNull() {
+        int[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testIntMismatchingDims() {
+        int[] tss = {1, 2};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testFloatComplexNull() {
+        FloatComplex[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testFloatComplexMismatchingDims() {
+        FloatComplex[] tss = {new FloatComplex(1, 2), new FloatComplex(3, 4)};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testDoubleComplexNull() {
+        DoubleComplex[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testDoubleComplexMismatchingDims() {
+        DoubleComplex[] tss = {new DoubleComplex(1, 2), new DoubleComplex(3, 4)};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testBooleanNull() {
+        boolean[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testBooleanMismatchingDims() {
+        boolean[] tss = {true, false};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testShortNull() {
+        short[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testShortMismatchingDims() {
+        short[] tss = {1, 2};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testByteNull() {
+        byte[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testByteMismatchingDims() {
+        byte[] tss = {1, 2};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testLongNull() {
+        long[] tss = null;
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null elems object provided");
+        }
+    }
+
+    @Test
+    public void testLongMismatchingDims() {
+        long[] tss = {1, 2};
+        long[] dims = {1, 1, 1, 1};
+        try {
+            new Array(tss, dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
+        }
+    }
+
+    @Test
+    public void testByte() throws Exception {
+        byte[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        byte[] result = a.getData();
+        byte[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
+        Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
+    public void testShort() throws Exception {
+        short[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        short[] result = a.getData();
+        short[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
+        Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
+    public void testUnsignedShort() throws Exception {
+        short[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array b = a.as(Array.Dtype.u16);
+        short[] result = b.getData();
+        short[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
+        Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
+    public void testLong() throws Exception {
+        long[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        long[] result = a.getData();
+        long[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
+        Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
+    public void testUnsignedLong() throws Exception {
+        long[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array b = a.as(Array.Dtype.u64);
+        long[] result = b.getData();
+        long[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
+        Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
+    public void testDim4Null() {
+        long[] dims = null;
+        try {
+            Array.dim4(dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "Null dimensions object provided");
+        }
+    }
+
+    @Test
+    public void testDim4FiveDimensions() {
+        long[] dims = {1, 1, 1, 1, 1};
+        try {
+            Array.dim4(dims);
+        } catch (Exception e) {
+            Assert.assertEquals(e.getMessage(), "ArrayFire supports up to 4 dimensions only");
+        }
+    }
+
+    @Test
+    public void testGetDims() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {2, 2, 2, 1};
+        Array a = new Array(tss, dims);
+        long[] result = a.getDims();
+        Assert.assertArrayEquals(result, dims);
+    }
 
     @Test
     public void testReal1D() throws Exception {
@@ -421,6 +699,18 @@ public class ArrayTest {
     }
 
     @Test
+    public void testNot() throws Exception {
+        boolean[] data = {true, false};
+        long[] dims = {2, 1, 1, 1};
+        Array a = new Array(data, dims);
+        Array b = a.not();
+
+        boolean[] result = b.getData();
+        boolean[] expected = {false, true};
+        Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
     public void testTransposeConjugate() throws Exception {
         DoubleComplex[] data = {new DoubleComplex(0, -1), new DoubleComplex(2, 1),
                 new DoubleComplex(4, 2), new DoubleComplex(0, -2)};
@@ -519,6 +809,25 @@ public class ArrayTest {
         boolean[] result = c.getData();
         boolean[] expected = {true, true, true, true};
         Assert.assertArrayEquals(result, expected);
+    }
+
+    @Test
+    public void testCopyConstructor() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        Array b = new Array(a);
+        double[] result = b.getData();
+        double[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
+        Assert.assertArrayEquals(result, expected, DELTA);
+    }
+
+    @Test
+    public void testClose() throws Exception {
+        double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
+        long[] dims = {8, 1, 1, 1};
+        Array a = new Array(tss, dims);
+        a.close();
     }
 
     @Test
