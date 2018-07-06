@@ -14,6 +14,15 @@ import org.junit.Test;
 
 public class LibraryTest {
 
+    @Test
+    public void testPrintBackendInfo(){
+        Library.printBackendInfo();
+    }
+
+    @Test
+    public void testBackendInfo(){
+        System.out.println(Library.getBackendInfo());
+    }
 
     @Test
     public void testSetBackend() {

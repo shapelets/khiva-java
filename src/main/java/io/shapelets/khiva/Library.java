@@ -86,7 +86,7 @@ public class Library {
         }
     }
 
-    private native static void info();
+    private native static String backendInfo();
 
     private native static void setBackend(int backend);
 
@@ -100,20 +100,27 @@ public class Library {
 
     private native static int getDeviceCount();
 
-    private native static byte[] version();
+    private native static String version();
 
 
     /**
-     * Gets the devices info.
+     * Prints information from the current backend.
      */
-    public static void infoKhiva() {
-        info();
+    public static void printBackendInfo() { System.out.println(backendInfo()); }
+
+    /**
+     * Gets information from the current backend.
+     *
+     * @return String with information from the active backend.
+     */
+    public static String getBackendInfo() {
+        return backendInfo();
     }
 
     /**
-     * Sets the Khiva back-end.
+     * Sets the Khiva backend.
      *
-     * @param khivaBE Back-end selected.
+     * @param khivaBE selected backend.
      */
     public static void setKhivaBackend(Backend khivaBE) {
         setBackend(khivaBE.getKhivaOrdinal());
@@ -130,7 +137,7 @@ public class Library {
 
 
     /**
-     * Get the available backends.
+     * Gets the available backends.
      *
      * @return The available backends.
      */
@@ -148,7 +155,7 @@ public class Library {
     }
 
     /**
-     * Get the active backend.
+     * Gets the active backend.
      *
      * @return The active backend.
      */
@@ -157,7 +164,7 @@ public class Library {
     }
 
     /**
-     * Get the devices count.
+     * Gets the devices count.
      *
      * @return The devices count.
      */
@@ -165,8 +172,10 @@ public class Library {
         return getDeviceCount();
     }
 
-    public static String getKhivaVersion() {
-        return new String(version());
-    }
-
+    /**
+     * Gets the vesion of the library.
+     *
+     * @return A string with the khiva version.
+     */
+    public static String getKhivaVersion() { return version(); }
 }
