@@ -9,8 +9,20 @@
 
 package io.shapelets.khiva;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 
 public class LibraryTest {
 
@@ -76,7 +88,84 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetKhivaVersion() {
-        Assert.assertEquals(Library.getKhivaVersion(), "0.1.0");
+    public void testGetKhivaVersion() { Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromGithub()); }
+
+    private String getKhivaVersionFromGithub() {
+        String response = getTagsFromGitHub();
+        Gson gson = new GsonBuilder().create();
+        GithubTag[] tagsArray = gson.fromJson(response, GithubTag[].class);
+        String version = tagsArray[tagsArray.length-1].getName();
+        version = version.replace("v", "");
+        version = version.replace("-RC", "");
+
+        return version;
+    }
+
+    private String getTagsFromGitHub() {
+        String response = "";
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        try {
+            HttpGet httpGetRequest = new HttpGet("https://api.github.com/repos/shapelets/khiva/tags");
+            HttpResponse httpResponse = httpClient.execute(httpGetRequest);
+            HttpEntity entity = httpResponse.getEntity();
+
+            byte[] buffer = new byte[1024];
+            if (entity != null) {
+                InputStream inputStream = entity.getContent();
+                try {
+                    int bytesRead = 0;
+                    BufferedInputStream bis = new BufferedInputStream(inputStream);
+                    while ((bytesRead = bis.read(buffer)) != -1) {
+                        response = response + new String(buffer, 0, bytesRead);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try { inputStream.close(); } catch (Exception ignore) {}
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public static class GithubTag {
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getZipball_url() {
+            return zipball_url;
+        }
+
+        public void setZipball_url(String zipball_url) {
+            this.zipball_url = zipball_url;
+        }
+
+        public String getTarball_url() {
+            return tarball_url;
+        }
+
+        public void setTarball_url(String tarball_url) {
+            this.tarball_url = tarball_url;
+        }
+
+        public String getNode_id() {
+            return node_id;
+        }
+
+        public void setNode_id(String node_id) {
+            this.node_id = node_id;
+        }
+
+        private String name;
+        private String zipball_url;
+        private String tarball_url;
+        private String node_id;
     }
 }
