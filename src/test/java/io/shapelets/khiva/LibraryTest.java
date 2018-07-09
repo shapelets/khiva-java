@@ -96,7 +96,7 @@ public class LibraryTest {
         String filePath;
 
         if(System.getProperty("os.name").startsWith("Windows")){
-            filePath = "C:/Program Files/Khiva/include/khiva/version.h";
+            filePath = "C:/Program Files/Khiva/v0/include/khiva/version.h";
         }else{
             filePath = "/usr/local/include/khiva/version.h";
         }
