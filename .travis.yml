@@ -69,7 +69,6 @@ matrix:
         - brew tap caskroom/versions
         - brew cask info java8
         - brew cask install java8
-        - $HOME/.pyenv
         - $HOME/Library/Caches/Homebrew
       install:
         - source .CI/travis/install-arrayfire.sh
@@ -88,7 +87,6 @@ matrix:
          - ${HOME}/.m2
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
-         - $HOME/.pyenv
          - $HOME/Library/Caches/Homebrew
       before_install:
         - brew update

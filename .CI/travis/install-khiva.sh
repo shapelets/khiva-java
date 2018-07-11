@@ -51,17 +51,17 @@ else
         # Installing conan
         sudo pip install conan
      else
-        brew install fftw
-        brew link --overwrite gcc
         brew upgrade pyenv
         export PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
-        pyenv install 3.6.5 -s
+        export PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+        pyenv install ${TRAVIS_PYTHON_VERSION} -s
         pyenv init -
-        pyenv local 3.6.5
+
+        pyenv local ${TRAVIS_PYTHON_VERSION}
+        python${PYTHON_VERSION} --version
 
         # Installing conan
-        sudo pip3 install --upgrade pip
-        sudo pip3 install conan
+        sudo pip${PYTHON_VERSION} install conan
      fi
      conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
 
