@@ -20,6 +20,12 @@ matrix:
       dist: trusty
       env: JDK='Oracle JDK 8'
       jdk: oraclejdk8
+      cache:
+       directories:
+         - ${TRAVIS_BUILD_DIR}/installers
+         - ${HOME}/.m2
+         - ${HOME}/.conan
+         - ${TRAVIS_BUILD_DIR}/cmake
       before_install:
         - jdk_switcher use oraclejdk8
       install:
@@ -34,6 +40,12 @@ matrix:
       dist: trusty
       env: JDK='Oracle JDK 9'
       jdk: oraclejdk9
+      cache:
+       directories:
+         - ${TRAVIS_BUILD_DIR}/installers
+         - ${HOME}/.m2
+         - ${HOME}/.conan
+         - ${TRAVIS_BUILD_DIR}/cmake
       before_install:
         - jdk_switcher use oraclejdk9
       install:
@@ -45,12 +57,20 @@ matrix:
     - os: osx
       osx_image: xcode9.3
       env: JDK='Oracle JDK 8'
+      cache:
+       directories:
+         - ${TRAVIS_BUILD_DIR}/installers
+         - ${HOME}/.m2
+         - ${HOME}/.conan
+         - ${TRAVIS_BUILD_DIR}/cmake
       before_install:
         - brew update
         - brew tap caskroom/cask
         - brew tap caskroom/versions
         - brew cask info java8
         - brew cask install java8
+        - $HOME/.pyenv
+        - $HOME/Library/Caches/Homebrew
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -62,6 +82,14 @@ matrix:
     - os: osx
       osx_image: xcode9.3
       env: JDK='Oracle JDK 9'
+      cache:
+       directories:
+         - ${TRAVIS_BUILD_DIR}/installers
+         - ${HOME}/.m2
+         - ${HOME}/.conan
+         - ${TRAVIS_BUILD_DIR}/cmake
+         - $HOME/.pyenv
+         - $HOME/Library/Caches/Homebrew
       before_install:
         - brew update
         - brew tap caskroom/cask
