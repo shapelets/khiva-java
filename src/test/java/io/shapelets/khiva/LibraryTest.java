@@ -29,12 +29,28 @@ public class LibraryTest {
 
     @Test
     public void testPrintBackendInfo(){
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream old = System.out;
+        System.setOut(ps);
+
         Library.printBackendInfo();
+
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+
+        String info = baos.toString();
+        String words[] = info.split(" ");
+        Assert.assertEquals(words[0], "ArrayFire");
     }
 
     @Test
     public void testBackendInfo(){
-        System.out.println(Library.getBackendInfo());
+        String info = Library.getBackendInfo();
+        String words[] = info.split(" ");
+        Assert.assertEquals(words[0], "ArrayFire");
     }
 
     @Test
