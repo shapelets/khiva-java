@@ -47,6 +47,9 @@ else
      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         sudo apt-get update -y
         sudo apt-get install -y python3 python3-pip
+
+        # Installing conan
+        sudo pip3 install conan
      else
         brew upgrade pyenv
         export PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
