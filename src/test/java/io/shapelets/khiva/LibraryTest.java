@@ -108,7 +108,7 @@ public class LibraryTest {
             e.printStackTrace();
         }
 
-        Matcher m = Pattern.compile("([0-9]+.[0-9]+.[0-9]+)").matcher(data);
+        Matcher m = Pattern.compile("([0-9]+\\.[0-9]+\\.[0-9]+)").matcher(data);
         if (m.find()){
             version = m.group(1);
         }
