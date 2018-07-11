@@ -51,7 +51,8 @@ else
         # Installing conan
         sudo pip3 install conan
      else
-        brew upgrade pyenv fftw3
+        brew install fftw
+        brew upgrade pyenv
         export PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         pyenv install 3.6.5 -s
         pyenv init -
