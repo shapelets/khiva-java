@@ -21,8 +21,8 @@ cache:
     - c:\tools\vcpkg\installed
     - C:\Program Files\ArrayFire
     - C:\Program Files\Khiva
-    - C:\maven\
     - C:\Users\appveyor\.m2
+
 clone_folder: C:\khiva-java
 platform:
     - x64
