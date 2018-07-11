@@ -51,6 +51,7 @@ else
         # Installing conan
         sudo pip install conan
      else
+        brew install fftw
         brew upgrade pyenv
         export PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         export PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
