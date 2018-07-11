@@ -56,7 +56,9 @@ matrix:
 
     - os: osx
       osx_image: xcode9.3
-      env: JDK='Oracle JDK 8'
+      env:
+        - JDK='Oracle JDK 8'
+        - TRAVIS_PYTHON_VERSION=3.6.5
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
@@ -80,7 +82,9 @@ matrix:
 
     - os: osx
       osx_image: xcode9.3
-      env: JDK='Oracle JDK 9'
+      env:
+        - JDK='Oracle JDK 9'
+        - TRAVIS_PYTHON_VERSION=3.6.5
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
