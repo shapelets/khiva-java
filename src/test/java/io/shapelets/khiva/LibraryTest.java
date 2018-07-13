@@ -9,13 +9,6 @@
 
 package io.shapelets.khiva;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -130,84 +123,5 @@ public class LibraryTest {
         }
 
         return version;
-    }
-
-    private String getKhivaVersionFromGithub() {
-        String response = getTagsFromGitHub();
-        Gson gson = new GsonBuilder().create();
-        GithubTag[] tagsArray = gson.fromJson(response, GithubTag[].class);
-        String version = tagsArray[tagsArray.length-1].getName();
-        version = version.replace("v", "");
-        version = version.replace("-RC", "");
-
-        return version;
-    }
-
-    private String getTagsFromGitHub() {
-        String response = "";
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        try {
-            HttpGet httpGetRequest = new HttpGet("https://api.github.com/repos/shapelets/khiva/tags");
-            HttpResponse httpResponse = httpClient.execute(httpGetRequest);
-            HttpEntity entity = httpResponse.getEntity();
-
-            byte[] buffer = new byte[1024];
-            if (entity != null) {
-                InputStream inputStream = entity.getContent();
-                try {
-                    int bytesRead = 0;
-                    BufferedInputStream bis = new BufferedInputStream(inputStream);
-                    while ((bytesRead = bis.read(buffer)) != -1) {
-                        response = response + new String(buffer, 0, bytesRead);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    try { inputStream.close(); } catch (Exception ignore) {}
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    private static class GithubTag {
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getZipBallUrl() {
-            return zipBallUrl;
-        }
-
-        public void setZipBallUrl(String zipBallUrl) {
-            this.zipBallUrl = zipBallUrl;
-        }
-
-        public String getTarBallUrl() {
-            return tarBallUrl;
-        }
-
-        public void setTarBallUrl(String tarBallUrl) {
-            this.tarBallUrl = tarBallUrl;
-        }
-
-        public String getNodeId() {
-            return nodeId;
-        }
-
-        public void setNodeId(String nodeId) {
-            this.nodeId = nodeId;
-        }
-
-        private String name;
-        private String zipBallUrl;
-        private String tarBallUrl;
-        private String nodeId;
     }
 }
