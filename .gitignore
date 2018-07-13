@@ -29,3 +29,6 @@ khiva.iml
 
 # target folder
 target/
+
+# Hidden files
+.DS_Store

@@ -59,7 +59,7 @@ matrix:
           - ${TRAVIS_BUILD_DIR}/cmake
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
-      before_install:
+      install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
         - brew update
@@ -84,7 +84,7 @@ matrix:
          - ${TRAVIS_BUILD_DIR}/cmake
          - ${HOME}/Library/Caches/Homebrew
          - ${HOME}/.pyenv
-      before_install:
+      install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
         - brew update
