@@ -6,6 +6,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    brew install fftw freeimage
     if [ ! -e "installers/arrayfire-unified-3.5.1.pkg" ]; then
         wget https://github.com/shapelets/arrayfire/releases/download/v3.5.1/arrayfire-unified-3.5.1.pkg -O installers/arrayfire-unified-3.5.1.pkg
     fi
