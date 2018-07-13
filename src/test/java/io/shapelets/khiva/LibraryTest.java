@@ -181,33 +181,33 @@ public class LibraryTest {
             this.name = name;
         }
 
-        public String getZipball_url() {
-            return zipball_url;
+        public String getZipBallUrl() {
+            return zipBallUrl;
         }
 
-        public void setZipball_url(String zipball_url) {
-            this.zipball_url = zipball_url;
+        public void setZipBallUrl(String zipBallUrl) {
+            this.zipBallUrl = zipBallUrl;
         }
 
-        public String getTarball_url() {
-            return tarball_url;
+        public String getTarBallUrl() {
+            return tarBallUrl;
         }
 
-        public void setTarball_url(String tarball_url) {
-            this.tarball_url = tarball_url;
+        public void setTarBallUrl(String tarBallUrl) {
+            this.tarBallUrl = tarBallUrl;
         }
 
-        public String getNode_id() {
-            return node_id;
+        public String getNodeId() {
+            return nodeId;
         }
 
-        public void setNode_id(String node_id) {
-            this.node_id = node_id;
+        public void setNodeId(String nodeId) {
+            this.nodeId = nodeId;
         }
 
         private String name;
-        private String zipball_url;
-        private String tarball_url;
-        private String node_id;
+        private String zipBallUrl;
+        private String tarBallUrl;
+        private String nodeId;
     }
 }
