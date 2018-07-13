@@ -51,7 +51,6 @@ matrix:
       osx_image: xcode9.3
       env:
         - JDK='Oracle JDK 8'
-        - TRAVIS_PYTHON_VERSION=3.6.5
       cache:
         directories:
           - ${TRAVIS_BUILD_DIR}/installers
@@ -61,14 +60,13 @@ matrix:
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
       before_install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
         - brew update
         - brew tap caskroom/cask
         - brew tap caskroom/versions
         - brew cask info java8
         - brew cask install java8
-      install:
-        - source .CI/travis/install-arrayfire.sh
-        - source .CI/travis/install-khiva.sh
       script:
         - source .CI/travis/build-and-test.sh
       after_success:
@@ -78,7 +76,6 @@ matrix:
       osx_image: xcode9.3
       env:
         - JDK='Oracle JDK 9'
-        - TRAVIS_PYTHON_VERSION=3.6.5
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
@@ -88,13 +85,12 @@ matrix:
          - ${HOME}/Library/Caches/Homebrew
          - ${HOME}/.pyenv
       before_install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
         - brew update
         - brew tap caskroom/cask
         - brew tap caskroom/versions
         - brew cask info java
         - brew cask install java
-      install:
-        - source .CI/travis/install-arrayfire.sh
-        - source .CI/travis/install-khiva.sh
       script:
         - source .CI/travis/build-and-test.sh

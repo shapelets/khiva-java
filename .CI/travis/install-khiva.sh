@@ -7,9 +7,6 @@
 
 if [["$INSTALL_KHIVA_METHOD" == "installer"]]; then
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew update
-        brew install fftw freeimage
-
         if [ ! -e "installers/khiva-v0.1.0-OnlyCPU.pkg" ]; then
             wget https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-OnlyCPU.pkg -O installers/khiva-v0.1.0-OnlyCPU.pkg
         fi
@@ -51,36 +48,35 @@ else
         # Installing conan
         sudo pip install conan
      else
-        brew install fftw
         brew upgrade pyenv
+        export TRAVIS_PYTHON_VERSION=3.6.5
         export PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         export PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+
         pyenv install ${TRAVIS_PYTHON_VERSION} -s
         pyenv init -
-
         pyenv local ${TRAVIS_PYTHON_VERSION}
-        python${PYTHON_VERSION} --version
 
         # Installing conan
+        sudo pip${PYTHON_VERSION} install --upgrade pip
         sudo pip${PYTHON_VERSION} install conan
      fi
      conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
 
     # Cloning Github repo into khiva-library folder
-    git clone https://github.com/shapelets/khiva.git khiva-library
-    cd khiva-library
+    git clone https://github.com/shapelets/khiva.git ../khiva-library
+    cd ../khiva-library
     mkdir -p build && cd build
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         conan install .. -s compiler=apple-clang -s compiler.version=9.1 -s compiler.libcxx=libc++ --build missing
         cmake .. -DKHIVA_ONLY_CPU_BACKEND=ON -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_BENCHMARKS=OFF
-         make install -j8
+        make install -j8
     else
         conan install .. --build missing
-        ../../cmakebin/bin/cmake .. -DKHIVA_ENABLE_COVERAGE=ON -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_BENCHMARKS=OFF
+        ../../khiva-r/cmakebin/bin/cmake .. -DKHIVA_ENABLE_COVERAGE=ON -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_BENCHMARKS=OFF
         sudo make install -j8
         sudo ldconfig
     fi
-    # Switching back to the khiva-python folder
-    cd ..
-    cd ..
+    # Switching back to the khiva-r folder
+    cd ${TRAVIS_BUILD_DIR}
 fi
