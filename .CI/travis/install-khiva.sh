@@ -40,14 +40,14 @@ else
         cd ..
     fi
 
-     #Installing conan and dependencies
-     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    #Installing conan and dependencies
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         sudo apt-get update -y
         sudo apt-get install -y python3 python3-pip
 
         # Installing conan
         sudo pip install conan
-     else
+    else
         brew upgrade pyenv
         export TRAVIS_PYTHON_VERSION=3.6.5
         export PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
@@ -60,8 +60,8 @@ else
         # Installing conan
         sudo pip${PYTHON_VERSION} install --upgrade pip
         sudo pip${PYTHON_VERSION} install conan
-     fi
-     conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
+    fi
+    conan remote add -f conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
 
     # Cloning Github repo into khiva-library folder
     git clone https://github.com/shapelets/khiva.git ../khiva-library
