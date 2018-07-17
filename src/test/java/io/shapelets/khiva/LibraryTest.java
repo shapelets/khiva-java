@@ -12,8 +12,39 @@ package io.shapelets.khiva;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LibraryTest {
 
+    @Test
+    public void testPrintBackendInfo(){
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream old = System.out;
+        System.setOut(ps);
+
+        Library.printBackendInfo();
+
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+
+        String info = baos.toString();
+        String words[] = info.split(" ");
+        Assert.assertEquals(words[0], "ArrayFire");
+    }
+
+    @Test
+    public void testBackendInfo(){
+        String info = Library.getBackendInfo();
+        String words[] = info.split(" ");
+        Assert.assertEquals(words[0], "ArrayFire");
+    }
 
     @Test
     public void testSetBackend() {
@@ -67,7 +98,30 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetKhivaVersion() {
-        Assert.assertEquals(Library.getKhivaVersion(), "0.1.0");
+    public void testGetKhivaVersion() { Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromFile()); }
+
+    private String getKhivaVersionFromFile() {
+        String version = "";
+        String filePath;
+
+        if(System.getProperty("os.name").startsWith("Windows")){
+            filePath = "C:/Program Files/Khiva/v0/include/khiva/version.h";
+        }else{
+            filePath = "/usr/local/include/khiva/version.h";
+        }
+
+        String data = "";
+        try {
+            data = new String(Files.readAllBytes(Paths.get(filePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Matcher m = Pattern.compile("([0-9]+\\.[0-9]+\\.[0-9]+)").matcher(data);
+        if (m.find()){
+            version = m.group(1);
+        }
+
+        return version;
     }
 }
