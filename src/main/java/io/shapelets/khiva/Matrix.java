@@ -18,9 +18,9 @@ public class Matrix extends Library {
 
     private native static long[] stompSelfJoin(long a, long m);
 
-    private native static long[] findBestNMotifs(long profile, long index, long n);
+    private native static long[] findBestNMotifs(long profile, long index, long m, long n, boolean selfJoin);
 
-    private native static long[] findBestNDiscords(long profile, long index, long n);
+    private native static long[] findBestNDiscords(long profile, long index, long m, long n, boolean selfJoin);
 
     /**
      * STOMP algorithm to calculate the matrix profile between 'arrA' and 'arrB' using a subsequence length
@@ -58,13 +58,48 @@ public class Matrix extends Library {
     /**
      * This function extracts the best N discords from a previously calculated matrix profile.
      *
+     * @param profile  The matrix profile containing the minimum distance of each subsequence.
+     * @param index    The matrix profile index
+     * @param m        Subsequence length value used to calculate the input matrix profile.
+     * @param n        Number of motifs to extract.
+     * @param selfJoin Indicates whether the input profile comes from a self join operation or not. It determines
+     *                 whether the mirror similar region is included in the output or not.
+     * @return Array of arrays with the distances, the indices and the indices in the compared time series.
+     */
+    public static Array[] findBestNMotifs(Array profile, Array index, long m, long n, boolean selfJoin) {
+        long[] refs = findBestNMotifs(profile.getReference(), index.getReference(), m, n, selfJoin);
+        profile.setReference(refs[0]);
+        index.setReference(refs[1]);
+        Array[] result = {new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
+        return result;
+    }
+
+    /**
+     * This function extracts the best N discords from a previously calculated matrix profile.
+     *
      * @param profile The matrix profile containing the minimum distance of each subsequence.
      * @param index   The matrix profile index
+     * @param m       Subsequence length value used to calculate the input matrix profile.
      * @param n       Number of motifs to extract.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
      */
-    public static Array[] findBestNMotifs(Array profile, Array index, long n) {
-        long[] refs = findBestNMotifs(profile.getReference(), index.getReference(), n);
+    public static Array[] findBestNMotifs(Array profile, Array index, long m, long n) {
+        return findBestNMotifs(profile, index, m, n, false);
+    }
+
+    /**
+     * This function extracts the best N motifs from a previously calculated matrix profile.
+     *
+     * @param profile  The matrix profile containing the minimum distance of each subsequence.
+     * @param index    The matrix profile index.
+     * @param m        Subsequence length value used to calculate the input matrix profile.
+     * @param n        Number of discords to extract.
+     * @param selfJoin Indicates whether the input profile comes from a self join operation or not. It determines
+     *                 whether the mirror similar region is included in the output or not.
+     * @return Array of arrays with the distances, the indices and the indices in the compared time series.
+     */
+    public static Array[] findBestNDiscords(Array profile, Array index, long m, long n, boolean selfJoin) {
+        long[] refs = findBestNDiscords(profile.getReference(), index.getReference(), m, n, selfJoin);
         profile.setReference(refs[0]);
         index.setReference(refs[1]);
         Array[] result = {new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
@@ -76,14 +111,11 @@ public class Matrix extends Library {
      *
      * @param profile The matrix profile containing the minimum distance of each subsequence.
      * @param index   The matrix profile index.
+     * @param m       Subsequence length value used to calculate the input matrix profile.
      * @param n       Number of discords to extract.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
      */
-    public static Array[] findBestNDiscords(Array profile, Array index, long n) {
-        long[] refs = findBestNDiscords(profile.getReference(), index.getReference(), n);
-        profile.setReference(refs[0]);
-        index.setReference(refs[1]);
-        Array[] result = {new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
-        return result;
+    public static Array[] findBestNDiscords(Array profile, Array index, long m, long n) {
+        return findBestNDiscords(profile, index, m, n, false);
     }
 }

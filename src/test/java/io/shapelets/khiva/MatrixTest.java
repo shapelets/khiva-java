@@ -68,32 +68,140 @@ public class MatrixTest {
         Array b = new Array(tss[1], dimsB);
 
         Array[] stompResult = Matrix.stomp(a, b, 3);
-        Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 2);
+        Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 1);
 
         int[] index = findMotifs[1].getData();
         int[] subsequenceIndex = findMotifs[2].getData();
 
         Assert.assertEquals(index[0], 12, DELTA);
-        Assert.assertEquals(index[1], 11, DELTA);
-
         Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
-        Assert.assertEquals(subsequenceIndex[1], 0, DELTA);
+    }
 
+    @Test
+    public void testFindBestNMotifsMultipleProfiles() throws Exception {
+        float[] dataA = {10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9, 10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9};
+        float[] dataB = {10, 11, 10, 9, 10, 11, 10, 9};
+        long[] dims = {15, 2, 1, 1};
+        long[] dimsB = {4, 2, 1, 1};
+
+        Array a = new Array(dataA, dims);
+        Array b = new Array(dataB, dimsB);
+
+        Array[] stompResult = Matrix.stomp(a, b, 3);
+        Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 1);
+
+        int[] index = findMotifs[1].getData();
+        int[] subsequenceIndex = findMotifs[2].getData();
+
+        int[] expectedIndex = {12, 12, 12, 12};
+        int[] expectedSubsequenceIndex = {1, 1, 1, 1};
+
+        Assert.assertArrayEquals(index, expectedIndex);
+        Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+    }
+
+    @Test
+    public void testFindBestNMotifsMirror() throws Exception {
+        float[] tss = {10.1f, 11, 10.2f, 10.15f, 10.775f, 10.1f, 11, 10.2f};
+        long[] dims = {8, 1, 1, 1};
+
+        Array a = new Array(tss, dims);
+
+        Array[] stompResult = Matrix.stompSelfJoin(a, 3);
+        Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 2, true);
+
+        int[] index = findMotifs[1].getData();
+        int[] subsequenceIndex = findMotifs[2].getData();
+
+        int[] expectedIndex = {0, 0};
+        int[] expectedSubsequenceIndex = {5, 3};
+
+        Assert.assertArrayEquals(index, expectedIndex);
+        Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+    }
+
+    @Test
+    public void testFindBestNMotifsConsecutive() throws Exception {
+        float[] tss = {10.1f, 11, 10.1f, 10.15f, 10.075f, 10.1f, 11, 10.1f, 10.15f};
+        long[] dims = {9, 1, 1, 1};
+
+        Array a = new Array(tss, dims);
+
+        Array[] stompResult = Matrix.stompSelfJoin(a, 3);
+        Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 2, true);
+
+        int[] index = findMotifs[1].getData();
+        int[] subsequenceIndex = findMotifs[2].getData();
+
+        Assert.assertEquals(index[1], 6, DELTA);
+        Assert.assertEquals(subsequenceIndex[1], 3, DELTA);
     }
 
     @Test
     public void testFindBestNDiscords() throws Exception {
-        double[][] tss = {{11, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11},
-                {9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9}};
+        float[] dataA = {11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 1};
+        float[] dataB = {9, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9};
 
-        long[] dims = {12, 1, 1, 1};
-        Array a = new Array(tss[0], dims);
-        Array b = new Array(tss[1], dims);
+        long[] dims = {13, 1, 1, 1};
+        Array a = new Array(dataA, dims);
+        Array b = new Array(dataB, dims);
 
         Array[] stompResult = Matrix.stomp(a, b, 3);
-        Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 2);
+        Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2);
         int[] subsequenceIndex = findDiscords[2].getData();
+
         Assert.assertEquals(subsequenceIndex[0], 0, DELTA);
-        Assert.assertEquals(subsequenceIndex[1], 9, DELTA);
+        Assert.assertEquals(subsequenceIndex[1], 10, DELTA);
+    }
+
+    @Test
+    public void testFindBestNDiscordsMultipleProfiles() throws Exception {
+        float[] dataA = {11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 1, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11,
+                10, 1};
+        float[] dataB = {9, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9, 9, 10.1f,
+                10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9};
+
+        long[] dims = {13, 2, 1, 1};
+        Array a = new Array(dataA, dims);
+        Array b = new Array(dataB, dims);
+
+        Array[] stompResult = Matrix.stomp(a, b, 3);
+        Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2);
+        int[] subsequenceIndex = findDiscords[2].getData();
+
+        int[] expectedSubsequenceIndex = {0, 10, 0, 10, 0, 10, 0, 10};
+
+        Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+    }
+
+    @Test
+    public void testFindBestNDiscordsMirror() throws Exception {
+        float[] dataA = {10, 11, 10, 10, 11, 10};
+
+        long[] dims = {6, 1, 1, 1};
+        Array a = new Array(dataA, dims);
+
+        Array[] stompResult = Matrix.stompSelfJoin(a, 3);
+        Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 1, true);
+        int[] index = findDiscords[1].getData();
+        int[] subsequenceIndex = findDiscords[2].getData();
+
+        Assert.assertEquals(index[0], 3, DELTA);
+        Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
+    }
+
+    @Test
+    public void testFindBestNDiscordsConsecutive() throws Exception {
+        float[] dataA = {10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 9.999f, 9.998f};
+
+        long[] dims = {15, 1, 1, 1};
+        Array a = new Array(dataA, dims);
+
+        Array[] stompResult = Matrix.stompSelfJoin(a, 3);
+        Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2, true);
+        int[] subsequenceIndex = findDiscords[2].getData();
+
+        Assert.assertEquals(subsequenceIndex[0], 12, DELTA);
+        Assert.assertNotEquals(subsequenceIndex[1], 11, DELTA);
     }
 }
