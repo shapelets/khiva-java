@@ -17,7 +17,7 @@ public class NormalizationTest {
     private static final double DELTA = 1e-6;
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() {
         Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
@@ -25,8 +25,11 @@ public class NormalizationTest {
     public void testZnorm() throws Exception {
         double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
-            double[] result = Normalization.znorm(a).getData();
+        try (
+                Array a = new Array(tss, dims);
+                Array b = Normalization.znorm(a)
+        ) {
+            double[] result = b.getData();
             double[] expected = {-1.341640786499870, -0.447213595499958, 0.447213595499958, 1.341640786499870};
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(result[i], expected[i], DELTA);
@@ -39,7 +42,7 @@ public class NormalizationTest {
     public void testZnormInPlace() throws Exception {
         double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
+        try (Array a = new Array(tss, dims)) {
             Normalization.znormInPlace(a);
             double[] result = a.getData();
             Assert.assertEquals(result[0], -1.341640786499870, DELTA);
@@ -58,8 +61,11 @@ public class NormalizationTest {
     public void testMaxMinNorm() throws Exception {
         double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
-            double[] result = Normalization.maxMinNorm(a, 2.0, 1.0).getData();
+        try (
+                Array a = new Array(tss, dims);
+                Array b = Normalization.maxMinNorm(a, 2.0, 1.0)
+        ) {
+            double[] result = b.getData();
             double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
             Assert.assertArrayEquals(result, expected, DELTA);
         }
@@ -69,7 +75,7 @@ public class NormalizationTest {
     public void testMaxMinNormInPlace() throws Exception {
         double[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
+        try (Array a = new Array(tss, dims)) {
             Normalization.maxMinNormInPlace(a, 2.0, 1.0);
             double[] result = a.getData();
             double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
@@ -81,8 +87,11 @@ public class NormalizationTest {
     public void decimalScalingNorm() throws Exception {
         double[] tss = {0, 1, -2, 3, 40, 50, 60, -70};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
-            double[] result = Normalization.decimalScalingNorm(a).getData();
+        try (
+                Array a = new Array(tss, dims);
+                Array b = Normalization.decimalScalingNorm(a)
+        ) {
+            double[] result = b.getData();
             double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
             Assert.assertArrayEquals(result, expected, DELTA);
         }
@@ -92,7 +101,7 @@ public class NormalizationTest {
     public void decimalScalingNormInPlace() throws Exception {
         double[] tss = {0, 1, -2, 3, 40, 50, 60, -70};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
+        try (Array a = new Array(tss, dims)) {
             Normalization.decimalScalingNormInPlace(a);
             double[] result = a.getData();
             double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
@@ -104,8 +113,8 @@ public class NormalizationTest {
     public void testMeanNorm() throws Exception {
         float[] tss = {0, 1, 2, 3, 4, 5, 6, 7};
         long[] dims = {4, 2, 1, 1};
-        try(Array a = new Array(tss, dims)) {
-            float[] result = Normalization.meanNorm(a).getData();
+        try (Array a = new Array(tss, dims); Array b = Normalization.meanNorm(a)) {
+            float[] result = b.getData();
             float[] expectedResult = {-0.5f, -0.166666667f, 0.166666667f, 0.5f, -0.5f, -0.166666667f, 0.166666667f, 0.5f};
             Assert.assertEquals(expectedResult.length, result.length, DELTA);
             for (int i = 0; i < result.length; i++) {

@@ -30,7 +30,7 @@ public class RegressionTest {
         float[] timeSeriesYss = {0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f,
                 0.51146167f, 0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f};
         long[] dims = {10, 1, 1, 1};
-        try(Array xss = new Array(timeSeriesXss, dims); Array yss = new Array(timeSeriesYss, dims)) {
+        try (Array xss = new Array(timeSeriesXss, dims); Array yss = new Array(timeSeriesYss, dims)) {
             Array[] result = Regression.linear(xss, yss);
             float[] slope = result[0].getData();
             float[] intercept = result[1].getData();
@@ -43,6 +43,13 @@ public class RegressionTest {
             Assert.assertEquals(rvalue[0], 0.283552942, DELTA);
             Assert.assertEquals(pvalue[0], 0.427239418, DELTA);
             Assert.assertEquals(stderrest[0], 0.412351891, DELTA);
+
+            result[0].close();
+            result[1].close();
+            result[2].close();
+            result[3].close();
+            result[4].close();
+
         }
     }
 
@@ -73,6 +80,12 @@ public class RegressionTest {
             Assert.assertEquals(rvalue[1], 0.283552942, DELTA);
             Assert.assertEquals(pvalue[1], 0.427239418, DELTA);
             Assert.assertEquals(stderrest[1], 0.412351891, DELTA);
+
+            result[0].close();
+            result[1].close();
+            result[2].close();
+            result[3].close();
+            result[4].close();
         }
     }
 }

@@ -26,7 +26,7 @@ public class MatrixTest {
     public void testStompSelfJoin() throws Exception {
         double[] ta = {10, 10, 10, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 10};
         long[] dims = {14, 1, 1, 1};
-        try(Array a = new Array(ta, dims)) {
+        try (Array a = new Array(ta, dims)) {
             Array[] stompSelfJoinResult = Matrix.stompSelfJoin(a, 3);
             double[] expectedIndex = {11, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 0};
             double[] matrix = stompSelfJoinResult[0].getData();
@@ -36,6 +36,8 @@ public class MatrixTest {
                 Assert.assertEquals(matrix[i], 0, DELTA);
                 Assert.assertEquals(index[i], expectedIndex[i], DELTA);
             }
+            stompSelfJoinResult[0].close();
+            stompSelfJoinResult[1].close();
         }
     }
 
@@ -45,7 +47,10 @@ public class MatrixTest {
 
         long[] dims = {8, 1, 1, 1};
 
-        try(Array a = new Array(tss, dims);  Array b = new Array(tss, dims)) {
+        try (
+                Array a = new Array(tss, dims);
+                Array b = new Array(tss, dims)
+        ) {
 
             double[] expectedIndex = {0, 1, 2, 3, 4, 5};
             Array[] stompResult = Matrix.stomp(a, b, 3);
@@ -55,6 +60,8 @@ public class MatrixTest {
                 Assert.assertEquals(matrix[i], 0, DELTA);
                 Assert.assertEquals(index[i], expectedIndex[i], DELTA);
             }
+            stompResult[0].close();
+            stompResult[1].close();
         }
     }
 
@@ -65,7 +72,10 @@ public class MatrixTest {
         long[] dims = {15, 1, 1, 1};
         long[] dimsB = {4, 1, 1, 1};
 
-        try(Array a = new Array(tss[0], dims); Array b = new Array(tss[1], dimsB)) {
+        try (
+                Array a = new Array(tss[0], dims);
+                Array b = new Array(tss[1], dimsB)
+        ) {
 
             Array[] stompResult = Matrix.stomp(a, b, 3);
             Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 1);
@@ -75,6 +85,12 @@ public class MatrixTest {
 
             Assert.assertEquals(index[0], 12, DELTA);
             Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findMotifs[0].close();
+            findMotifs[1].close();
+            findMotifs[2].close();
         }
     }
 
@@ -98,6 +114,12 @@ public class MatrixTest {
 
             Assert.assertArrayEquals(index, expectedIndex);
             Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findMotifs[0].close();
+            findMotifs[1].close();
+            findMotifs[2].close();
         }
     }
 
@@ -106,7 +128,7 @@ public class MatrixTest {
         float[] tss = {10.1f, 11, 10.2f, 10.15f, 10.775f, 10.1f, 11, 10.2f};
         long[] dims = {8, 1, 1, 1};
 
-        try(Array a = new Array(tss, dims)) {
+        try (Array a = new Array(tss, dims)) {
 
             Array[] stompResult = Matrix.stompSelfJoin(a, 3);
             Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 2, true);
@@ -119,6 +141,12 @@ public class MatrixTest {
 
             Assert.assertArrayEquals(index, expectedIndex);
             Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findMotifs[0].close();
+            findMotifs[1].close();
+            findMotifs[2].close();
         }
     }
 
@@ -127,7 +155,7 @@ public class MatrixTest {
         float[] tss = {10.1f, 11, 10.1f, 10.15f, 10.075f, 10.1f, 11, 10.1f, 10.15f};
         long[] dims = {9, 1, 1, 1};
 
-        try(Array a = new Array(tss, dims)) {
+        try (Array a = new Array(tss, dims)) {
 
             Array[] stompResult = Matrix.stompSelfJoin(a, 3);
             Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 2, true);
@@ -137,6 +165,12 @@ public class MatrixTest {
 
             Assert.assertEquals(index[1], 6, DELTA);
             Assert.assertEquals(subsequenceIndex[1], 3, DELTA);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findMotifs[0].close();
+            findMotifs[1].close();
+            findMotifs[2].close();
         }
     }
 
@@ -146,7 +180,7 @@ public class MatrixTest {
         float[] dataB = {9, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9};
 
         long[] dims = {13, 1, 1, 1};
-        try(Array a = new Array(dataA, dims); Array b = new Array(dataB, dims)) {
+        try (Array a = new Array(dataA, dims); Array b = new Array(dataB, dims)) {
 
             Array[] stompResult = Matrix.stomp(a, b, 3);
             Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2);
@@ -154,6 +188,12 @@ public class MatrixTest {
 
             Assert.assertEquals(subsequenceIndex[0], 0, DELTA);
             Assert.assertEquals(subsequenceIndex[1], 10, DELTA);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findDiscords[0].close();
+            findDiscords[1].close();
+            findDiscords[2].close();
         }
     }
 
@@ -165,7 +205,7 @@ public class MatrixTest {
                 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9};
 
         long[] dims = {13, 2, 1, 1};
-        try(Array a = new Array(dataA, dims); Array b = new Array(dataB, dims)) {
+        try (Array a = new Array(dataA, dims); Array b = new Array(dataB, dims)) {
 
             Array[] stompResult = Matrix.stomp(a, b, 3);
             Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2);
@@ -174,6 +214,12 @@ public class MatrixTest {
             int[] expectedSubsequenceIndex = {0, 10, 0, 10, 0, 10, 0, 10};
 
             Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findDiscords[0].close();
+            findDiscords[1].close();
+            findDiscords[2].close();
         }
     }
 
@@ -182,7 +228,7 @@ public class MatrixTest {
         float[] dataA = {10, 11, 10, 10, 11, 10};
 
         long[] dims = {6, 1, 1, 1};
-        try(Array a = new Array(dataA, dims)) {
+        try (Array a = new Array(dataA, dims)) {
 
             Array[] stompResult = Matrix.stompSelfJoin(a, 3);
             Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 1, true);
@@ -191,6 +237,12 @@ public class MatrixTest {
 
             Assert.assertEquals(index[0], 3, DELTA);
             Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
+
+            stompResult[0].close();
+            stompResult[1].close();
+            findDiscords[0].close();
+            findDiscords[1].close();
+            findDiscords[2].close();
         }
     }
 
@@ -212,6 +264,11 @@ public class MatrixTest {
             } else {
                 Assert.assertEquals(subsequenceIndex[1], 11, DELTA);
             }
+            stompResult[0].close();
+            stompResult[1].close();
+            findDiscords[0].close();
+            findDiscords[1].close();
+            findDiscords[2].close();
         }
     }
 }
