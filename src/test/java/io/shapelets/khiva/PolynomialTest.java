@@ -25,11 +25,11 @@ public class PolynomialTest {
     public void testPolyfit1() throws Exception {
         double[] tss = {0, 1, 2, 3, 4, 5};
         long[] dims = {6, 1, 1, 1};
-        Array x = new Array(tss, dims);
-        Array y = new Array(tss, dims);
-        double[] result = Polynomial.polyfit(x, y, 1).getData();
-        double[] expected = {1.0, 0.0};
-        Assert.assertArrayEquals(result, expected, DELTA);
+        try(Array x = new Array(tss, dims); Array y = new Array(tss, dims)) {
+            double[] result = Polynomial.polyfit(x, y, 1).getData();
+            double[] expected = {1.0, 0.0};
+            Assert.assertArrayEquals(result, expected, DELTA);
+        }
     }
 
     @Test
@@ -37,25 +37,26 @@ public class PolynomialTest {
         double[] tss1 = {0, 1, 2, 3, 4, 5};
         double[] tss2 = {0.0, 0.8, 0.9, 0.1, -0.8, -1.0};
         long[] dims = {6, 1, 1, 1};
-        Array x = new Array(tss1, dims);
-        Array y = new Array(tss2, dims);
-        double[] result = Polynomial.polyfit(x, y, 3).getData();
-        double[] expected = {0.08703704, -0.81349206, 1.69312169, -0.03968254};
-        Assert.assertArrayEquals(result, expected, DELTA);
+        try(Array x = new Array(tss1, dims); Array y = new Array(tss2, dims)) {
+            double[] result = Polynomial.polyfit(x, y, 3).getData();
+            double[] expected = {0.08703704, -0.81349206, 1.69312169, -0.03968254};
+            Assert.assertArrayEquals(result, expected, DELTA);
+        }
     }
 
     @Test
     public void testRoots() throws Exception {
         double[] tss = {5, -20, 5, 50, -20, -40};
         long[] dims = {6, 1, 1, 1};
-        Array p = new Array(tss, dims);
+        try (Array p = new Array(tss, dims)) {
 
-        FloatComplex[] result = Polynomial.roots(p).getData();
-        FloatComplex[] expected = {new FloatComplex(2, 0), new FloatComplex(2, 0),
-                new FloatComplex(2, 0), new FloatComplex(-1, 0), new FloatComplex(-1, 0)};
-        for (int i = 0; i < 5; i++) {
-            Assert.assertEquals(expected[i].getReal(), result[i].getReal(), 1e-2);
-            Assert.assertEquals(expected[i].getImag(), result[i].getImag(), 1e-2);
+            FloatComplex[] result = Polynomial.roots(p).getData();
+            FloatComplex[] expected = {new FloatComplex(2, 0), new FloatComplex(2, 0),
+                    new FloatComplex(2, 0), new FloatComplex(-1, 0), new FloatComplex(-1, 0)};
+            for (int i = 0; i < 5; i++) {
+                Assert.assertEquals(expected[i].getReal(), result[i].getReal(), 1e-2);
+                Assert.assertEquals(expected[i].getImag(), result[i].getImag(), 1e-2);
+            }
         }
     }
 }

@@ -27,10 +27,10 @@ public class LinalgTest {
         long[] dims = {2, 2, 1, 1};
         double[] b = {3, 1};
         long[] dimsB = {2, 1, 1, 1};
-        Array a = new Array(tss, dims);
-        Array c = new Array(b, dimsB);
-        double[] result = Linalg.lls(a, c).getData();
-        Assert.assertEquals(result[0], 1, DELTA);
-        Assert.assertEquals(result[1], 1, DELTA);
+        try(Array a = new Array(tss, dims); Array c = new Array(b, dimsB)) {
+            double[] result = Linalg.lls(a, c).getData();
+            Assert.assertEquals(result[0], 1, DELTA);
+            Assert.assertEquals(result[1], 1, DELTA);
+        }
     }
 }
