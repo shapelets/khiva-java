@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 public class LibraryTest {
 
     @Test
-    public void testPrintBackendInfo(){
+    public void testPrintBackendInfo() {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
@@ -40,7 +40,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testBackendInfo(){
+    public void testBackendInfo() {
         String info = Library.getBackendInfo();
         String words[] = info.split(" ");
         Assert.assertEquals(words[0], "ArrayFire");
@@ -98,15 +98,17 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetKhivaVersion() { Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromFile()); }
+    public void testGetKhivaVersion() {
+        Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromFile());
+    }
 
     private String getKhivaVersionFromFile() {
         String version = "";
         String filePath;
 
-        if(System.getProperty("os.name").startsWith("Windows")){
+        if (System.getProperty("os.name").startsWith("Windows")) {
             filePath = "C:/Program Files/Khiva/v0/include/khiva/version.h";
-        }else{
+        } else {
             filePath = "/usr/local/include/khiva/version.h";
         }
 
@@ -118,7 +120,7 @@ public class LibraryTest {
         }
 
         Matcher m = Pattern.compile("([0-9]+\\.[0-9]+\\.[0-9]+)").matcher(data);
-        if (m.find()){
+        if (m.find()) {
             version = m.group(1);
         }
 
