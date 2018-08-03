@@ -27,7 +27,7 @@ matrix:
       script:
         - source .CI/travis/build-and-test.sh
       after_success:
-        - bash <(curl -s https://codecov.io/bash) -cF Linux
+        - bash <(curl -s https://codecov.io/bash) -cF Linux  -cf ./target/site/jacoco/jacoco.xml
 
     - os: linux
       dist: trusty
