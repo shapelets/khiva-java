@@ -46,7 +46,7 @@ else
         sudo apt-get install -y python3 python3-pip
 
         # Installing conan
-        sudo pip install conan
+        sudo pip install conan==1.6.1
     else
         brew upgrade pyenv
         export TRAVIS_PYTHON_VERSION=3.6.5
