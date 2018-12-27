@@ -10,7 +10,7 @@ sudo: required
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
       env: JDK='Oracle JDK 8'
       jdk: oraclejdk8
       cache:
@@ -30,7 +30,7 @@ matrix:
         - bash <(curl -s https://codecov.io/bash) -cF Linux  -cf ./target/site/jacoco/jacoco.xml
 
     - os: linux
-      dist: trusty
+      dist: xenial
       env: JDK='Oracle JDK 9'
       jdk: oraclejdk9
       cache:
