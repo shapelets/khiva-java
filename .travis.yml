@@ -18,6 +18,7 @@ matrix:
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
       install:
+        - source .CI/travis/install-java.sh
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
