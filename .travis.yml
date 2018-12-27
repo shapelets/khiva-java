@@ -17,8 +17,6 @@ matrix:
          - ${HOME}/.m2
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
-      before_install:
-        - jdk_switcher use openjdk10
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -26,22 +24,6 @@ matrix:
         - source .CI/travis/build-and-test.sh
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF Linux  -cf ./target/site/jacoco/jacoco.xml
-
-    - os: linux
-      dist: xenial
-      cache:
-        directories:
-          - ${TRAVIS_BUILD_DIR}/installers
-          - ${HOME}/.m2
-          - ${HOME}/.conan
-          - ${TRAVIS_BUILD_DIR}/cmake
-      before_install:
-        - jdk_switcher use openjdk11
-      install:
-        - source .CI/travis/install-arrayfire.sh
-        - source .CI/travis/install-khiva.sh
-      script:
-        - source .CI/travis/build-and-test.sh
 
     - os: osx
       osx_image: xcode9.3
