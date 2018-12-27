@@ -11,8 +11,6 @@ matrix:
   include:
     - os: linux
       dist: xenial
-      env: JDK='Oracle JDK 8'
-      jdk: oraclejdk8
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
@@ -20,7 +18,7 @@ matrix:
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
       before_install:
-        - jdk_switcher use oraclejdk8
+        - jdk_switcher use openjdk10
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -31,8 +29,6 @@ matrix:
 
     - os: linux
       dist: xenial
-      env: JDK='Oracle JDK 9'
-      jdk: oraclejdk9
       cache:
         directories:
           - ${TRAVIS_BUILD_DIR}/installers
@@ -40,7 +36,7 @@ matrix:
           - ${HOME}/.conan
           - ${TRAVIS_BUILD_DIR}/cmake
       before_install:
-        - jdk_switcher use oraclejdk9
+        - jdk_switcher use openjdk11
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
