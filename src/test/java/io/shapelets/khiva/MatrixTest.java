@@ -258,8 +258,8 @@ public class MatrixTest {
             int[] subsequenceIndex = findDiscords[2].getData();
 
             Assert.assertEquals(subsequenceIndex[0], 12, DELTA);
-            String os = System.getenv("TRAVIS_OS_NAME");
-            if (os == null || !os.equals("osx")) {
+            String os = System.getenv("TRAVIS");
+            if (os == null || !os.equals("true")) {
                 Assert.assertNotEquals(subsequenceIndex[1], 11, DELTA);
             } else {
                 Assert.assertEquals(subsequenceIndex[1], 11, DELTA);
