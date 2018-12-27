@@ -11,6 +11,8 @@ matrix:
   include:
     - os: linux
       dist: xenial
+      env:
+        - JAVA_HOME='/usr/lib/jvm/java-8-oracle'
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
