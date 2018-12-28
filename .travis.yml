@@ -10,42 +10,23 @@ sudo: required
 matrix:
   include:
     - os: linux
-      dist: trusty
-      env: JDK='Oracle JDK 8'
-      jdk: oraclejdk8
+      dist: xenial
+      env:
+        - JAVA_HOME='/usr/lib/jvm/java-8-oracle'
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
          - ${HOME}/.m2
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
-      before_install:
-        - jdk_switcher use oraclejdk8
       install:
+        - source .CI/travis/install-java.sh
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
         - source .CI/travis/build-and-test.sh
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF Linux  -cf ./target/site/jacoco/jacoco.xml
-
-    - os: linux
-      dist: trusty
-      env: JDK='Oracle JDK 9'
-      jdk: oraclejdk9
-      cache:
-        directories:
-          - ${TRAVIS_BUILD_DIR}/installers
-          - ${HOME}/.m2
-          - ${HOME}/.conan
-          - ${TRAVIS_BUILD_DIR}/cmake
-      before_install:
-        - jdk_switcher use oraclejdk9
-      install:
-        - source .CI/travis/install-arrayfire.sh
-        - source .CI/travis/install-khiva.sh
-      script:
-        - source .CI/travis/build-and-test.sh
 
     - os: osx
       osx_image: xcode9.3
