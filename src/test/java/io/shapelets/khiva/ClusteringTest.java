@@ -26,7 +26,9 @@ public class ClusteringTest {
                 8.0f, 5.0f,  3.0f,  1.0f,  15.0f, 10.0f, 5.0f, 0.0f, 7.0f, -7.0f,  1.0f, -1.0f};
         long[] dims = {4, 6, 1, 1};
 
-        float[] expected = {0.0f, 0.1667f, 0.3333f, 0.5f, 1.5f, -1.5f, 0.8333f, -0.8333f, 4.8333f, 3.6667f, 2.6667f, 1.6667f};
+        float[] expected = {0.0f, 0.1667f, 0.3333f, 0.5f,
+                            1.5f, -1.5f, 0.8333f, -0.8333f,
+                            4.8333f, 3.6667f, 2.6667f, 1.6667f};
 
         float tolerance = 1e-10f;
         int maxIterations = 100;
@@ -37,9 +39,13 @@ public class ClusteringTest {
             Array[] result = Clustering.kMeans(a, k, tolerance, maxIterations);
             float[] centroids = result[0].getData();
 
-            for (int i = 0; i < 3; i++){
-                Assert.assertEquals(centroids[i] + centroids[i+4] + centroids[i+8],
-                        expected[i] + expected[i+4] + expected[i+8], 1e-4f);
+            for(int i = 0; i < 12; i++){
+                System.out.println("Centroid["+ i + "]=" + centroids[i]);
+            }
+
+            for (int i = 0; i < 4; i++){
+                Assert.assertEquals(expected[i] + expected[i + 4] + expected[i + 8],
+                        centroids[i] + centroids[i + 4] + centroids[i + 8], 1e-4f);
             }
         }
     }
@@ -66,6 +72,7 @@ public class ClusteringTest {
             float[] centroids = result[0].getData();
 
             for (int i = 0; i < 21; i++){
+                System.out.println("Centroid["+ i + "]=" + centroids[i]);
                 Assert.assertEquals(centroids[i], expected_c[i], 1e-4f);
             }
         }
