@@ -39,11 +39,6 @@ public class ClusteringTest {
             Array[] result = Clustering.kMeans(a, k, tolerance, maxIterations);
             float[] centroids = result[0].getData();
 
-            System.out.println("KMeans");
-            for(int i = 0; i < centroids.length; i++){
-                System.out.println("Centroid["+ i + "]=" + centroids[i]);
-            }
-
             for (int i = 0; i < 4; i++){
                 Assert.assertEquals(expected[i] + expected[i + 4] + expected[i + 8],
                         centroids[i] + centroids[i + 4] + centroids[i + 8], 1e-4f);
@@ -72,9 +67,7 @@ public class ClusteringTest {
             Array[] result = Clustering.kShape(a, k, tolerance, maxIterations);
             float[] centroids = result[0].getData();
 
-            System.out.println("KShape");
             for (int i = 0; i < centroids.length; i++){
-                System.out.println("Centroid["+ i + "]=" + centroids[i]);
                 Assert.assertEquals(centroids[i], expected_c[i], 1e-4f);
             }
         }
