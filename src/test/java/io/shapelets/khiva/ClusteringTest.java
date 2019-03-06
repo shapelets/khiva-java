@@ -34,7 +34,7 @@ public class ClusteringTest {
         int maxIterations = 100;
         int k = 3;
         try (
-                Array a = new Array(tss, dims);
+                Array a = new Array(tss, dims)
         ){
             Array[] result = Clustering.kMeans(a, k, tolerance, maxIterations);
             float[] centroids = result[0].getData();
@@ -62,7 +62,7 @@ public class ClusteringTest {
         int maxIterations = 100;
         int k = 3;
         try (
-                Array a = new Array(tss, dims);
+                Array a = new Array(tss, dims)
         ){
             Array[] result = Clustering.kShape(a, k, tolerance, maxIterations);
             float[] centroids = result[0].getData();

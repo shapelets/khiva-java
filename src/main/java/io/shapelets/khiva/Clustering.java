@@ -21,6 +21,9 @@ public class Clustering extends Library{
     /**
      * Calculates the KMeans algorithm.
      *
+     * [1] S. Lloyd. 1982. Least squares quantization in PCM. IEEE Transactions on Information Theory, 28, 2,
+     * Pages 129-137.
+     *
      * @param tss               The set of time series to be clusterized.
      * @param k                 The number of centroids.
      * @param tolerance         The maximum error tolerance.
@@ -36,6 +39,9 @@ public class Clustering extends Library{
 
     /**
      * Calculates the KShape algorithm.
+     *
+     * [1] John Paparrizos and Luis Gravano. 2016. k-Shape: Efficient and Accurate Clustering of Time Series.
+     * SIGMOD Rec. 45, 1 (June 2016), 69-76.
      *
      * @param tss               The set of time series to be clusterized.
      * @param k                 The number of centroids.
