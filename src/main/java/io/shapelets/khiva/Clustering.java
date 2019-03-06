@@ -25,7 +25,7 @@ public class Clustering extends Library{
      * @param k                 The number of centroids.
      * @param tolerance         The maximum error tolerance.
      * @param maxIterations     The maximum number of iterations.
-     * @return  An Array of arrays with the resulting centroids and labels.
+     * @return An Array of arrays with the resulting centroids and labels.
      */
     public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) {
         long[] refs = kMeans(tss.getReference(), k, tolerance, maxIterations);
@@ -41,7 +41,7 @@ public class Clustering extends Library{
      * @param k                 The number of centroids.
      * @param tolerance         The maximum error tolerance.
      * @param maxIterations     The maximum number of iterations.
-     * @return  An Array of arrays with the resulting centroids and labels.
+     * @return An Array of arrays with the resulting centroids and labels.
      */
     public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) {
         long[] refs = kShape(tss.getReference(), k, tolerance, maxIterations);
