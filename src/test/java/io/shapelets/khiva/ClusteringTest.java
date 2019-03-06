@@ -22,8 +22,8 @@ public class ClusteringTest {
 
     @Test
     public void testKMeans() throws Exception {
-        float[] tss = {0.0f, 1.0f, 2.0f, 3.0f, 6.0f,  7.0f,  8.0f, 9.0f, 2.0f, -2.0f, 4.0f, -4.0f,
-                8.0f, 5.0f,  3.0f,  1.0f,  15.0f, 10.0f, 5.0f, 0.0f, 7.0f, -7.0f,  1.0f, -1.0f};
+        float[] tss = {0.0f, 1.0f, 2.0f, 3.0f, 6.0f, 7.0f,  8.0f, 9.0f, 2.0f, -2.0f, 4.0f, -4.0f,
+                8.0f, 5.0f,  3.0f, 1.0f, 15.0f, 10.0f, 5.0f, 0.0f, 7.0f, -7.0f,  1.0f, -1.0f};
         long[] dims = {4, 6, 1, 1};
 
         float[] expected = {0.0f, 0.1667f, 0.3333f, 0.5f,
