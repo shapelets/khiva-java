@@ -43,6 +43,8 @@ public class ClusteringTest {
                 Assert.assertEquals(expected[i] + expected[i + 4] + expected[i + 8],
                         centroids[i] + centroids[i + 4] + centroids[i + 8], 1e-4f);
             }
+            result[0].close();
+            result[1].close();
         }
     }
 
@@ -70,7 +72,8 @@ public class ClusteringTest {
             for (int i = 0; i < centroids.length; i++){
                 Assert.assertEquals(expected_c[i], centroids[i],1e-4f);
             }
+            result[0].close();
+            result[1].close();
         }
-
     }
 }
