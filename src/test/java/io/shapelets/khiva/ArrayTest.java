@@ -486,11 +486,22 @@ public class ArrayTest {
     }
 
     @Test
+    public void testJoin() throws Exception {
+        float[] data1 = {1f, 2f, 3f, 4f};
+        float[] data2 = {5f, 6f, 7f, 8f};
+        long[] dims = {4, 1, 1, 1};
+        try (Array a = new Array(data1, dims); Array b = new Array(data2, dims); Array c = a.join(1, b)) {
+            float[] result = c.getData();
+            float[] expected = {1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f};
+            Assert.assertArrayEquals(result, expected, 1e-6f);
+        }
+    }
+
+    @Test
     public void testAdd() throws Exception {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = new Array(data, dims); Array b = new Array(data, dims); Array c = a.add(b)) {
-
             float[] result = c.getData();
             float[] expected = {2f, 4f, 6f, 8f};
             Assert.assertArrayEquals(result, expected, 1e-6f);

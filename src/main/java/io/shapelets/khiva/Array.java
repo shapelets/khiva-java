@@ -256,6 +256,8 @@ public class Array extends Library implements AutoCloseable {
 
     private native long[] nativeGetDims();
 
+    private native int nativeGetType();
+
     private native long nativePrint();
 
     private native DoubleComplex[] getDoubleComplexFromArray();
@@ -276,7 +278,7 @@ public class Array extends Library implements AutoCloseable {
 
     private native long[] getLongFromArray();
 
-    private native int nativeGetType();
+    private native long[] join(int dim, long refRhs);
 
     private native long[] add(long refRhs);
 
@@ -432,6 +434,19 @@ public class Array extends Library implements AutoCloseable {
      */
     public long[] getDims() {
         return nativeGetDims();
+    }
+
+    /**
+     * Joins this array with the one specified as parameter along the specified dimension.
+     *
+     * @param dim The dimension along which the join occurs.
+     * @param rhs Right-hand side array for the operation.
+     * @return The result of joining the given arrays along the specified dimension.
+     */
+    public Array join(int dim, Array rhs) {
+        long[] refs = join(dim, rhs.reference);
+        rhs.reference = refs[0];
+        return new Array(refs[1]);
     }
 
     /**
