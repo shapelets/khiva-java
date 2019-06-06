@@ -14,6 +14,10 @@ package io.shapelets.khiva;
  */
 public class Matrix extends Library {
 
+    private native static long[] mass(long query, long tss);
+
+    private native static long[] findBestNOccurrences(long query, long tss, long n);
+
     private native static long[] stomp(long a, long b, long m);
 
     private native static long[] stompSelfJoin(long a, long m);
@@ -21,6 +25,61 @@ public class Matrix extends Library {
     private native static long[] findBestNMotifs(long profile, long index, long m, long n, boolean selfJoin);
 
     private native static long[] findBestNDiscords(long profile, long index, long m, long n, boolean selfJoin);
+
+    /**
+     * Mueen's Algorithm for Similarity Search.
+     * 
+     * The result has the following structure:
+     * - 1st dimension corresponds to the index of the subsequence in the time series.
+     * - 2nd dimension corresponds to the number of queries.
+     * - 3rd dimension corresponds to the number of time series.
+     * 
+     * For example, the distance in the position (1, 2, 3) correspond to the distance of the third query to the fourth time
+     * series for the second subsequence in the time series.
+     * 
+     * [1] Chin-Chia Michael Yeh, Yan Zhu, Liudmila Ulanova, Nurjahan Begum, Yifei Ding, Hoang Anh Dau, Diego Furtado Silva,
+     * Abdullah Mueen, Eamonn Keogh (2016). Matrix Profile I: All Pairs Similarity Joins for Time Series: A Unifying View
+     * that Includes Motifs, Discords and Shapelets. IEEE ICDM 2016.
+     *
+     * @param query Array whose first dimension is the length of the query time series and the second dimension is the
+     *              number of queries.
+     * @param tss   Array whose first dimension is the length of the time series and the second dimension is the number of
+     *              time series.
+     * @return Array with the distances.
+     */
+    public static Array mass(Array query, Array tss) {
+        long[] refs = mass(query.getReference(), tss.getReference());
+        query.setReference(refs[0]);
+        tss.setReference(refs[1]);
+        return new Array(refs[2]);
+    }
+
+    /**
+     * Calculates the N best matches of several queries in several time series.
+     * 
+     * The result has the following structure:
+     * - 1st dimension corresponds to the nth best match.
+     * - 2nd dimension corresponds to the number of queries.
+     * - 3rd dimension corresponds to the number of time series.
+     *
+     * For example, the distance in the position (1, 2, 3) corresponds to the second best distance of the third query in the
+     * fourth time series. The index in the position (1, 2, 3) is the is the index of the subsequence which leads to the
+     * second best distance of the third query in the fourth time series.
+     *
+     * @param query Array whose first dimension is the length of the query time series and the second dimension is the
+     *              number of queries.
+     * @param tss   Array whose first dimension is the length of the time series and the second dimension is the number of
+     *              time series.
+     * @param n     Number of matches to return.
+     * @return Array or arrays with the distances and indexes.
+     */
+    public static Array[] findBestNOccurrences(Array query, Array tss, long n) {
+        long[] refs = findBestNOccurrences(query.getReference(), tss.getReference(), n);
+        query.setReference(refs[0]);
+        tss.setReference(refs[1]);
+        Array[] result = {new Array(refs[2]), new Array(refs[3])};
+        return result;
+    }
 
     /**
      * STOMP algorithm to calculate the matrix profile between 'arrA' and 'arrB' using a subsequence length
@@ -36,7 +95,6 @@ public class Matrix extends Library {
      * @return Array of arrays with the Matrix profile and index.
      */
     public static Array[] stomp(Array arrA, Array arrB, long m) {
-
         long[] refs = stomp(arrA.getReference(), arrB.getReference(), m);
         arrA.setReference(refs[0]);
         arrB.setReference(refs[1]);
