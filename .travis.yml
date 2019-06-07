@@ -11,8 +11,7 @@ matrix:
   include:
     - os: linux
       dist: xenial
-      env:
-        - JAVA_HOME='/usr/lib/jvm/java-8-oracle'
+      jdk: openjdk8
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
@@ -20,7 +19,6 @@ matrix:
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
       install:
-        - source .CI/travis/install-java.sh
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
@@ -30,8 +28,7 @@ matrix:
 
     - os: osx
       osx_image: xcode9.3
-      env:
-        - JDK='Oracle JDK 8'
+      jdk: oraclejdk8
       cache:
         directories:
           - ${TRAVIS_BUILD_DIR}/installers
@@ -43,11 +40,6 @@ matrix:
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
-        - brew update
-        - brew tap caskroom/cask
-        - brew tap caskroom/versions
-        - brew cask info java8
-        - brew cask install java8
       script:
         - source .CI/travis/build-and-test.sh
       after_success:

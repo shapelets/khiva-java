@@ -21,6 +21,132 @@ public class MatrixTest {
         Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
+    private double getSingleValueDouble(Array arr, long dim0, long dim1, long dim2, long dim3) {
+        double[] data = arr.getData();
+
+        long[] dims4 = arr.getDims();
+        long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
+        offset += (dims4[0] * dims4[1]) * dim2;
+        offset += dims4[0] * dim1;
+        offset += dim0;
+
+        return data[(int) offset];
+    }
+
+    private int getSingleValueInt(Array arr, long dim0, long dim1, long dim2, long dim3) {
+        int[] data = arr.getData();
+
+        long[] dims4 = arr.getDims();
+        long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
+        offset += (dims4[0] * dims4[1]) * dim2;
+        offset += dims4[0] * dim1;
+        offset += dim0;
+
+        return data[(int) offset];
+    }
+
+    @Test
+    public void testMass() throws Exception {
+        double[] tss = {10, 10, 10, 11, 12, 11, 10, 10, 11, 12, 11, 14, 10, 10};
+        long[] dimsTss = {14, 1, 1, 1};
+
+        double[] query = {4, 3, 8};
+        long[] dimsQuery = {3, 1, 1, 1};
+
+        try (
+                Array t = new Array(tss, dimsTss);
+                Array q = new Array(query, dimsQuery)
+        ) {
+
+            double[] expectedDistance = {1.732051, 0.328954, 1.210135, 3.150851, 3.245858, 2.822044,
+                    0.328954, 1.210135, 3.150851, 0.248097, 3.30187, 2.82205};
+            Array result = Matrix.mass(q, t);
+            double[] distances = result.getData();
+
+            Assert.assertArrayEquals(expectedDistance, distances, 1e-3);
+
+            result.close();
+        }
+
+    }
+
+    @Test
+    public void testMassMultiple() throws Exception {
+        double[] tss = {10, 10, 10, 11, 12, 11, 10, 10, 11, 12, 11, 14, 10, 10};
+        long[] dimsTss = {7, 2, 1, 1};
+
+        double[] query = {10, 10, 11, 11, 10, 11, 10, 10};
+        long[] dimsQuery = {4, 2, 1, 1};
+
+        try (
+                Array t = new Array(tss, dimsTss);
+                Array q = new Array(query, dimsQuery)
+        ) {
+
+            double[] expectedDistance = {1.8388, 0.8739, 1.5307, 3.6955, 3.2660, 3.4897, 2.8284, 1.2116, 1.5307,
+                    2.1758, 2.5783, 3.7550, 2.8284, 2.8284, 3.2159, 0.5020};
+            Array result = Matrix.mass(q, t);
+            double[] distances = result.getData();
+
+            Assert.assertArrayEquals(expectedDistance, distances, 1e-3);
+
+            result.close();
+        }
+
+    }
+
+    @Test
+    public void testFindBestNOccurrences() throws Exception {
+        double[] tss = {10, 10, 11, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 11, 10, 10, 11,
+                11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 11};
+        long[] dimsTss = {28, 1, 1, 1};
+
+        double[] query = {10, 11, 12};
+        long[] dimsQuery = {3, 1, 1, 1};
+
+        try (
+                Array t = new Array(tss, dimsTss);
+                Array q = new Array(query, dimsQuery)
+        ) {
+            Array[] result = Matrix.findBestNOccurrences(q, t, 1);
+            double[] distances = result[0].getData();
+            int[] indexes = result[1].getData();
+
+            Assert.assertEquals(distances[0], 0, DELTA);
+            Assert.assertEquals(indexes[0], 7);
+
+            result[0].close();
+            result[1].close();
+        }
+
+    }
+
+    @Test
+    public void testFindBestNOccurrencesMultipleQueries() throws Exception {
+        double[] tss = {10, 10, 11, 11, 10, 11, 10, 10, 11, 11, 10, 11, 10, 10,
+                11, 10, 10, 11, 10, 11, 11, 10, 11, 11, 14, 10, 11, 10};
+        long[] dimsTss = {14, 2, 1, 1};
+
+        double[] query = {11, 11, 10, 11, 10, 11, 11, 12};
+        long[] dimsQuery = {4, 2, 1, 1};
+
+        try (
+                Array t = new Array(tss, dimsTss);
+                Array q = new Array(query, dimsQuery)
+        ) {
+            Array[] result = Matrix.findBestNOccurrences(q, t, 4);
+
+            double distance = getSingleValueDouble(result[0], 2, 0, 1, 0);
+            Assert.assertEquals(distance, 1.83880, 1e-3);
+
+            int index = getSingleValueInt(result[1], 3, 1, 0, 0);
+            Assert.assertEquals(index, 2);
+
+            result[0].close();
+            result[1].close();
+        }
+
+    }
 
     @Test
     public void testStompSelfJoin() throws Exception {
