@@ -508,6 +508,17 @@ public class ArrayTest {
         }
     }
 
+    @Test(expected = Exception.class)
+    public void testMulException()throws Exception {
+        float[] data = {1f, 2f, 3f, 4f, 5f};
+        long[] dims = {5, 1, 1, 1};
+        float[] data2 = {1f, 2f, 3f, 4f};
+        long[] dims2 = {4, 1, 1, 1};
+        Array a = new Array(data, dims);
+        Array b = new Array(data2, dims2);
+        Array c = a.mul(b);
+    }
+
     @Test
     public void testMul() throws Exception {
         float[] data = {1f, 2f, 3f, 4f};

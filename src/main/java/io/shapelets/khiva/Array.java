@@ -282,7 +282,7 @@ public class Array extends Library implements AutoCloseable {
 
     private native long[] add(long refRhs);
 
-    private native long[] mul(long refRhs);
+    private native long[] mul(long refRhs) throws Exception;
 
     private native long[] sub(long refRhs);
 
@@ -467,7 +467,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The product of both arrays.
      */
-    public Array mul(Array rhs) {
+    public Array mul(Array rhs) throws Exception{
         long[] refs = mul(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
