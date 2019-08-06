@@ -16,7 +16,7 @@ public class FloatComplex {
     private float real;
     private float imag;
 
-    public FloatComplex(float re, float im) {
+    public FloatComplex(float re, float im){
         set(re, im);
     }
 
