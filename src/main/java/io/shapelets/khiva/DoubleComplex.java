@@ -16,11 +16,11 @@ public class DoubleComplex {
     private double real;
     private double imag;
 
-    public DoubleComplex(double re, double im) {
+    public DoubleComplex(double re, double im){
         set(re, im);
     }
 
-    public DoubleComplex() {
+    public DoubleComplex(){
         set(0, 0);
     }
 
@@ -30,7 +30,7 @@ public class DoubleComplex {
      * @param re Real value.
      * @param im Imaginary value.
      */
-    public void set(double re, double im) {
+    public void set(double re, double im){
         real = re;
         imag = im;
     }
@@ -40,7 +40,7 @@ public class DoubleComplex {
      *
      * @param re Real value.
      */
-    public void setReal(double re) {
+    public void setReal(double re){
         real = re;
     }
 
@@ -49,7 +49,7 @@ public class DoubleComplex {
      *
      * @param im Imaginary value.
      */
-    public void setImag(double im) {
+    public void setImag(double im){
         imag = im;
     }
 
@@ -58,7 +58,7 @@ public class DoubleComplex {
      *
      * @return The real value.
      */
-    public double getReal() {
+    public double getReal(){
         return real;
     }
 
@@ -67,7 +67,7 @@ public class DoubleComplex {
      *
      * @return The imaginary value.
      */
-    public double getImag() {
+    public double getImag(){
         return imag;
     }
 
@@ -77,7 +77,7 @@ public class DoubleComplex {
      * @return String with the Object representation.
      */
     @Override
-    public String toString() {
+    public String toString(){
         String str = String.valueOf(real);
 
         if (imag < 0) str = str + " - ";
@@ -93,7 +93,7 @@ public class DoubleComplex {
      * False otherwise.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj){
         DoubleComplex dc = null;
         if(obj instanceof DoubleComplex) {
             dc = (DoubleComplex) obj;

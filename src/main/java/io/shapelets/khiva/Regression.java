@@ -14,7 +14,7 @@ package io.shapelets.khiva;
  */
 public class Regression extends Library {
 
-    private native static long[] linear(long xssRef, long yssRef);
+    private native static long[] linear(long xssRef, long yssRef)throws Exception;
 
     /**
      * Calculates a linear least-squares regression for two sets of measurements. Both arrays should have the same
@@ -32,7 +32,7 @@ public class Regression extends Library {
      * stderrest Standard error of the estimated gradient.
      * }
      */
-    public static Array[] linear(Array xss, Array yss) {
+    public static Array[] linear(Array xss, Array yss)throws Exception{
         long[] refs = linear(xss.getReference(), yss.getReference());
         xss.setReference(refs[0]);
         yss.setReference(refs[1]);

@@ -14,9 +14,9 @@ package io.shapelets.khiva;
  */
 public class Clustering extends Library{
 
-    private native static long[] kMeans(long tss, int k, float tolerance, int maxIterations);
+    private native static long[] kMeans(long tss, int k, float tolerance, int maxIterations) throws Exception;
 
-    private native static long[] kShape(long tss, int k, float tolerance, int maxIterations);
+    private native static long[] kShape(long tss, int k, float tolerance, int maxIterations) throws Exception;
 
     /**
      * Calculates the KMeans algorithm.
@@ -31,7 +31,7 @@ public class Clustering extends Library{
      *                          
      * @return An Array of arrays with the resulting centroids and labels.
      */
-    public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) {
+    public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) throws Exception {
         long[] refs = kMeans(tss.getReference(), k, tolerance, maxIterations);
         tss.setReference(refs[0]);
         Array[] result = {new Array(refs[1]), new Array(refs[2])};
@@ -51,7 +51,7 @@ public class Clustering extends Library{
      *
      * @return An Array of arrays with the resulting centroids and labels.
      */
-    public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) {
+    public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) throws Exception {
         long[] refs = kShape(tss.getReference(), k, tolerance, maxIterations);
         tss.setReference(refs[0]);
         Array[] result = {new Array(refs[1]), new Array(refs[2])};
