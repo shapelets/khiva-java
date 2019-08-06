@@ -86,34 +86,36 @@ public class Library {
         }
     }
 
-    private native static String backendInfo();
+    private native static String backendInfo() throws Exception;
 
-    private native static void setBackend(int backend);
+    private native static void setBackend(int backend) throws Exception;
 
-    private native static void setDevice(int device);
+    private native static void setDevice(int device) throws Exception;
 
-    private native static int getBackends();
+    private native static int getBackends() throws Exception;
 
-    private native static int getDeviceID();
+    private native static int getDeviceID() throws Exception;
 
-    private native static int getBackend();
+    private native static int getBackend() throws Exception;
 
-    private native static int getDeviceCount();
+    private native static int getDeviceCount() throws Exception;
 
-    private native static String version();
+    private native static String version() throws Exception;
 
 
     /**
      * Prints information from the current backend.
      */
-    public static void printBackendInfo() { System.out.println(backendInfo()); }
+    public static void printBackendInfo() throws Exception {
+        System.out.println(backendInfo());
+    }
 
     /**
      * Gets information from the current backend.
      *
      * @return String with information from the active backend.
      */
-    public static String getBackendInfo() {
+    public static String getBackendInfo() throws Exception {
         return backendInfo();
     }
 
@@ -122,7 +124,7 @@ public class Library {
      *
      * @param khivaBE selected backend.
      */
-    public static void setKhivaBackend(Backend khivaBE) {
+    public static void setKhivaBackend(Backend khivaBE) throws Exception {
         setBackend(khivaBE.getKhivaOrdinal());
     }
 
@@ -131,7 +133,7 @@ public class Library {
      *
      * @param device Device selected.
      */
-    public static void setKhivaDevice(int device) {
+    public static void setKhivaDevice(int device) throws Exception {
         setDevice(device);
     }
 
@@ -141,7 +143,7 @@ public class Library {
      *
      * @return The available backends.
      */
-    public static int getKhivaBackends() {
+    public static int getKhivaBackends() throws Exception {
         return getBackends();
     }
 
@@ -150,7 +152,7 @@ public class Library {
      *
      * @return The device id.
      */
-    public static int getKhivaDeviceID() {
+    public static int getKhivaDeviceID() throws Exception {
         return getDeviceID();
     }
 
@@ -159,7 +161,7 @@ public class Library {
      *
      * @return The active backend.
      */
-    public static Backend getKhivaBackend() {
+    public static Backend getKhivaBackend() throws Exception {
         return Backend.getBackendFromOrdinal(getBackend());
     }
 
@@ -168,7 +170,7 @@ public class Library {
      *
      * @return The devices count.
      */
-    public static int getKhivaDeviceCount() {
+    public static int getKhivaDeviceCount() throws Exception {
         return getDeviceCount();
     }
 
@@ -177,5 +179,7 @@ public class Library {
      *
      * @return A string with the khiva version.
      */
-    public static String getKhivaVersion() { return version(); }
+    public static String getKhivaVersion() throws Exception {
+        return version();
+    }
 }

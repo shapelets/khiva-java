@@ -19,7 +19,11 @@ public class DistancesTest {
 
     @BeforeClass
     public static void setUp() {
-        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        try {
+            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

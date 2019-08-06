@@ -14,19 +14,19 @@ package io.shapelets.khiva;
  */
 public class Dimensionality extends Library {
 
-    private native static long[] paa(long ref, int bins)throws Exception;
+    private native static long[] paa(long ref, int bins) throws Exception;
 
-    private native static long[] pip(long ref, int numberIPs)throws Exception;
+    private native static long[] pip(long ref, int numberIPs) throws Exception;
 
-    private native static long[] PLABottomUp(long ts, float maxError)throws Exception;
+    private native static long[] PLABottomUp(long ts, float maxError) throws Exception;
 
-    private native static long[] PLASlidingWindow(long ts, float maxError)throws Exception;
+    private native static long[] PLASlidingWindow(long ts, float maxError) throws Exception;
 
-    private native static long[] ramerDouglasPeucker(long ref, double epsilon)throws Exception;
+    private native static long[] ramerDouglasPeucker(long ref, double epsilon) throws Exception;
 
-    private native static long[] sax(long ref, int alphabetSize)throws Exception;
+    private native static long[] sax(long ref, int alphabetSize) throws Exception;
 
-    private native static long[] visvalingam(long ref, int numPoints)throws Exception;
+    private native static long[] visvalingam(long ref, int numPoints) throws Exception;
 
     /**
      * Piecewise Aggregate Approximation (PAA) approximates a time series \(X\) of length \(n\) into vector
@@ -43,7 +43,7 @@ public class Dimensionality extends Library {
      * @param bins Sets the total number of divisions.
      * @return Array of points with the reduced dimensionality.
      */
-    public static Array paa(Array arr, int bins)throws Exception{
+    public static Array paa(Array arr, int bins) throws Exception {
         long[] refs = paa(arr.getReference(), bins);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -59,7 +59,7 @@ public class Dimensionality extends Library {
      * @param numberIPs The number of points to be returned.
      * @return The updated ref and an array with the most Perceptually Important numberIPs.
      */
-    public static Array pip(Array arr, int numberIPs)throws Exception{
+    public static Array pip(Array arr, int numberIPs) throws Exception {
         long[] refs = pip(arr.getReference(), numberIPs);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -67,16 +67,16 @@ public class Dimensionality extends Library {
 
     /**
      * Applies the Piecewise Linear Approximation (PLA BottomUP) to the time series.
-     *
+     * <p>
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
      * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
-     * @param ts Expects a khiva array containing the set of points to be reduced. The first component of the points in
-     * the first column and the second component of the points in the second column.
+     * @param ts       Expects a khiva array containing the set of points to be reduced. The first component of the points in
+     *                 the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
      */
-    public static Array PLABottomUp(Array ts, float maxError)throws Exception{
+    public static Array PLABottomUp(Array ts, float maxError) throws Exception {
         long[] refs = PLABottomUp(ts.getReference(), maxError);
         ts.setReference(refs[0]);
         return new Array(refs[1]);
@@ -84,16 +84,16 @@ public class Dimensionality extends Library {
 
     /**
      * Applies the Piecewise Linear Approximation (PLA Sliding Window) to the time series.
-     *
+     * <p>
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
      * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
-     * @param ts Expects a khiva array containing the set of points to be reduced. The first component of the points in
-     * the first column and the second component of the points in the second column.
+     * @param ts       Expects a khiva array containing the set of points to be reduced. The first component of the points in
+     *                 the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
      */
-    public static Array PLASlidingWindow(Array ts, float maxError)throws Exception{
+    public static Array PLASlidingWindow(Array ts, float maxError) throws Exception {
         long[] refs = PLASlidingWindow(ts.getReference(), maxError);
         ts.setReference(refs[0]);
         return new Array(refs[1]);
@@ -117,7 +117,7 @@ public class Dimensionality extends Library {
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
      * one as standard deviation.
      */
-    public static Array ramerDouglasPeucker(Array arr, double epsilon)throws Exception{
+    public static Array ramerDouglasPeucker(Array arr, double epsilon) throws Exception {
         long[] refs = ramerDouglasPeucker(arr.getReference(), epsilon);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -139,7 +139,7 @@ public class Dimensionality extends Library {
      * @param alphabetSize Number of element within the alphabet.
      * @return Array of symbols.
      */
-    public static Array sax(Array arr, int alphabetSize)throws Exception{
+    public static Array sax(Array arr, int alphabetSize) throws Exception {
         long[] refs = sax(arr.getReference(), alphabetSize);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -158,7 +158,7 @@ public class Dimensionality extends Library {
      * @return Array with the x-coordinates and y-coordinates of the selected points (x in column 0
      * and y in column 1).
      */
-    public static Array visvalingam(Array arr, int numPoints)throws Exception{
+    public static Array visvalingam(Array arr, int numPoints) throws Exception {
         long[] refs = visvalingam(arr.getReference(), numPoints);
         arr.setReference(refs[0]);
         return new Array(refs[1]);

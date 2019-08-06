@@ -230,7 +230,7 @@ public class Array extends Library implements AutoCloseable {
         this.reference = ref;
     }
 
-    public Array(Array other) {
+    public Array(Array other) throws Exception {
         this.reference = other.copy().reference;
     }
 
@@ -254,83 +254,83 @@ public class Array extends Library implements AutoCloseable {
 
     private native void deleteArray() throws Exception;
 
-    private native long[] nativeGetDims()throws Exception;
+    private native long[] nativeGetDims() throws Exception;
 
-    private native int nativeGetType()throws Exception;;
+    private native int nativeGetType() throws Exception;
 
-    private native long nativePrint()throws Exception;;
+    private native long nativePrint() throws Exception;
 
-    private native DoubleComplex[] getDoubleComplexFromArray()throws Exception;;
+    private native DoubleComplex[] getDoubleComplexFromArray() throws Exception;
 
-    private native FloatComplex[] getFloatComplexFromArray()throws Exception;;
+    private native FloatComplex[] getFloatComplexFromArray() throws Exception;
 
-    private native double[] getDoubleFromArray()throws Exception;;
+    private native double[] getDoubleFromArray() throws Exception;
 
-    private native float[] getFloatFromArray()throws Exception;;
+    private native float[] getFloatFromArray() throws Exception;
 
-    private native short[] getShortFromArray()throws Exception;;
+    private native short[] getShortFromArray() throws Exception;
 
-    private native byte[] getByteFromArray()throws Exception;;
+    private native byte[] getByteFromArray() throws Exception;
 
-    private native boolean[] getBooleanFromArray()throws Exception;;
+    private native boolean[] getBooleanFromArray() throws Exception;
 
-    private native int[] getIntFromArray()throws Exception;;
+    private native int[] getIntFromArray() throws Exception;
 
-    private native long[] getLongFromArray()throws Exception;;
+    private native long[] getLongFromArray() throws Exception;
 
-    private native long[] join(int dim, long refRhs)throws Exception;;
+    private native long[] join(int dim, long refRhs) throws Exception;
 
-    private native long[] add(long refRhs)throws Exception;;
+    private native long[] add(long refRhs) throws Exception;
 
     private native long[] mul(long refRhs) throws Exception;
 
-    private native long[] sub(long refRhs)throws Exception;;
+    private native long[] sub(long refRhs) throws Exception;
 
-    private native long[] div(long refRhs)throws Exception;;
+    private native long[] div(long refRhs) throws Exception;
 
-    private native long[] mod(long refRhs)throws Exception;;
+    private native long[] mod(long refRhs) throws Exception;
 
-    private native long[] pow(long refRhs)throws Exception;;
+    private native long[] pow(long refRhs) throws Exception;
 
-    private native long[] lt(long refRhs)throws Exception;;
+    private native long[] lt(long refRhs) throws Exception;
 
-    private native long[] gt(long refRhs)throws Exception;;
+    private native long[] gt(long refRhs) throws Exception;
 
-    private native long[] le(long refRhs)throws Exception;;
+    private native long[] le(long refRhs) throws Exception;
 
-    private native long[] ge(long refRhs)throws Exception;;
+    private native long[] ge(long refRhs) throws Exception;
 
-    private native long[] eq(long refRhs)throws Exception;;
+    private native long[] eq(long refRhs) throws Exception;
 
-    private native long[] ne(long refRhs)throws Exception;;
+    private native long[] ne(long refRhs) throws Exception;
 
-    private native long[] bitAnd(long refRhs)throws Exception;;
+    private native long[] bitAnd(long refRhs) throws Exception;
 
-    private native long[] bitOr(long refRhs)throws Exception;;
+    private native long[] bitOr(long refRhs) throws Exception;
 
-    private native long[] bitXor(long refRhs)throws Exception;;
+    private native long[] bitXor(long refRhs) throws Exception;
 
-    private native long nativeBitShiftL(int n)throws Exception;;
+    private native long nativeBitShiftL(int n) throws Exception;
 
-    private native long nativeBitShiftR(int n)throws Exception;;
+    private native long nativeBitShiftR(int n) throws Exception;
 
-    private native long nativeNot()throws Exception;;
+    private native long nativeNot() throws Exception;
 
-    private native long nativeTranspose(boolean conjugate)throws Exception;;
+    private native long nativeTranspose(boolean conjugate) throws Exception;
 
-    private native long nativeCol(int index)throws Exception;;
+    private native long nativeCol(int index) throws Exception;
 
-    private native long nativeCols(int first, int last)throws Exception;;
+    private native long nativeCols(int first, int last) throws Exception;
 
-    private native long nativeRow(int index)throws Exception;
+    private native long nativeRow(int index) throws Exception;
 
-    private native long nativeRows(int first, int last)throws Exception;
+    private native long nativeRows(int first, int last) throws Exception;
 
-    private native long[] matmul(long refRhs)throws Exception;
+    private native long[] matmul(long refRhs) throws Exception;
 
-    private native long nativeCopy()throws Exception;
+    private native long nativeCopy() throws Exception;
 
-    private native long as(int type)throws Exception;
+    private native long as(int type) throws Exception;
 
 
     /**
@@ -356,7 +356,7 @@ public class Array extends Library implements AutoCloseable {
      *
      * @return Array data type.
      */
-    public Dtype getType() {
+    public Dtype getType() throws Exception {
         return Dtype.values()[nativeGetType()];
     }
 
@@ -389,7 +389,7 @@ public class Array extends Library implements AutoCloseable {
      * @param <Any> The data type to be returned.
      * @return The data to an array of its type.
      */
-    public <Any> Any getData() {
+    public <Any> Any getData() throws Exception {
         switch (getType()) {
             case f32:
                 return (Any) getFloatFromArray();
@@ -423,7 +423,7 @@ public class Array extends Library implements AutoCloseable {
     /**
      * Prints the Array.
      */
-    public void print() {
+    public void print() throws Exception {
         nativePrint();
     }
 
@@ -432,7 +432,7 @@ public class Array extends Library implements AutoCloseable {
      *
      * @return The dimensions.
      */
-    public long[] getDims() {
+    public long[] getDims() throws Exception {
         return nativeGetDims();
     }
 
@@ -443,7 +443,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of joining the given arrays along the specified dimension.
      */
-    public Array join(int dim, Array rhs)throws Exception{
+    public Array join(int dim, Array rhs) throws Exception {
         long[] refs = join(dim, rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -455,7 +455,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The sum of both arrays.
      */
-    public Array add(Array rhs)throws Exception{
+    public Array add(Array rhs) throws Exception {
         long[] refs = add(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -467,7 +467,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The product of both arrays.
      */
-    public Array mul(Array rhs) throws Exception{
+    public Array mul(Array rhs) throws Exception {
         long[] refs = mul(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -479,7 +479,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The subtraction of both arrays.
      */
-    public Array sub(Array rhs)throws Exception {
+    public Array sub(Array rhs) throws Exception {
         long[] refs = sub(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -491,7 +491,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The division of both arrays.
      */
-    public Array div(Array rhs)throws Exception {
+    public Array div(Array rhs) throws Exception {
         long[] refs = div(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -503,7 +503,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The modulo of this array with the one passed as parameter.
      */
-    public Array mod(Array rhs)throws Exception{
+    public Array mod(Array rhs) throws Exception {
         long[] refs = mod(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -515,7 +515,7 @@ public class Array extends Library implements AutoCloseable {
      * @param exponent Exponent for the power operation.
      * @return The power of this array with the one passed as parameter.
      */
-    public Array pow(Array exponent)throws Exception{
+    public Array pow(Array exponent) throws Exception {
         long[] refs = pow(exponent.reference);
         exponent.reference = refs[0];
         return new Array(refs[1]);
@@ -527,7 +527,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
-    public Array lt(Array rhs)throws Exception{
+    public Array lt(Array rhs) throws Exception {
         long[] refs = lt(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -539,7 +539,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
-    public Array gt(Array rhs)throws Exception{
+    public Array gt(Array rhs) throws Exception {
         long[] refs = gt(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -551,7 +551,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
-    public Array le(Array rhs)throws Exception{
+    public Array le(Array rhs) throws Exception {
         long[] refs = le(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -563,7 +563,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
-    public Array ge(Array rhs)throws Exception{
+    public Array ge(Array rhs) throws Exception {
         long[] refs = ge(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -575,7 +575,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
-    public Array eq(Array rhs)throws Exception{
+    public Array eq(Array rhs) throws Exception {
         long[] refs = eq(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -587,7 +587,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
-    public Array ne(Array rhs)throws Exception{
+    public Array ne(Array rhs) throws Exception {
         long[] refs = ne(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -599,7 +599,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of an AND operation of this array with the one passed as parameter.
      */
-    public Array bitAnd(Array rhs)throws Exception{
+    public Array bitAnd(Array rhs) throws Exception {
         long[] refs = bitAnd(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -611,7 +611,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of an OR operation of this array with the one passed as parameter.
      */
-    public Array bitOr(Array rhs)throws Exception{
+    public Array bitOr(Array rhs) throws Exception {
         long[] refs = bitOr(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -623,7 +623,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of an eXclusive-OR operation of this array with the one passed as parameter.
      */
-    public Array bitXor(Array rhs)throws Exception{
+    public Array bitXor(Array rhs) throws Exception {
         long[] refs = bitXor(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -636,7 +636,7 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of a left bit shift operation to this array as many times as specified in the
      * parameter.
      */
-    public Array bitShiftL(int n)throws Exception{
+    public Array bitShiftL(int n) throws Exception {
         long ref = nativeBitShiftL(n);
         return new Array(ref);
     }
@@ -648,7 +648,7 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of a right bit shift operation to this array as many times as specified in the
      * parameter.
      */
-    public Array bitShiftR(int n)throws Exception{
+    public Array bitShiftR(int n) throws Exception {
         long ref = nativeBitShiftR(n);
         return new Array(ref);
     }
@@ -658,7 +658,7 @@ public class Array extends Library implements AutoCloseable {
      *
      * @return The result of a logical NOT operation to this array.
      */
-    public Array not()throws Exception{
+    public Array not() throws Exception {
         long ref = nativeNot();
         return new Array(ref);
     }
@@ -669,7 +669,7 @@ public class Array extends Library implements AutoCloseable {
      * @param conjugate If true a conjugate transposition is performed.
      * @return The transposed (conjugate) array.
      */
-    public Array transpose(boolean conjugate)throws Exception{
+    public Array transpose(boolean conjugate) throws Exception {
         long ref = nativeTranspose(conjugate);
         return new Array(ref);
     }
@@ -679,7 +679,7 @@ public class Array extends Library implements AutoCloseable {
      *
      * @return The transposed array.
      */
-    public Array transpose()throws Exception{
+    public Array transpose() throws Exception {
         return transpose(false);
     }
 
@@ -689,7 +689,7 @@ public class Array extends Library implements AutoCloseable {
      * @param index The column to be retrieved.
      * @return The specified column of this array.
      */
-    public Array col(int index)throws Exception{
+    public Array col(int index) throws Exception {
         long ref = nativeCol(index);
         return new Array(ref);
     }
@@ -701,7 +701,7 @@ public class Array extends Library implements AutoCloseable {
      * @param last  End of the subset of columns to be retrieved.
      * @return The subset of columns of this array starting at first and finishing at last, both inclusive.
      */
-    public Array cols(int first, int last)throws Exception{
+    public Array cols(int first, int last) throws Exception {
         long ref = nativeCols(first, last);
         return new Array(ref);
     }
@@ -712,7 +712,7 @@ public class Array extends Library implements AutoCloseable {
      * @param index The row to be retrieved.
      * @return The specified row of this array.
      */
-    public Array row(int index)throws Exception{
+    public Array row(int index) throws Exception {
         long ref = nativeRow(index);
         return new Array(ref);
     }
@@ -724,7 +724,7 @@ public class Array extends Library implements AutoCloseable {
      * @param last  End of the subset of rows to be retrieved.
      * @return The subset of rows of this array starting at first and finishing at last, both inclusive.
      */
-    public Array rows(int first, int last)throws Exception{
+    public Array rows(int first, int last) throws Exception {
         long ref = nativeRows(first, last);
         return new Array(ref);
     }
@@ -735,7 +735,7 @@ public class Array extends Library implements AutoCloseable {
      * @param rhs Right-hand side array for the operation.
      * @return The result of a matrix multiplication of both arrays.
      */
-    public Array matmul(Array rhs)throws Exception{
+    public Array matmul(Array rhs) throws Exception {
         long[] refs = matmul(rhs.reference);
         rhs.reference = refs[0];
         return new Array(refs[1]);
@@ -746,7 +746,7 @@ public class Array extends Library implements AutoCloseable {
      *
      * @return A deep copy of this array.
      */
-    public Array copy()throws Exception{
+    public Array copy() throws Exception {
         long ref = nativeCopy();
         return new Array(ref);
     }
@@ -757,7 +757,7 @@ public class Array extends Library implements AutoCloseable {
      * @param type Target type of the output array.
      * @return The result of changing the type of the input array to the one passed as parameter.
      */
-    public Array as(Dtype type)throws Exception{
+    public Array as(Dtype type) throws Exception {
         long ref = as(type.ordinal());
         return new Array(ref);
     }

@@ -16,7 +16,7 @@ public class FloatComplex {
     private float real;
     private float imag;
 
-    public FloatComplex(float re, float im){
+    public FloatComplex(float re, float im) {
         set(re, im);
     }
 
@@ -95,7 +95,7 @@ public class FloatComplex {
     @Override
     public boolean equals(Object obj) {
         FloatComplex fc = null;
-        if(obj instanceof FloatComplex) {
+        if (obj instanceof FloatComplex) {
             fc = (FloatComplex) obj;
         }
         return fc != null && this.real == fc.real && this.imag == fc.imag;

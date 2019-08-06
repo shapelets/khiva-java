@@ -17,14 +17,14 @@ public class FloatComplexTest {
     private static final double DELTA = 1e-6;
 
     @Test
-    public void testConstructor() throws Exception {
+    public void testConstructor() {
         FloatComplex fc = new FloatComplex();
         Assert.assertEquals(fc.getReal(), 0, DELTA);
         Assert.assertEquals(fc.getImag(), 0, DELTA);
     }
 
     @Test
-    public void testSettersAndGetters() throws Exception {
+    public void testSettersAndGetters() {
         FloatComplex fc = new FloatComplex();
         fc.setReal(1f);
         fc.setImag(2f);
@@ -33,7 +33,7 @@ public class FloatComplexTest {
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         FloatComplex fc = new FloatComplex();
         fc.setReal(1f);
         fc.setImag(2f);

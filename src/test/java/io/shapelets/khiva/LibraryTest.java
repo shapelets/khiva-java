@@ -12,7 +12,9 @@ package io.shapelets.khiva;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.regex.Matcher;
@@ -28,7 +30,11 @@ public class LibraryTest {
         PrintStream old = System.out;
         System.setOut(ps);
 
-        Library.printBackendInfo();
+        try {
+            Library.printBackendInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Put things back
         System.out.flush();
@@ -41,65 +47,84 @@ public class LibraryTest {
 
     @Test
     public void testBackendInfo() {
-        String info = Library.getBackendInfo();
+        String info = null;
+        try {
+            info = Library.getBackendInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String words[] = info.split(" ");
         Assert.assertEquals(words[0], "ArrayFire");
     }
 
     @Test
     public void testSetBackend() {
-        int backends = Library.getKhivaBackends();
-        int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
-        int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
-        int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
+        int backends = 0;
+        try {
+            backends = Library.getKhivaBackends();
 
-        if (cuda != 0) {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
-            Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CUDA);
-        }
-        if (opencl != 0) {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_OPENCL);
-            Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_OPENCL);
-        }
-        if (cpu != 0) {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-            Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CPU);
+            int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
+            int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
+            int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
+
+            if (cuda != 0) {
+                Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
+                Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CUDA);
+            }
+            if (opencl != 0) {
+                Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_OPENCL);
+                Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_OPENCL);
+            }
+            if (cpu != 0) {
+                Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+                Assert.assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CPU);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Test
     public void testGetDevice() {
-        int backends = Library.getKhivaBackends();
-        int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
-        int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
-        int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
+        try {
+            int backends = Library.getKhivaBackends();
+            int cuda = backends & Library.Backend.KHIVA_BACKEND_CUDA.getKhivaOrdinal();
+            int opencl = backends & Library.Backend.KHIVA_BACKEND_OPENCL.getKhivaOrdinal();
+            int cpu = backends & Library.Backend.KHIVA_BACKEND_CPU.getKhivaOrdinal();
 
-        if (cuda != 0) {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
-            for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
-                Library.setKhivaDevice(i);
-                Assert.assertEquals(Library.getKhivaDeviceID(), i);
+            if (cuda != 0) {
+                Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
+                for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
+                    Library.setKhivaDevice(i);
+                    Assert.assertEquals(Library.getKhivaDeviceID(), i);
+                }
             }
-        }
-        if (opencl != 0) {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_OPENCL);
-            for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
-                Library.setKhivaDevice(i);
-                Assert.assertEquals(Library.getKhivaDeviceID(), i);
+            if (opencl != 0) {
+                Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_OPENCL);
+                for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
+                    Library.setKhivaDevice(i);
+                    Assert.assertEquals(Library.getKhivaDeviceID(), i);
+                }
             }
-        }
-        if (cpu != 0) {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-            for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
-                Library.setKhivaDevice(i);
-                Assert.assertEquals(Library.getKhivaDeviceID(), i);
+            if (cpu != 0) {
+                Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+                for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
+                    Library.setKhivaDevice(i);
+                    Assert.assertEquals(Library.getKhivaDeviceID(), i);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Test
     public void testGetKhivaVersion() {
-        Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromFile());
+        try {
+            Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String getKhivaVersionFromFile() {
