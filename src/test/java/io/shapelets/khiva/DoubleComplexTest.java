@@ -17,14 +17,14 @@ public class DoubleComplexTest {
     private static final double DELTA = 1e-6;
 
     @Test
-    public void testConstructor() throws Exception {
+    public void testConstructor() {
         DoubleComplex dc = new DoubleComplex();
         Assert.assertEquals(dc.getReal(), 0, DELTA);
         Assert.assertEquals(dc.getImag(), 0, DELTA);
     }
 
     @Test
-    public void testSettersAndGetters() throws Exception {
+    public void testSettersAndGetters() {
         DoubleComplex dc = new DoubleComplex();
         dc.setReal(1f);
         dc.setImag(2f);
@@ -33,7 +33,7 @@ public class DoubleComplexTest {
     }
 
     @Test
-    public void testToString() throws Exception {
+    public void testToString() {
         DoubleComplex dc = new DoubleComplex();
         dc.setReal(1f);
         dc.setImag(2f);

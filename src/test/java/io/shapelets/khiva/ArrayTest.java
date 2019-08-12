@@ -18,7 +18,11 @@ public class ArrayTest {
 
     @BeforeClass
     public static void setUp() {
-        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        try {
+            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -508,6 +512,17 @@ public class ArrayTest {
         }
     }
 
+    @Test(expected = Exception.class)
+    public void testMulException() throws Exception {
+        float[] data = {1f, 2f, 3f, 4f, 5f};
+        long[] dims = {5, 1, 1, 1};
+        float[] data2 = {1f, 2f, 3f, 4f};
+        long[] dims2 = {4, 1, 1, 1};
+        Array a = new Array(data, dims);
+        Array b = new Array(data2, dims2);
+        Array c = a.mul(b);
+    }
+
     @Test
     public void testMul() throws Exception {
         float[] data = {1f, 2f, 3f, 4f};
@@ -724,7 +739,7 @@ public class ArrayTest {
     public void testTranspose() throws Exception {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {2, 2, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.transpose()) {
+        try (Array a = new Array(data, dims); Array b = a.transpose()) {
             float[] result = b.getData();
             float[] expected = {1f, 3f, 2f, 4f};
             Assert.assertArrayEquals(result, expected, 1e-6f);
@@ -735,7 +750,7 @@ public class ArrayTest {
     public void testCol() throws Exception {
         float[] data = {1f, 3f, 2f, 4f};
         long[] dims = {2, 2, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.col(0)) {
+        try (Array a = new Array(data, dims); Array b = a.col(0)) {
 
             float[] result = b.getData();
             float[] expected = {1f, 3f};
@@ -747,7 +762,7 @@ public class ArrayTest {
     public void testCols() throws Exception {
         float[] data = {1f, 4f, 2f, 5f, 3f, 6f};
         long[] dims = {2, 3, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.cols(0, 1)) {
+        try (Array a = new Array(data, dims); Array b = a.cols(0, 1)) {
             float[] result = b.getData();
             float[] expected = {1f, 4f, 2f, 5f};
             Assert.assertArrayEquals(result, expected, 1e-6f);
@@ -758,7 +773,7 @@ public class ArrayTest {
     public void testRow() throws Exception {
         float[] data = {1f, 3f, 2f, 4f};
         long[] dims = {2, 2, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.row(0)) {
+        try (Array a = new Array(data, dims); Array b = a.row(0)) {
             float[] result = b.getData();
             float[] expected = {1f, 2f};
             Assert.assertArrayEquals(result, expected, 1e-6f);
@@ -769,7 +784,7 @@ public class ArrayTest {
     public void testRows() throws Exception {
         float[] data = {1f, 3f, 5f, 2f, 4f, 6f};
         long[] dims = {3, 2, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.rows(0, 1)) {
+        try (Array a = new Array(data, dims); Array b = a.rows(0, 1)) {
             float[] result = b.getData();
             float[] expected = {1f, 3f, 2f, 4f};
             Assert.assertArrayEquals(result, expected, 1e-6f);
@@ -781,7 +796,7 @@ public class ArrayTest {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dimsA = {4, 1, 1, 1};
         long[] dimsB = {1, 4, 1, 1};
-        try(Array a = new Array(data, dimsA); Array b = new Array(data, dimsB); Array c = a.matmul(b)) {
+        try (Array a = new Array(data, dimsA); Array b = new Array(data, dimsB); Array c = a.matmul(b)) {
             float[] result = c.getData();
             float[] expected = {1f, 2f, 3f, 4f, 2f, 4f, 6f, 8f, 3f, 6f, 9f, 12f, 4f, 8f, 12f, 16f};
             Assert.assertArrayEquals(result, expected, 1e-6f);
@@ -792,7 +807,7 @@ public class ArrayTest {
     public void testCopy() throws Exception {
         float[] data = {1.1f, 2.1f, 3.1f, 4.1f};
         long[] dims = {4, 1, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.copy(); Array c = a.eq(b)) {
+        try (Array a = new Array(data, dims); Array b = a.copy(); Array c = a.eq(b)) {
             boolean[] result = c.getData();
             boolean[] expected = {true, true, true, true};
             Assert.assertArrayEquals(result, expected);
@@ -803,7 +818,7 @@ public class ArrayTest {
     public void testCopyConstructor() throws Exception {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
-        try(Array a = new Array(tss, dims); Array b = new Array(a)) {
+        try (Array a = new Array(tss, dims); Array b = new Array(a)) {
             double[] result = b.getData();
             double[] expected = {1, 2, 3, 4, 5, 6, 7, 8};
             Assert.assertArrayEquals(result, expected, DELTA);
@@ -822,7 +837,7 @@ public class ArrayTest {
     public void testAs() throws Exception {
         float[] data = {1.1f, 2.1f, 3.1f, 4.1f};
         long[] dims = {4, 1, 1, 1};
-        try(Array a = new Array(data, dims); Array b = a.as(Array.Dtype.s32)) {
+        try (Array a = new Array(data, dims); Array b = a.as(Array.Dtype.s32)) {
             int[] result = b.getData();
             int[] expected = {1, 2, 3, 4};
             Assert.assertArrayEquals(result, expected);

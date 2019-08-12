@@ -18,7 +18,11 @@ public class FeaturesTest {
 
     @BeforeClass
     public static void setUp() {
-        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        try {
+            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -705,6 +709,27 @@ public class FeaturesTest {
     }
 
     @Test
+    public void localMaximals() throws Exception {
+        double[] tss = {0.0, 4.0, 3.0, 5.0, 4.0, 1.0, 0.0, 6.0,
+                0.0, 4.0, 3.0, 5.0, 4.0, 1.0, 0.0, 6.0};
+        long[] dims = {8, 2, 1, 1};
+        try (
+                Array a = new Array(tss, dims);
+                Array b = Features.localMaximals(a)
+        ) {
+            double[] lm = b.getData();
+            Assert.assertEquals(lm[0], (float) 0.0, DELTA);
+            Assert.assertEquals(lm[1], (float) 1.0, DELTA);
+            Assert.assertEquals(lm[2], (float) 0.0, DELTA);
+            Assert.assertEquals(lm[3], (float) 1.0, DELTA);
+            Assert.assertEquals(lm[4], (float) 0.0, DELTA);
+            Assert.assertEquals(lm[5], (float) 0.0, DELTA);
+            Assert.assertEquals(lm[6], (float) 0.0, DELTA);
+            Assert.assertEquals(lm[7], (float) 1.0, DELTA);
+        }
+    }
+
+    @Test
     public void testMeanSecondDerivativeCentral() throws Exception {
         double[] tss = {1, 3, 7, 4, 8, 2, 5, 1, 7, 4};
         long[] dims = {5, 2, 1, 1};
@@ -1042,12 +1067,40 @@ public class FeaturesTest {
     }
 
     @Test
+    public void testSumOfReoccurringDatapoints2() throws Exception {
+        double[] tss = {3, 3, 0, 4, 0, 13, 13, 3, 3, 0, 4, 0, 13, 13};
+        long[] dims = {7, 2, 1, 1};
+        try (
+                Array a = new Array(tss, dims);
+                Array b = Features.sumOfReoccurringDatapoints(a)
+        ) {
+            double[] result = b.getData();
+            Assert.assertEquals(result[0], 32, DELTA);
+            Assert.assertEquals(result[1], 32, DELTA);
+        }
+    }
+
+    @Test
     public void testSumOfReoccurringValues() throws Exception {
         double[] tss = {4, 4, 6, 6, 7, 4, 7, 7, 8, 8};
         long[] dims = {5, 2, 1, 1};
         try (
                 Array a = new Array(tss, dims);
                 Array b = Features.sumOfReoccurringValues(a, false)
+        ) {
+            double[] result = b.getData();
+            Assert.assertEquals(result[0], 10, DELTA);
+            Assert.assertEquals(result[1], 15, DELTA);
+        }
+    }
+
+    @Test
+    public void testSumOfReoccurringValues2() throws Exception {
+        double[] tss = {4, 4, 6, 6, 7, 4, 7, 7, 8, 8};
+        long[] dims = {5, 2, 1, 1};
+        try (
+                Array a = new Array(tss, dims);
+                Array b = Features.sumOfReoccurringValues(a)
         ) {
             double[] result = b.getData();
             Assert.assertEquals(result[0], 10, DELTA);

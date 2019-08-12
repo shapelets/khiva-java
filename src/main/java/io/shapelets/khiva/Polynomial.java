@@ -14,9 +14,9 @@ package io.shapelets.khiva;
  */
 public class Polynomial extends Library {
 
-    private native static long[] polyfit(long refX, long refY, int deg);
+    private native static long[] polyfit(long refX, long refY, int deg) throws Exception;
 
-    private native static long[] roots(long ref);
+    private native static long[] roots(long ref) throws Exception;
 
     /**
      * Least squares polynomial fit. Fit a polynomial \(p(x) = p[0] * x^{deg} + ... + p[deg]\) of degree \(deg\)
@@ -27,7 +27,7 @@ public class Polynomial extends Library {
      * @param deg Degree of the fitting polynomial.
      * @return Array with the polynomial coefficients, highest power first.
      */
-    public static Array polyfit(Array x, Array y, int deg) {
+    public static Array polyfit(Array x, Array y, int deg) throws Exception {
         long[] refs = polyfit(x.getReference(), y.getReference(), deg);
         x.setReference(refs[0]);
         y.setReference(refs[1]);
@@ -45,7 +45,7 @@ public class Polynomial extends Library {
      * @param p Array of polynomial coefficients.
      * @return Array with the roots of the polynomial.
      */
-    public static Array roots(Array p) {
+    public static Array roots(Array p) throws Exception {
         long[] refs = roots(p.getReference());
         p.setReference(refs[0]);
         return new Array(refs[1]);

@@ -20,7 +20,6 @@ matrix:
 cache:
     - C:\tools\vcpkg\installed
     - C:\Program Files\ArrayFire
-    - C:\Program Files\Khiva
     - C:\Users\appveyor\.m2
     - C:\ProgramData\chocolatey\bin
     - C:\ProgramData\chocolatey\lib
@@ -39,12 +38,16 @@ before_build:
             if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S };
           }else{
             git clone -q https://github.com/shapelets/khiva.git C:\khiva-library;
+
             cd C:\khiva-library;
+            git submodule -q update --init;
             mkdir build;
             cd build;
             cmake .. -DCMAKE_TOOLCHAIN_FILE=C:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$($env:BOOST_PATH)" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON -G"$env:GENERATOR";
-            cmake --build . --config Release --target INSTALL -- /m;
           }
+    - cmake --build . --config Release -- /m
+    - cmake --build . --config Release --target INSTALL
+
     - cd C:\khiva-java
     - start /wait choco install maven
     - pip install codecov

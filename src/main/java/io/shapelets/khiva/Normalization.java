@@ -14,21 +14,21 @@ package io.shapelets.khiva;
  */
 public class Normalization extends Library {
 
-    private native static long[] znorm(long ref, double epsilon);
+    private native static long[] znorm(long ref, double epsilon) throws Exception;
 
-    private native static long znormInPlace(long ref, double epsilon);
+    private native static long znormInPlace(long ref, double epsilon) throws Exception;
 
-    private native static long[] maxMinNorm(long ref, double high, double low, double epsilon);
+    private native static long[] maxMinNorm(long ref, double high, double low, double epsilon) throws Exception;
 
-    private native static long maxMinNormInPlace(long ref, double high, double low, double epsilon);
+    private native static long maxMinNormInPlace(long ref, double high, double low, double epsilon) throws Exception;
 
-    private native static long[] decimalScalingNorm(long ref);
+    private native static long[] decimalScalingNorm(long ref) throws Exception;
 
-    private native static long decimalScalingNormInPlace(long ref);
+    private native static long decimalScalingNormInPlace(long ref) throws Exception;
 
-    private native static long[] meanNorm(long ref);
+    private native static long[] meanNorm(long ref) throws Exception;
 
-    private native static long meanNormInPlace(long ref);
+    private native static long meanNormInPlace(long ref) throws Exception;
 
 
     /**
@@ -38,7 +38,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have been normalized by
      * dividing each number by \(10^j\), where j is the number of integer digits of the max number in the time series.
      */
-    public static Array decimalScalingNorm(Array arr) {
+    public static Array decimalScalingNorm(Array arr) throws Exception {
         long[] refs = decimalScalingNorm(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -49,7 +49,7 @@ public class Normalization extends Library {
      *
      * @param arr Array containing the input time series.
      */
-    public static void decimalScalingNormInPlace(Array arr) {
+    public static void decimalScalingNormInPlace(Array arr) throws Exception {
         long ref = decimalScalingNormInPlace(arr.getReference());
         arr.setReference(ref);
     }
@@ -62,7 +62,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
      */
-    public static Array maxMinNorm(Array arr) {
+    public static Array maxMinNorm(Array arr) throws Exception {
         return maxMinNorm(arr, 1.0, 0.0, 0.00000001);
     }
 
@@ -75,7 +75,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
      */
-    public static Array maxMinNorm(Array arr, double high) {
+    public static Array maxMinNorm(Array arr, double high) throws Exception {
         return maxMinNorm(arr, high, 0.0, 0.00000001);
     }
 
@@ -89,7 +89,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
      */
-    public static Array maxMinNorm(Array arr, double high, double low) {
+    public static Array maxMinNorm(Array arr, double high, double low) throws Exception {
         return maxMinNorm(arr, high, low, 0.00000001);
     }
 
@@ -105,7 +105,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
      */
-    public static Array maxMinNorm(Array arr, double high, double low, double epsilon) {
+    public static Array maxMinNorm(Array arr, double high, double low, double epsilon) throws Exception {
         long[] refs = maxMinNorm(arr.getReference(), high, low, epsilon);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -116,7 +116,7 @@ public class Normalization extends Library {
      *
      * @param arr Array containing the input time series.
      */
-    public static void maxMinNormInPlace(Array arr) {
+    public static void maxMinNormInPlace(Array arr) throws Exception {
         maxMinNormInPlace(arr, 1.0, 0.0, 0.00000001);
     }
 
@@ -126,7 +126,7 @@ public class Normalization extends Library {
      * @param arr  Array containing the input time series.
      * @param high Maximum final value (Defaults to 1.0).
      */
-    public static void maxMinNormInPlace(Array arr, double high) {
+    public static void maxMinNormInPlace(Array arr, double high) throws Exception {
         maxMinNormInPlace(arr, high, 0.0, 0.00000001);
     }
 
@@ -137,7 +137,7 @@ public class Normalization extends Library {
      * @param low  Minimum final value (Defaults to 0.0).
      * @param high Maximum final value (Defaults to 1.0).
      */
-    public static void maxMinNormInPlace(Array arr, double high, double low) {
+    public static void maxMinNormInPlace(Array arr, double high, double low) throws Exception {
         maxMinNormInPlace(arr, high, low, 0.00000001);
     }
 
@@ -150,7 +150,7 @@ public class Normalization extends Library {
      * @param epsilon epsilon Minimum standard deviation to consider.  It acts as a gatekeeper for
      *                those time series that may be constant or near constant.
      */
-    public static void maxMinNormInPlace(Array arr, double high, double low, double epsilon) {
+    public static void maxMinNormInPlace(Array arr, double high, double low, double epsilon) throws Exception {
         long ref = maxMinNormInPlace(arr.getReference(), high, low, epsilon);
         arr.setReference(ref);
     }
@@ -167,7 +167,7 @@ public class Normalization extends Library {
      * normalized by substracting the mean from each number and dividing each number by \(max(x) - min(x)\), in the
      * time series.
      */
-    public static Array meanNorm(Array arr) {
+    public static Array meanNorm(Array arr) throws Exception {
         long[] refs = meanNorm(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -182,7 +182,7 @@ public class Normalization extends Library {
      *
      * @param arr Array containing the input time series.
      */
-    public static void meanNormInPlace(Array arr) {
+    public static void meanNormInPlace(Array arr) throws Exception {
         long ref = meanNormInPlace(arr.getReference());
         arr.setReference(ref);
     }
@@ -194,7 +194,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
      * one as standard deviation.
      */
-    public static Array znorm(Array arr) {
+    public static Array znorm(Array arr) throws Exception {
         return znorm(arr, 0.00000001);
     }
 
@@ -207,7 +207,7 @@ public class Normalization extends Library {
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
      * one as standard deviation.
      */
-    public static Array znorm(Array arr, double epsilon) {
+    public static Array znorm(Array arr, double epsilon) throws Exception {
         long[] refs = znorm(arr.getReference(), epsilon);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -219,7 +219,7 @@ public class Normalization extends Library {
      *
      * @param arr Array containing the input time series.
      */
-    public static void znormInPlace(Array arr) {
+    public static void znormInPlace(Array arr) throws Exception {
         znormInPlace(arr, 0.00000001);
     }
 
@@ -231,7 +231,7 @@ public class Normalization extends Library {
      * @param epsilon epsilon Minimum standard deviation to consider. It acts as a gatekeeper for
      *                those time series that may be constant or near constant.
      */
-    public static void znormInPlace(Array arr, double epsilon) {
+    public static void znormInPlace(Array arr, double epsilon) throws Exception {
         long ref = znormInPlace(arr.getReference(), epsilon);
         arr.setReference(ref);
     }

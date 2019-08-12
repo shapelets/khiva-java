@@ -83,7 +83,7 @@ public class DoubleComplex {
         if (imag < 0) str = str + " - ";
         else str = str + " + ";
 
-        return str + String.valueOf(Math.abs(imag)) + "i";
+        return str + Math.abs(imag) + "i";
     }
 
     /**
@@ -95,7 +95,7 @@ public class DoubleComplex {
     @Override
     public boolean equals(Object obj) {
         DoubleComplex dc = null;
-        if(obj instanceof DoubleComplex) {
+        if (obj instanceof DoubleComplex) {
             dc = (DoubleComplex) obj;
         }
         return dc != null && this.real == dc.real && this.imag == dc.imag;

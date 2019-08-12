@@ -18,10 +18,12 @@ This Java package called 'khiva' provides all the functionalities of the Khiva l
 ## Requirements
 * Arrayfire
 * Khiva library
+* JAVA SDK 1.8
+* Maven
 
 ## Set up
 
-It is just needed to execute the next command in the root directory of the project:
+Just execute the next command in the root directory of the project:
 ```bash
 mvn install
 ```

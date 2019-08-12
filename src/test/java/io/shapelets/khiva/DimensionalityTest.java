@@ -17,7 +17,11 @@ public class DimensionalityTest {
 
     @BeforeClass
     public static void setUp() {
-        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        try {
+            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -38,7 +42,7 @@ public class DimensionalityTest {
     @Test
     public void testVisvalingam() throws Exception {
         float[] tss = {0f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f,
-                       0f, 0.1f,-0.1f, 5.0f, 6.0f, 7.0f, 8.1f, 9.0f, 9.0f, 9.0f};
+                0f, 0.1f, -0.1f, 5.0f, 6.0f, 7.0f, 8.1f, 9.0f, 9.0f, 9.0f};
         long[] dims = {10, 2, 1, 1};
         try (
                 Array a = new Array(tss, dims);

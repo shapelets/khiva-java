@@ -18,31 +18,46 @@ public class MatrixTest {
 
     @BeforeClass
     public static void setUp() {
-        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        try {
+            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private double getSingleValueDouble(Array arr, long dim0, long dim1, long dim2, long dim3) {
-        double[] data = arr.getData();
+        try {
+            double[] data = arr.getData();
+            long[] dims4 = arr.getDims();
+            long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
 
-        long[] dims4 = arr.getDims();
-        long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
-        offset += (dims4[0] * dims4[1]) * dim2;
-        offset += dims4[0] * dim1;
-        offset += dim0;
+            offset += (dims4[0] * dims4[1]) * dim2;
+            offset += dims4[0] * dim1;
+            offset += dim0;
 
-        return data[(int) offset];
+            return data[(int) offset];
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     private int getSingleValueInt(Array arr, long dim0, long dim1, long dim2, long dim3) {
-        int[] data = arr.getData();
+        try {
+            int[] data = arr.getData();
 
-        long[] dims4 = arr.getDims();
-        long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
-        offset += (dims4[0] * dims4[1]) * dim2;
-        offset += dims4[0] * dim1;
-        offset += dim0;
+            long[] dims4 = arr.getDims();
+            long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
+            offset += (dims4[0] * dims4[1]) * dim2;
+            offset += dims4[0] * dim1;
+            offset += dim0;
 
-        return data[(int) offset];
+            return data[(int) offset];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Test

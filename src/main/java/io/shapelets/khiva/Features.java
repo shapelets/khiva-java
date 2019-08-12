@@ -16,134 +16,133 @@ package io.shapelets.khiva;
  */
 public class Features extends Library {
 
-    private native static long[] absEnergy(long ref);
+    private native static long[] absEnergy(long ref) throws Exception;
 
-    private native static long[] absoluteSumOfChanges(long ref);
+    private native static long[] absoluteSumOfChanges(long ref) throws Exception;
 
-    private native static long[] aggregatedAutocorrelation(long ref, int aggregationFunction);
+    private native static long[] aggregatedAutocorrelation(long ref, int aggregationFunction) throws Exception;
 
-    private native static long[] aggregatedLinearTrend(long ref, long chunkSize, int aggregationFunction);
+    private native static long[] aggregatedLinearTrend(long ref, long chunkSize, int aggregationFunction) throws Exception;
 
-    private native static long[] approximateEntropy(long ref, int m, float r);
+    private native static long[] approximateEntropy(long ref, int m, float r) throws Exception;
 
-    private native static long[] crossCovariance(long refXss, long refYss, boolean unbiased);
+    private native static long[] crossCovariance(long refXss, long refYss, boolean unbiased) throws Exception;
 
-    private native static long[] autoCovariance(long ref, boolean unbiased);
+    private native static long[] autoCovariance(long ref, boolean unbiased) throws Exception;
 
-    private native static long[] crossCorrelation(long refXss, long refYss, boolean unbiased);
+    private native static long[] crossCorrelation(long refXss, long refYss, boolean unbiased) throws Exception;
 
-    private native static long[] autoCorrelation(long ref, long maxLag, boolean unbiased);
+    private native static long[] autoCorrelation(long ref, long maxLag, boolean unbiased) throws Exception;
 
-    private native static long[] binnedEntropy(long ref, long maxBins);
+    private native static long[] binnedEntropy(long ref, long maxBins) throws Exception;
 
-    private native static long[] c3(long ref, long lag);
+    private native static long[] c3(long ref, long lag) throws Exception;
 
-    private native static long[] cidCe(long ref, boolean zNormalize);
+    private native static long[] cidCe(long ref, boolean zNormalize) throws Exception;
 
-    private native static long[] countAboveMean(long ref);
+    private native static long[] countAboveMean(long ref) throws Exception;
 
-    private native static long[] countBelowMean(long ref);
+    private native static long[] countBelowMean(long ref) throws Exception;
 
-    private native static long[] cwtCoefficients(long ref, long refW, int coeff, int w);
+    private native static long[] cwtCoefficients(long ref, long refW, int coeff, int w) throws Exception;
 
-    private native static long[] energyRatioByChunks(long ref, long numSegments, long segmentFocus);
+    private native static long[] energyRatioByChunks(long ref, long numSegments, long segmentFocus) throws Exception;
 
-    private native static long[] fftAggregated(long ref);
+    private native static long[] fftAggregated(long ref) throws Exception;
 
-    private native static long[] fftCoefficient(long ref, long coefficient);
+    private native static long[] fftCoefficient(long ref, long coefficient) throws Exception;
 
-    private native static long[] firstLocationOfMaximum(long ref);
+    private native static long[] firstLocationOfMaximum(long ref) throws Exception;
 
-    private native static long[] firstLocationOfMinimum(long ref);
+    private native static long[] firstLocationOfMinimum(long ref) throws Exception;
 
-    private native static long[] friedrichCoefficients(long ref, int m, float r);
+    private native static long[] friedrichCoefficients(long ref, int m, float r) throws Exception;
 
-    private native static long[] hasDuplicates(long ref);
+    private native static long[] hasDuplicates(long ref) throws Exception;
 
-    private native static long[] hasDuplicateMax(long ref);
+    private native static long[] hasDuplicateMax(long ref) throws Exception;
 
-    private native static long[] hasDuplicateMin(long ref);
+    private native static long[] hasDuplicateMin(long ref) throws Exception;
 
-    private native static long[] indexMassQuantile(long ref, float q);
+    private native static long[] indexMassQuantile(long ref, float q) throws Exception;
 
-    private native static long[] kurtosis(long ref);
+    private native static long[] kurtosis(long ref) throws Exception;
 
-    private native static long[] largeStandardDeviation(long ref, float r);
+    private native static long[] largeStandardDeviation(long ref, float r) throws Exception;
 
-    private native static long[] lastLocationOfMaximum(long ref)
-            ;
+    private native static long[] lastLocationOfMaximum(long ref) throws Exception;
 
-    private native static long[] lastLocationOfMinimum(long ref);
+    private native static long[] lastLocationOfMinimum(long ref) throws Exception;
 
-    private native static long[] length(long ref);
+    private native static long[] length(long ref) throws Exception;
 
-    private native static long[] linearTrend(long ref);
+    private native static long[] linearTrend(long ref) throws Exception;
 
-    private native static long[] localMaximals(long ref);
+    private native static long[] localMaximals(long ref) throws Exception;
 
-    private native static long[] longestStrikeAboveMean(long ref);
+    private native static long[] longestStrikeAboveMean(long ref) throws Exception;
 
-    private native static long[] longestStrikeBelowMean(long ref);
+    private native static long[] longestStrikeBelowMean(long ref) throws Exception;
 
-    private native static long[] maxLangevinFixedPoint(long ref, int m, float r);
+    private native static long[] maxLangevinFixedPoint(long ref, int m, float r) throws Exception;
 
-    private native static long[] maximum(long ref);
+    private native static long[] maximum(long ref) throws Exception;
 
-    private native static long[] mean(long ref);
+    private native static long[] mean(long ref) throws Exception;
 
-    private native static long[] meanAbsoluteChange(long ref);
+    private native static long[] meanAbsoluteChange(long ref) throws Exception;
 
-    private native static long[] meanChange(long ref);
+    private native static long[] meanChange(long ref) throws Exception;
 
-    private native static long[] meanSecondDerivativeCentral(long ref);
+    private native static long[] meanSecondDerivativeCentral(long ref) throws Exception;
 
-    private native static long[] median(long ref);
+    private native static long[] median(long ref) throws Exception;
 
-    private native static long[] minimum(long ref);
+    private native static long[] minimum(long ref) throws Exception;
 
-    private native static long[] numberCrossingM(long ref, int m);
+    private native static long[] numberCrossingM(long ref, int m) throws Exception;
 
-    private native static long[] numberCwtPeaks(long ref, int maxW);
+    private native static long[] numberCwtPeaks(long ref, int maxW) throws Exception;
 
-    private native static long[] numberPeaks(long ref, int n);
+    private native static long[] numberPeaks(long ref, int n) throws Exception;
 
-    private native static long[] partialAutocorrelation(long ref, long refLags);
+    private native static long[] partialAutocorrelation(long ref, long refLags) throws Exception;
 
-    private native static long[] percentageOfReoccurringDatapointsToAllDatapoints(long ref, boolean isSorted);
+    private native static long[] percentageOfReoccurringDatapointsToAllDatapoints(long ref, boolean isSorted) throws Exception;
 
-    private native static long[] percentageOfReoccurringValuesToAllValues(long ref, boolean isSorted);
+    private native static long[] percentageOfReoccurringValuesToAllValues(long ref, boolean isSorted) throws Exception;
 
-    private native static long[] quantile(long ref, long refQ, float precision);
+    private native static long[] quantile(long ref, long refQ, float precision) throws Exception;
 
-    private native static long[] rangeCount(long ref, float min, float max);
+    private native static long[] rangeCount(long ref, float min, float max) throws Exception;
 
-    private native static long[] ratioBeyondRSigma(long ref, float r);
+    private native static long[] ratioBeyondRSigma(long ref, float r) throws Exception;
 
-    private native static long[] ratioValueNumberToTimeSeriesLength(long ref);
+    private native static long[] ratioValueNumberToTimeSeriesLength(long ref) throws Exception;
 
-    private native static long[] sampleEntropy(long ref);
+    private native static long[] sampleEntropy(long ref) throws Exception;
 
-    private native static long[] skewness(long ref);
+    private native static long[] skewness(long ref) throws Exception;
 
-    private native static long[] spktWelchDensity(long ref, int coeff);
+    private native static long[] spktWelchDensity(long ref, int coeff) throws Exception;
 
-    private native static long[] standardDeviation(long ref);
+    private native static long[] standardDeviation(long ref) throws Exception;
 
-    private native static long[] sumOfReoccurringDatapoints(long ref, boolean isSorted);
+    private native static long[] sumOfReoccurringDatapoints(long ref, boolean isSorted) throws Exception;
 
-    private native static long[] sumOfReoccurringValues(long ref, boolean isSorted);
+    private native static long[] sumOfReoccurringValues(long ref, boolean isSorted) throws Exception;
 
-    private native static long[] sumValues(long ref);
+    private native static long[] sumValues(long ref) throws Exception;
 
-    private native static long[] symmetryLooking(long ref, float r);
+    private native static long[] symmetryLooking(long ref, float r) throws Exception;
 
-    private native static long[] timeReversalAsymmetryStatistic(long ref, int lag);
+    private native static long[] timeReversalAsymmetryStatistic(long ref, int lag) throws Exception;
 
-    private native static long[] valueCount(long ref, float v);
+    private native static long[] valueCount(long ref, float v) throws Exception;
 
-    private native static long[] variance(long ref);
+    private native static long[] variance(long ref) throws Exception;
 
-    private native static long[] varianceLargerThanStandardDeviation(long ref);
+    private native static long[] varianceLargerThanStandardDeviation(long ref) throws Exception;
 
     /**
      * Calculates the sum over the square values of the time series.
@@ -151,7 +150,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Array with the Absolute Energy.
      */
-    public static Array absEnergy(Array arr) {
+    public static Array absEnergy(Array arr) throws Exception {
         long[] refs = absEnergy(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -165,7 +164,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Array with the absolute sum of changes.
      */
-    public static Array absoluteSumOfChanges(Array arr) {
+    public static Array absoluteSumOfChanges(Array arr) throws Exception {
         long[] refs = absoluteSumOfChanges(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -189,7 +188,7 @@ public class Features extends Library {
      *                            }
      * @return Array whose values contains the aggregated correlation for each time series.
      */
-    public static Array aggregatedAutocorrelation(Array arr, int aggregationFunction) {
+    public static Array aggregatedAutocorrelation(Array arr, int aggregationFunction) throws Exception {
         long[] refs = aggregatedAutocorrelation(arr.getReference(), aggregationFunction);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -213,7 +212,7 @@ public class Features extends Library {
      *                            }
      * @return The aggregated Linear Trend.
      */
-    public static Array[] aggregatedLinearTrend(Array arr, long chunkSize, int aggregationFunction) {
+    public static Array[] aggregatedLinearTrend(Array arr, long chunkSize, int aggregationFunction) throws Exception {
         long[] refs = aggregatedLinearTrend(arr.getReference(), chunkSize, aggregationFunction);
         arr.setReference(refs[0]);
         return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
@@ -234,7 +233,7 @@ public class Features extends Library {
      * @return Array with the vectorized approximate entropy for all the input time series in arr.
      */
 
-    public static Array approximateEntropy(Array arr, int m, float r) {
+    public static Array approximateEntropy(Array arr, int m, float r) throws Exception {
         long[] refs = approximateEntropy(arr.getReference(), m, r);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -248,7 +247,7 @@ public class Features extends Library {
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Array with the cross-covariance value for the given time series.
      */
-    public static Array crossCovariance(Array arrXss, Array arrYss, Boolean unbiased) {
+    public static Array crossCovariance(Array arrXss, Array arrYss, Boolean unbiased) throws Exception {
         long[] refs = crossCovariance(arrXss.getReference(), arrYss.getReference(), unbiased);
         arrXss.setReference(refs[0]);
         arrYss.setReference(refs[1]);
@@ -262,7 +261,7 @@ public class Features extends Library {
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Array with the auto-covariance value for the given time series.
      */
-    public static Array autoCovariance(Array arr, Boolean unbiased) {
+    public static Array autoCovariance(Array arr, Boolean unbiased) throws Exception {
         long[] refs = autoCovariance(arr.getReference(), unbiased);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -276,7 +275,7 @@ public class Features extends Library {
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Double array with cross-correlation value for the given time series.
      */
-    public static Array crossCorrelation(Array arrXss, Array arrYss, Boolean unbiased) {
+    public static Array crossCorrelation(Array arrXss, Array arrYss, Boolean unbiased) throws Exception {
 
         long[] refs = crossCorrelation(arrXss.getReference(), arrYss.getReference(),
                 unbiased);
@@ -294,7 +293,7 @@ public class Features extends Library {
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return The autocorrelation value for the given time series.
      */
-    public static Array autoCorrelation(Array arr, long maxLag, Boolean unbiased) {
+    public static Array autoCorrelation(Array arr, long maxLag, Boolean unbiased) throws Exception {
         long[] refs = autoCorrelation(arr.getReference(), maxLag, unbiased);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -307,7 +306,7 @@ public class Features extends Library {
      * @param maxBins The number of bins.
      * @return The binned entropy value for the given time series.
      */
-    public static Array binnedEntropy(Array arr, int maxBins) {
+    public static Array binnedEntropy(Array arr, int maxBins) throws Exception {
         long[] refs = binnedEntropy(arr.getReference(), maxBins);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -321,7 +320,7 @@ public class Features extends Library {
      * @param lag The lag.
      * @return The non-linearity value for the given time series.
      */
-    public static Array c3(Array arr, long lag) {
+    public static Array c3(Array arr, long lag) throws Exception {
         long[] refs = c3(arr.getReference(), lag);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -336,7 +335,7 @@ public class Features extends Library {
      * @param zNormalize Controls whether the time series should be z-normalized or not.
      * @return The complexity value for the given time series.
      */
-    public static Array cidCe(Array arr, Boolean zNormalize) {
+    public static Array cidCe(Array arr, Boolean zNormalize) throws Exception {
 
         long[] refs = cidCe(arr.getReference(), zNormalize);
         arr.setReference(refs[0]);
@@ -350,7 +349,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The number of values in the time series that are higher than the mean.
      */
-    public static Array countAboveMean(Array arr) {
+    public static Array countAboveMean(Array arr) throws Exception {
 
         long[] refs = countAboveMean(arr.getReference());
         arr.setReference(refs[0]);
@@ -364,7 +363,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The number of values in the time series that are lower than the mean.
      */
-    public static Array countBelowMean(Array arr) {
+    public static Array countBelowMean(Array arr) throws Exception {
 
         long[] refs = countBelowMean(arr.getReference());
         arr.setReference(refs[0]);
@@ -381,7 +380,7 @@ public class Features extends Library {
      * @param w     Width of interest.
      * @return Result of calculated coefficients.
      */
-    public static Array cwtCoefficients(Array arr, Array arrW, int coeff, int w) {
+    public static Array cwtCoefficients(Array arr, Array arrW, int coeff, int w) throws Exception {
         long[] refs = cwtCoefficients(arr.getReference(), arrW.getReference(), coeff, w);
         arr.setReference(refs[0]);
         arrW.setReference(refs[1]);
@@ -398,7 +397,7 @@ public class Features extends Library {
      * @param segmentFocus The segment number (starting at zero) to return a feature on.
      * @return The energy ratio by chunk of the time series.
      */
-    public static Array energyRatioByChunks(Array arr, long numSegments, long segmentFocus) {
+    public static Array energyRatioByChunks(Array arr, long numSegments, long segmentFocus) throws Exception {
         long[] refs = energyRatioByChunks(arr.getReference(), numSegments, segmentFocus);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -412,7 +411,7 @@ public class Features extends Library {
      * @return The spectral centroid (mean), variance, skew, and kurtosis of the absolute fourier transform
      * spectrum.
      */
-    public static Array fftAggregated(Array arr) {
+    public static Array fftAggregated(Array arr) throws Exception {
         long[] refs = fftAggregated(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -431,7 +430,7 @@ public class Features extends Library {
      * abs         The absolute value of the coefficient.
      * angle       The angle of the coefficient.
      */
-    public static Array[] fftCoefficient(Array arr, long coefficient) {
+    public static Array[] fftCoefficient(Array arr, long coefficient) throws Exception {
         long[] refs = fftCoefficient(arr.getReference(), coefficient);
         arr.setReference(refs[0]);
         return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
@@ -444,7 +443,7 @@ public class Features extends Library {
      * @return The first relative location of the maximum value to the length of the times series,
      * for each time series.
      */
-    public static Array firstLocationOfMaximum(Array arr) {
+    public static Array firstLocationOfMaximum(Array arr) throws Exception {
         long[] refs = firstLocationOfMaximum(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -457,7 +456,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The first relative location of the minimal value of each series.
      */
-    public static Array firstLocationOfMinimum(Array arr) {
+    public static Array firstLocationOfMinimum(Array arr) throws Exception {
         long[] refs = firstLocationOfMinimum(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -479,7 +478,7 @@ public class Features extends Library {
      * @param r   Number of quantils to use for averaging.
      * @return Array containing the coefficients for each time series.
      */
-    public static Array friedrichCoefficients(Array arr, int m, float r) {
+    public static Array friedrichCoefficients(Array arr, int m, float r) throws Exception {
         long[] refs = friedrichCoefficients(arr.getReference(), m, r);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -492,7 +491,7 @@ public class Features extends Library {
      * @return Array containing True if the time series contains duplicated elements
      * and false otherwise.
      */
-    public static Array hasDuplicates(Array arr) {
+    public static Array hasDuplicates(Array arr) throws Exception {
         long[] refs = hasDuplicates(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -504,7 +503,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Calculates if the maximum within input time series is duplicated.
      */
-    public static Array hasDuplicateMax(Array arr) {
+    public static Array hasDuplicateMax(Array arr) throws Exception {
 
         long[] refs = hasDuplicateMax(arr.getReference());
         arr.setReference(refs[0]);
@@ -517,7 +516,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Array containing True if the minimum of the time series is duplicated and False otherwise.
      */
-    public static Array hasDuplicateMin(Array arr) {
+    public static Array hasDuplicateMin(Array arr) throws Exception {
 
         long[] refs = hasDuplicateMin(arr.getReference());
         arr.setReference(refs[0]);
@@ -531,7 +530,7 @@ public class Features extends Library {
      * @param q   The quantile.
      * @return The index of the mass quantile q.
      */
-    public static Array indexMassQuantile(Array arr, float q) {
+    public static Array indexMassQuantile(Array arr, float q) throws Exception {
         long[] refs = indexMassQuantile(arr.getReference(), q);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -543,7 +542,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The kurtosis of each arr.
      */
-    public static Array kurtosis(Array arr) {
+    public static Array kurtosis(Array arr) throws Exception {
 
         long[] refs = kurtosis(arr.getReference());
         arr.setReference(refs[0]);
@@ -557,7 +556,7 @@ public class Features extends Library {
      * @param r   The threshold.
      * @return Array containing True for those time series in arr that have a large standard deviation.
      */
-    public static Array largeStandardDeviation(Array arr, float r) {
+    public static Array largeStandardDeviation(Array arr, float r) throws Exception {
 
         long[] refs = largeStandardDeviation(arr.getReference(), r);
         arr.setReference(refs[0]);
@@ -571,7 +570,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The last relative location of the maximum value of each series.
      */
-    public static Array lastLocationOfMaximum(Array arr) {
+    public static Array lastLocationOfMaximum(Array arr) throws Exception {
 
         long[] refs = lastLocationOfMaximum(arr.getReference());
         arr.setReference(refs[0]);
@@ -585,7 +584,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The last relative location of the minimum value of each series.
      */
-    public static Array lastLocationOfMinimum(Array arr) {
+    public static Array lastLocationOfMinimum(Array arr) throws Exception {
         long[] refs = lastLocationOfMinimum(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -597,7 +596,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The length of arr.
      */
-    public static Array length(Array arr) {
+    public static Array length(Array arr) throws Exception {
         long[] refs = length(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -615,7 +614,7 @@ public class Features extends Library {
      * slope     The slope for all time series.
      * stdrr     The stdrr values for all time series.
      */
-    public static Array[] linearTrend(Array arr) {
+    public static Array[] linearTrend(Array arr) throws Exception {
         long[] refs = linearTrend(arr.getReference());
         arr.setReference(refs[0]);
         return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
@@ -627,7 +626,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The calculated local maximals for each time series in array.
      */
-    public static Array localMaximals(Array arr) {
+    public static Array localMaximals(Array arr) throws Exception {
         long[] refs = localMaximals(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -640,7 +639,7 @@ public class Features extends Library {
      * @return The length of the longest consecutive subsequence in the input time series that is bigger than the
      * mean.
      */
-    public static Array longestStrikeAboveMean(Array arr) {
+    public static Array longestStrikeAboveMean(Array arr) throws Exception {
         long[] refs = longestStrikeAboveMean(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -652,7 +651,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The length of the longest consecutive subsequence in the input time series that is below the mean.
      */
-    public static Array longestStrikeBelowMean(Array arr) {
+    public static Array longestStrikeBelowMean(Array arr) throws Exception {
         long[] refs = longestStrikeBelowMean(arr.getReference());
         arr.setReference(refs[0]);
 
@@ -673,7 +672,7 @@ public class Features extends Library {
      * @param r   Number of quantiles to use for averaging.
      * @return Largest fixed point of deterministic dynamics.
      */
-    public static Array maxLangevinFixedPoint(Array arr, int m, float r) {
+    public static Array maxLangevinFixedPoint(Array arr, int m, float r) throws Exception {
         long[] refs = maxLangevinFixedPoint(arr.getReference(), m, r);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -685,7 +684,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The maximum value of each time series within arr.
      */
-    public static Array maximum(Array arr) {
+    public static Array maximum(Array arr) throws Exception {
 
         long[] refs = maximum(arr.getReference());
         arr.setReference(refs[0]);
@@ -698,7 +697,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The mean value of each time series within arr.
      */
-    public static Array mean(Array arr) {
+    public static Array mean(Array arr) throws Exception {
 
         long[] refs = mean(arr.getReference());
         arr.setReference(refs[0]);
@@ -711,7 +710,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The mean over the absolute differences between subsequent time series values.
      */
-    public static Array meanAbsoluteChange(Array arr) {
+    public static Array meanAbsoluteChange(Array arr) throws Exception {
         long[] refs = meanAbsoluteChange(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -723,7 +722,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The mean over the differences between subsequent time series values.
      */
-    public static Array meanChange(Array arr) {
+    public static Array meanChange(Array arr) throws Exception {
         long[] refs = meanChange(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -735,7 +734,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The mean value of a central approximation of the second derivative for each time series.
      */
-    public static Array meanSecondDerivativeCentral(Array arr) {
+    public static Array meanSecondDerivativeCentral(Array arr) throws Exception {
         long[] refs = meanSecondDerivativeCentral(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -747,7 +746,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The median value of each time series within arr.
      */
-    public static Array median(Array arr) {
+    public static Array median(Array arr) throws Exception {
         long[] refs = median(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -759,7 +758,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The minimum value of each time series within arr.
      */
-    public static Array minimum(Array arr) {
+    public static Array minimum(Array arr) throws Exception {
         long[] refs = minimum(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -774,7 +773,7 @@ public class Features extends Library {
      * @param m   The m value.
      * @return The number of m-crossings of each time series within arr.
      */
-    public static Array numberCrossingM(Array arr, int m) {
+    public static Array numberCrossingM(Array arr, int m) throws Exception {
         long[] refs = numberCrossingM(arr.getReference(), m);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -789,7 +788,7 @@ public class Features extends Library {
      * @param maxW The maximum width to consider.
      * @return The number of peaks for each time series.
      */
-    public static Array numberCwtPeaks(Array arr, int maxW) {
+    public static Array numberCwtPeaks(Array arr, int maxW) throws Exception {
         long[] refs = numberCwtPeaks(arr.getReference(), maxW);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -804,7 +803,7 @@ public class Features extends Library {
      * @param n   The support of the peak.
      * @return The number of peaks of at least support \(n\).
      */
-    public static Array numberPeaks(Array arr, int n) {
+    public static Array numberPeaks(Array arr, int n) throws Exception {
         long[] refs = numberPeaks(arr.getReference(), n);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -835,7 +834,7 @@ public class Features extends Library {
      * @param arrLags Array containing the lags to be calculated.
      * @return Returns the partial autocorrelation for each time series for the given lags.
      */
-    public static Array partialAutocorrelation(Array arr, Array arrLags) {
+    public static Array partialAutocorrelation(Array arr, Array arrLags) throws Exception {
         long[] refs = partialAutocorrelation(arr.getReference(), arrLags.getReference());
         arr.setReference(refs[0]);
         arrLags.setReference(refs[1]);
@@ -854,7 +853,7 @@ public class Features extends Library {
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Returns the percentage of unique values, that are present in the time series more than once.
      */
-    public static Array percentageOfReoccurringDatapointsToAllDatapoints(Array arr, boolean isSorted) {
+    public static Array percentageOfReoccurringDatapointsToAllDatapoints(Array arr, boolean isSorted) throws Exception {
         long[] refs = percentageOfReoccurringDatapointsToAllDatapoints(arr.getReference(), isSorted);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -872,7 +871,7 @@ public class Features extends Library {
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Returns the percentage of unique values, that are present in the time series more than once.
      */
-    public static Array percentageOfReoccurringValuesToAllValues(Array arr, boolean isSorted) {
+    public static Array percentageOfReoccurringValuesToAllValues(Array arr, boolean isSorted) throws Exception {
         long[] refs = percentageOfReoccurringValuesToAllValues(arr.getReference(), isSorted);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -885,7 +884,7 @@ public class Features extends Library {
      * @param arrQ Percentile(s) at which to extract score(s). One or many.
      * @return Values at the given quantile.
      */
-    public static Array quantile(Array arr, Array arrQ) {
+    public static Array quantile(Array arr, Array arrQ) throws Exception {
         return quantile(arr, arrQ, (float) 1e8);
     }
 
@@ -897,7 +896,7 @@ public class Features extends Library {
      * @param precision Number of decimals expected.
      * @return Values at the given quantile.
      */
-    public static Array quantile(Array arr, Array arrQ, float precision) {
+    public static Array quantile(Array arr, Array arrQ, float precision) throws Exception {
         long[] refs = quantile(arr.getReference(), arrQ.getReference(), precision);
         arr.setReference(refs[0]);
         arrQ.setReference(refs[1]);
@@ -912,7 +911,7 @@ public class Features extends Library {
      * @param max Value that sets the upper limit.
      * @return Values at the given range.
      */
-    public static Array rangeCount(Array arr, float min, float max) {
+    public static Array rangeCount(Array arr, float min, float max) throws Exception {
         long[] refs = rangeCount(arr.getReference(), min, max);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -927,7 +926,7 @@ public class Features extends Library {
      * @return The ratio of values that are more than \(r*std(x)\) (so \(r\) sigma) away from the mean of
      * \(x\).
      */
-    public static Array ratioBeyondRSigma(Array arr, float r) {
+    public static Array ratioBeyondRSigma(Array arr, float r) throws Exception {
         long[] refs = ratioBeyondRSigma(arr.getReference(), r);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -944,7 +943,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The ratio of unique values with respect to the total number of values.
      */
-    public static Array ratioValueNumberToTimeSeriesLength(Array arr) {
+    public static Array ratioValueNumberToTimeSeriesLength(Array arr) throws Exception {
         long[] refs = ratioValueNumberToTimeSeriesLength(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -963,7 +962,7 @@ public class Features extends Library {
      * @return An array with the same dimensions as arr, whose values (time series in dimension 0)
      * contains the vectorized sample entropy for all the input time series in arr.
      */
-    public static Array sampleEntropy(Array arr) {
+    public static Array sampleEntropy(Array arr) throws Exception {
         long[] refs = sampleEntropy(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -976,7 +975,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Array containing the skewness of each time series in arr.
      */
-    public static Array skewness(Array arr) {
+    public static Array skewness(Array arr) throws Exception {
         long[] refs = skewness(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -998,7 +997,7 @@ public class Features extends Library {
      * @param coeff The coefficient to be returned.
      * @return Array containing the power spectrum of the different frequencies for each time series in array.
      */
-    public static Array spktWelchDensity(Array arr, int coeff) {
+    public static Array spktWelchDensity(Array arr, int coeff) throws Exception {
         long[] refs = spktWelchDensity(arr.getReference(), coeff);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1010,7 +1009,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The standard deviation of each time series within arr.
      */
-    public static Array standardDeviation(Array arr) {
+    public static Array standardDeviation(Array arr) throws Exception {
         long[] refs = standardDeviation(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1022,7 +1021,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Returns the sum of all data points, that are present in the time series more than once.
      */
-    public static Array sumOfReoccurringDatapoints(Array arr) {
+    public static Array sumOfReoccurringDatapoints(Array arr) throws Exception {
         return sumOfReoccurringDatapoints(arr, false);
     }
 
@@ -1033,7 +1032,7 @@ public class Features extends Library {
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Returns the sum of all data points, that are present in the time series more than once.
      */
-    public static Array sumOfReoccurringDatapoints(Array arr, boolean isSorted) {
+    public static Array sumOfReoccurringDatapoints(Array arr, boolean isSorted) throws Exception {
         long[] refs = sumOfReoccurringDatapoints(arr.getReference(), isSorted);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1045,7 +1044,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Array containing the the sum of all values, that are present in the time series more than once.
      */
-    public static Array sumOfReoccurringValues(Array arr) {
+    public static Array sumOfReoccurringValues(Array arr) throws Exception {
         long[] refs = sumOfReoccurringValues(arr.getReference(), false);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1058,7 +1057,7 @@ public class Features extends Library {
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Array containing the the sum of all values, that are present in the time series more than once.
      */
-    public static Array sumOfReoccurringValues(Array arr, boolean isSorted) {
+    public static Array sumOfReoccurringValues(Array arr, boolean isSorted) throws Exception {
         long[] refs = sumOfReoccurringValues(arr.getReference(), isSorted);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1070,7 +1069,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Srray containing the sum of values in each time series.
      */
-    public static Array sumValues(Array arr) {
+    public static Array sumValues(Array arr) throws Exception {
         long[] refs = sumValues(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1086,7 +1085,7 @@ public class Features extends Library {
      * @param r   The percentage of the range to compare with.
      * @return An array denoting if the input time series look symmetric.
      */
-    public static Array symmetryLooking(Array arr, float r) {
+    public static Array symmetryLooking(Array arr, float r) throws Exception {
         long[] refs = symmetryLooking(arr.getReference(), r);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1111,7 +1110,7 @@ public class Features extends Library {
      * @param lag The lag to be computed.
      * @return An array containing the time reversal asymetry statistic value in each time series.
      */
-    public static Array timeReversalAsymmetryStatistic(Array arr, int lag) {
+    public static Array timeReversalAsymmetryStatistic(Array arr, int lag) throws Exception {
         long[] refs = timeReversalAsymmetryStatistic(arr.getReference(), lag);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1124,7 +1123,7 @@ public class Features extends Library {
      * @param v   The value to be counted.
      * @return An array containing the count of the given value in each time series.
      */
-    public static Array valueCount(Array arr, float v) {
+    public static Array valueCount(Array arr, float v) throws Exception {
         long[] refs = valueCount(arr.getReference(), v);
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1136,7 +1135,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return An array containing the variance in each time series.
      */
-    public static Array variance(Array arr) {
+    public static Array variance(Array arr) throws Exception {
         long[] refs = variance(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
@@ -1149,7 +1148,7 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return An array denoting if the variance of array is greater than the standard deviation.
      */
-    public static Array varianceLargerThanStandardDeviation(Array arr) {
+    public static Array varianceLargerThanStandardDeviation(Array arr) throws Exception {
         long[] refs = varianceLargerThanStandardDeviation(arr.getReference());
         arr.setReference(refs[0]);
         return new Array(refs[1]);
