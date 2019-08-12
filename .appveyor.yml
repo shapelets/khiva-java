@@ -46,6 +46,7 @@ before_build:
           }
     - cmake --build . --config Release -- /m
     - cmake --build . --config Release --target INSTALL
+
     - cd C:\khiva-java
     - start /wait choco install maven
     - pip install codecov
