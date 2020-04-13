@@ -31,6 +31,7 @@ if [[ "$INSTALL_KHIVA_METHOD" == "installer" ]]; then
 
 else
     cmake --version
+    ls -lah /opt/python/
     python --version
     pip install --upgrade pip
     #Installing conan and dependencies

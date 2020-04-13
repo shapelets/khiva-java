@@ -5,13 +5,14 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 language: java
-
+env:
+  global:
+    - PATH=/opt/python/3.7.6/bin:$PATH
 matrix:
   include:
     - os: linux
       dist: bionic
       jdk: openjdk8
-      python: "3.6"
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
