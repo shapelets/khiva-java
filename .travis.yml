@@ -40,6 +40,9 @@ matrix:
           - ${TRAVIS_BUILD_DIR}/cmake
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
+      before_install:
+        - pyenv install 3.6.4
+        - pyenv local 3.6.4
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -61,6 +64,9 @@ matrix:
           - ${TRAVIS_BUILD_DIR}/cmake
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
+      before_install:
+        - pyenv install 3.6.4
+        - pyenv local 3.6.4
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
