@@ -144,13 +144,11 @@ public class StatisticsTest {
     public void testQuantileCut2() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         long[] dims = {6, 2, 1, 1};
-        try (
-                Array arrayOfTimeSeries = new Array(timeSeries, dims);
-                Array b = Statistics.quantilesCut(arrayOfTimeSeries, 2)
-        ) {
+        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+             Array b = Statistics.quantilesCut(arrayOfTimeSeries, 2)) {
             float[] result = b.getData();
-            float[] expected = {-1.0E-8f, -1.0E-8f, -1.0E-8f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 5.0f, 5.0f, 5.0f, 6.0f,
-                    6.0f, 6.0f, 8.5f, 8.5f, 8.5f, 8.5f, 8.5f, 8.5f, 11.0f, 11.0f, 11.0f};
+            float[] expected = {-1.0E-8f, -1.0E-8f, -1.0E-8f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 5.0f, 5.0f, 5.0f,
+                                6.0f, 6.0f, 6.0f, 8.5f, 8.5f, 8.5f, 8.5f, 8.5f, 8.5f, 11.0f, 11.0f, 11.0f};
             Assert.assertEquals(expected.length, result.length, DELTA);
             for (int i = 0; i < result.length; i++) {
                 Assert.assertEquals(expected[i], result[i], 1e-2);

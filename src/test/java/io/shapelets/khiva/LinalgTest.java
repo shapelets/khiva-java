@@ -20,7 +20,8 @@ public class LinalgTest {
     public static void setUp() {
         try {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -31,11 +32,7 @@ public class LinalgTest {
         long[] dims = {2, 2, 1, 1};
         double[] b = {3, 1};
         long[] dimsB = {2, 1, 1, 1};
-        try (
-                Array a = new Array(tss, dims);
-                Array c = new Array(b, dimsB);
-                Array d = Linalg.lls(a, c)
-        ) {
+        try (Array a = new Array(tss, dims); Array c = new Array(b, dimsB); Array d = Linalg.lls(a, c)) {
             double[] result = d.getData();
             Assert.assertEquals(result[0], 1, DELTA);
             Assert.assertEquals(result[1], 1, DELTA);

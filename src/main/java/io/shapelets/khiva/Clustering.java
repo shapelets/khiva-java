@@ -33,8 +33,7 @@ public class Clustering extends Library {
     public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) throws Exception {
         long[] refs = kMeans(tss.getReference(), k, tolerance, maxIterations);
         tss.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2])};
-        return result;
+        return new Array[]{new Array(refs[1]), new Array(refs[2])};
     }
 
     /**
@@ -52,7 +51,6 @@ public class Clustering extends Library {
     public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) throws Exception {
         long[] refs = kShape(tss.getReference(), k, tolerance, maxIterations);
         tss.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2])};
-        return result;
+        return new Array[]{new Array(refs[1]), new Array(refs[2])};
     }
 }

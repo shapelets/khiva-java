@@ -62,7 +62,8 @@ public class Distances extends Library {
      * @param tss Expects an input array whose dimension zero is the length of the time series (all the same) and
      *            dimension one indicates the number of time series.
      * @return Array with an upper triangular matrix where each position corresponds to the
-     * distance between two time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the
+     * distance between two time series. Diagonal elements will be zero. For example: Position row 0 column 1 records
+     * the
      * distance between time series 0 and time series 1.
      */
     public static Array hamming(Array tss) throws Exception {
@@ -78,7 +79,8 @@ public class Distances extends Library {
      * @param tss Expects an input array whose dimension zero is the length of the time series (all the same) and
      *            dimension one indicates the number of time series.
      * @return Array with an upper triangular matrix where each position corresponds to the distance between two
-     * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance between time
+     * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance between
+     * time
      * series 0 and time series 1.
      */
     public static Array sbd(Array tss) throws Exception {
@@ -93,7 +95,8 @@ public class Distances extends Library {
      * @param tss Expects an input array whose dimension zero is the length of the time series (all the same) and
      *            dimension one indicates the number of time series.
      * @return Array with an upper triangular matrix where each position corresponds to the distance between two
-     * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance between time
+     * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance between
+     * time
      * series 0 and time series 1.
      */
     public static Array manhattan(Array tss) throws Exception {

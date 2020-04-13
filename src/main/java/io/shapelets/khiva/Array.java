@@ -71,10 +71,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(double[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long dim : arrayDims) totalSize *= dim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -89,10 +89,10 @@ public class Array extends Library implements AutoCloseable {
 
 
     public Array(float[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long dim : arrayDims) totalSize *= dim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -106,10 +106,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(int[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long dim : arrayDims) totalSize *= dim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -123,11 +123,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(FloatComplex[] arr, long[] dims) throws Exception {
-
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long arrayDim : arrayDims) totalSize *= arrayDim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -141,10 +140,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(DoubleComplex[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long arrayDim : arrayDims) totalSize *= arrayDim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -158,10 +157,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(boolean[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long arrayDim : arrayDims) totalSize *= arrayDim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -175,10 +174,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(short[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long arrayDim : arrayDims) totalSize *= arrayDim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -192,10 +191,10 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(byte[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long arrayDim : arrayDims) totalSize *= arrayDim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -210,10 +209,10 @@ public class Array extends Library implements AutoCloseable {
 
 
     public Array(long[] arr, long[] dims) throws Exception {
-        long[] adims = Array.dim4(dims);
+        long[] arrayDims = Array.dim4(dims);
 
         int totalSize = 1;
-        for (int i = 0; i < adims.length; i++) totalSize *= adims[i];
+        for (long arrayDim : arrayDims) totalSize *= arrayDim;
 
         if (arr == null) {
             throw new Exception("Null elems object provided");
@@ -372,15 +371,16 @@ public class Array extends Library implements AutoCloseable {
 
         if (dims == null) {
             throw new Exception("Null dimensions object provided");
-        } else if (dims.length > 4) {
+        }
+        else if (dims.length > 4) {
             throw new Exception("ArrayFire supports up to 4 dimensions only");
         }
 
-        long[] adims;
-        adims = new long[]{1, 1, 1, 1};
-        for (int i = 0; i < dims.length; i++) adims[i] = dims[i];
+        long[] arrayDims;
+        arrayDims = new long[]{1, 1, 1, 1};
+        System.arraycopy(dims, 0, arrayDims, 0, dims.length);
 
-        return adims;
+        return arrayDims;
     }
 
     /**
@@ -391,8 +391,6 @@ public class Array extends Library implements AutoCloseable {
      */
     public <Any> Any getData() throws Exception {
         switch (getType()) {
-            case f32:
-                return (Any) getFloatFromArray();
             case c32:
                 return (Any) getFloatComplexFromArray();
             case f64:
@@ -402,17 +400,14 @@ public class Array extends Library implements AutoCloseable {
             case b8:
                 return (Any) getBooleanFromArray();
             case s32:
-                return (Any) getIntFromArray();
             case u32:
                 return (Any) getIntFromArray();
             case u8:
                 return (Any) getByteFromArray();
             case s64:
-                return (Any) getLongFromArray();
             case u64:
                 return (Any) getLongFromArray();
             case s16:
-                return (Any) getShortFromArray();
             case u16:
                 return (Any) getShortFromArray();
             default:

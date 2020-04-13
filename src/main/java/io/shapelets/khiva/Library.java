@@ -15,17 +15,8 @@ package io.shapelets.khiva;
  */
 public class Library {
 
-    private static String OS;
-
     static {
-        OS = System.getProperty("os.name").toLowerCase();
-        if (OS.indexOf("mac") >= 0) {
-            System.load("/usr/local/lib/libkhiva_jni.dylib");
-        } else if (OS.indexOf("win") >= 0) {
-            System.load("C:\\Program Files\\Khiva\\v0\\lib\\khiva_jni.dll");
-        } else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0) {
-            System.load("/usr/local/lib/libkhiva_jni.so");
-        }
+        System.loadLibrary("khiva_jni");
     }
 
     /**
@@ -72,8 +63,6 @@ public class Library {
          */
         public static Backend getBackendFromOrdinal(int ordinal) {
             switch (ordinal) {
-                case 0:
-                    return Backend.KHIVA_BACKEND_DEFAULT;
                 case 1:
                     return Backend.KHIVA_BACKEND_CPU;
                 case 2:

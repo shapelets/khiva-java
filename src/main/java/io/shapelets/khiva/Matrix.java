@@ -22,9 +22,11 @@ public class Matrix extends Library {
 
     private native static long[] stompSelfJoin(long a, long m) throws Exception;
 
-    private native static long[] findBestNMotifs(long profile, long index, long m, long n, boolean selfJoin) throws Exception;
+    private native static long[] findBestNMotifs(long profile, long index, long m, long n, boolean selfJoin)
+        throws Exception;
 
-    private native static long[] findBestNDiscords(long profile, long index, long m, long n, boolean selfJoin) throws Exception;
+    private native static long[] findBestNDiscords(long profile, long index, long m, long n, boolean selfJoin)
+        throws Exception;
 
     /**
      * Mueen's Algorithm for Similarity Search.
@@ -34,16 +36,20 @@ public class Matrix extends Library {
      * - 2nd dimension corresponds to the number of queries.
      * - 3rd dimension corresponds to the number of time series.
      * <p>
-     * For example, the distance in the position (1, 2, 3) correspond to the distance of the third query to the fourth time
+     * For example, the distance in the position (1, 2, 3) correspond to the distance of the third query to the
+     * fourth time
      * series for the second subsequence in the time series.
      * <p>
-     * [1] Chin-Chia Michael Yeh, Yan Zhu, Liudmila Ulanova, Nurjahan Begum, Yifei Ding, Hoang Anh Dau, Diego Furtado Silva,
-     * Abdullah Mueen, Eamonn Keogh (2016). Matrix Profile I: All Pairs Similarity Joins for Time Series: A Unifying View
+     * [1] Chin-Chia Michael Yeh, Yan Zhu, Liudmila Ulanova, Nurjahan Begum, Yifei Ding, Hoang Anh Dau, Diego Furtado
+     * Silva,
+     * Abdullah Mueen, Eamonn Keogh (2016). Matrix Profile I: All Pairs Similarity Joins for Time Series: A Unifying
+     * View
      * that Includes Motifs, Discords and Shapelets. IEEE ICDM 2016.
      *
      * @param query Array whose first dimension is the length of the query time series and the second dimension is the
      *              number of queries.
-     * @param tss   Array whose first dimension is the length of the time series and the second dimension is the number of
+     * @param tss   Array whose first dimension is the length of the time series and the second dimension is the
+     *              number of
      *              time series.
      * @return Array with the distances.
      */
@@ -62,13 +68,15 @@ public class Matrix extends Library {
      * - 2nd dimension corresponds to the number of queries.
      * - 3rd dimension corresponds to the number of time series.
      * <p>
-     * For example, the distance in the position (1, 2, 3) corresponds to the second best distance of the third query in the
+     * For example, the distance in the position (1, 2, 3) corresponds to the second best distance of the third query
+     * in the
      * fourth time series. The index in the position (1, 2, 3) is the is the index of the subsequence which leads to the
      * second best distance of the third query in the fourth time series.
      *
      * @param query Array whose first dimension is the length of the query time series and the second dimension is the
      *              number of queries.
-     * @param tss   Array whose first dimension is the length of the time series and the second dimension is the number of
+     * @param tss   Array whose first dimension is the length of the time series and the second dimension is the
+     *              number of
      *              time series.
      * @param n     Number of matches to return.
      * @return Array or arrays with the distances and indexes.
@@ -77,8 +85,7 @@ public class Matrix extends Library {
         long[] refs = findBestNOccurrences(query.getReference(), tss.getReference(), n);
         query.setReference(refs[0]);
         tss.setReference(refs[1]);
-        Array[] result = {new Array(refs[2]), new Array(refs[3])};
-        return result;
+        return new Array[]{new Array(refs[2]), new Array(refs[3])};
     }
 
     /**
@@ -98,8 +105,7 @@ public class Matrix extends Library {
         long[] refs = stomp(arrA.getReference(), arrB.getReference(), m);
         arrA.setReference(refs[0]);
         arrB.setReference(refs[1]);
-        Array[] result = {new Array(refs[2]), new Array(refs[3])};
-        return result;
+        return new Array[]{new Array(refs[2]), new Array(refs[3])};
     }
 
     /**
@@ -117,8 +123,7 @@ public class Matrix extends Library {
     public static Array[] stompSelfJoin(Array arr, long m) throws Exception {
         long[] refs = stompSelfJoin(arr.getReference(), m);
         arr.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2])};
-        return result;
+        return new Array[]{new Array(refs[1]), new Array(refs[2])};
     }
 
     /**
@@ -132,12 +137,12 @@ public class Matrix extends Library {
      *                 whether the mirror similar region is included in the output or not.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
      */
-    public static Array[] findBestNMotifs(Array profile, Array index, long m, long n, boolean selfJoin) throws Exception {
+    public static Array[] findBestNMotifs(Array profile, Array index, long m, long n, boolean selfJoin)
+        throws Exception {
         long[] refs = findBestNMotifs(profile.getReference(), index.getReference(), m, n, selfJoin);
         profile.setReference(refs[0]);
         index.setReference(refs[1]);
-        Array[] result = {new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
-        return result;
+        return new Array[]{new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
     }
 
     /**
@@ -164,12 +169,12 @@ public class Matrix extends Library {
      *                 whether the mirror similar region is included in the output or not.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
      */
-    public static Array[] findBestNDiscords(Array profile, Array index, long m, long n, boolean selfJoin) throws Exception {
+    public static Array[] findBestNDiscords(Array profile, Array index, long m, long n, boolean selfJoin)
+        throws Exception {
         long[] refs = findBestNDiscords(profile.getReference(), index.getReference(), m, n, selfJoin);
         profile.setReference(refs[0]);
         index.setReference(refs[1]);
-        Array[] result = {new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
-        return result;
+        return new Array[]{new Array(refs[2]), new Array(refs[3]), new Array(refs[4])};
     }
 
     /**

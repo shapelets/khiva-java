@@ -8,13 +8,15 @@ image:
     - Visual Studio 2017
 environment:
     GENERATOR: "Visual Studio 15 Win64"
-    BOOST_PATH: C:\Libraries\boost_1_67_0
+    BOOST_PATH: C:\Libraries\boost_1_69_0
     AF_PATH: C:\Program Files\ArrayFire\v3
     KHIVA_PATH: C:\Program Files\Khiva\v0
-    PATH: $(AF_PATH)\lib;$(KHIVA_PATH)\lib;C:\Python36-x64;C:\Python36-x64\Scripts;$(PATH)
+    PATH: $(AF_PATH)\lib;$(KHIVA_PATH)\lib;$(PATH)
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk9
+          PATH: $(JAVA_HOME)\bin;$(PATH)
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+          PATH: $(JAVA_HOME)\bin;$(PATH)
 matrix:
     fast_finish: true
 cache:
@@ -28,22 +30,18 @@ clone_folder: C:\khiva-java
 platform:
     - x64
 before_build:
-    - SET PATH=%JAVA_HOME%\bin;%PATH%
-    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "https://www.dropbox.com/s/13wnbd1qynjmw0i/ArrayFire-v3.6.2.zip?dl=1" -FileName ArrayFire-v3.6.2.zip }
-    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ 7z x ArrayFire-v3.6.2.zip -o"C:\Program Files" }
-    - reg add HKCU\Software\Kitware\CMake\Packages\ArrayFire /v ArrayFire_CMake_DIR /d "C:\Program Files\ArrayFire\v3\cmake" /f
-    - vcpkg install --triplet x64-windows gtest eigen3
+    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
+    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
+    - ps: vcpkg install --triplet x64-windows gtest eigen3
     - ps: if ($env:INSTALL_KHIVA_METHOD -eq "installer"){
-            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-unattended.exe" -FileName khiva-v0.1.0-unattended.exe };
-            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S };
+            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.5.0/khiva-v0.5.0-unattended.exe" -FileName khiva-v0.5.0-unattended.exe };
+            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.5.0-unattended.exe /S };
           }else{
-            git clone -q https://github.com/shapelets/khiva.git C:\khiva-library;
-
+            git clone --recurse-submodules --depth 1 -q https://github.com/shapelets/khiva.git C:\khiva-library;
             cd C:\khiva-library;
-            git submodule -q update --init;
             mkdir build;
             cd build;
-            cmake .. -DCMAKE_TOOLCHAIN_FILE=C:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$($env:BOOST_PATH)" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON -G"$env:GENERATOR";
+            cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON;
           }
     - cmake --build . --config Release -- /m
     - cmake --build . --config Release --target INSTALL
@@ -58,6 +56,7 @@ build_script:
 test_script:
     - mvn test
 on_finish:
+    - #    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     - codecov -F Windows -f target/site/jacoco/jacoco.xml
     - ps: |
         $files = Get-ChildItem -Path .\target\surefire-reports -File -Filter *.xml

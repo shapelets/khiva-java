@@ -20,7 +20,8 @@ public class MatrixTest {
     public static void setUp() {
         try {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -37,7 +38,8 @@ public class MatrixTest {
 
             return data[(int) offset];
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -54,7 +56,8 @@ public class MatrixTest {
             offset += dim0;
 
             return data[(int) offset];
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -68,13 +71,10 @@ public class MatrixTest {
         double[] query = {4, 3, 8};
         long[] dimsQuery = {3, 1, 1, 1};
 
-        try (
-                Array t = new Array(tss, dimsTss);
-                Array q = new Array(query, dimsQuery)
-        ) {
+        try (Array t = new Array(tss, dimsTss); Array q = new Array(query, dimsQuery)) {
 
-            double[] expectedDistance = {1.732051, 0.328954, 1.210135, 3.150851, 3.245858, 2.822044,
-                    0.328954, 1.210135, 3.150851, 0.248097, 3.30187, 2.82205};
+            double[] expectedDistance = {1.732051, 0.328954, 1.210135, 3.150851, 3.245858, 2.822044, 0.328954, 1.210135,
+                                         3.150851, 0.248097, 3.30187, 2.82205};
             Array result = Matrix.mass(q, t);
             double[] distances = result.getData();
 
@@ -93,13 +93,10 @@ public class MatrixTest {
         double[] query = {10, 10, 11, 11, 10, 11, 10, 10};
         long[] dimsQuery = {4, 2, 1, 1};
 
-        try (
-                Array t = new Array(tss, dimsTss);
-                Array q = new Array(query, dimsQuery)
-        ) {
+        try (Array t = new Array(tss, dimsTss); Array q = new Array(query, dimsQuery)) {
 
-            double[] expectedDistance = {1.8388, 0.8739, 1.5307, 3.6955, 3.2660, 3.4897, 2.8284, 1.2116, 1.5307,
-                    2.1758, 2.5783, 3.7550, 2.8284, 2.8284, 3.2159, 0.5020};
+            double[] expectedDistance = {1.8388, 0.8739, 1.5307, 3.6955, 3.2660, 3.4897, 2.8284, 1.2116, 1.5307, 2.1758,
+                                         2.5783, 3.7550, 2.8284, 2.8284, 3.2159, 0.5020};
             Array result = Matrix.mass(q, t);
             double[] distances = result.getData();
 
@@ -112,17 +109,14 @@ public class MatrixTest {
 
     @Test
     public void testFindBestNOccurrences() throws Exception {
-        double[] tss = {10, 10, 11, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 11, 10, 10, 11,
-                11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 11};
+        double[] tss = {10, 10, 11, 11, 12, 11, 10, 10, 11, 12, 11, 10, 10, 11, 10, 10, 11, 11, 12, 11, 10, 10, 11, 12,
+                        11, 10, 10, 11};
         long[] dimsTss = {28, 1, 1, 1};
 
         double[] query = {10, 11, 12};
         long[] dimsQuery = {3, 1, 1, 1};
 
-        try (
-                Array t = new Array(tss, dimsTss);
-                Array q = new Array(query, dimsQuery)
-        ) {
+        try (Array t = new Array(tss, dimsTss); Array q = new Array(query, dimsQuery)) {
             Array[] result = Matrix.findBestNOccurrences(q, t, 1);
             double[] distances = result[0].getData();
             int[] indexes = result[1].getData();
@@ -138,17 +132,14 @@ public class MatrixTest {
 
     @Test
     public void testFindBestNOccurrencesMultipleQueries() throws Exception {
-        double[] tss = {10, 10, 11, 11, 10, 11, 10, 10, 11, 11, 10, 11, 10, 10,
-                11, 10, 10, 11, 10, 11, 11, 10, 11, 11, 14, 10, 11, 10};
+        double[] tss = {10, 10, 11, 11, 10, 11, 10, 10, 11, 11, 10, 11, 10, 10, 11, 10, 10, 11, 10, 11, 11, 10, 11, 11,
+                        14, 10, 11, 10};
         long[] dimsTss = {14, 2, 1, 1};
 
         double[] query = {11, 11, 10, 11, 10, 11, 11, 12};
         long[] dimsQuery = {4, 2, 1, 1};
 
-        try (
-                Array t = new Array(tss, dimsTss);
-                Array q = new Array(query, dimsQuery)
-        ) {
+        try (Array t = new Array(tss, dimsTss); Array q = new Array(query, dimsQuery)) {
             Array[] result = Matrix.findBestNOccurrences(q, t, 4);
 
             double distance = getSingleValueDouble(result[0], 2, 0, 1, 0);
@@ -188,10 +179,7 @@ public class MatrixTest {
 
         long[] dims = {8, 1, 1, 1};
 
-        try (
-                Array a = new Array(tss, dims);
-                Array b = new Array(tss, dims)
-        ) {
+        try (Array a = new Array(tss, dims); Array b = new Array(tss, dims)) {
 
             double[] expectedIndex = {0, 1, 2, 3, 4, 5};
             Array[] stompResult = Matrix.stomp(a, b, 3);
@@ -208,15 +196,11 @@ public class MatrixTest {
 
     @Test
     public void testFindBestNMotifs() throws Exception {
-        float[][] tss = {{10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9},
-                {10, 11, 10, 9}};
+        float[][] tss = {{10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9}, {10, 11, 10, 9}};
         long[] dims = {15, 1, 1, 1};
         long[] dimsB = {4, 1, 1, 1};
 
-        try (
-                Array a = new Array(tss[0], dims);
-                Array b = new Array(tss[1], dimsB)
-        ) {
+        try (Array a = new Array(tss[0], dims); Array b = new Array(tss[1], dimsB)) {
 
             Array[] stompResult = Matrix.stomp(a, b, 3);
             Array[] findMotifs = Matrix.findBestNMotifs(stompResult[0], stompResult[1], 3, 1);
@@ -237,7 +221,8 @@ public class MatrixTest {
 
     @Test
     public void testFindBestNMotifsMultipleProfiles() throws Exception {
-        float[] dataA = {10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9, 10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9};
+        float[] dataA = {10, 10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 11, 10, 9, 10, 10, 10, 10, 10, 10, 9, 10, 10,
+                         10, 10, 10, 11, 10, 9};
         float[] dataB = {10, 11, 10, 9, 10, 11, 10, 9};
         long[] dims = {15, 2, 1, 1};
         long[] dimsB = {4, 2, 1, 1};
@@ -341,9 +326,9 @@ public class MatrixTest {
     @Test
     public void testFindBestNDiscordsMultipleProfiles() throws Exception {
         float[] dataA = {11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 1, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11,
-                10, 1};
+                         10, 1};
         float[] dataB = {9, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9, 9, 10.1f,
-                10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9};
+                         10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 10.2f, 10.1f, 9};
 
         long[] dims = {13, 2, 1, 1};
         try (Array a = new Array(dataA, dims); Array b = new Array(dataB, dims)) {
@@ -402,7 +387,8 @@ public class MatrixTest {
             String os = System.getenv("TRAVIS");
             if (os == null || !os.equals("true")) {
                 Assert.assertNotEquals(subsequenceIndex[1], 11, DELTA);
-            } else {
+            }
+            else {
                 Assert.assertEquals(subsequenceIndex[1], 11, DELTA);
             }
             stompResult[0].close();

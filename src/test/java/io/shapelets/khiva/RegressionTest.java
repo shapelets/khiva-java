@@ -22,17 +22,18 @@ public class RegressionTest {
     public static void setUp() {
         try {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
     public void testLinear() throws Exception {
-        float[] timeSeriesXss = {0.24580423f, 0.59642861f, 0.35879163f, 0.37891011f, 0.02445137f,
-                0.23830957f, 0.38793433f, 0.68054104f, 0.83934083f, 0.76073689f};
-        float[] timeSeriesYss = {0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f,
-                0.51146167f, 0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f};
+        float[] timeSeriesXss = {0.24580423f, 0.59642861f, 0.35879163f, 0.37891011f, 0.02445137f, 0.23830957f,
+                                 0.38793433f, 0.68054104f, 0.83934083f, 0.76073689f};
+        float[] timeSeriesYss = {0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f, 0.51146167f,
+                                 0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f};
         long[] dims = {10, 1, 1, 1};
         try (Array xss = new Array(timeSeriesXss, dims); Array yss = new Array(timeSeriesYss, dims)) {
             Array[] result = Regression.linear(xss, yss);
@@ -59,12 +60,14 @@ public class RegressionTest {
 
     @Test
     public void testLinearMultipleTimeSeries() throws Exception {
-        float[] timeSeriesXss = {0.24580423f, 0.59642861f, 0.35879163f, 0.37891011f, 0.02445137f,
-                0.23830957f, 0.38793433f, 0.68054104f, 0.83934083f, 0.76073689f, 0.24580423f, 0.59642861f, 0.35879163f, 0.37891011f, 0.02445137f,
-                0.23830957f, 0.38793433f, 0.68054104f, 0.83934083f, 0.76073689f};
-        float[] timeSeriesYss = {0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f,
-                0.51146167f, 0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f, 0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f,
-                0.51146167f, 0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f};
+        float[] timeSeriesXss = {0.24580423f, 0.59642861f, 0.35879163f, 0.37891011f, 0.02445137f, 0.23830957f,
+                                 0.38793433f, 0.68054104f, 0.83934083f, 0.76073689f, 0.24580423f, 0.59642861f,
+                                 0.35879163f, 0.37891011f, 0.02445137f, 0.23830957f, 0.38793433f, 0.68054104f,
+                                 0.83934083f, 0.76073689f};
+        float[] timeSeriesYss = {0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f, 0.51146167f,
+                                 0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f, 0.2217416f, 0.06344161f,
+                                 0.77944375f, 0.72174137f, 0.19413884f, 0.51146167f, 0.06880307f, 0.39414268f,
+                                 0.98172767f, 0.30490851f};
         long[] dims = {10, 2, 1, 1};
         try (Array xss = new Array(timeSeriesXss, dims); Array yss = new Array(timeSeriesYss, dims)) {
             Array[] result = Regression.linear(xss, yss);

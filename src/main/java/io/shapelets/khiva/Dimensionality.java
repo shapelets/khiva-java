@@ -30,12 +30,14 @@ public class Dimensionality extends Library {
 
     /**
      * Piecewise Aggregate Approximation (PAA) approximates a time series \(X\) of length \(n\) into vector
-     * \(\bar{X}=(\bar{x}_{1},{@literal ...},\bar{x}_{M})\) of any arbitrary length \(M \leq n\) where each of \(\bar{x_{i}}\) is
+     * \(\bar{X}=(\bar{x}_{1},{@literal ...},\bar{x}_{M})\) of any arbitrary length \(M \leq n\) where each of \(\bar
+     * {x_{i}}\) is
      * calculated as follows:
      * \[
      * \bar{x}_{i} = \frac{M}{n} \sum_{j=n/M(i-1)+1}^{(n/M)i} x_{j}.
      * \]
-     * Which simply means that in order to reduce the dimensionality from \f$n\f$ to \f$M\f$, we first divide the original
+     * Which simply means that in order to reduce the dimensionality from \f$n\f$ to \f$M\f$, we first divide the
+     * original
      * time series into \f$M\f$ equally sized frames and secondly compute the mean values for each frame. The sequence
      * assembled from the mean values is the PAA approximation (i.e., transform) of the original time series.
      *
@@ -71,7 +73,8 @@ public class Dimensionality extends Library {
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
      * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
-     * @param ts       Expects a khiva array containing the set of points to be reduced. The first component of the points in
+     * @param ts       Expects a khiva array containing the set of points to be reduced. The first component of the
+     *                 points in
      *                 the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
@@ -88,7 +91,8 @@ public class Dimensionality extends Library {
      * [1] Zhu Y, Wu D, Li Sh (2007). A Piecewise Linear Representation Method of Time Series Based on Feature Points.
      * Knowledge-Based Intelligent Information and Engineering Systems 4693:1066-1072.
      *
-     * @param ts       Expects a khiva array containing the set of points to be reduced. The first component of the points in
+     * @param ts       Expects a khiva array containing the set of points to be reduced. The first component of the
+     *                 points in
      *                 the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
@@ -107,7 +111,8 @@ public class Dimensionality extends Library {
      * [1] Urs Ramer, "An iterative procedure for the polygonal approximation of plane curves", Computer Graphics and
      * Image Processing, 1(3), 244-256 (1972) doi:10.1016/S0146-664X(72)80017-0.
      * <p>
-     * [2] David Douglas {@literal &} Thomas Peucker, "Algorithms for the reduction of the number of points required to represent a
+     * [2] David Douglas {@literal &} Thomas Peucker, "Algorithms for the reduction of the number of points required
+     * to represent a
      * digitized line or its caricature", The Canadian Cartographer 10(2), 112-122 (1973)
      * doi:10.3138/FM57-6770-U75U-7727
      *
@@ -125,14 +130,18 @@ public class Dimensionality extends Library {
 
     /**
      * Symbolic Aggregate approXimation (SAX). It transforms a numeric time series into a time series of symbols with
-     * the same size. The algorithm was proposed by Lin et al.) and extends the PAA-based approach inheriting the original
+     * the same size. The algorithm was proposed by Lin et al.) and extends the PAA-based approach inheriting the
+     * original
      * algorithm simplicity and low computational complexity while providing satisfactory sensitivity and selectivity in
      * range query processing. Moreover, the use of a symbolic representation opened a door to the existing wealth of
-     * data-structures and string-manipulation algorithms in computer science such as hashing, regular expression, pattern
+     * data-structures and string-manipulation algorithms in computer science such as hashing, regular expression,
+     * pattern
      * matching, suffix trees, and grammatical inference.
      * <p>
-     * [1] Lin, J., Keogh, E., Lonardi, S. {@literal &} Chiu, B. (2003) A Symbolic Representation of Time Series, with Implications for
-     * Streaming Algorithms. In proceedings of the 8th ACM SIGMOD Workshop on Research Issues in Data Mining and Knowledge
+     * [1] Lin, J., Keogh, E., Lonardi, S. {@literal &} Chiu, B. (2003) A Symbolic Representation of Time Series,
+     * with Implications for
+     * Streaming Algorithms. In proceedings of the 8th ACM SIGMOD Workshop on Research Issues in Data Mining and
+     * Knowledge
      * Discovery. San Diego, CA. June 13.
      *
      * @param arr          Array with the input time series.

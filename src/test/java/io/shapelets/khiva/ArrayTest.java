@@ -20,7 +20,8 @@ public class ArrayTest {
     public static void setUp() {
         try {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -31,7 +32,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -42,7 +44,9 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+            Assert.fail("testDoubleMismatchingDims should throw");
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -53,7 +57,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -64,7 +69,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -75,7 +81,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -86,7 +93,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -97,7 +105,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -108,7 +117,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -119,7 +129,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -130,7 +141,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -141,7 +153,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -152,7 +165,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -163,7 +177,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -174,7 +189,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -185,7 +201,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -196,7 +213,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -207,7 +225,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null elems object provided");
         }
     }
@@ -218,7 +237,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1};
         try {
             new Array(tss, dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Mismatching dims and array size");
         }
     }
@@ -283,7 +303,8 @@ public class ArrayTest {
         long[] dims = null;
         try {
             Array.dim4(dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "Null dimensions object provided");
         }
     }
@@ -293,7 +314,8 @@ public class ArrayTest {
         long[] dims = {1, 1, 1, 1, 1};
         try {
             Array.dim4(dims);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assert.assertEquals(e.getMessage(), "ArrayFire supports up to 4 dimensions only");
         }
     }
@@ -354,128 +376,128 @@ public class ArrayTest {
 
     @Test
     public void testFloatComplex1D() throws Exception {
-        FloatComplex[] tss = {new FloatComplex(1, 5), new FloatComplex(2, 6),
-                new FloatComplex(3, 7), new FloatComplex(4, 8)};
+        FloatComplex[] tss = {new FloatComplex(1, 5), new FloatComplex(2, 6), new FloatComplex(3, 7),
+                              new FloatComplex(4, 8)};
         long[] dims = {4, 1, 1, 1};
         try (Array a = new Array(tss, dims)) {
             FloatComplex[] result = a.getData();
-            FloatComplex[] expected = {new FloatComplex(1, 5), new FloatComplex(2, 6),
-                    new FloatComplex(3, 7), new FloatComplex(4, 8)};
+            FloatComplex[] expected = {new FloatComplex(1, 5), new FloatComplex(2, 6), new FloatComplex(3, 7),
+                                       new FloatComplex(4, 8)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testFloatComplex2D() throws Exception {
-        FloatComplex[] tss = {new FloatComplex(1, 5), new FloatComplex(2, 6),
-                new FloatComplex(3, 7), new FloatComplex(4, 8), new FloatComplex(9, 13),
-                new FloatComplex(10, 14), new FloatComplex(11, 15), new FloatComplex(12, 16)};
+        FloatComplex[] tss = {new FloatComplex(1, 5), new FloatComplex(2, 6), new FloatComplex(3, 7),
+                              new FloatComplex(4, 8), new FloatComplex(9, 13), new FloatComplex(10, 14),
+                              new FloatComplex(11, 15), new FloatComplex(12, 16)};
         long[] dims = {4, 2, 1, 1};
         try (Array a = new Array(tss, dims)) {
             FloatComplex[] result = a.getData();
-            FloatComplex[] expected = {new FloatComplex(1, 5), new FloatComplex(2, 6),
-                    new FloatComplex(3, 7), new FloatComplex(4, 8), new FloatComplex(9, 13),
-                    new FloatComplex(10, 14), new FloatComplex(11, 15), new FloatComplex(12, 16)};
+            FloatComplex[] expected = {new FloatComplex(1, 5), new FloatComplex(2, 6), new FloatComplex(3, 7),
+                                       new FloatComplex(4, 8), new FloatComplex(9, 13), new FloatComplex(10, 14),
+                                       new FloatComplex(11, 15), new FloatComplex(12, 16)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testFloatComplex3D() throws Exception {
-        FloatComplex[] tss = {new FloatComplex(1, 1), new FloatComplex(2, 2),
-                new FloatComplex(3, 3), new FloatComplex(4, 4), new FloatComplex(5, 5),
-                new FloatComplex(6, 6), new FloatComplex(7, 7), new FloatComplex(8, 8)};
+        FloatComplex[] tss = {new FloatComplex(1, 1), new FloatComplex(2, 2), new FloatComplex(3, 3),
+                              new FloatComplex(4, 4), new FloatComplex(5, 5), new FloatComplex(6, 6),
+                              new FloatComplex(7, 7), new FloatComplex(8, 8)};
         long[] dims = {2, 2, 2, 1};
         try (Array a = new Array(tss, dims)) {
             FloatComplex[] result = a.getData();
-            FloatComplex[] expected = {new FloatComplex(1, 1), new FloatComplex(2, 2),
-                    new FloatComplex(3, 3), new FloatComplex(4, 4), new FloatComplex(5, 5),
-                    new FloatComplex(6, 6), new FloatComplex(7, 7), new FloatComplex(8, 8)};
+            FloatComplex[] expected = {new FloatComplex(1, 1), new FloatComplex(2, 2), new FloatComplex(3, 3),
+                                       new FloatComplex(4, 4), new FloatComplex(5, 5), new FloatComplex(6, 6),
+                                       new FloatComplex(7, 7), new FloatComplex(8, 8)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testFloatComplex4D() throws Exception {
-        FloatComplex[] tss = {new FloatComplex(1, 1), new FloatComplex(2, 2),
-                new FloatComplex(3, 3), new FloatComplex(4, 4), new FloatComplex(5, 5),
-                new FloatComplex(6, 6), new FloatComplex(7, 7), new FloatComplex(8, 8),
-                new FloatComplex(9, 9), new FloatComplex(10, 10), new FloatComplex(11, 11),
-                new FloatComplex(12, 12), new FloatComplex(13, 13), new FloatComplex(14, 14),
-                new FloatComplex(15, 15), new FloatComplex(16, 16)};
+        FloatComplex[] tss = {new FloatComplex(1, 1), new FloatComplex(2, 2), new FloatComplex(3, 3),
+                              new FloatComplex(4, 4), new FloatComplex(5, 5), new FloatComplex(6, 6),
+                              new FloatComplex(7, 7), new FloatComplex(8, 8), new FloatComplex(9, 9),
+                              new FloatComplex(10, 10), new FloatComplex(11, 11), new FloatComplex(12, 12),
+                              new FloatComplex(13, 13), new FloatComplex(14, 14), new FloatComplex(15, 15),
+                              new FloatComplex(16, 16)};
         long[] dims = {2, 2, 2, 2};
         try (Array a = new Array(tss, dims)) {
             FloatComplex[] result = a.getData();
-            FloatComplex[] expected = {new FloatComplex(1, 1), new FloatComplex(2, 2),
-                    new FloatComplex(3, 3), new FloatComplex(4, 4), new FloatComplex(5, 5),
-                    new FloatComplex(6, 6), new FloatComplex(7, 7), new FloatComplex(8, 8),
-                    new FloatComplex(9, 9), new FloatComplex(10, 10), new FloatComplex(11, 11),
-                    new FloatComplex(12, 12), new FloatComplex(13, 13), new FloatComplex(14, 14),
-                    new FloatComplex(15, 15), new FloatComplex(16, 16)};
+            FloatComplex[] expected = {new FloatComplex(1, 1), new FloatComplex(2, 2), new FloatComplex(3, 3),
+                                       new FloatComplex(4, 4), new FloatComplex(5, 5), new FloatComplex(6, 6),
+                                       new FloatComplex(7, 7), new FloatComplex(8, 8), new FloatComplex(9, 9),
+                                       new FloatComplex(10, 10), new FloatComplex(11, 11), new FloatComplex(12, 12),
+                                       new FloatComplex(13, 13), new FloatComplex(14, 14), new FloatComplex(15, 15),
+                                       new FloatComplex(16, 16)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testDoubleComplex1D() throws Exception {
-        DoubleComplex[] tss = {new DoubleComplex(1, 5), new DoubleComplex(2, 6),
-                new DoubleComplex(3, 7), new DoubleComplex(4, 8)};
+        DoubleComplex[] tss = {new DoubleComplex(1, 5), new DoubleComplex(2, 6), new DoubleComplex(3, 7),
+                               new DoubleComplex(4, 8)};
         long[] dims = {4, 1, 1, 1};
         try (Array a = new Array(tss, dims)) {
             DoubleComplex[] result = a.getData();
-            DoubleComplex[] expected = {new DoubleComplex(1, 5), new DoubleComplex(2, 6),
-                    new DoubleComplex(3, 7), new DoubleComplex(4, 8)};
+            DoubleComplex[] expected = {new DoubleComplex(1, 5), new DoubleComplex(2, 6), new DoubleComplex(3, 7),
+                                        new DoubleComplex(4, 8)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testDoubleComplex2D() throws Exception {
-        DoubleComplex[] tss = {new DoubleComplex(1, 5), new DoubleComplex(2, 6),
-                new DoubleComplex(3, 7), new DoubleComplex(4, 8), new DoubleComplex(9, 13),
-                new DoubleComplex(10, 14), new DoubleComplex(11, 15), new DoubleComplex(12, 16)};
+        DoubleComplex[] tss = {new DoubleComplex(1, 5), new DoubleComplex(2, 6), new DoubleComplex(3, 7),
+                               new DoubleComplex(4, 8), new DoubleComplex(9, 13), new DoubleComplex(10, 14),
+                               new DoubleComplex(11, 15), new DoubleComplex(12, 16)};
         long[] dims = {4, 2, 1, 1};
         try (Array a = new Array(tss, dims)) {
             DoubleComplex[] result = a.getData();
-            DoubleComplex[] expected = {new DoubleComplex(1, 5), new DoubleComplex(2, 6),
-                    new DoubleComplex(3, 7), new DoubleComplex(4, 8), new DoubleComplex(9, 13),
-                    new DoubleComplex(10, 14), new DoubleComplex(11, 15), new DoubleComplex(12, 16)};
+            DoubleComplex[] expected = {new DoubleComplex(1, 5), new DoubleComplex(2, 6), new DoubleComplex(3, 7),
+                                        new DoubleComplex(4, 8), new DoubleComplex(9, 13), new DoubleComplex(10, 14),
+                                        new DoubleComplex(11, 15), new DoubleComplex(12, 16)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testDoubleComplex3D() throws Exception {
-        DoubleComplex[] tss = {new DoubleComplex(1, 1), new DoubleComplex(2, 2),
-                new DoubleComplex(3, 3), new DoubleComplex(4, 4), new DoubleComplex(5, 5),
-                new DoubleComplex(6, 6), new DoubleComplex(7, 7), new DoubleComplex(8, 8)};
+        DoubleComplex[] tss = {new DoubleComplex(1, 1), new DoubleComplex(2, 2), new DoubleComplex(3, 3),
+                               new DoubleComplex(4, 4), new DoubleComplex(5, 5), new DoubleComplex(6, 6),
+                               new DoubleComplex(7, 7), new DoubleComplex(8, 8)};
         long[] dims = {2, 2, 2, 1};
         try (Array a = new Array(tss, dims)) {
             DoubleComplex[] result = a.getData();
-            DoubleComplex[] expected = {new DoubleComplex(1, 1), new DoubleComplex(2, 2),
-                    new DoubleComplex(3, 3), new DoubleComplex(4, 4), new DoubleComplex(5, 5),
-                    new DoubleComplex(6, 6), new DoubleComplex(7, 7), new DoubleComplex(8, 8)};
+            DoubleComplex[] expected = {new DoubleComplex(1, 1), new DoubleComplex(2, 2), new DoubleComplex(3, 3),
+                                        new DoubleComplex(4, 4), new DoubleComplex(5, 5), new DoubleComplex(6, 6),
+                                        new DoubleComplex(7, 7), new DoubleComplex(8, 8)};
             Assert.assertArrayEquals(result, expected);
         }
     }
 
     @Test
     public void testDoubleComplex4D() throws Exception {
-        DoubleComplex[] tss = {new DoubleComplex(1, 1), new DoubleComplex(2, 2),
-                new DoubleComplex(3, 3), new DoubleComplex(4, 4), new DoubleComplex(5, 5),
-                new DoubleComplex(6, 6), new DoubleComplex(7, 7), new DoubleComplex(8, 8),
-                new DoubleComplex(9, 9), new DoubleComplex(10, 10), new DoubleComplex(11, 11),
-                new DoubleComplex(12, 12), new DoubleComplex(13, 13), new DoubleComplex(14, 14),
-                new DoubleComplex(15, 15), new DoubleComplex(16, 16)};
+        DoubleComplex[] tss = {new DoubleComplex(1, 1), new DoubleComplex(2, 2), new DoubleComplex(3, 3),
+                               new DoubleComplex(4, 4), new DoubleComplex(5, 5), new DoubleComplex(6, 6),
+                               new DoubleComplex(7, 7), new DoubleComplex(8, 8), new DoubleComplex(9, 9),
+                               new DoubleComplex(10, 10), new DoubleComplex(11, 11), new DoubleComplex(12, 12),
+                               new DoubleComplex(13, 13), new DoubleComplex(14, 14), new DoubleComplex(15, 15),
+                               new DoubleComplex(16, 16)};
         long[] dims = {2, 2, 2, 2};
         try (Array a = new Array(tss, dims)) {
             DoubleComplex[] result = a.getData();
-            DoubleComplex[] expected = {new DoubleComplex(1, 1), new DoubleComplex(2, 2),
-                    new DoubleComplex(3, 3), new DoubleComplex(4, 4), new DoubleComplex(5, 5),
-                    new DoubleComplex(6, 6), new DoubleComplex(7, 7), new DoubleComplex(8, 8),
-                    new DoubleComplex(9, 9), new DoubleComplex(10, 10), new DoubleComplex(11, 11),
-                    new DoubleComplex(12, 12), new DoubleComplex(13, 13), new DoubleComplex(14, 14),
-                    new DoubleComplex(15, 15), new DoubleComplex(16, 16)};
+            DoubleComplex[] expected = {new DoubleComplex(1, 1), new DoubleComplex(2, 2), new DoubleComplex(3, 3),
+                                        new DoubleComplex(4, 4), new DoubleComplex(5, 5), new DoubleComplex(6, 6),
+                                        new DoubleComplex(7, 7), new DoubleComplex(8, 8), new DoubleComplex(9, 9),
+                                        new DoubleComplex(10, 10), new DoubleComplex(11, 11), new DoubleComplex(12, 12),
+                                        new DoubleComplex(13, 13), new DoubleComplex(14, 14), new DoubleComplex(15, 15),
+                                        new DoubleComplex(16, 16)};
             Assert.assertArrayEquals(result, expected);
         }
     }
@@ -518,9 +540,9 @@ public class ArrayTest {
         long[] dims = {5, 1, 1, 1};
         float[] data2 = {1f, 2f, 3f, 4f};
         long[] dims2 = {4, 1, 1, 1};
-        Array a = new Array(data, dims);
-        Array b = new Array(data2, dims2);
-        Array c = a.mul(b);
+        try (Array a = new Array(data, dims); Array b = new Array(data2, dims2)) {
+            a.mul(b);
+        }
     }
 
     @Test
@@ -723,14 +745,13 @@ public class ArrayTest {
 
     @Test
     public void testTransposeConjugate() throws Exception {
-        DoubleComplex[] data = {new DoubleComplex(0, -1), new DoubleComplex(2, 1),
-                new DoubleComplex(4, 2), new DoubleComplex(0, -2)};
+        DoubleComplex[] data = {new DoubleComplex(0, -1), new DoubleComplex(2, 1), new DoubleComplex(4, 2),
+                                new DoubleComplex(0, -2)};
         long[] dims = {2, 2, 1, 1};
         try (Array a = new Array(data, dims); Array b = a.transpose(true)) {
-
             DoubleComplex[] result = b.getData();
-            DoubleComplex[] expected = {new DoubleComplex(0, 1), new DoubleComplex(4, -2),
-                    new DoubleComplex(2, -1), new DoubleComplex(0, 2)};
+            DoubleComplex[] expected = {new DoubleComplex(0, 1), new DoubleComplex(4, -2), new DoubleComplex(2, -1),
+                                        new DoubleComplex(0, 2)};
             Assert.assertArrayEquals(result, expected);
         }
     }
@@ -751,7 +772,6 @@ public class ArrayTest {
         float[] data = {1f, 3f, 2f, 4f};
         long[] dims = {2, 2, 1, 1};
         try (Array a = new Array(data, dims); Array b = a.col(0)) {
-
             float[] result = b.getData();
             float[] expected = {1f, 3f};
             Assert.assertArrayEquals(result, expected, 1e-6f);

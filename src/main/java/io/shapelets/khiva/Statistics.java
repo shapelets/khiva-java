@@ -66,7 +66,8 @@ public class Statistics extends Library {
     }
 
     /**
-     * The Ljung-Box test checks that data whithin the time series are independently distributed (i.e. the correlations in
+     * The Ljung-Box test checks that data whithin the time series are independently distributed (i.e. the
+     * correlations in
      * the population from which the sample is taken are 0, so that any observed correlations in the data result from
      * randomness of the sampling process). Data are no independently distributed, if they exhibit serial correlation.
      * <p>
@@ -90,7 +91,8 @@ public class Statistics extends Library {
      * [1] G. M. Ljung  G. E. P. Box (1978). On a measure of lack of fit in time series models.
      * Biometrika, Volume 65, Issue 2, 1 August 1978, Pages 297-303.
      *
-     * @param tss  Expects an input array whose dimension zero is the length of the time series (all the same) and dimension
+     * @param tss  Expects an input array whose dimension zero is the length of the time series (all the same) and
+     *             dimension
      *             one indicates the number of time series.
      * @param lags Number of lags being tested.
      * @return The updated ref and the Ljung-Box statistic test.

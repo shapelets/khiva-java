@@ -22,7 +22,8 @@ public class Features extends Library {
 
     private native static long[] aggregatedAutocorrelation(long ref, int aggregationFunction) throws Exception;
 
-    private native static long[] aggregatedLinearTrend(long ref, long chunkSize, int aggregationFunction) throws Exception;
+    private native static long[] aggregatedLinearTrend(long ref, long chunkSize, int aggregationFunction)
+        throws Exception;
 
     private native static long[] approximateEntropy(long ref, int m, float r) throws Exception;
 
@@ -108,7 +109,8 @@ public class Features extends Library {
 
     private native static long[] partialAutocorrelation(long ref, long refLags) throws Exception;
 
-    private native static long[] percentageOfReoccurringDatapointsToAllDatapoints(long ref, boolean isSorted) throws Exception;
+    private native static long[] percentageOfReoccurringDatapointsToAllDatapoints(long ref, boolean isSorted)
+        throws Exception;
 
     private native static long[] percentageOfReoccurringValuesToAllValues(long ref, boolean isSorted) throws Exception;
 
@@ -215,14 +217,16 @@ public class Features extends Library {
     public static Array[] aggregatedLinearTrend(Array arr, long chunkSize, int aggregationFunction) throws Exception {
         long[] refs = aggregatedLinearTrend(arr.getReference(), chunkSize, aggregationFunction);
         arr.setReference(refs[0]);
-        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
+        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]),
+                           new Array(refs[5])};
 
     }
 
     /**
      * Calculates a vectorized Approximate entropy algorithm.
      * https://en.wikipedia.org/wiki/Approximate_entropy
-     * For short time-series this method is highly dependent on the parameters, but should be stable for N greater than 2000,
+     * For short time-series this method is highly dependent on the parameters, but should be stable for N greater
+     * than 2000,
      * see: Yentes et al. (2012) - The Appropriate Use of Approximate Entropy and Sample Entropy with Short Data Sets
      * Other shortcomings and alternatives discussed in:
      * Richman and Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy
@@ -277,8 +281,7 @@ public class Features extends Library {
      */
     public static Array crossCorrelation(Array arrXss, Array arrYss, Boolean unbiased) throws Exception {
 
-        long[] refs = crossCorrelation(arrXss.getReference(), arrYss.getReference(),
-                unbiased);
+        long[] refs = crossCorrelation(arrXss.getReference(), arrYss.getReference(), unbiased);
         arrXss.setReference(refs[0]);
         arrYss.setReference(refs[1]);
 
@@ -617,7 +620,8 @@ public class Features extends Library {
     public static Array[] linearTrend(Array arr) throws Exception {
         long[] refs = linearTrend(arr.getReference());
         arr.setReference(refs[0]);
-        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5])};
+        return new Array[]{new Array(refs[1]), new Array(refs[2]), new Array(refs[3]), new Array(refs[4]),
+                           new Array(refs[5])};
     }
 
     /**
@@ -956,7 +960,8 @@ public class Features extends Library {
      * For short time-series this method is highly dependent on the parameters, but should be stable for N &gt; 2000,
      * see: Yentes et al. (2012) - The Appropriate Use of Approximate Entropy and Sample Entropy with Short Data Sets
      * Other shortcomings and alternatives discussed in:
-     * Richman {@literal &} Moorman (2000) - Physiological time-series analysis using approximate entropy and sample entropy.
+     * Richman {@literal &} Moorman (2000) - Physiological time-series analysis using approximate entropy and sample
+     * entropy.
      *
      * @param arr Array containing the input time series.
      * @return An array with the same dimensions as arr, whose values (time series in dimension 0)

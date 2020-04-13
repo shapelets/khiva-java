@@ -36,7 +36,7 @@ public class Regression extends Library {
         long[] refs = linear(xss.getReference(), yss.getReference());
         xss.setReference(refs[0]);
         yss.setReference(refs[1]);
-        Array[] result = {new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5]), new Array(refs[6])};
-        return result;
+        return new Array[]{new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5]),
+                           new Array(refs[6])};
     }
 }
