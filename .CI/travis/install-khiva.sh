@@ -31,7 +31,9 @@ if [[ "$INSTALL_KHIVA_METHOD" == "installer" ]]; then
 
 else
     cmake --version
-    python3 --version    
+    pyenv versions
+    pyenv install --list
+    python --version
     #Installing conan and dependencies
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         pip install --upgrade pip
