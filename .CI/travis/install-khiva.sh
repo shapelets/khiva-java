@@ -31,14 +31,13 @@ if [[ "$INSTALL_KHIVA_METHOD" == "installer" ]]; then
 
 else
     cmake --version
-    ls -lah /opt/python/
     python --version
     pip install --upgrade pip
     #Installing conan and dependencies
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        pip install conan==1.22.2
+        pip install conan==1.24.0
     else
-        pip${PYTHON_VERSION} install conan==1.22.2
+        pip${PYTHON_VERSION} install conan==1.24.0
     fi
 
     conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
