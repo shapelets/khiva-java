@@ -13,6 +13,8 @@ matrix:
     - os: linux
       dist: bionic
       jdk: openjdk8
+      env:
+        - LD_LIBRARY_PATH=/opt/khiva/lib
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers

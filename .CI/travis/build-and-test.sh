@@ -5,10 +5,5 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  LD_LIBRARY_PATH=/opt/khiva/lib;
-  AF_DISABLE_GRAPHICS=1
-fi
-
 mvn javadoc:javadoc
 mvn test

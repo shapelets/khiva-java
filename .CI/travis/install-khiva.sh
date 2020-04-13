@@ -56,6 +56,7 @@ else
         conan profile update settings.compiler=apple-clang default
         conan profile update settings.compiler.version=9.1 default
         conan install .. --build missing
+        check-error "Error installing dependencies"
         cmake .. -DKHIVA_ONLY_CPU_BACKEND=ON -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_BENCHMARKS=OFF
         check-error "Error generating CMake configuration"
         make install -j8
@@ -64,6 +65,7 @@ else
         conan profile update settings.compiler.libcxx=libstdc++11 default
         conan profile update settings.compiler.version=7 default
         conan install .. --build missing
+        check-error "Error installing dependencies"
         cmake .. -DKHIVA_ENABLE_COVERAGE=ON -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DCMAKE_INSTALL_PREFIX=/opt/khiva
         check-error "Error generating CMake configuration"
         sudo make install -j8
