@@ -31,7 +31,15 @@ if [[ "$INSTALL_KHIVA_METHOD" == "installer" ]]; then
 
 else
     cmake --version
+    pyenv which python3
+    pyenv which python
+    pyenv versions
+    pyenv shell
+    pyenv global 3.6.4
+    pyenv versions
+    pyenv shell
     python --version
+    python3.6 --version
     # Installing conan and dependencies
     pip install --upgrade pip
     pip install conan==1.24.0
