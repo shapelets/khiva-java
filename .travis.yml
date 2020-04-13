@@ -32,8 +32,6 @@ matrix:
     - os: osx
       osx_image: xcode9.3
       jdk: oraclejdk8
-      env:
-        - TRAVIS_PYTHON_VERSION=3.6.5
       cache:
         directories:
           - ${TRAVIS_BUILD_DIR}/installers
@@ -42,6 +40,9 @@ matrix:
           - ${TRAVIS_BUILD_DIR}/cmake
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
+      addons:
+        homebrew:
+          packages: python3.6
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -54,15 +55,17 @@ matrix:
       osx_image: xcode9.3
       env:
         - JDK='Oracle JDK 9'
-        - TRAVIS_PYTHON_VERSION=3.6.5
+      addons:
+        homebrew:
+          packages: python3.6
       cache:
-       directories:
-         - ${TRAVIS_BUILD_DIR}/installers
-         - ${HOME}/.m2
-         - ${HOME}/.conan
-         - ${TRAVIS_BUILD_DIR}/cmake
-         - ${HOME}/Library/Caches/Homebrew
-         - ${HOME}/.pyenv
+        directories:
+          - ${TRAVIS_BUILD_DIR}/installers
+          - ${HOME}/.m2
+          - ${HOME}/.conan
+          - ${TRAVIS_BUILD_DIR}/cmake
+          - ${HOME}/Library/Caches/Homebrew
+          - ${HOME}/.pyenv
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh

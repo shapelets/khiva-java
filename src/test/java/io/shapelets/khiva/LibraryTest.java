@@ -101,26 +101,7 @@ public class LibraryTest {
 
     @Test
     public void testGetKhivaVersion() throws Exception {
-        Assert.assertEquals(Library.getKhivaVersion(), getKhivaVersionFromFile());
-    }
-
-    private String getKhivaVersionFromFile() throws IOException {
-        final String filePath;
-
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            filePath = "C:/Program Files/Khiva/v0/include/khiva/version.h";
-        }
-        else {
-            filePath = "/usr/local/include/khiva/version.h";
-        }
-
-        final String data = new String(Files.readAllBytes(Paths.get(filePath)));
-
-        final Matcher m = Pattern.compile("([0-9]+\\.[0-9]+\\.[0-9]+)").matcher(data);
-        if (m.find()) {
-            return m.group(1);
-        }
-
-        return "";
+        Assert.assertNotNull(Library.getKhivaVersion());
+        Assert.assertFalse(Library.getKhivaVersion().isEmpty());
     }
 }
