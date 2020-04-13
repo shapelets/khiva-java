@@ -17,13 +17,8 @@ public class LinalgTest {
     private static final double DELTA = 1e-6;
 
     @BeforeClass
-    public static void setUp() {
-        try {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void setUp() throws Exception {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test

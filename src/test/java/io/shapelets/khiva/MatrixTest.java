@@ -9,46 +9,35 @@
 
 package io.shapelets.khiva;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class MatrixTest {
     private static final double DELTA = 1e-6;
 
     @BeforeClass
-    public static void setUp() {
-        try {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void setUp() throws Exception {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
-    private double getSingleValueDouble(Array arr, long dim0, long dim1, long dim2, long dim3) {
-        try {
-            double[] data = arr.getData();
-            long[] dims4 = arr.getDims();
-            long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
+    private double getSingleValueDouble(Array arr, long dim0, long dim1, long dim2, long dim3) throws Exception {
+        double[] data = arr.getData();
+        long[] dims4 = arr.getDims();
+        long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
 
-            offset += (dims4[0] * dims4[1]) * dim2;
-            offset += dims4[0] * dim1;
-            offset += dim0;
+        offset += (dims4[0] * dims4[1]) * dim2;
+        offset += dims4[0] * dim1;
+        offset += dim0;
 
-            return data[(int) offset];
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return data[(int) offset];
     }
 
-    private int getSingleValueInt(Array arr, long dim0, long dim1, long dim2, long dim3) {
-        try {
+    private int getSingleValueInt(Array arr, long dim0, long dim1, long dim2, long dim3) throws Exception {
             int[] data = arr.getData();
-
             long[] dims4 = arr.getDims();
             long offset = (dims4[0] * dims4[1] * dims4[2]) * dim3;
             offset += (dims4[0] * dims4[1]) * dim2;
@@ -56,11 +45,6 @@ public class MatrixTest {
             offset += dim0;
 
             return data[(int) offset];
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
     @Test
@@ -78,7 +62,7 @@ public class MatrixTest {
             Array result = Matrix.mass(q, t);
             double[] distances = result.getData();
 
-            Assert.assertArrayEquals(expectedDistance, distances, 1e-3);
+            assertArrayEquals(expectedDistance, distances, 1e-3);
 
             result.close();
         }
@@ -100,8 +84,7 @@ public class MatrixTest {
             Array result = Matrix.mass(q, t);
             double[] distances = result.getData();
 
-            Assert.assertArrayEquals(expectedDistance, distances, 1e-3);
-
+            assertArrayEquals(expectedDistance, distances, 1e-3);
             result.close();
         }
 
@@ -121,8 +104,8 @@ public class MatrixTest {
             double[] distances = result[0].getData();
             int[] indexes = result[1].getData();
 
-            Assert.assertEquals(distances[0], 0, DELTA);
-            Assert.assertEquals(indexes[0], 7);
+            assertEquals(distances[0], 0, DELTA);
+            assertEquals(indexes[0], 7);
 
             result[0].close();
             result[1].close();
@@ -143,10 +126,10 @@ public class MatrixTest {
             Array[] result = Matrix.findBestNOccurrences(q, t, 4);
 
             double distance = getSingleValueDouble(result[0], 2, 0, 1, 0);
-            Assert.assertEquals(distance, 1.83880, 1e-3);
+            assertEquals(distance, 1.83880, 1e-3);
 
             int index = getSingleValueInt(result[1], 3, 1, 0, 0);
-            Assert.assertEquals(index, 2);
+            assertEquals(index, 2);
 
             result[0].close();
             result[1].close();
@@ -165,8 +148,8 @@ public class MatrixTest {
             int[] index = stompSelfJoinResult[1].getData();
 
             for (int i = 0; i < expectedIndex.length; i++) {
-                Assert.assertEquals(matrix[i], 0, DELTA);
-                Assert.assertEquals(index[i], expectedIndex[i], DELTA);
+                assertEquals(matrix[i], 0, DELTA);
+                assertEquals(index[i], expectedIndex[i], DELTA);
             }
             stompSelfJoinResult[0].close();
             stompSelfJoinResult[1].close();
@@ -186,8 +169,8 @@ public class MatrixTest {
             double[] matrix = stompResult[0].getData();
             int[] index = stompResult[1].getData();
             for (int i = 0; i < expectedIndex.length; i++) {
-                Assert.assertEquals(matrix[i], 0, DELTA);
-                Assert.assertEquals(index[i], expectedIndex[i], DELTA);
+                assertEquals(matrix[i], 0, DELTA);
+                assertEquals(index[i], expectedIndex[i], DELTA);
             }
             stompResult[0].close();
             stompResult[1].close();
@@ -208,8 +191,8 @@ public class MatrixTest {
             int[] index = findMotifs[1].getData();
             int[] subsequenceIndex = findMotifs[2].getData();
 
-            Assert.assertEquals(index[0], 12, DELTA);
-            Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
+            assertEquals(index[0], 12, DELTA);
+            assertEquals(subsequenceIndex[0], 1, DELTA);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -238,8 +221,8 @@ public class MatrixTest {
             int[] expectedIndex = {12, 12, 12, 12};
             int[] expectedSubsequenceIndex = {1, 1, 1, 1};
 
-            Assert.assertArrayEquals(index, expectedIndex);
-            Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+            assertArrayEquals(index, expectedIndex);
+            assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -265,8 +248,8 @@ public class MatrixTest {
             int[] expectedIndex = {0, 0};
             int[] expectedSubsequenceIndex = {5, 3};
 
-            Assert.assertArrayEquals(index, expectedIndex);
-            Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+            assertArrayEquals(index, expectedIndex);
+            assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -289,8 +272,8 @@ public class MatrixTest {
             int[] index = findMotifs[1].getData();
             int[] subsequenceIndex = findMotifs[2].getData();
 
-            Assert.assertEquals(index[1], 6, DELTA);
-            Assert.assertEquals(subsequenceIndex[1], 3, DELTA);
+            assertEquals(index[1], 6, DELTA);
+            assertEquals(subsequenceIndex[1], 3, DELTA);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -312,8 +295,8 @@ public class MatrixTest {
             Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2);
             int[] subsequenceIndex = findDiscords[2].getData();
 
-            Assert.assertEquals(subsequenceIndex[0], 0, DELTA);
-            Assert.assertEquals(subsequenceIndex[1], 10, DELTA);
+            assertEquals(subsequenceIndex[0], 0, DELTA);
+            assertEquals(subsequenceIndex[1], 10, DELTA);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -339,7 +322,7 @@ public class MatrixTest {
 
             int[] expectedSubsequenceIndex = {0, 10, 0, 10, 0, 10, 0, 10};
 
-            Assert.assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
+            assertArrayEquals(subsequenceIndex, expectedSubsequenceIndex);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -361,8 +344,8 @@ public class MatrixTest {
             int[] index = findDiscords[1].getData();
             int[] subsequenceIndex = findDiscords[2].getData();
 
-            Assert.assertEquals(index[0], 3, DELTA);
-            Assert.assertEquals(subsequenceIndex[0], 1, DELTA);
+            assertEquals(index[0], 3, DELTA);
+            assertEquals(subsequenceIndex[0], 1, DELTA);
 
             stompResult[0].close();
             stompResult[1].close();
@@ -383,13 +366,13 @@ public class MatrixTest {
             Array[] findDiscords = Matrix.findBestNDiscords(stompResult[0], stompResult[1], 3, 2, true);
             int[] subsequenceIndex = findDiscords[2].getData();
 
-            Assert.assertEquals(subsequenceIndex[0], 12, DELTA);
+            assertEquals(subsequenceIndex[0], 12, DELTA);
             String os = System.getenv("TRAVIS");
             if (os == null || !os.equals("true")) {
-                Assert.assertNotEquals(subsequenceIndex[1], 11, DELTA);
+                assertNotEquals(subsequenceIndex[1], 11, DELTA);
             }
             else {
-                Assert.assertEquals(subsequenceIndex[1], 11, DELTA);
+                assertEquals(subsequenceIndex[1], 11, DELTA);
             }
             stompResult[0].close();
             stompResult[1].close();

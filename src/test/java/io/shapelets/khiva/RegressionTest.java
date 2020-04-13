@@ -9,23 +9,18 @@
 
 package io.shapelets.khiva;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class RegressionTest {
 
     private static final double DELTA = 1e-6;
 
-
     @BeforeClass
-    public static void setUp() {
-        try {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void setUp() throws Exception {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test
@@ -43,18 +38,17 @@ public class RegressionTest {
             float[] pvalue = result[3].getData();
             float[] stderrest = result[4].getData();
 
-            Assert.assertEquals(slope[0], 0.344864266, DELTA);
-            Assert.assertEquals(intercept[0], 0.268578232, DELTA);
-            Assert.assertEquals(rvalue[0], 0.283552942, DELTA);
-            Assert.assertEquals(pvalue[0], 0.427239418, DELTA);
-            Assert.assertEquals(stderrest[0], 0.412351891, DELTA);
+            assertEquals(slope[0], 0.344864266, DELTA);
+            assertEquals(intercept[0], 0.268578232, DELTA);
+            assertEquals(rvalue[0], 0.283552942, DELTA);
+            assertEquals(pvalue[0], 0.427239418, DELTA);
+            assertEquals(stderrest[0], 0.412351891, DELTA);
 
             result[0].close();
             result[1].close();
             result[2].close();
             result[3].close();
             result[4].close();
-
         }
     }
 
@@ -77,16 +71,16 @@ public class RegressionTest {
             float[] pvalue = result[3].getData();
             float[] stderrest = result[4].getData();
 
-            Assert.assertEquals(slope[0], 0.344864266, DELTA);
-            Assert.assertEquals(intercept[0], 0.268578232, DELTA);
-            Assert.assertEquals(rvalue[0], 0.283552942, DELTA);
-            Assert.assertEquals(pvalue[0], 0.427239418, DELTA);
-            Assert.assertEquals(stderrest[0], 0.412351891, DELTA);
-            Assert.assertEquals(slope[1], 0.344864266, DELTA);
-            Assert.assertEquals(intercept[1], 0.268578232, DELTA);
-            Assert.assertEquals(rvalue[1], 0.283552942, DELTA);
-            Assert.assertEquals(pvalue[1], 0.427239418, DELTA);
-            Assert.assertEquals(stderrest[1], 0.412351891, DELTA);
+            assertEquals(slope[0], 0.344864266, DELTA);
+            assertEquals(intercept[0], 0.268578232, DELTA);
+            assertEquals(rvalue[0], 0.283552942, DELTA);
+            assertEquals(pvalue[0], 0.427239418, DELTA);
+            assertEquals(stderrest[0], 0.412351891, DELTA);
+            assertEquals(slope[1], 0.344864266, DELTA);
+            assertEquals(intercept[1], 0.268578232, DELTA);
+            assertEquals(rvalue[1], 0.283552942, DELTA);
+            assertEquals(pvalue[1], 0.427239418, DELTA);
+            assertEquals(stderrest[1], 0.412351891, DELTA);
 
             result[0].close();
             result[1].close();

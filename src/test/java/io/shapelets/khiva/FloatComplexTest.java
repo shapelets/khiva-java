@@ -9,8 +9,9 @@
 
 package io.shapelets.khiva;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class FloatComplexTest {
     private static final double DELTA = 1e-6;
@@ -18,8 +19,8 @@ public class FloatComplexTest {
     @Test
     public void testConstructor() {
         FloatComplex fc = new FloatComplex();
-        Assert.assertEquals(fc.getReal(), 0, DELTA);
-        Assert.assertEquals(fc.getImag(), 0, DELTA);
+        assertEquals(fc.getReal(), 0, DELTA);
+        assertEquals(fc.getImag(), 0, DELTA);
     }
 
     @Test
@@ -27,8 +28,8 @@ public class FloatComplexTest {
         FloatComplex fc = new FloatComplex();
         fc.setReal(1f);
         fc.setImag(2f);
-        Assert.assertEquals(fc.getReal(), 1, DELTA);
-        Assert.assertEquals(fc.getImag(), 2, DELTA);
+        assertEquals(fc.getReal(), 1, DELTA);
+        assertEquals(fc.getImag(), 2, DELTA);
     }
 
     @Test
@@ -36,8 +37,8 @@ public class FloatComplexTest {
         FloatComplex fc = new FloatComplex();
         fc.setReal(1f);
         fc.setImag(2f);
-        Assert.assertEquals(fc.toString(), "1.0 + 2.0i");
+        assertEquals(fc.toString(), "1.0 + 2.0i");
         fc.setImag(-2f);
-        Assert.assertEquals(fc.toString(), "1.0 - 2.0i");
+        assertEquals(fc.toString(), "1.0 - 2.0i");
     }
 }

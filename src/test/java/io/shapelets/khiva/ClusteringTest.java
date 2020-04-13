@@ -13,16 +13,13 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class ClusteringTest {
 
     @BeforeClass
-    public static void setUp() {
-        try {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void setUp() throws Exception {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test
@@ -42,7 +39,7 @@ public class ClusteringTest {
             float[] centroids = result[0].getData();
 
             for (int i = 0; i < 4; i++) {
-                Assert.assertEquals(expected[i] + expected[i + 4] + expected[i + 8],
+                assertEquals(expected[i] + expected[i + 4] + expected[i + 8],
                                     centroids[i] + centroids[i + 4] + centroids[i + 8], 1e-4f);
             }
 
@@ -70,7 +67,7 @@ public class ClusteringTest {
             float[] centroids = result[0].getData();
 
             for (int i = 0; i < centroids.length; i++) {
-                Assert.assertEquals(expected_c[i], centroids[i], 1e-4f);
+                assertEquals(expected_c[i], centroids[i], 1e-4f);
             }
 
             result[0].close();
