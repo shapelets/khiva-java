@@ -5,7 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 image:
-    - Visual Studio 2017
+    - Visual Studio 2019
 environment:
     GENERATOR: "Visual Studio 15 Win64"
     BOOST_PATH: C:\Libraries\boost_1_69_0
@@ -26,11 +26,11 @@ cache:
     - C:\Users\appveyor\.m2
     - C:\ProgramData\chocolatey\bin
     - C:\ProgramData\chocolatey\lib
-
 clone_folder: C:\khiva-java
 platform:
     - x64
 before_build:
+    - ps: env
     - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
     - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
     - ps: vcpkg install --triplet x64-windows gtest eigen3
@@ -38,7 +38,7 @@ before_build:
             if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.5.0/khiva-v0.5.0-unattended.exe" -FileName khiva-v0.5.0-unattended.exe };
             if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.5.0-unattended.exe /S };
           }else{
-            git clone --recurse-submodules --depth 1 -q https://github.com/shapelets/khiva.git C:\khiva-library;
+            git clone --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library;
             cd C:\khiva-library;
             mkdir build;
             cd build;
