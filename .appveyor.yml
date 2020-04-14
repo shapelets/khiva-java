@@ -13,12 +13,11 @@ environment:
     AF_DISABLE_GRAPHICS: 1
     KHIVA_PATH: C:\Program Files\Khiva\v0
     KHIVALIB_DIR: $(KHIVA_PATH)\lib
-    PATH: $(AF_PATH)\lib;$(KHIVA_PATH)\lib;$(PATH)
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-          PATH: $(JAVA_HOME)\bin;$(PATH)
+          PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
         - JAVA_HOME: C:\Program Files\Java\jdk11
-          PATH: $(JAVA_HOME)\bin;$(PATH)
+          PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
 matrix:
     fast_finish: true
 cache:
