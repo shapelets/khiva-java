@@ -39,10 +39,8 @@ else
     pyenv versions
     pyenv shell
     python --version
-    python3.6 --version
+    python${PYTHON_VERSION} --version
     # Installing conan and dependencies
-    pip install --upgrade pip
-    pip install conan==1.24.0
 
     conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
     if [ $? -ne 0 ]; then

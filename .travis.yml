@@ -20,6 +20,9 @@ matrix:
          - ${HOME}/.m2
          - ${HOME}/.conan
          - ${TRAVIS_BUILD_DIR}/cmake
+      before_install:
+        - pip install --upgrade pip
+        - pip install conan==1.24.0
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -39,9 +42,18 @@ matrix:
           - ${TRAVIS_BUILD_DIR}/cmake
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
-      before_install:
-        - pyenv install 3.6.4
-        - pyenv global 3.6.4
+      env:
+        - TRAVIS_PYTHON_VERSION=3.7.6
+        - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
+        - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+        before_install:
+          - brew upgrade pyenv
+          - pyenv install -l
+          - pyenv install ${TRAVIS_PYTHON_VERSION}
+          - pyenv init -
+          - pyenv local ${TRAVIS_PYTHON_VERSION}
+          - pip${PYTHON_VERSION} install --upgrade pip
+          - pip${PYTHON_VERSION} install conan
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
@@ -52,8 +64,6 @@ matrix:
 
     - os: osx
       osx_image: xcode9.3
-      env:
-        - JDK='Oracle JDK 9'
       cache:
         directories:
           - ${TRAVIS_BUILD_DIR}/installers
@@ -62,9 +72,19 @@ matrix:
           - ${TRAVIS_BUILD_DIR}/cmake
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
+      env:
+        - JDK='Oracle JDK 9'
+        - TRAVIS_PYTHON_VERSION=3.7.6
+        - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
+        - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
       before_install:
-        - pyenv install 3.6.4
-        - pyenv global 3.6.4
+        - brew upgrade pyenv
+        - pyenv install -l
+        - pyenv install ${TRAVIS_PYTHON_VERSION}
+        - pyenv init -
+        - pyenv local ${TRAVIS_PYTHON_VERSION}
+        - pip${PYTHON_VERSION} install --upgrade pip
+        - pip${PYTHON_VERSION} install conan
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
