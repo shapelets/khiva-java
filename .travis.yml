@@ -10,11 +10,10 @@ matrix:
   include:
     - os: linux
       dist: bionic
-      jdk:
-        - openjdk8
-        - openjdk11
+      jdk: openjdk8
       env:
         - PATH=/opt/python/3.7.6/bin:$PATH
+        - KHIVALIB_DIR=/usr/local/lib
       cache:
        directories:
          - ${TRAVIS_BUILD_DIR}/installers
@@ -28,7 +27,30 @@ matrix:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
-        - source .CI/travis/build-and-test.sh
+        - mvn clean package
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -cF Linux  -cf ./target/site/jacoco/jacoco.xml
+
+    - os: linux
+      dist: bionic
+      jdk: openjdk11
+      env:
+        - PATH=/opt/python/3.7.6/bin:$PATH
+        - KHIVALIB_DIR=/usr/local/lib
+      cache:
+        directories:
+          - ${TRAVIS_BUILD_DIR}/installers
+          - ${HOME}/.m2
+          - ${HOME}/.conan
+          - ${TRAVIS_BUILD_DIR}/cmake
+      before_install:
+        - pip install --upgrade pip
+        - pip install conan==1.24.0
+      install:
+        - source .CI/travis/install-arrayfire.sh
+        - source .CI/travis/install-khiva.sh
+      script:
+        - mvn clean package
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF Linux  -cf ./target/site/jacoco/jacoco.xml
 
@@ -46,7 +68,7 @@ matrix:
       env:
         - TRAVIS_PYTHON_VERSION=3.7.6
         - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
-        - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+        - KHIVALIB_DIR=/usr/local/lib
       before_install:
         - brew upgrade pyenv
         - pyenv install -s ${TRAVIS_PYTHON_VERSION}
@@ -58,7 +80,7 @@ matrix:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
-        - source .CI/travis/build-and-test.sh
+        - mvn clean package
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF MacOS
 
@@ -76,7 +98,7 @@ matrix:
       env:
         - TRAVIS_PYTHON_VERSION=3.7.6
         - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
-        - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+        - KHIVALIB_DIR=/usr/local/lib
       before_install:
         - brew upgrade pyenv
         - pyenv install -s ${TRAVIS_PYTHON_VERSION}
@@ -88,4 +110,4 @@ matrix:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
       script:
-        - source .CI/travis/build-and-test.sh
+        - mvn clean package
