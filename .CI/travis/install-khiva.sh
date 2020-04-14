@@ -31,16 +31,7 @@ if [[ "$INSTALL_KHIVA_METHOD" == "installer" ]]; then
 
 else
     cmake --version
-    pyenv which python3
-    pyenv which python
-    pyenv versions
-    pyenv shell
-    pyenv global 3.6.4
-    pyenv versions
-    pyenv shell
-    python --version
-    python${PYTHON_VERSION} --version
-    # Installing conan and dependencies
+    python3 --version
 
     conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
     if [ $? -ne 0 ]; then
