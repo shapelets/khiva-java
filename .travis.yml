@@ -46,6 +46,7 @@ matrix:
         - TRAVIS_PYTHON_VERSION=3.7.6
         - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+        - DYLD_LIBRARY_PATH=/usr/local/lib
         - DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib
       before_install:
         - brew upgrade pyenv
@@ -78,6 +79,7 @@ matrix:
         - TRAVIS_PYTHON_VERSION=3.7.6
         - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
+        - DYLD_LIBRARY_PATH=/usr/local/lib
         - DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib
       before_install:
         - brew upgrade pyenv
