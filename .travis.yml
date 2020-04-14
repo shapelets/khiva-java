@@ -49,8 +49,7 @@ matrix:
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
       before_install:
         - brew upgrade pyenv
-        - pyenv install -l
-        - pyenv install ${TRAVIS_PYTHON_VERSION}
+        - pyenv install -s ${TRAVIS_PYTHON_VERSION}
         - pyenv init -
         - pyenv local ${TRAVIS_PYTHON_VERSION}
         - pip3 install --upgrade pip
@@ -80,8 +79,7 @@ matrix:
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
       before_install:
         - brew upgrade pyenv
-        - pyenv install -l
-        - pyenv install ${TRAVIS_PYTHON_VERSION}
+        - pyenv install -s ${TRAVIS_PYTHON_VERSION}
         - pyenv init -
         - pyenv local ${TRAVIS_PYTHON_VERSION}
         - pip3 install --upgrade pip
