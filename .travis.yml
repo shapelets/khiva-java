@@ -44,11 +44,11 @@ matrix:
           - ${HOME}/.pyenv
       env:
         - TRAVIS_PYTHON_VERSION=3.7.6
-        - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
-        - DYLD_LIBRARY_PATH=/usr/local/lib
-        - DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib
+#        - DYLD_LIBRARY_PATH=/usr/local/lib
+        - DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
       before_install:
+        - echo $DYLD_FALLBACK_LIBRARY_PATH
         - brew upgrade pyenv
         - pyenv install -l
         - pyenv install ${TRAVIS_PYTHON_VERSION}
@@ -65,7 +65,8 @@ matrix:
         - bash <(curl -s https://codecov.io/bash) -cF MacOS
 
     - os: osx
-      osx_image: xcode9.3
+      osx_image: xcode9.4
+      jdk: oraclejdk11
       cache:
         directories:
           - ${TRAVIS_BUILD_DIR}/installers
@@ -75,13 +76,13 @@ matrix:
           - ${HOME}/Library/Caches/Homebrew
           - ${HOME}/.pyenv
       env:
-        - JDK='Oracle JDK 9'
         - TRAVIS_PYTHON_VERSION=3.7.6
         - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
-        - DYLD_LIBRARY_PATH=/usr/local/lib
-        - DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib
+#        - DYLD_LIBRARY_PATH=/usr/local/lib
+        - DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
       before_install:
+        - echo $DYLD_FALLBACK_LIBRARY_PATH
         - brew upgrade pyenv
         - pyenv install -l
         - pyenv install ${TRAVIS_PYTHON_VERSION}
@@ -92,10 +93,10 @@ matrix:
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
-        - brew update
-        - brew tap homebrew/cask-cask
-        - brew tap caskroom/versions
-        - brew cask info java
-        - brew cask install java
+#        - brew update
+#        - brew tap homebrew/cask-cask
+#        - brew tap caskroom/versions
+#        - brew cask info java
+#        - brew cask install java
       script:
         - source .CI/travis/build-and-test.sh
