@@ -46,14 +46,14 @@ matrix:
         - TRAVIS_PYTHON_VERSION=3.7.6
         - PATH=$HOME/.pyenv/shims:$HOME/.pyenv/versions/${TRAVIS_PYTHON_VERSION}/bin:$PATH
         - PYTHON_VERSION=$(echo $TRAVIS_PYTHON_VERSION | awk -F'.' '{print $1 "." $2}')
-        before_install:
-          - brew upgrade pyenv
-          - pyenv install -l
-          - pyenv install ${TRAVIS_PYTHON_VERSION}
-          - pyenv init -
-          - pyenv local ${TRAVIS_PYTHON_VERSION}
-          - pip${PYTHON_VERSION} install --upgrade pip
-          - pip${PYTHON_VERSION} install conan
+      before_install:
+        - brew upgrade pyenv
+        - pyenv install -l
+        - pyenv install ${TRAVIS_PYTHON_VERSION}
+        - pyenv init -
+        - pyenv local ${TRAVIS_PYTHON_VERSION}
+        - pip${PYTHON_VERSION} install --upgrade pip
+        - pip${PYTHON_VERSION} install conan
       install:
         - source .CI/travis/install-arrayfire.sh
         - source .CI/travis/install-khiva.sh
