@@ -42,7 +42,7 @@ before_build:
             cd C:\khiva-library;
             mkdir build;
             cd build;
-            cmake .. -G"$env:GENERATOR" -Ax64 -DCMAKE_BUILD_TYPE=Release -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON;
+            cmake .. -G"$env:GENERATOR" -DCMAKE_BUILD_TYPE=Release -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON;
           }
     - cmake --build . --config Release -- /m
     - cmake --build . --config Release --target INSTALL
