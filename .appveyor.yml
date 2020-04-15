@@ -7,12 +7,13 @@
 image:
     - Visual Studio 2019
 environment:
-    GENERATOR: "Ninja"
+    GENERATOR: "Visual Studio 16 2019"
     BOOST_PATH: C:\Libraries\boost_1_71_0
     AF_PATH: C:\Program Files\ArrayFire\v3
     AF_DISABLE_GRAPHICS: 1
     KHIVA_PATH: C:\Program Files\Khiva\v0
     KHIVALIB_DIR: $(KHIVA_PATH)\lib
+    VCPKG_ROOT: C:/Tools/vcpkg
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
           PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
@@ -42,7 +43,7 @@ before_build:
             cd C:\khiva-library;
             mkdir build;
             cd build;
-            cmake .. -G"$env:GENERATOR" -DCMAKE_BUILD_TYPE=Release -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON;
+            cmake .. -G"$env:GENERATOR" -Ax64 -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
           }
     - cmake --build . --config Release -- /m
     - cmake --build . --config Release --target INSTALL
