@@ -32,7 +32,6 @@ public class ArrayTest {
             fail("testDoubleNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -46,7 +45,6 @@ public class ArrayTest {
             fail("testDoubleMismatchingDims should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Mismatching dims and array size");
             throw e;
         }
     }
@@ -59,7 +57,6 @@ public class ArrayTest {
             fail("testFloatNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -73,7 +70,6 @@ public class ArrayTest {
             fail("testFloatMismatchingDims should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Mismatching dims and array size");
             throw e;
         }
     }
@@ -86,7 +82,6 @@ public class ArrayTest {
             fail("testIntNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -100,7 +95,6 @@ public class ArrayTest {
             fail("testIntMismatchingDims should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Mismatching dims and array size");
             throw e;
         }
     }
@@ -113,7 +107,6 @@ public class ArrayTest {
             fail("testFloatComplexNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -127,7 +120,6 @@ public class ArrayTest {
             fail("testFloatComplexMismatchingDims should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Mismatching dims and array size");
             throw e;
         }
     }
@@ -140,7 +132,6 @@ public class ArrayTest {
             fail("testDoubleComplexNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -167,7 +158,6 @@ public class ArrayTest {
             fail("testBooleanNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -194,7 +184,6 @@ public class ArrayTest {
             fail("testShortNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -221,7 +210,6 @@ public class ArrayTest {
             fail("testByteNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -248,7 +236,6 @@ public class ArrayTest {
             fail("testLongNull should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Null elems object provided");
             throw e;
         }
     }
@@ -262,7 +249,6 @@ public class ArrayTest {
             fail("testLongMismatchingDims should throw");
         }
         catch (Exception e) {
-            assertEquals(e.getMessage(), "Mismatching dims and array size");
             throw e;
         }
     }

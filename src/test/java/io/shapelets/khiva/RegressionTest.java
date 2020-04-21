@@ -38,17 +38,15 @@ public class RegressionTest {
             float[] pvalue = result[3].getData();
             float[] stderrest = result[4].getData();
 
-            assertEquals(slope[0], 0.344864266, DELTA);
-            assertEquals(intercept[0], 0.268578232, DELTA);
-            assertEquals(rvalue[0], 0.283552942, DELTA);
-            assertEquals(pvalue[0], 0.427239418, DELTA);
-            assertEquals(stderrest[0], 0.412351891, DELTA);
+            assertEquals(0.344864266, slope[0], DELTA);
+            assertEquals(0.268578232, intercept[0], DELTA);
+            assertEquals(0.283552942, rvalue[0], DELTA);
+            assertEquals(0.427239418, pvalue[0], DELTA);
+            assertEquals(0.412351891, stderrest[0], DELTA);
 
-            result[0].close();
-            result[1].close();
-            result[2].close();
-            result[3].close();
-            result[4].close();
+            for (Array a : result) {
+                a.close();
+            }
         }
     }
 
@@ -71,22 +69,20 @@ public class RegressionTest {
             float[] pvalue = result[3].getData();
             float[] stderrest = result[4].getData();
 
-            assertEquals(slope[0], 0.344864266, DELTA);
-            assertEquals(intercept[0], 0.268578232, DELTA);
-            assertEquals(rvalue[0], 0.283552942, DELTA);
-            assertEquals(pvalue[0], 0.427239418, DELTA);
-            assertEquals(stderrest[0], 0.412351891, DELTA);
-            assertEquals(slope[1], 0.344864266, DELTA);
-            assertEquals(intercept[1], 0.268578232, DELTA);
-            assertEquals(rvalue[1], 0.283552942, DELTA);
-            assertEquals(pvalue[1], 0.427239418, DELTA);
-            assertEquals(stderrest[1], 0.412351891, DELTA);
+            assertEquals(0.344864266, slope[0], DELTA);
+            assertEquals(0.268578232, intercept[0], DELTA);
+            assertEquals(0.283552942, rvalue[0], DELTA);
+            assertEquals(0.427239418, pvalue[0], DELTA);
+            assertEquals(0.412351891, stderrest[0], DELTA);
+            assertEquals(0.344864266, slope[1], DELTA);
+            assertEquals(0.268578232, intercept[1], DELTA);
+            assertEquals(0.283552942, rvalue[1], DELTA);
+            assertEquals(0.427239418, pvalue[1], DELTA);
+            assertEquals(0.412351891, stderrest[1], DELTA);
 
-            result[0].close();
-            result[1].close();
-            result[2].close();
-            result[3].close();
-            result[4].close();
+            for (Array a : result) {
+                a.close();
+            }
         }
     }
 }

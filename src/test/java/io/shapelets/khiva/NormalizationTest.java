@@ -31,8 +31,8 @@ public class NormalizationTest {
             double[] result = b.getData();
             double[] expected = {-1.341640786499870, -0.447213595499958, 0.447213595499958, 1.341640786499870};
             for (int i = 0; i < expected.length; i++) {
-                assertEquals(result[i], expected[i], DELTA);
-                assertEquals(result[i + 4], expected[i], DELTA);
+                assertEquals(expected[i], result[i], DELTA);
+                assertEquals(expected[i], result[i + 4], DELTA);
             }
         }
     }
@@ -44,15 +44,15 @@ public class NormalizationTest {
         try (Array a = new Array(tss, dims)) {
             Normalization.znormInPlace(a);
             double[] result = a.getData();
-            assertEquals(result[0], -1.341640786499870, DELTA);
-            assertEquals(result[1], -0.447213595499958, DELTA);
-            assertEquals(result[2], 0.447213595499958, DELTA);
-            assertEquals(result[3], 1.341640786499870, DELTA);
+            assertEquals(-1.341640786499870, result[0], DELTA);
+            assertEquals(-0.447213595499958, result[1], DELTA);
+            assertEquals(0.447213595499958, result[2], DELTA);
+            assertEquals(1.341640786499870, result[3], DELTA);
 
-            assertEquals(result[4], -1.341640786499870, DELTA);
-            assertEquals(result[5], -0.447213595499958, DELTA);
-            assertEquals(result[6], 0.447213595499958, DELTA);
-            assertEquals(result[7], 1.341640786499870, DELTA);
+            assertEquals(-1.341640786499870, result[4], DELTA);
+            assertEquals(-0.447213595499958, result[5], DELTA);
+            assertEquals(0.447213595499958, result[6], DELTA);
+            assertEquals(1.341640786499870, result[7], DELTA);
         }
     }
 
@@ -63,7 +63,7 @@ public class NormalizationTest {
         try (Array a = new Array(tss, dims); Array b = Normalization.maxMinNorm(a, 2.0, 1.0)) {
             double[] result = b.getData();
             double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
-            assertArrayEquals(result, expected, DELTA);
+            assertArrayEquals(expected, result, DELTA);
         }
     }
 
@@ -75,7 +75,7 @@ public class NormalizationTest {
             Normalization.maxMinNormInPlace(a, 2.0, 1.0);
             double[] result = a.getData();
             double[] expected = {1.0, 1.3333333333333, 1.66666667, 2.0, 1.0, 1.3333333333333, 1.66666667, 2.0};
-            assertArrayEquals(result, expected, DELTA);
+            assertArrayEquals(expected, result, DELTA);
         }
     }
 
@@ -86,7 +86,7 @@ public class NormalizationTest {
         try (Array a = new Array(tss, dims); Array b = Normalization.decimalScalingNorm(a)) {
             double[] result = b.getData();
             double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
-            assertArrayEquals(result, expected, DELTA);
+            assertArrayEquals(expected, result, DELTA);
         }
     }
 
@@ -98,7 +98,7 @@ public class NormalizationTest {
             Normalization.decimalScalingNormInPlace(a);
             double[] result = a.getData();
             double[] expected = {0.0, 0.1, -0.2, 0.3, 0.4, 0.5, 0.6, -0.7};
-            assertArrayEquals(result, expected, DELTA);
+            assertArrayEquals(expected, result, DELTA);
         }
     }
 

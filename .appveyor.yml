@@ -5,10 +5,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 image:
-    - Visual Studio 2019
+    - Visual Studio 2017
 environment:
-    GENERATOR: "Visual Studio 16 2019"
-    BOOST_PATH: C:\Libraries\boost_1_71_0
+    GENERATOR: "Visual Studio 15 2017 Win64"
+    BOOST_PATH: C:\Libraries\boost_1_70_0
     AF_PATH: C:\Program Files\ArrayFire\v3
     AF_DISABLE_GRAPHICS: 1
     KHIVA_PATH: C:\Program Files\Khiva\v0
@@ -31,32 +31,26 @@ clone_folder: C:\khiva-java
 platform:
     - x64
 before_build:
-    - ps: env
-    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
-    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
-    - ps: vcpkg install --triplet x64-windows gtest eigen3
-    - ps: if ($env:INSTALL_KHIVA_METHOD -eq "installer"){
-            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.5.0/khiva-v0.5.0-unattended.exe" -FileName khiva-v0.5.0-unattended.exe };
-            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.5.0-unattended.exe /S };
-          }else{
-            git clone --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library;
-            cd C:\khiva-library;
-            mkdir build;
-            cd build;
-            cmake .. -G"$env:GENERATOR" -Ax64 -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
-          }
-    - cmake --build . --config Release -- /m
-    - cmake --build . --config Release --target INSTALL
-
-    - cd C:\khiva-java
-    - start /wait choco install maven
-    - pip install codecov
-    - java -version
+    - ps: |
+      env
+      if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
+      if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
+      vcpkg install --triplet x64-windows gtest eigen3
+      git clone -b v0.5.0 --depth 1 --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library
+      cd C:\khiva-library
+      mkdir build
+      cd build
+      cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
+      cmake --build . --config Release --target install -- /m
+      cd C:\khiva-java
+      start /wait choco install maven
+      pip install codecov
+      java -version
 build_script:
-    - mvn clean package
+    - ps: mvn clean package
 on_finish:
-    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-    - codecov -F Windows -f target/site/jacoco/jacoco.xml
+    # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    - ps: codecov -F Windows -f target/site/jacoco/jacoco.xml
     - ps: |
         $files = Get-ChildItem -Path .\target\surefire-reports -File -Filter *.xml
         foreach ($file in $files) {
