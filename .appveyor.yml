@@ -8,7 +8,7 @@ image:
     - Visual Studio 2017
 environment:
     GENERATOR: "Visual Studio 15 2017 Win64"
-    BOOST_PATH: C:\Libraries\boost_1_70_0
+    BOOST_PATH: C:\Libraries\boost_1_69_0
     AF_PATH: C:\Program Files\ArrayFire\v3
     AF_DISABLE_GRAPHICS: 1
     KHIVA_PATH: C:\Program Files\Khiva\v0
