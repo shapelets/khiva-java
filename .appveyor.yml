@@ -33,6 +33,10 @@ platform:
 before_build:
     - ps: |
         env
+        java -version
+        python --version
+        pip install -U pip
+        pip install codecov
         if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
         if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
         vcpkg install --triplet x64-windows gtest eigen3
@@ -42,12 +46,10 @@ before_build:
         cd build
         cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
         cmake --build . --config Release --target install -- /m
-        cd C:\khiva-java
-        start /wait choco install maven
-        pip install codecov
-        java -version
 build_script:
-    - ps: mvn clean package
+    - ps: |
+        cd C:\khiva-java
+        mvn clean package
 on_finish:
     # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     - ps: codecov -F Windows -f target/site/jacoco/jacoco.xml
