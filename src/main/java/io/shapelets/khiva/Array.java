@@ -9,6 +9,8 @@
 
 package io.shapelets.khiva;
 
+import java.util.Objects;
+
 /**
  * Khiva Array Class.
  */
@@ -71,157 +73,100 @@ public class Array extends Library implements AutoCloseable {
     }
 
     public Array(double[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long dim : arrayDims) totalSize *= dim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromDouble(arr, dims);
     }
 
-
-    public Array(float[] arr, long[] dims) throws Exception {
+    private int getNumElements(long[] dims) throws Exception {
         long[] arrayDims = Array.dim4(dims);
-
         int totalSize = 1;
         for (long dim : arrayDims) totalSize *= dim;
+        return totalSize;
+    }
 
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+    public Array(float[] arr, long[] dims) throws Exception {
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromFloat(arr, dims);
     }
 
     public Array(int[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long dim : arrayDims) totalSize *= dim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromInt(arr, dims);
     }
 
     public Array(FloatComplex[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long arrayDim : arrayDims) totalSize *= arrayDim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
+            throw new IllegalArgumentException("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromFloatComplex(arr, dims);
     }
 
     public Array(DoubleComplex[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long arrayDim : arrayDims) totalSize *= arrayDim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromDoubleComplex(arr, dims);
     }
 
     public Array(boolean[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long arrayDim : arrayDims) totalSize *= arrayDim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromBoolean(arr, dims);
     }
 
     public Array(short[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long arrayDim : arrayDims) totalSize *= arrayDim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromShort(arr, dims);
     }
 
     public Array(byte[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long arrayDim : arrayDims) totalSize *= arrayDim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromByte(arr, dims);
     }
 
 
     public Array(long[] arr, long[] dims) throws Exception {
-        long[] arrayDims = Array.dim4(dims);
-
-        int totalSize = 1;
-        for (long arrayDim : arrayDims) totalSize *= arrayDim;
-
-        if (arr == null) {
-            throw new Exception("Null elems object provided");
-        }
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
 
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-
         this.reference = createArrayFromLong(arr, dims);
     }
 
@@ -277,37 +222,37 @@ public class Array extends Library implements AutoCloseable {
 
     private native long[] getLongFromArray() throws Exception;
 
-    private native long[] join(int dim, long refRhs) throws Exception;
+    private native long join(int dim, long refRhs) throws Exception;
 
-    private native long[] add(long refRhs) throws Exception;
+    private native long add(long refRhs) throws Exception;
 
-    private native long[] mul(long refRhs) throws Exception;
+    private native long mul(long refRhs) throws Exception;
 
-    private native long[] sub(long refRhs) throws Exception;
+    private native long sub(long refRhs) throws Exception;
 
-    private native long[] div(long refRhs) throws Exception;
+    private native long div(long refRhs) throws Exception;
 
-    private native long[] mod(long refRhs) throws Exception;
+    private native long mod(long refRhs) throws Exception;
 
-    private native long[] pow(long refRhs) throws Exception;
+    private native long pow(long refRhs) throws Exception;
 
-    private native long[] lt(long refRhs) throws Exception;
+    private native long lt(long refRhs) throws Exception;
 
-    private native long[] gt(long refRhs) throws Exception;
+    private native long gt(long refRhs) throws Exception;
 
-    private native long[] le(long refRhs) throws Exception;
+    private native long le(long refRhs) throws Exception;
 
-    private native long[] ge(long refRhs) throws Exception;
+    private native long ge(long refRhs) throws Exception;
 
-    private native long[] eq(long refRhs) throws Exception;
+    private native long eq(long refRhs) throws Exception;
 
-    private native long[] ne(long refRhs) throws Exception;
+    private native long ne(long refRhs) throws Exception;
 
-    private native long[] bitAnd(long refRhs) throws Exception;
+    private native long bitAnd(long refRhs) throws Exception;
 
-    private native long[] bitOr(long refRhs) throws Exception;
+    private native long bitOr(long refRhs) throws Exception;
 
-    private native long[] bitXor(long refRhs) throws Exception;
+    private native long bitXor(long refRhs) throws Exception;
 
     private native long nativeBitShiftL(int n) throws Exception;
 
@@ -325,7 +270,7 @@ public class Array extends Library implements AutoCloseable {
 
     private native long nativeRows(int first, int last) throws Exception;
 
-    private native long[] matmul(long refRhs) throws Exception;
+    private native long matmul(long refRhs) throws Exception;
 
     private native long nativeCopy() throws Exception;
 
@@ -439,9 +384,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of joining the given arrays along the specified dimension.
      */
     public Array join(int dim, Array rhs) throws Exception {
-        long[] refs = join(dim, rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = join(dim, rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -451,9 +395,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The sum of both arrays.
      */
     public Array add(Array rhs) throws Exception {
-        long[] refs = add(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = add(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -463,9 +406,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The product of both arrays.
      */
     public Array mul(Array rhs) throws Exception {
-        long[] refs = mul(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = mul(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -475,9 +417,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The subtraction of both arrays.
      */
     public Array sub(Array rhs) throws Exception {
-        long[] refs = sub(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = sub(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -487,9 +428,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The division of both arrays.
      */
     public Array div(Array rhs) throws Exception {
-        long[] refs = div(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = div(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -499,9 +439,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The modulo of this array with the one passed as parameter.
      */
     public Array mod(Array rhs) throws Exception {
-        long[] refs = mod(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = mod(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -511,9 +450,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The power of this array with the one passed as parameter.
      */
     public Array pow(Array exponent) throws Exception {
-        long[] refs = pow(exponent.reference);
-        exponent.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = pow(exponent.reference);
+        return new Array(ref);
     }
 
     /**
@@ -523,9 +461,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array lt(Array rhs) throws Exception {
-        long[] refs = lt(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = lt(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -535,9 +472,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array gt(Array rhs) throws Exception {
-        long[] refs = gt(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = gt(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -547,9 +483,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array le(Array rhs) throws Exception {
-        long[] refs = le(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = le(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -559,9 +494,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array ge(Array rhs) throws Exception {
-        long[] refs = ge(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = ge(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -571,9 +505,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array eq(Array rhs) throws Exception {
-        long[] refs = eq(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = eq(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -583,9 +516,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of comparing element-wise this array with the one passed as parameter.
      */
     public Array ne(Array rhs) throws Exception {
-        long[] refs = ne(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = ne(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -595,9 +527,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of an AND operation of this array with the one passed as parameter.
      */
     public Array bitAnd(Array rhs) throws Exception {
-        long[] refs = bitAnd(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = bitAnd(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -607,9 +538,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of an OR operation of this array with the one passed as parameter.
      */
     public Array bitOr(Array rhs) throws Exception {
-        long[] refs = bitOr(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = bitOr(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -619,9 +549,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of an eXclusive-OR operation of this array with the one passed as parameter.
      */
     public Array bitXor(Array rhs) throws Exception {
-        long[] refs = bitXor(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = bitXor(rhs.reference);
+        return new Array(ref);
     }
 
     /**
@@ -731,9 +660,8 @@ public class Array extends Library implements AutoCloseable {
      * @return The result of a matrix multiplication of both arrays.
      */
     public Array matmul(Array rhs) throws Exception {
-        long[] refs = matmul(rhs.reference);
-        rhs.reference = refs[0];
-        return new Array(refs[1]);
+        long ref = matmul(rhs.reference);
+        return new Array(ref);
     }
 
     /**

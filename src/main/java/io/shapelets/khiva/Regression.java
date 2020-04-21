@@ -34,9 +34,7 @@ public class Regression extends Library {
      */
     public static Array[] linear(Array xss, Array yss) throws Exception {
         long[] refs = linear(xss.getReference(), yss.getReference());
-        xss.setReference(refs[0]);
-        yss.setReference(refs[1]);
-        return new Array[]{new Array(refs[2]), new Array(refs[3]), new Array(refs[4]), new Array(refs[5]),
-                           new Array(refs[6])};
+        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2]), new Array(refs[3]),
+                           new Array(refs[4])};
     }
 }

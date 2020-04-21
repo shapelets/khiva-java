@@ -14,21 +14,21 @@ package io.shapelets.khiva;
  */
 public class Statistics extends Library {
 
-    private native static long[] covariance(long ref, boolean unbiased) throws Exception;
+    private native static long covariance(long ref, boolean unbiased) throws Exception;
 
-    private native static long[] moment(long ref, int k) throws Exception;
+    private native static long moment(long ref, int k) throws Exception;
 
-    private native static long[] sampleStdev(long ref) throws Exception;
+    private native static long sampleStdev(long ref) throws Exception;
 
-    private native static long[] kurtosis(long ref) throws Exception;
+    private native static long kurtosis(long ref) throws Exception;
 
-    private native static long[] ljungBox(long ref, long lags) throws Exception;
+    private native static long ljungBox(long ref, long lags) throws Exception;
 
-    private native static long[] skewness(long ref) throws Exception;
+    private native static long skewness(long ref) throws Exception;
 
-    private native static long[] quantile(long ref, long refQ, float precision) throws Exception;
+    private native static long quantile(long ref, long refQ, float precision) throws Exception;
 
-    private native static long[] quantilesCut(long ref, float quantiles, float precision) throws Exception;
+    private native static long quantilesCut(long ref, float quantiles, float precision) throws Exception;
 
     /**
      * Returns the covariance matrix of the time series contained in tss.
@@ -48,9 +48,8 @@ public class Statistics extends Library {
      * @return The covariance matrix of the time series.
      */
     public static Array covariance(Array tss, boolean unbiased) throws Exception {
-        long[] refs = covariance(tss.getReference(), unbiased);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = covariance(tss.getReference(), unbiased);
+        return new Array(ref);
     }
 
     /**
@@ -60,9 +59,8 @@ public class Statistics extends Library {
      * @return The kurtosis of tss.
      */
     public static Array kurtosis(Array tss) throws Exception {
-        long[] refs = kurtosis(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = kurtosis(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -98,9 +96,8 @@ public class Statistics extends Library {
      * @return The updated ref and the Ljung-Box statistic test.
      */
     public static Array ljungBox(Array tss, long lags) throws Exception {
-        long[] refs = ljungBox(tss.getReference(), lags);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = ljungBox(tss.getReference(), lags);
+        return new Array(ref);
     }
 
     /**
@@ -111,9 +108,8 @@ public class Statistics extends Library {
      * @return The kth moment of the given time series.
      */
     public static Array moment(Array tss, int k) throws Exception {
-        long[] refs = moment(tss.getReference(), k);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = moment(tss.getReference(), k);
+        return new Array(ref);
     }
 
     /**
@@ -136,10 +132,8 @@ public class Statistics extends Library {
      * @return Values at the given quantile.
      */
     public static Array quantile(Array tss, Array q, float precision) throws Exception {
-        long[] refs = quantile(tss.getReference(), q.getReference(), precision);
-        tss.setReference(refs[0]);
-        q.setReference(refs[1]);
-        return new Array(refs[2]);
+        long ref = quantile(tss.getReference(), q.getReference(), precision);
+        return new Array(ref);
     }
 
     /**
@@ -165,9 +159,8 @@ public class Statistics extends Library {
      * column and the end in the second category.
      */
     public static Array quantilesCut(Array tss, float quantiles, float precision) throws Exception {
-        long[] refs = quantilesCut(tss.getReference(), quantiles, precision);
-        tss.setReference(refs[0]);
-        return new Array((refs[1]));
+        long ref = quantilesCut(tss.getReference(), quantiles, precision);
+        return new Array(ref);
     }
 
     /**
@@ -177,9 +170,8 @@ public class Statistics extends Library {
      * @return The sample standard deviation.
      */
     public static Array sampleStdev(Array tss) throws Exception {
-        long[] refs = sampleStdev(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = sampleStdev(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -190,8 +182,7 @@ public class Statistics extends Library {
      * @return Array containing the skewness of each time series in tss.
      */
     public static Array skewness(Array tss) throws Exception {
-        long[] refs = skewness(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = skewness(tss.getReference());
+        return new Array(ref);
     }
 }

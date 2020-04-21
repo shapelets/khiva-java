@@ -14,7 +14,7 @@ package io.shapelets.khiva;
  */
 public class Regularization extends Library {
 
-    private native static long[] groupBy(long ref, int aggregationFunction, int nColumnsKey, int nColumnsValue)
+    private native static long groupBy(long ref, int aggregationFunction, int nColumnsKey, int nColumnsValue)
         throws Exception;
 
     /**
@@ -91,8 +91,7 @@ public class Regularization extends Library {
      */
     public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey, int nColumnsValue)
         throws Exception {
-        long[] refs = groupBy(arr.getReference(), aggregationFunction, nColumnsKey, nColumnsValue);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = groupBy(arr.getReference(), aggregationFunction, nColumnsKey, nColumnsValue);
+        return new Array(ref);
     }
 }

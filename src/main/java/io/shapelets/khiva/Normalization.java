@@ -14,21 +14,21 @@ package io.shapelets.khiva;
  */
 public class Normalization extends Library {
 
-    private native static long[] znorm(long ref, double epsilon) throws Exception;
+    private native static long znorm(long ref, double epsilon) throws Exception;
 
-    private native static long znormInPlace(long ref, double epsilon) throws Exception;
+    private native static void znormInPlace(long ref, double epsilon) throws Exception;
 
-    private native static long[] maxMinNorm(long ref, double high, double low, double epsilon) throws Exception;
+    private native static long maxMinNorm(long ref, double high, double low, double epsilon) throws Exception;
 
-    private native static long maxMinNormInPlace(long ref, double high, double low, double epsilon) throws Exception;
+    private native static void maxMinNormInPlace(long ref, double high, double low, double epsilon) throws Exception;
 
-    private native static long[] decimalScalingNorm(long ref) throws Exception;
+    private native static long decimalScalingNorm(long ref) throws Exception;
 
-    private native static long decimalScalingNormInPlace(long ref) throws Exception;
+    private native static void decimalScalingNormInPlace(long ref) throws Exception;
 
-    private native static long[] meanNorm(long ref) throws Exception;
+    private native static long meanNorm(long ref) throws Exception;
 
-    private native static long meanNormInPlace(long ref) throws Exception;
+    private native static void meanNormInPlace(long ref) throws Exception;
 
 
     /**
@@ -39,9 +39,8 @@ public class Normalization extends Library {
      * dividing each number by \(10^j\), where j is the number of integer digits of the max number in the time series.
      */
     public static Array decimalScalingNorm(Array arr) throws Exception {
-        long[] refs = decimalScalingNorm(arr.getReference());
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = decimalScalingNorm(arr.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -50,8 +49,7 @@ public class Normalization extends Library {
      * @param arr Array containing the input time series.
      */
     public static void decimalScalingNormInPlace(Array arr) throws Exception {
-        long ref = decimalScalingNormInPlace(arr.getReference());
-        arr.setReference(ref);
+        decimalScalingNormInPlace(arr.getReference());
     }
 
     /**
@@ -106,9 +104,8 @@ public class Normalization extends Library {
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
      */
     public static Array maxMinNorm(Array arr, double high, double low, double epsilon) throws Exception {
-        long[] refs = maxMinNorm(arr.getReference(), high, low, epsilon);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = maxMinNorm(arr.getReference(), high, low, epsilon);
+        return new Array(ref);
     }
 
     /**
@@ -151,8 +148,7 @@ public class Normalization extends Library {
      *                those time series that may be constant or near constant.
      */
     public static void maxMinNormInPlace(Array arr, double high, double low, double epsilon) throws Exception {
-        long ref = maxMinNormInPlace(arr.getReference(), high, low, epsilon);
-        arr.setReference(ref);
+        maxMinNormInPlace(arr.getReference(), high, low, epsilon);
     }
 
     /**
@@ -168,9 +164,8 @@ public class Normalization extends Library {
      * time series.
      */
     public static Array meanNorm(Array arr) throws Exception {
-        long[] refs = meanNorm(arr.getReference());
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = meanNorm(arr.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -183,8 +178,7 @@ public class Normalization extends Library {
      * @param arr Array containing the input time series.
      */
     public static void meanNormInPlace(Array arr) throws Exception {
-        long ref = meanNormInPlace(arr.getReference());
-        arr.setReference(ref);
+        meanNormInPlace(arr.getReference());
     }
 
     /**
@@ -208,9 +202,8 @@ public class Normalization extends Library {
      * one as standard deviation.
      */
     public static Array znorm(Array arr, double epsilon) throws Exception {
-        long[] refs = znorm(arr.getReference(), epsilon);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = znorm(arr.getReference(), epsilon);
+        return new Array(ref);
     }
 
     /**
@@ -232,7 +225,6 @@ public class Normalization extends Library {
      *                those time series that may be constant or near constant.
      */
     public static void znormInPlace(Array arr, double epsilon) throws Exception {
-        long ref = znormInPlace(arr.getReference(), epsilon);
-        arr.setReference(ref);
+        znormInPlace(arr.getReference(), epsilon);
     }
 }

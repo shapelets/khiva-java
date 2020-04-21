@@ -14,17 +14,17 @@ package io.shapelets.khiva;
  */
 public class Distances extends Library {
 
-    private native static long[] euclidean(long ref) throws Exception;
+    private native static long euclidean(long ref) throws Exception;
 
-    private native static long[] dtw(long ref) throws Exception;
+    private native static long dtw(long ref) throws Exception;
 
-    private native static long[] hamming(long ref) throws Exception;
+    private native static long hamming(long ref) throws Exception;
 
-    private native static long[] manhattan(long ref) throws Exception;
+    private native static long manhattan(long ref) throws Exception;
 
-    private native static long[] sbd(long ref) throws Exception;
+    private native static long sbd(long ref) throws Exception;
 
-    private native static long[] squaredEuclidean(long ref) throws Exception;
+    private native static long squaredEuclidean(long ref) throws Exception;
 
 
     /**
@@ -36,9 +36,8 @@ public class Distances extends Library {
      * between time series 0 and time series 1.
      */
     public static Array euclidean(Array tss) throws Exception {
-        long[] refs = euclidean(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = euclidean(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -51,9 +50,8 @@ public class Distances extends Library {
      * distance between time series 0 and time series 1.
      */
     public static Array dtw(Array tss) throws Exception {
-        long[] refs = dtw(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = dtw(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -67,9 +65,8 @@ public class Distances extends Library {
      * distance between time series 0 and time series 1.
      */
     public static Array hamming(Array tss) throws Exception {
-        long[] refs = hamming(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = hamming(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -84,9 +81,8 @@ public class Distances extends Library {
      * series 0 and time series 1.
      */
     public static Array sbd(Array tss) throws Exception {
-        long[] refs = sbd(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = sbd(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -100,9 +96,8 @@ public class Distances extends Library {
      * series 0 and time series 1.
      */
     public static Array manhattan(Array tss) throws Exception {
-        long[] refs = manhattan(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = manhattan(tss.getReference());
+        return new Array(ref);
     }
 
     /**
@@ -114,8 +109,7 @@ public class Distances extends Library {
      * between time series 0 and time series 1.
      */
     public static Array squaredEuclidean(Array tss) throws Exception {
-        long[] refs = squaredEuclidean(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = squaredEuclidean(tss.getReference());
+        return new Array(ref);
     }
 }

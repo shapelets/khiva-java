@@ -14,19 +14,19 @@ package io.shapelets.khiva;
  */
 public class Dimensionality extends Library {
 
-    private native static long[] paa(long ref, int bins) throws Exception;
+    private native static long paa(long ref, int bins) throws Exception;
 
-    private native static long[] pip(long ref, int numberIPs) throws Exception;
+    private native static long pip(long ref, int numberIPs) throws Exception;
 
-    private native static long[] PLABottomUp(long ts, float maxError) throws Exception;
+    private native static long PLABottomUp(long ts, float maxError) throws Exception;
 
-    private native static long[] PLASlidingWindow(long ts, float maxError) throws Exception;
+    private native static long PLASlidingWindow(long ts, float maxError) throws Exception;
 
-    private native static long[] ramerDouglasPeucker(long ref, double epsilon) throws Exception;
+    private native static long ramerDouglasPeucker(long ref, double epsilon) throws Exception;
 
-    private native static long[] sax(long ref, int alphabetSize) throws Exception;
+    private native static long sax(long ref, int alphabetSize) throws Exception;
 
-    private native static long[] visvalingam(long ref, int numPoints) throws Exception;
+    private native static long visvalingam(long ref, int numPoints) throws Exception;
 
     /**
      * Piecewise Aggregate Approximation (PAA) approximates a time series \(X\) of length \(n\) into vector
@@ -46,9 +46,8 @@ public class Dimensionality extends Library {
      * @return Array of points with the reduced dimensionality.
      */
     public static Array paa(Array arr, int bins) throws Exception {
-        long[] refs = paa(arr.getReference(), bins);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = paa(arr.getReference(), bins);
+        return new Array(ref);
     }
 
     /**
@@ -62,9 +61,8 @@ public class Dimensionality extends Library {
      * @return The updated ref and an array with the most Perceptually Important numberIPs.
      */
     public static Array pip(Array arr, int numberIPs) throws Exception {
-        long[] refs = pip(arr.getReference(), numberIPs);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = pip(arr.getReference(), numberIPs);
+        return new Array(ref);
     }
 
     /**
@@ -80,9 +78,8 @@ public class Dimensionality extends Library {
      * @return The reduced number of points.
      */
     public static Array PLABottomUp(Array ts, float maxError) throws Exception {
-        long[] refs = PLABottomUp(ts.getReference(), maxError);
-        ts.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = PLABottomUp(ts.getReference(), maxError);
+        return new Array(ref);
     }
 
     /**
@@ -98,9 +95,8 @@ public class Dimensionality extends Library {
      * @return The reduced number of points.
      */
     public static Array PLASlidingWindow(Array ts, float maxError) throws Exception {
-        long[] refs = PLASlidingWindow(ts.getReference(), maxError);
-        ts.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = PLASlidingWindow(ts.getReference(), maxError);
+        return new Array(ref);
     }
 
     /**
@@ -123,9 +119,8 @@ public class Dimensionality extends Library {
      * one as standard deviation.
      */
     public static Array ramerDouglasPeucker(Array arr, double epsilon) throws Exception {
-        long[] refs = ramerDouglasPeucker(arr.getReference(), epsilon);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = ramerDouglasPeucker(arr.getReference(), epsilon);
+        return new Array(ref);
     }
 
     /**
@@ -149,9 +144,8 @@ public class Dimensionality extends Library {
      * @return Array of symbols.
      */
     public static Array sax(Array arr, int alphabetSize) throws Exception {
-        long[] refs = sax(arr.getReference(), alphabetSize);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = sax(arr.getReference(), alphabetSize);
+        return new Array(ref);
     }
 
     /**
@@ -168,8 +162,7 @@ public class Dimensionality extends Library {
      * and y in column 1).
      */
     public static Array visvalingam(Array arr, int numPoints) throws Exception {
-        long[] refs = visvalingam(arr.getReference(), numPoints);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+        long ref = visvalingam(arr.getReference(), numPoints);
+        return new Array(ref);
     }
 }
