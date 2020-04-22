@@ -14,19 +14,19 @@ package io.shapelets.khiva;
  */
 public class Dimensionality extends Library {
 
-    private native static long paa(long ref, int bins) throws Exception;
+    private native static long paa(long ref, int bins);
 
-    private native static long pip(long ref, int numberIPs) throws Exception;
+    private native static long pip(long ref, int numberIPs);
 
-    private native static long PLABottomUp(long ts, float maxError) throws Exception;
+    private native static long PLABottomUp(long ts, float maxError);
 
-    private native static long PLASlidingWindow(long ts, float maxError) throws Exception;
+    private native static long PLASlidingWindow(long ts, float maxError);
 
-    private native static long ramerDouglasPeucker(long ref, double epsilon) throws Exception;
+    private native static long ramerDouglasPeucker(long ref, double epsilon);
 
-    private native static long sax(long ref, int alphabetSize) throws Exception;
+    private native static long sax(long ref, int alphabetSize);
 
-    private native static long visvalingam(long ref, int numPoints) throws Exception;
+    private native static long visvalingam(long ref, int numPoints);
 
     /**
      * Piecewise Aggregate Approximation (PAA) approximates a time series \(X\) of length \(n\) into vector
@@ -44,9 +44,9 @@ public class Dimensionality extends Library {
      * @param arr  Set of points.
      * @param bins Sets the total number of divisions.
      * @return Array of points with the reduced dimensionality.
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array paa(Array arr, int bins) throws Exception {
+    public static Array paa(Array arr, int bins) {
         long ref = paa(arr.getReference(), bins);
         return Array.fromNative(ref);
     }
@@ -60,9 +60,9 @@ public class Dimensionality extends Library {
      * @param arr       Expects an input array whose dimension zero is the length of the time series.
      * @param numberIPs The number of points to be returned.
      * @return The updated ref and an array with the most Perceptually Important numberIPs.
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array pip(Array arr, int numberIPs) throws Exception {
+    public static Array pip(Array arr, int numberIPs) {
         long ref = pip(arr.getReference(), numberIPs);
         return Array.fromNative(ref);
     }
@@ -78,9 +78,9 @@ public class Dimensionality extends Library {
      *                 the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array PLABottomUp(Array ts, float maxError) throws Exception {
+    public static Array PLABottomUp(Array ts, float maxError) {
         long ref = PLABottomUp(ts.getReference(), maxError);
         return Array.fromNative(ref);
     }
@@ -96,9 +96,9 @@ public class Dimensionality extends Library {
      *                 the first column and the second component of the points in the second column.
      * @param maxError The maximum approximation error allowed.
      * @return The reduced number of points.
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array PLASlidingWindow(Array ts, float maxError) throws Exception {
+    public static Array PLASlidingWindow(Array ts, float maxError) {
         long ref = PLASlidingWindow(ts.getReference(), maxError);
         return Array.fromNative(ref);
     }
@@ -121,9 +121,9 @@ public class Dimensionality extends Library {
      * @param epsilon It acts as the threshold value to decide which points should be considered meaningful or not.
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
      * one as standard deviation.
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array ramerDouglasPeucker(Array arr, double epsilon) throws Exception {
+    public static Array ramerDouglasPeucker(Array arr, double epsilon) {
         long ref = ramerDouglasPeucker(arr.getReference(), epsilon);
         return Array.fromNative(ref);
     }
@@ -147,9 +147,9 @@ public class Dimensionality extends Library {
      * @param arr          Array with the input time series.
      * @param alphabetSize Number of element within the alphabet.
      * @return Array of symbols.
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array sax(Array arr, int alphabetSize) throws Exception {
+    public static Array sax(Array arr, int alphabetSize) {
         long ref = sax(arr.getReference(), alphabetSize);
         return Array.fromNative(ref);
     }
@@ -166,9 +166,9 @@ public class Dimensionality extends Library {
      * @param numPoints Sets the number of points returned after the execution of the method.
      * @return Array with the x-coordinates and y-coordinates of the selected points (x in column 0
      * and y in column 1).
-     * @throws java.lang.Exception If the native function call fails.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array visvalingam(Array arr, int numPoints) throws Exception {
+    public static Array visvalingam(Array arr, int numPoints) {
         long ref = visvalingam(arr.getReference(), numPoints);
         return Array.fromNative(ref);
     }

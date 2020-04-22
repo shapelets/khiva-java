@@ -20,86 +20,86 @@ public class ArrayTest {
     private static final double DELTA = 1e-6;
 
     @BeforeClass
-    public static void setUp() throws Exception {
+    public static void setUp() {
         Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testDimsNull() throws Exception {
+    public void testDimsNull() {
         final double[] a = {1.0};
         Array.fromPrimitiveArray(a, null);
         fail("testDimsNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testDoubleNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testDoubleNull() {
         final long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((double[]) null, dims);
         fail("testDoubleNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testDoubleMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testDoubleMismatchingDims() {
         double[] tss = {1, 2};
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray(tss, dims);
         fail("testDoubleMismatchingDims should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testFloatNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testFloatNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((float[]) null, dims);
         fail("testFloatNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testFloatMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testFloatMismatchingDims() {
         float[] tss = {1, 2};
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray(tss, dims);
         fail("testFloatMismatchingDims should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testIntNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testIntNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((long[]) null, dims);
         fail("testIntNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testIntMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testIntMismatchingDims() {
         int[] tss = {1, 2};
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray(tss, dims);
         fail("testIntMismatchingDims should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testFloatComplexNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testFloatComplexNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((FloatComplex[]) null, dims);
         fail("testFloatComplexNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testFloatComplexMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testFloatComplexMismatchingDims() {
         FloatComplex[] tss = {new FloatComplex(1, 2), new FloatComplex(3, 4)};
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray(tss, dims);
         fail("testFloatComplexMismatchingDims should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testDoubleComplexNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testDoubleComplexNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((DoubleComplex[]) null, dims);
         fail("testDoubleComplexNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testDoubleComplexMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testDoubleComplexMismatchingDims() {
         DoubleComplex[] tss = {new DoubleComplex(1, 2), new DoubleComplex(3, 4)};
         long[] dims = {1, 1, 1, 1};
         try {
@@ -112,15 +112,15 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testBooleanNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testBooleanNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((boolean[]) null, dims);
         fail("testBooleanNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testBooleanMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBooleanMismatchingDims() {
         boolean[] tss = {true, false};
         long[] dims = {1, 1, 1, 1};
         try {
@@ -133,15 +133,15 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testShortNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testShortNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((short[]) null, dims);
         fail("testShortNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testShortMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testShortMismatchingDims() {
         short[] tss = {1, 2};
         long[] dims = {1, 1, 1, 1};
         try {
@@ -154,15 +154,15 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testByteNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testByteNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((byte[]) null, dims);
         fail("testByteNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testByteMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testByteMismatchingDims() {
         byte[] tss = {1, 2};
         long[] dims = {1, 1, 1, 1};
         try {
@@ -175,15 +175,15 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testLongNull() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testLongNull() {
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray((long[]) null, dims);
         fail("testLongNull should throw");
     }
 
-    @Test(expected = Exception.class)
-    public void testLongMismatchingDims() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testLongMismatchingDims() {
         long[] tss = {1, 2};
         long[] dims = {1, 1, 1, 1};
         Array.fromPrimitiveArray(tss, dims);
@@ -191,7 +191,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testByte() throws Exception {
+    public void testByte() {
         byte[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -202,7 +202,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testShort() throws Exception {
+    public void testShort() {
         short[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -213,7 +213,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testUnsignedShort() throws Exception {
+    public void testUnsignedShort() {
         short[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims); Array b = a.as(Dtype.u16)) {
@@ -224,7 +224,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testLong() throws Exception {
+    public void testLong() {
         long[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -235,7 +235,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testUnsignedLong() throws Exception {
+    public void testUnsignedLong() {
         long[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims); Array b = a.as(Dtype.u64)) {
@@ -245,8 +245,8 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testDim4Null() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testDim4Null() {
         try {
             Array.dim4(null);
             fail("testDim4Null should throw");
@@ -257,8 +257,8 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testDim4FiveDimensions() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void testDim4FiveDimensions() {
         long[] dims = {1, 1, 1, 1, 1};
         try {
             Array.dim4(dims);
@@ -271,7 +271,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testGetDims() throws Exception {
+    public void testGetDims() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {2, 2, 2, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -281,7 +281,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testReal1D() throws Exception {
+    public void testReal1D() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -292,7 +292,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testReal2D() throws Exception {
+    public void testReal2D() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {4, 2, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -303,7 +303,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testReal3D() throws Exception {
+    public void testReal3D() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {2, 2, 2, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -314,7 +314,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testReal4D() throws Exception {
+    public void testReal4D() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
         long[] dims = {2, 2, 2, 2};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -325,7 +325,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testFloatComplex1D() throws Exception {
+    public void testFloatComplex1D() {
         FloatComplex[] tss = {new FloatComplex(1, 5), new FloatComplex(2, 6), new FloatComplex(3, 7),
                               new FloatComplex(4, 8)};
         long[] dims = {4, 1, 1, 1};
@@ -338,7 +338,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testFloatComplex2D() throws Exception {
+    public void testFloatComplex2D() {
         FloatComplex[] tss = {new FloatComplex(1, 5), new FloatComplex(2, 6), new FloatComplex(3, 7),
                               new FloatComplex(4, 8), new FloatComplex(9, 13), new FloatComplex(10, 14),
                               new FloatComplex(11, 15), new FloatComplex(12, 16)};
@@ -353,7 +353,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testFloatComplex3D() throws Exception {
+    public void testFloatComplex3D() {
         FloatComplex[] tss = {new FloatComplex(1, 1), new FloatComplex(2, 2), new FloatComplex(3, 3),
                               new FloatComplex(4, 4), new FloatComplex(5, 5), new FloatComplex(6, 6),
                               new FloatComplex(7, 7), new FloatComplex(8, 8)};
@@ -368,7 +368,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testFloatComplex4D() throws Exception {
+    public void testFloatComplex4D() {
         FloatComplex[] tss = {new FloatComplex(1, 1), new FloatComplex(2, 2), new FloatComplex(3, 3),
                               new FloatComplex(4, 4), new FloatComplex(5, 5), new FloatComplex(6, 6),
                               new FloatComplex(7, 7), new FloatComplex(8, 8), new FloatComplex(9, 9),
@@ -389,7 +389,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testDoubleComplex1D() throws Exception {
+    public void testDoubleComplex1D() {
         DoubleComplex[] tss = {new DoubleComplex(1, 5), new DoubleComplex(2, 6), new DoubleComplex(3, 7),
                                new DoubleComplex(4, 8)};
         long[] dims = {4, 1, 1, 1};
@@ -402,7 +402,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testDoubleComplex2D() throws Exception {
+    public void testDoubleComplex2D() {
         DoubleComplex[] tss = {new DoubleComplex(1, 5), new DoubleComplex(2, 6), new DoubleComplex(3, 7),
                                new DoubleComplex(4, 8), new DoubleComplex(9, 13), new DoubleComplex(10, 14),
                                new DoubleComplex(11, 15), new DoubleComplex(12, 16)};
@@ -417,7 +417,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testDoubleComplex3D() throws Exception {
+    public void testDoubleComplex3D() {
         DoubleComplex[] tss = {new DoubleComplex(1, 1), new DoubleComplex(2, 2), new DoubleComplex(3, 3),
                                new DoubleComplex(4, 4), new DoubleComplex(5, 5), new DoubleComplex(6, 6),
                                new DoubleComplex(7, 7), new DoubleComplex(8, 8)};
@@ -432,7 +432,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testDoubleComplex4D() throws Exception {
+    public void testDoubleComplex4D() {
         DoubleComplex[] tss = {new DoubleComplex(1, 1), new DoubleComplex(2, 2), new DoubleComplex(3, 3),
                                new DoubleComplex(4, 4), new DoubleComplex(5, 5), new DoubleComplex(6, 6),
                                new DoubleComplex(7, 7), new DoubleComplex(8, 8), new DoubleComplex(9, 9),
@@ -453,7 +453,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testGetType() throws Exception {
+    public void testGetType() {
         long[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims)) {
@@ -462,7 +462,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testJoin() throws Exception {
+    public void testJoin() {
         float[] data1 = {1f, 2f, 3f, 4f};
         float[] data2 = {5f, 6f, 7f, 8f};
         long[] dims = {4, 1, 1, 1};
@@ -474,7 +474,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testAdd() throws Exception {
+    public void testAdd() {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = Array.fromPrimitiveArray(data, dims); Array c = a.add(b)) {
@@ -484,8 +484,8 @@ public class ArrayTest {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void testMulException() throws Exception {
+    @Test(expected = KhivaException.class)
+    public void testMulException() {
         float[] data = {1f, 2f, 3f, 4f, 5f};
         long[] dims = {5, 1, 1, 1};
         float[] data2 = {1f, 2f, 3f, 4f};
@@ -496,7 +496,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testMul() throws Exception {
+    public void testMul() {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = Array.fromPrimitiveArray(data, dims); Array c = a.mul(b)) {
@@ -507,7 +507,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testSub() throws Exception {
+    public void testSub() {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = Array.fromPrimitiveArray(data, dims); Array c = a.sub(b)) {
@@ -518,7 +518,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testDiv() throws Exception {
+    public void testDiv() {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = Array.fromPrimitiveArray(data, dims); Array c = a.div(b)) {
@@ -529,7 +529,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testMod() throws Exception {
+    public void testMod() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {2f, 2f, 2f, 2f};
         long[] dims = {4, 1, 1, 1};
@@ -541,7 +541,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testPow() throws Exception {
+    public void testPow() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {2f, 2f, 2f, 2f};
         long[] dims = {4, 1, 1, 1};
@@ -553,7 +553,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testLt() throws Exception {
+    public void testLt() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {2f, 2f, 2f, 2f};
         long[] dims = {4, 1, 1, 1};
@@ -565,7 +565,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testGt() throws Exception {
+    public void testGt() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {2f, 2f, 2f, 2f};
         long[] dims = {4, 1, 1, 1};
@@ -577,7 +577,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testLe() throws Exception {
+    public void testLe() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {2f, 2f, 2f, 2f};
         long[] dims = {4, 1, 1, 1};
@@ -589,7 +589,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testGe() throws Exception {
+    public void testGe() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {2f, 2f, 2f, 2f};
         long[] dims = {4, 1, 1, 1};
@@ -601,7 +601,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testEq() throws Exception {
+    public void testEq() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {1f, 2f, 3f, 5f};
         long[] dims = {4, 1, 1, 1};
@@ -613,7 +613,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testNe() throws Exception {
+    public void testNe() {
         float[] dataA = {1f, 2f, 3f, 4f};
         float[] dataB = {1f, 2f, 3f, 5f};
         long[] dims = {4, 1, 1, 1};
@@ -625,7 +625,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testBitAnd() throws Exception {
+    public void testBitAnd() {
         boolean[] dataA = {true, true, true, true};
         boolean[] dataB = {true, false, true, false};
         long[] dims = {4, 1, 1, 1};
@@ -637,7 +637,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testBitOr() throws Exception {
+    public void testBitOr() {
         boolean[] dataA = {true, true, true, true};
         boolean[] dataB = {true, false, true, false};
         long[] dims = {4, 1, 1, 1};
@@ -649,7 +649,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testBitXor() throws Exception {
+    public void testBitXor() {
         boolean[] dataA = {true, true, true, true};
         boolean[] dataB = {true, false, true, false};
         long[] dims = {4, 1, 1, 1};
@@ -661,7 +661,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testBitShiftL() throws Exception {
+    public void testBitShiftL() {
         int[] data = {2, 4, 6, 8};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.bitShiftL(1)) {
@@ -672,7 +672,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testBitShiftR() throws Exception {
+    public void testBitShiftR() {
         int[] data = {2, 4, 6, 8};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.bitShiftR(1)) {
@@ -683,7 +683,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testNot() throws Exception {
+    public void testNot() {
         boolean[] data = {true, false};
         long[] dims = {2, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.not()) {
@@ -694,7 +694,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testTransposeConjugate() throws Exception {
+    public void testTransposeConjugate() {
         DoubleComplex[] data = {new DoubleComplex(0, -1), new DoubleComplex(2, 1), new DoubleComplex(4, 2),
                                 new DoubleComplex(0, -2)};
         long[] dims = {2, 2, 1, 1};
@@ -707,7 +707,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testTranspose() throws Exception {
+    public void testTranspose() {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dims = {2, 2, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.transpose()) {
@@ -718,7 +718,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testCol() throws Exception {
+    public void testCol() {
         float[] data = {1f, 3f, 2f, 4f};
         long[] dims = {2, 2, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.col(0)) {
@@ -729,7 +729,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testCols() throws Exception {
+    public void testCols() {
         float[] data = {1f, 4f, 2f, 5f, 3f, 6f};
         long[] dims = {2, 3, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.cols(0, 1)) {
@@ -740,7 +740,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testRow() throws Exception {
+    public void testRow() {
         float[] data = {1f, 3f, 2f, 4f};
         long[] dims = {2, 2, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.row(0)) {
@@ -751,7 +751,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testRows() throws Exception {
+    public void testRows() {
         float[] data = {1f, 3f, 5f, 2f, 4f, 6f};
         long[] dims = {3, 2, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.rows(0, 1)) {
@@ -762,7 +762,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testMatmul() throws Exception {
+    public void testMatmul() {
         float[] data = {1f, 2f, 3f, 4f};
         long[] dimsA = {4, 1, 1, 1};
         long[] dimsB = {1, 4, 1, 1};
@@ -774,7 +774,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testCopy() throws Exception {
+    public void testCopy() {
         float[] data = {1.1f, 2.1f, 3.1f, 4.1f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = Array.copy(a); Array c = a.eq(b)) {
@@ -785,7 +785,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testCopyConstructor() throws Exception {
+    public void testCopyConstructor() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(tss, dims); Array b = Array.copy(a)) {
@@ -796,7 +796,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testClose() throws Exception {
+    public void testClose() {
         double[] tss = {1, 2, 3, 4, 5, 6, 7, 8};
         long[] dims = {8, 1, 1, 1};
         Array a = Array.fromPrimitiveArray(tss, dims);
@@ -804,7 +804,7 @@ public class ArrayTest {
     }
 
     @Test
-    public void testAs() throws Exception {
+    public void testAs() {
         float[] data = {1.1f, 2.1f, 3.1f, 4.1f};
         long[] dims = {4, 1, 1, 1};
         try (Array a = Array.fromPrimitiveArray(data, dims); Array b = a.as(Dtype.s32)) {
