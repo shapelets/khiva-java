@@ -27,10 +27,10 @@ public class PolynomialTest {
     public void testPolyfit1() throws Exception {
         double[] tss = {0, 1, 2, 3, 4, 5};
         long[] dims = {6, 1, 1, 1};
-        try (Array x = new Array(tss, dims); Array y = new Array(tss, dims); Array b = Polynomial.polyfit(x, y, 1)) {
+        try (Array x = Array.fromPrimitiveArray(tss, dims); Array y = Array.fromPrimitiveArray(tss, dims); Array b = Polynomial.polyfit(x, y, 1)) {
             double[] result = b.getData();
             double[] expected = {1.0, 0.0};
-            assertArrayEquals(result, expected, DELTA);
+            assertArrayEquals(expected, result, DELTA);
         }
     }
 
@@ -39,10 +39,10 @@ public class PolynomialTest {
         double[] tss1 = {0, 1, 2, 3, 4, 5};
         double[] tss2 = {0.0, 0.8, 0.9, 0.1, -0.8, -1.0};
         long[] dims = {6, 1, 1, 1};
-        try (Array x = new Array(tss1, dims); Array y = new Array(tss2, dims); Array b = Polynomial.polyfit(x, y, 3)) {
+        try (Array x = Array.fromPrimitiveArray(tss1, dims); Array y = Array.fromPrimitiveArray(tss2, dims); Array b = Polynomial.polyfit(x, y, 3)) {
             double[] result = b.getData();
             double[] expected = {0.08703704, -0.81349206, 1.69312169, -0.03968254};
-            assertArrayEquals(result, expected, DELTA);
+            assertArrayEquals(expected, result, DELTA);
         }
     }
 
@@ -50,7 +50,7 @@ public class PolynomialTest {
     public void testRoots() throws Exception {
         double[] tss = {5, -20, 5, 50, -20, -40};
         long[] dims = {6, 1, 1, 1};
-        try (Array p = new Array(tss, dims); Array b = Polynomial.roots(p)) {
+        try (Array p = Array.fromPrimitiveArray(tss, dims); Array b = Polynomial.roots(p)) {
 
             FloatComplex[] result = b.getData();
             FloatComplex[] expected = {new FloatComplex(2, 0), new FloatComplex(2, 0), new FloatComplex(2, 0),

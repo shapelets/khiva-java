@@ -26,7 +26,7 @@ public class StatisticsTest {
     public void testCovarianceUnbiased() throws Exception {
         float[] timeSeries = {-2.1f, -1f, 4.3f, 3f, 1.1f, 0.12f, 3f, 1.1f, 0.12f};
         long[] dims = {3, 3, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.covariance(arrayOfTimeSeries)) {
             float[] result = b.getData();
             float[] expected = {11.70999999f, -4.286f, -4.286f, -4.286f, 2.14413333f, 2.14413333f, -4.286f, 2.14413333f,
@@ -42,7 +42,7 @@ public class StatisticsTest {
     public void testCovarianceBiased() throws Exception {
         float[] timeSeries = {-2.1f, -1f, 4.3f, 3f, 1.1f, 0.12f, 3f, 1.1f, 0.12f};
         long[] dims = {3, 3, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.covariance(arrayOfTimeSeries, false)) {
             float[] result = b.getData();
             float[] expected = {7.80666667f, -2.85733333f, -2.85733333f, -2.85733333f, 1.42942222f, 1.42942222f,
@@ -58,7 +58,8 @@ public class StatisticsTest {
     public void testKurtosis() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 2, 2, 2, 20, 30, 25};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims); Array b = Statistics.kurtosis(arrayOfTimeSeries)) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
+             Array b = Statistics.kurtosis(arrayOfTimeSeries)) {
             float[] result = b.getData();
             float[] expected = {-1.2f, -2.66226722f};
             assertEquals(expected.length, result.length, DELTA);
@@ -72,7 +73,7 @@ public class StatisticsTest {
     public void testLjungBox() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7};
         long[] dims = {4, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.ljungBox(arrayOfTimeSeries, 3)) {
             float[] result = b.getData();
             float[] expected = {6.4400f, 6.4400f};
@@ -87,7 +88,8 @@ public class StatisticsTest {
     public void testMoment() throws Exception {
         float[] timeSeries = {0f, 1f, 2f, 3f, 4f, 5f, 0f, 1f, 2f, 3f, 4f, 5f};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims); Array b = Statistics.moment(arrayOfTimeSeries, 2)) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
+             Array b = Statistics.moment(arrayOfTimeSeries, 2)) {
             float[] result = b.getData();
             float[] expected = {9.166666666f, 9.166666666f};
             assertEquals(expected.length, result.length, DELTA);
@@ -111,8 +113,8 @@ public class StatisticsTest {
         long[] dims = {6, 2, 1, 1};
         float[] q = {0.1f, 0.2f};
         long[] dimsQ = {2, 1, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims); Array qa = new Array(q, dimsQ);
-             Array b = Statistics.quantile(arrayOfTimeSeries, qa)) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
+             Array qa = Array.fromPrimitiveArray(q, dimsQ); Array b = Statistics.quantile(arrayOfTimeSeries, qa)) {
             float[] result = b.getData();
             float[] expected = {0.5f, 1.0f, 6.5f, 7.0f};
             assertEquals(expected.length, result.length, DELTA);
@@ -126,7 +128,7 @@ public class StatisticsTest {
     public void testQuantileCut2() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.quantilesCut(arrayOfTimeSeries, 2)) {
             float[] result = b.getData();
             float[] expected = {-1.0E-8f, -1.0E-8f, -1.0E-8f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 5.0f, 5.0f, 5.0f,
@@ -142,7 +144,7 @@ public class StatisticsTest {
     public void testQuantileCut3() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.quantilesCut(arrayOfTimeSeries, 3)) {
             float[] result = b.getData();
 
@@ -160,7 +162,7 @@ public class StatisticsTest {
     public void testQuantileCut7() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.quantilesCut(arrayOfTimeSeries, 7)) {
             float[] result = b.getData();
             float[] expected = {-1.0E-8f, 0.71428573f, 1.4285715f, 2.857143f, 3.5714288f, 4.2857146f, 0.71428573f,
@@ -178,7 +180,7 @@ public class StatisticsTest {
     public void testSampleStdev() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 2, 2, 2, 20, 30, 25};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims);
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
              Array b = Statistics.sampleStdev(arrayOfTimeSeries)) {
             float[] result = b.getData();
             float[] expected = {1.870828693f, 12.988456413f};
@@ -193,7 +195,8 @@ public class StatisticsTest {
     public void testSkewness() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 2, 2, 2, 20, 30, 25};
         long[] dims = {6, 2, 1, 1};
-        try (Array arrayOfTimeSeries = new Array(timeSeries, dims); Array b = Statistics.skewness(arrayOfTimeSeries)) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
+             Array b = Statistics.skewness(arrayOfTimeSeries)) {
             float[] result = b.getData();
             float[] expected = {0.0f, 0.236177069879499f};
             assertEquals(expected.length, result.length, DELTA);

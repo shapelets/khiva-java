@@ -26,9 +26,10 @@ public class Linalg extends Library {
      * @param arrA Coefficients of the linear equation problem to solve.
      * @param arrB Array with the measured values.
      * @return Contains the solution to the linear equation problem minimizing the norm 2.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array lls(Array arrA, Array arrB) throws Exception {
         long ref = lls(arrA.getReference(), arrB.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 }

@@ -151,10 +151,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Array with the Absolute Energy.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array absEnergy(Array arr) throws Exception {
         long ref = absEnergy(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -164,10 +165,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Array with the absolute sum of changes.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array absoluteSumOfChanges(Array arr) throws Exception {
         long ref = absoluteSumOfChanges(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -187,10 +189,11 @@ public class Features extends Library {
      *                            default : mean
      *                            }
      * @return Array whose values contains the aggregated correlation for each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array aggregatedAutocorrelation(Array arr, int aggregationFunction) throws Exception {
         long ref = aggregatedAutocorrelation(arr.getReference(), aggregationFunction);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -210,11 +213,12 @@ public class Features extends Library {
      *                            default : mean
      *                            }
      * @return The aggregated Linear Trend.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] aggregatedLinearTrend(Array arr, long chunkSize, int aggregationFunction) throws Exception {
         long[] refs = aggregatedLinearTrend(arr.getReference(), chunkSize, aggregationFunction);
-        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2]), new Array(refs[3]),
-                           new Array(refs[4])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1]), Array.fromNative(refs[2]),
+                           Array.fromNative(refs[3]), Array.fromNative(refs[4])};
 
     }
 
@@ -231,11 +235,12 @@ public class Features extends Library {
      * @param m   Length of compared run of data.
      * @param r   Filtering level, must be positive.
      * @return Array with the vectorized approximate entropy for all the input time series in arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
 
     public static Array approximateEntropy(Array arr, int m, float r) throws Exception {
         long ref = approximateEntropy(arr.getReference(), m, r);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -245,10 +250,11 @@ public class Features extends Library {
      * @param arrYss   Array containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Array with the cross-covariance value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array crossCovariance(Array arrXss, Array arrYss, Boolean unbiased) throws Exception {
         long ref = crossCovariance(arrXss.getReference(), arrYss.getReference(), unbiased);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -257,10 +263,11 @@ public class Features extends Library {
      * @param arr      Array containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Array with the auto-covariance value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array autoCovariance(Array arr, Boolean unbiased) throws Exception {
         long ref = autoCovariance(arr.getReference(), unbiased);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -270,10 +277,11 @@ public class Features extends Library {
      * @param arrYss   Array containing the input time series.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return Double array with cross-correlation value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array crossCorrelation(Array arrXss, Array arrYss, Boolean unbiased) throws Exception {
         long ref = crossCorrelation(arrXss.getReference(), arrYss.getReference(), unbiased);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -283,10 +291,11 @@ public class Features extends Library {
      * @param maxLag   The maximum lag to compute.
      * @param unbiased Determines whether it divides by n - lag (if true) or n (if false).
      * @return The autocorrelation value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array autoCorrelation(Array arr, long maxLag, Boolean unbiased) throws Exception {
         long ref = autoCorrelation(arr.getReference(), maxLag, unbiased);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -295,10 +304,11 @@ public class Features extends Library {
      * @param arr     Array containing the input time series.
      * @param maxBins The number of bins.
      * @return The binned entropy value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array binnedEntropy(Array arr, int maxBins) throws Exception {
         long ref = binnedEntropy(arr.getReference(), maxBins);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -308,10 +318,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param lag The lag.
      * @return The non-linearity value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array c3(Array arr, long lag) throws Exception {
         long ref = c3(arr.getReference(), lag);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -322,10 +333,11 @@ public class Features extends Library {
      * @param arr        Array containing the input time series.
      * @param zNormalize Controls whether the time series should be z-normalized or not.
      * @return The complexity value for the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array cidCe(Array arr, Boolean zNormalize) throws Exception {
         long ref = cidCe(arr.getReference(), zNormalize);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -334,10 +346,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The number of values in the time series that are higher than the mean.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array countAboveMean(Array arr) throws Exception {
         long ref = countAboveMean(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -346,10 +359,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The number of values in the time series that are lower than the mean.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array countBelowMean(Array arr) throws Exception {
         long ref = countBelowMean(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -361,10 +375,11 @@ public class Features extends Library {
      * @param coeff Coefficient of interest.
      * @param w     Width of interest.
      * @return Result of calculated coefficients.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array cwtCoefficients(Array arr, Array arrW, int coeff, int w) throws Exception {
         long ref = cwtCoefficients(arr.getReference(), arrW.getReference(), coeff, w);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -376,10 +391,11 @@ public class Features extends Library {
      * @param numSegments  The number of segments to divide the series into.
      * @param segmentFocus The segment number (starting at zero) to return a feature on.
      * @return The energy ratio by chunk of the time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array energyRatioByChunks(Array arr, long numSegments, long segmentFocus) throws Exception {
         long ref = energyRatioByChunks(arr.getReference(), numSegments, segmentFocus);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -389,10 +405,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The spectral centroid (mean), variance, skew, and kurtosis of the absolute fourier transform
      * spectrum.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array fftAggregated(Array arr) throws Exception {
         long ref = fftAggregated(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -407,10 +424,12 @@ public class Features extends Library {
      * imag        The imaginary part of the coefficient.
      * abs         The absolute value of the coefficient.
      * angle       The angle of the coefficient.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] fftCoefficient(Array arr, long coefficient) throws Exception {
         long[] refs = fftCoefficient(arr.getReference(), coefficient);
-        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2]), new Array(refs[3])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1]), Array.fromNative(refs[2]),
+                           Array.fromNative(refs[3])};
     }
 
     /**
@@ -419,10 +438,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The first relative location of the maximum value to the length of the times series,
      * for each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array firstLocationOfMaximum(Array arr) throws Exception {
         long ref = firstLocationOfMaximum(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -431,10 +451,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The first relative location of the minimal value of each series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array firstLocationOfMinimum(Array arr) throws Exception {
         long ref = firstLocationOfMinimum(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -452,10 +473,11 @@ public class Features extends Library {
      * @param m   Order of polynom to fit for estimating fixed points of dynamics.
      * @param r   Number of quantils to use for averaging.
      * @return Array containing the coefficients for each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array friedrichCoefficients(Array arr, int m, float r) throws Exception {
         long ref = friedrichCoefficients(arr.getReference(), m, r);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -464,10 +486,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return Array containing True if the time series contains duplicated elements
      * and false otherwise.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array hasDuplicates(Array arr) throws Exception {
         long ref = hasDuplicates(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -475,10 +498,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Calculates if the maximum within input time series is duplicated.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array hasDuplicateMax(Array arr) throws Exception {
         long ref = hasDuplicateMax(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -486,10 +510,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Array containing True if the minimum of the time series is duplicated and False otherwise.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array hasDuplicateMin(Array arr) throws Exception {
         long ref = hasDuplicateMin(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -498,10 +523,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param q   The quantile.
      * @return The index of the mass quantile q.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array indexMassQuantile(Array arr, float q) throws Exception {
         long ref = indexMassQuantile(arr.getReference(), q);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -509,10 +535,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The kurtosis of each arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array kurtosis(Array arr) throws Exception {
         long ref = kurtosis(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -521,10 +548,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param r   The threshold.
      * @return Array containing True for those time series in arr that have a large standard deviation.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array largeStandardDeviation(Array arr, float r) throws Exception {
         long ref = largeStandardDeviation(arr.getReference(), r);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -533,10 +561,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The last relative location of the maximum value of each series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array lastLocationOfMaximum(Array arr) throws Exception {
         long ref = lastLocationOfMaximum(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -545,10 +574,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The last relative location of the minimum value of each series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array lastLocationOfMinimum(Array arr) throws Exception {
         long ref = lastLocationOfMinimum(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -556,10 +586,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The length of arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array length(Array arr) throws Exception {
         long ref = length(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -573,11 +604,12 @@ public class Features extends Library {
      * intercept The intercept values for all time series.
      * slope     The slope for all time series.
      * stdrr     The stdrr values for all time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] linearTrend(Array arr) throws Exception {
         long[] refs = linearTrend(arr.getReference());
-        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2]), new Array(refs[3]),
-                           new Array(refs[4])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1]), Array.fromNative(refs[2]),
+                           Array.fromNative(refs[3]), Array.fromNative(refs[4])};
     }
 
     /**
@@ -585,10 +617,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The calculated local maximals for each time series in array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array localMaximals(Array arr) throws Exception {
         long ref = localMaximals(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -597,10 +630,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return The length of the longest consecutive subsequence in the input time series that is bigger than the
      * mean.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array longestStrikeAboveMean(Array arr) throws Exception {
         long ref = longestStrikeAboveMean(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -608,10 +642,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The length of the longest consecutive subsequence in the input time series that is below the mean.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array longestStrikeBelowMean(Array arr) throws Exception {
         long ref = longestStrikeBelowMean(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -627,10 +662,11 @@ public class Features extends Library {
      * @param m   Order of polynom to fit for estimating fixed points of dynamics.
      * @param r   Number of quantiles to use for averaging.
      * @return Largest fixed point of deterministic dynamics.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array maxLangevinFixedPoint(Array arr, int m, float r) throws Exception {
         long ref = maxLangevinFixedPoint(arr.getReference(), m, r);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -638,10 +674,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The maximum value of each time series within arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array maximum(Array arr) throws Exception {
         long ref = maximum(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -649,10 +686,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The mean value of each time series within arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array mean(Array arr) throws Exception {
         long ref = mean(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -660,10 +698,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The mean over the absolute differences between subsequent time series values.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array meanAbsoluteChange(Array arr) throws Exception {
         long ref = meanAbsoluteChange(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -671,10 +710,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The mean over the differences between subsequent time series values.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array meanChange(Array arr) throws Exception {
         long ref = meanChange(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -682,10 +722,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The mean value of a central approximation of the second derivative for each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array meanSecondDerivativeCentral(Array arr) throws Exception {
         long ref = meanSecondDerivativeCentral(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -693,10 +734,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The median value of each time series within arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array median(Array arr) throws Exception {
         long ref = median(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -704,10 +746,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The minimum value of each time series within arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array minimum(Array arr) throws Exception {
         long ref = minimum(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -718,10 +761,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param m   The m value.
      * @return The number of m-crossings of each time series within arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array numberCrossingM(Array arr, int m) throws Exception {
         long ref = numberCrossingM(arr.getReference(), m);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -732,10 +776,11 @@ public class Features extends Library {
      * @param arr  Array containing the input time series.
      * @param maxW The maximum width to consider.
      * @return The number of peaks for each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array numberCwtPeaks(Array arr, int maxW) throws Exception {
         long ref = numberCwtPeaks(arr.getReference(), maxW);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -746,10 +791,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param n   The support of the peak.
      * @return The number of peaks of at least support \(n\).
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array numberPeaks(Array arr, int n) throws Exception {
         long ref = numberPeaks(arr.getReference(), n);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -776,10 +822,11 @@ public class Features extends Library {
      * @param arr     Array containing the input time series.
      * @param arrLags Array containing the lags to be calculated.
      * @return Returns the partial autocorrelation for each time series for the given lags.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array partialAutocorrelation(Array arr, Array arrLags) throws Exception {
         long ref = partialAutocorrelation(arr.getReference(), arrLags.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -793,10 +840,11 @@ public class Features extends Library {
      * @param arr      Array containing the input time series.
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Returns the percentage of unique values, that are present in the time series more than once.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array percentageOfReoccurringDatapointsToAllDatapoints(Array arr, boolean isSorted) throws Exception {
         long ref = percentageOfReoccurringDatapointsToAllDatapoints(arr.getReference(), isSorted);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -810,10 +858,11 @@ public class Features extends Library {
      * @param arr      Array containing the input time series.
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Returns the percentage of unique values, that are present in the time series more than once.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array percentageOfReoccurringValuesToAllValues(Array arr, boolean isSorted) throws Exception {
         long ref = percentageOfReoccurringValuesToAllValues(arr.getReference(), isSorted);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -822,6 +871,7 @@ public class Features extends Library {
      * @param arr  Array containing the input time series.
      * @param arrQ Percentile(s) at which to extract score(s). One or many.
      * @return Values at the given quantile.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array quantile(Array arr, Array arrQ) throws Exception {
         return quantile(arr, arrQ, (float) 1e8);
@@ -834,10 +884,11 @@ public class Features extends Library {
      * @param arrQ      Percentile(s) at which to extract score(s). One or many.
      * @param precision Number of decimals expected.
      * @return Values at the given quantile.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array quantile(Array arr, Array arrQ, float precision) throws Exception {
         long ref = quantile(arr.getReference(), arrQ.getReference(), precision);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -847,10 +898,11 @@ public class Features extends Library {
      * @param min Value that sets the lower limit.
      * @param max Value that sets the upper limit.
      * @return Values at the given range.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array rangeCount(Array arr, float min, float max) throws Exception {
         long ref = rangeCount(arr.getReference(), min, max);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -861,10 +913,11 @@ public class Features extends Library {
      * @param r   Number of times that the values should be away from.
      * @return The ratio of values that are more than \(r*std(x)\) (so \(r\) sigma) away from the mean of
      * \(x\).
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array ratioBeyondRSigma(Array arr, float r) throws Exception {
         long ref = ratioBeyondRSigma(arr.getReference(), r);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -877,10 +930,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The ratio of unique values with respect to the total number of values.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array ratioValueNumberToTimeSeriesLength(Array arr) throws Exception {
         long ref = ratioValueNumberToTimeSeriesLength(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -896,10 +950,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @return An array with the same dimensions as arr, whose values (time series in dimension 0)
      * contains the vectorized sample entropy for all the input time series in arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sampleEntropy(Array arr) throws Exception {
         long ref = sampleEntropy(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -908,10 +963,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Array containing the skewness of each time series in arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array skewness(Array arr) throws Exception {
         long ref = skewness(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -929,10 +985,11 @@ public class Features extends Library {
      * @param arr   Array containing the input time series.
      * @param coeff The coefficient to be returned.
      * @return Array containing the power spectrum of the different frequencies for each time series in array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array spktWelchDensity(Array arr, int coeff) throws Exception {
         long ref = spktWelchDensity(arr.getReference(), coeff);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -940,10 +997,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return The standard deviation of each time series within arr.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array standardDeviation(Array arr) throws Exception {
         long ref = standardDeviation(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -962,10 +1020,11 @@ public class Features extends Library {
      * @param arr      Array containing the input time series.
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Returns the sum of all data points, that are present in the time series more than once.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sumOfReoccurringDatapoints(Array arr, boolean isSorted) throws Exception {
         long ref = sumOfReoccurringDatapoints(arr.getReference(), isSorted);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -973,10 +1032,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Array containing the the sum of all values, that are present in the time series more than once.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sumOfReoccurringValues(Array arr) throws Exception {
         long ref = sumOfReoccurringValues(arr.getReference(), false);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -985,10 +1045,11 @@ public class Features extends Library {
      * @param arr      Array containing the input time series.
      * @param isSorted Indicates if the input time series is sorted or not. Defaults to false.
      * @return Array containing the the sum of all values, that are present in the time series more than once.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sumOfReoccurringValues(Array arr, boolean isSorted) throws Exception {
         long ref = sumOfReoccurringValues(arr.getReference(), isSorted);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -996,10 +1057,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return Srray containing the sum of values in each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sumValues(Array arr) throws Exception {
         long ref = sumValues(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -1011,10 +1073,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param r   The percentage of the range to compare with.
      * @return An array denoting if the input time series look symmetric.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array symmetryLooking(Array arr, float r) throws Exception {
         long ref = symmetryLooking(arr.getReference(), r);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -1035,10 +1098,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param lag The lag to be computed.
      * @return An array containing the time reversal asymetry statistic value in each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array timeReversalAsymmetryStatistic(Array arr, int lag) throws Exception {
         long ref = timeReversalAsymmetryStatistic(arr.getReference(), lag);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -1047,10 +1111,11 @@ public class Features extends Library {
      * @param arr Array containing the input time series.
      * @param v   The value to be counted.
      * @return An array containing the count of the given value in each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array valueCount(Array arr, float v) throws Exception {
         long ref = valueCount(arr.getReference(), v);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -1058,10 +1123,11 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return An array containing the variance in each time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array variance(Array arr) throws Exception {
         long ref = variance(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -1070,9 +1136,10 @@ public class Features extends Library {
      *
      * @param arr Array containing the input time series.
      * @return An array denoting if the variance of array is greater than the standard deviation.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array varianceLargerThanStandardDeviation(Array arr) throws Exception {
         long ref = varianceLargerThanStandardDeviation(arr.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 }

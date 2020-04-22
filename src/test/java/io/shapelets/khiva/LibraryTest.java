@@ -35,7 +35,7 @@ public class LibraryTest {
 
         final String info = baos.toString();
         final String[] words = info.split(" ");
-        assertEquals(words[0], "ArrayFire");
+        assertEquals("ArrayFire", words[0]);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class LibraryTest {
         final String info = Library.getBackendInfo();
         assertNotNull(info);
         final String[] words = info.split(" ");
-        assertEquals(words[0], "ArrayFire");
+        assertEquals("ArrayFire", words[0]);
     }
 
     @Test
@@ -55,15 +55,15 @@ public class LibraryTest {
 
         if (cuda != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
-            assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CUDA);
+            assertEquals(Library.Backend.KHIVA_BACKEND_CUDA, Library.getKhivaBackend());
         }
         if (opencl != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_OPENCL);
-            assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_OPENCL);
+            assertEquals(Library.Backend.KHIVA_BACKEND_OPENCL, Library.getKhivaBackend());
         }
         if (cpu != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-            assertEquals(Library.getKhivaBackend(), Library.Backend.KHIVA_BACKEND_CPU);
+            assertEquals(Library.Backend.KHIVA_BACKEND_CPU, Library.getKhivaBackend());
         }
     }
 
@@ -78,21 +78,21 @@ public class LibraryTest {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CUDA);
             for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
                 Library.setKhivaDevice(i);
-                assertEquals(Library.getKhivaDeviceID(), i);
+                assertEquals(i, Library.getKhivaDeviceID());
             }
         }
         if (opencl != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_OPENCL);
             for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
                 Library.setKhivaDevice(i);
-                assertEquals(Library.getKhivaDeviceID(), i);
+                assertEquals(i, Library.getKhivaDeviceID());
             }
         }
         if (cpu != 0) {
             Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
             for (int i = 0; i < Library.getKhivaDeviceCount(); i++) {
                 Library.setKhivaDevice(i);
-                assertEquals(Library.getKhivaDeviceID(), i);
+                assertEquals(i, Library.getKhivaDeviceID());
             }
         }
     }

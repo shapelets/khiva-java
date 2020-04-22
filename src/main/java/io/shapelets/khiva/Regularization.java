@@ -36,6 +36,7 @@ public class Regularization extends Library {
      *                            default : mean
      *                            }
      * @return Array with the values of the group keys aggregated using the aggregationFunction.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array groupBy(Array arr, int aggregationFunction) throws Exception {
         return groupBy(arr, aggregationFunction, 1, 1);
@@ -61,6 +62,7 @@ public class Regularization extends Library {
      *                            }
      * @param nColumnsKey         Number of columns conforming the key.
      * @return Array with the values of the group keys aggregated using the aggregationFunction.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey) throws Exception {
         return groupBy(arr, aggregationFunction, nColumnsKey, 1);
@@ -88,10 +90,11 @@ public class Regularization extends Library {
      * @param nColumnsValue       Number of columns conforming the value (they are expected to be consecutive to the
      *                            column keys).
      * @return Array with the values of the group keys aggregated using the aggregationFunction.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey, int nColumnsValue)
         throws Exception {
         long ref = groupBy(arr.getReference(), aggregationFunction, nColumnsKey, nColumnsValue);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 }

@@ -52,10 +52,11 @@ public class Matrix extends Library {
      *              number of
      *              time series.
      * @return Array with the distances.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array mass(Array query, Array tss) throws Exception {
         long ref = mass(query.getReference(), tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -78,10 +79,11 @@ public class Matrix extends Library {
      *              time series.
      * @param n     Number of matches to return.
      * @return Array or arrays with the distances and indexes.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] findBestNOccurrences(Array query, Array tss, long n) throws Exception {
         long[] refs = findBestNOccurrences(query.getReference(), tss.getReference(), n);
-        return new Array[]{new Array(refs[0]), new Array(refs[1])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 
     /**
@@ -96,10 +98,11 @@ public class Matrix extends Library {
      * @param arrB Array containing the input time series.
      * @param m    Long with the subsequence length.
      * @return Array of arrays with the Matrix profile and index.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] stomp(Array arrA, Array arrB, long m) throws Exception {
         long[] refs = stomp(arrA.getReference(), arrB.getReference(), m);
-        return new Array[]{new Array(refs[0]), new Array(refs[1])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 
     /**
@@ -113,10 +116,11 @@ public class Matrix extends Library {
      * @param arr Array containing the input time series.
      * @param m   Long with the subsequence length.
      * @return Array of arrays with the Matrix profile and index.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] stompSelfJoin(Array arr, long m) throws Exception {
         long[] refs = stompSelfJoin(arr.getReference(), m);
-        return new Array[]{new Array(refs[0]), new Array(refs[1])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 
     /**
@@ -129,11 +133,12 @@ public class Matrix extends Library {
      * @param selfJoin Indicates whether the input profile comes from a self join operation or not. It determines
      *                 whether the mirror similar region is included in the output or not.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] findBestNMotifs(Array profile, Array index, long m, long n, boolean selfJoin)
         throws Exception {
         long[] refs = findBestNMotifs(profile.getReference(), index.getReference(), m, n, selfJoin);
-        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1]), Array.fromNative(refs[2])};
     }
 
     /**
@@ -144,6 +149,7 @@ public class Matrix extends Library {
      * @param m       Subsequence length value used to calculate the input matrix profile.
      * @param n       Number of motifs to extract.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] findBestNMotifs(Array profile, Array index, long m, long n) throws Exception {
         return findBestNMotifs(profile, index, m, n, false);
@@ -159,11 +165,12 @@ public class Matrix extends Library {
      * @param selfJoin Indicates whether the input profile comes from a self join operation or not. It determines
      *                 whether the mirror similar region is included in the output or not.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] findBestNDiscords(Array profile, Array index, long m, long n, boolean selfJoin)
         throws Exception {
         long[] refs = findBestNDiscords(profile.getReference(), index.getReference(), m, n, selfJoin);
-        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1]), Array.fromNative(refs[2])};
     }
 
     /**
@@ -174,6 +181,7 @@ public class Matrix extends Library {
      * @param m       Subsequence length value used to calculate the input matrix profile.
      * @param n       Number of discords to extract.
      * @return Array of arrays with the distances, the indices and the indices in the compared time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] findBestNDiscords(Array profile, Array index, long m, long n) throws Exception {
         return findBestNDiscords(profile, index, m, n, false);

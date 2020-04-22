@@ -26,10 +26,11 @@ public class Polynomial extends Library {
      * @param y   Array containing the y-coordinates of the sample points.
      * @param deg Degree of the fitting polynomial.
      * @return Array with the polynomial coefficients, highest power first.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array polyfit(Array x, Array y, int deg) throws Exception {
         long ref = polyfit(x.getReference(), y.getReference(), deg);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -42,9 +43,10 @@ public class Polynomial extends Library {
      *
      * @param p Array of polynomial coefficients.
      * @return Array with the roots of the polynomial.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array roots(Array p) throws Exception {
         long ref = roots(p.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 }

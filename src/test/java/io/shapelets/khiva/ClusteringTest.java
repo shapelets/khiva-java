@@ -32,7 +32,7 @@ public class ClusteringTest {
         int maxIterations = 100;
         int k = 3;
 
-        try (Array a = new Array(tss, dims)) {
+        try (Array a = Array.fromPrimitiveArray(tss, dims)) {
             Array[] result = Clustering.kMeans(a, k, tolerance, maxIterations);
             float[] expected = {0.0f, 0.1667f, 0.3333f, 0.5f, 1.5f, -1.5f, 0.8333f, -0.8333f, 4.8333f, 3.6667f, 2.6667f,
                                 1.6667f};
@@ -43,8 +43,9 @@ public class ClusteringTest {
                                     centroids[i] + centroids[i + 4] + centroids[i + 8], 1e-4f);
             }
 
-            result[0].close();
-            result[1].close();
+            for (Array r: result) {
+                r.close();
+            }
         }
     }
 
@@ -59,7 +60,7 @@ public class ClusteringTest {
         int maxIterations = 100;
         int k = 3;
 
-        try (Array a = new Array(tss, dims)) {
+        try (Array a = Array.fromPrimitiveArray(tss, dims)) {
             Array[] result = Clustering.kShape(a, k, tolerance, maxIterations);
             float[] expected_c = {-0.5234f, 0.1560f, -0.3627f, -1.2764f, -0.7781f, 0.9135f, 1.8711f, -0.7825f, 1.5990f,
                                   0.1701f, 0.4082f, 0.8845f, -1.4969f, -0.7825f, -0.6278f, 1.3812f, -2.0090f, 0.5022f,
@@ -69,9 +70,9 @@ public class ClusteringTest {
             for (int i = 0; i < centroids.length; i++) {
                 assertEquals(expected_c[i], centroids[i], 1e-4f);
             }
-
-            result[0].close();
-            result[1].close();
+            for (Array r: result) {
+                r.close();
+            }
         }
     }
 }

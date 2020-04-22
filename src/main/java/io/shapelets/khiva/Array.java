@@ -16,185 +16,235 @@ import java.util.Objects;
  */
 public class Array extends Library implements AutoCloseable {
 
-    private long reference;
+    private final long reference;
 
-    /**
-     * Data type of the Array
-     */
-    public enum Dtype {
-        /**
-         * Floating point of single precision. khiva.dtype.
-         */
-        f32,
-        /**
-         * Complex floating point of single precision. khiva.dtype.
-         */
-        c32,
-        /**
-         * Floating point of double precision. khiva.dtype.
-         */
-        f64,
-        /**
-         * Complex floating point of double precision. khiva.dtype.
-         */
-        c64,
-        /**
-         * Boolean. khiva.dtype.
-         */
-        b8,
-        /**
-         * 32 bits Int. khiva.dtype.
-         */
-        s32,
-        /**
-         * 32 bits Unsigned Int. khiva.dtype.
-         */
-        u32,
-        /**
-         * 8 bits Unsigned Int. khiva.dtype.
-         */
-        u8,
-        /**
-         * 64 bits Integer. khiva.dtype.
-         */
-        s64,
-        /**
-         * 64 bits Unsigned Int. khiva.dtype.
-         */
-        u64,
-        /**
-         * 16 bits Int. khiva.dtype.
-         */
-        s16,
-        /**
-         * 16 bits Unsigned Int. khiva.dtype.
-         */
-        u16
+    // Constructor accepting a native pointer address.
+    //
+    private Array(long ref) {
+        this.reference = ref;
     }
 
-    public Array(double[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of doubles.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(double[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new Exception("Mismatching dims and array size");
         }
-        this.reference = createArrayFromDouble(arr, dims);
+        return fromNative(createArrayFromDouble(arr, dims));
     }
 
-    private int getNumElements(long[] dims) throws Exception {
+    // Returns the number of elements for the specified dimensions.
+    //
+    private static int getNumElements(long[] dims) throws Exception {
         long[] arrayDims = Array.dim4(dims);
         int totalSize = 1;
         for (long dim : arrayDims) totalSize *= dim;
         return totalSize;
     }
 
-    public Array(float[] arr, long[] dims) throws Exception {
-        Objects.requireNonNull(arr);
-        int totalSize = getNumElements(dims);
-
-        if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
-        }
-        this.reference = createArrayFromFloat(arr, dims);
+    /**
+     * Creates a Khiva array from a native pointer address.
+     *
+     * @return A Khiva Array.
+     */
+    static public Array fromNative(long reference) {
+        return new Array(reference);
     }
 
-    public Array(int[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of floats.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(float[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
-        if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
-        }
-        this.reference = createArrayFromInt(arr, dims);
-    }
-
-    public Array(FloatComplex[] arr, long[] dims) throws Exception {
-        Objects.requireNonNull(arr);
-        int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
             throw new IllegalArgumentException("Mismatching dims and array size");
         }
-        this.reference = createArrayFromFloatComplex(arr, dims);
+        return fromNative(createArrayFromFloat(arr, dims));
     }
 
-    public Array(DoubleComplex[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of ints.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(int[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
+            throw new IllegalArgumentException("Mismatching dims and array size");
         }
-        this.reference = createArrayFromDoubleComplex(arr, dims);
+        return fromNative(createArrayFromInt(arr, dims));
     }
 
-    public Array(boolean[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of FloatComplex.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(FloatComplex[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
+            throw new IllegalArgumentException("Mismatching dims and array size");
         }
-        this.reference = createArrayFromBoolean(arr, dims);
+        return fromNative(createArrayFromFloatComplex(arr, dims));
     }
 
-    public Array(short[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of DoubleComplex.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(DoubleComplex[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
+            throw new IllegalArgumentException("Mismatching dims and array size");
         }
-        this.reference = createArrayFromShort(arr, dims);
+        return fromNative(createArrayFromDoubleComplex(arr, dims));
     }
 
-    public Array(byte[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of boolean.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(boolean[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
+            throw new IllegalArgumentException("Mismatching dims and array size");
         }
-        this.reference = createArrayFromByte(arr, dims);
+        return fromNative(createArrayFromBoolean(arr, dims));
     }
 
-
-    public Array(long[] arr, long[] dims) throws Exception {
+    /**
+     * Creates a Khiva array from a primitive array of short.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(short[] arr, long[] dims) throws Exception {
         Objects.requireNonNull(arr);
         int totalSize = getNumElements(dims);
-
         if (arr.length > totalSize || arr.length < totalSize) {
-            throw new Exception("Mismatching dims and array size");
+            throw new IllegalArgumentException("Mismatching dims and array size");
         }
-        this.reference = createArrayFromLong(arr, dims);
+        return fromNative(createArrayFromShort(arr, dims));
     }
 
-    public Array(long ref) {
-        this.reference = ref;
+    /**
+     * Creates a Khiva array from a primitive array of byte.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mismatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(byte[] arr, long[] dims) throws Exception {
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
+        if (arr.length > totalSize || arr.length < totalSize) {
+            throw new IllegalArgumentException("Mismatching dims and array size");
+        }
+        return fromNative(createArrayFromByte(arr, dims));
     }
 
-    public Array(Array other) throws Exception {
-        this.reference = other.copy().reference;
+    /**
+     * Creates a Khiva array from a primitive array of long.
+     *
+     * @param arr  input array to initialize from.
+     * @param dims an array specifying the dimensions of the input Array.
+     * @throws NullPointerException     if the input array or dimensions are null.
+     * @throws IllegalArgumentException if there is a mistmatch between input array size and dimensions.
+     * @throws Exception                if the native function call fails.
+     */
+    static public Array fromPrimitiveArray(long[] arr, long[] dims) throws Exception {
+        Objects.requireNonNull(arr);
+        int totalSize = getNumElements(dims);
+        if (arr.length > totalSize || arr.length < totalSize) {
+            throw new IllegalArgumentException("Mismatching dims and array size");
+        }
+        return fromNative(createArrayFromLong(arr, dims));
     }
 
-    private native long createArrayFromDouble(double[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromDouble(double[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromFloat(float[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromFloat(float[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromBoolean(boolean[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromBoolean(boolean[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromInt(int[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromInt(int[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromByte(byte[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromByte(byte[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromShort(short[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromShort(short[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromLong(long[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromLong(long[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromFloatComplex(FloatComplex[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromFloatComplex(FloatComplex[] arr, long[] dims) throws Exception;
 
-    private native long createArrayFromDoubleComplex(DoubleComplex[] arr, long[] dims) throws Exception;
+    private native static long createArrayFromDoubleComplex(DoubleComplex[] arr, long[] dims) throws Exception;
+
+    /**
+     * Gets the dim4 in order to construct the Array.
+     *
+     * @param dims The dimensions.
+     * @return The dim4.
+     * @throws java.lang.Exception When the input parameter is null or the length is greater than 4, because ArrayFire
+     *                             supports up to 4 dimension.
+     */
+    protected static long[] dim4(long[] dims) throws Exception {
+
+        if (dims == null) {
+            throw new Exception("Null dimensions object provided");
+        }
+        else if (dims.length > 4) {
+            throw new Exception("ArrayFire supports up to 4 dimensions only");
+        }
+
+        long[] arrayDims;
+        arrayDims = new long[]{1, 1, 1, 1};
+        System.arraycopy(dims, 0, arrayDims, 0, dims.length);
+
+        return arrayDims;
+    }
 
     private native void deleteArray() throws Exception;
 
@@ -276,7 +326,6 @@ public class Array extends Library implements AutoCloseable {
 
     private native long as(int type) throws Exception;
 
-
     /**
      * Gets the Array reference.
      *
@@ -287,45 +336,13 @@ public class Array extends Library implements AutoCloseable {
     }
 
     /**
-     * Sets the Array reference.
-     *
-     * @param ref Reference.
-     */
-    public void setReference(long ref) {
-        this.reference = ref;
-    }
-
-    /**
      * Gets the Array type.
      *
      * @return Array data type.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Dtype getType() throws Exception {
         return Dtype.values()[nativeGetType()];
-    }
-
-    /**
-     * Gets the dim4 in order to construct the Array.
-     *
-     * @param dims The dimensions.
-     * @return The dim4.
-     * @throws java.lang.Exception When the input parameter is null or the length is greater than 4, because ArrayFire
-     *                             supports up to 4 dimension.
-     */
-    protected static long[] dim4(long[] dims) throws Exception {
-
-        if (dims == null) {
-            throw new Exception("Null dimensions object provided");
-        }
-        else if (dims.length > 4) {
-            throw new Exception("ArrayFire supports up to 4 dimensions only");
-        }
-
-        long[] arrayDims;
-        arrayDims = new long[]{1, 1, 1, 1};
-        System.arraycopy(dims, 0, arrayDims, 0, dims.length);
-
-        return arrayDims;
     }
 
     /**
@@ -333,6 +350,7 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param <Any> The data type to be returned.
      * @return The data to an array of its type.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public <Any> Any getData() throws Exception {
         switch (getType()) {
@@ -362,6 +380,8 @@ public class Array extends Library implements AutoCloseable {
 
     /**
      * Prints the Array.
+     *
+     * @throws java.lang.Exception If the native function call fails.
      */
     public void print() throws Exception {
         nativePrint();
@@ -371,6 +391,7 @@ public class Array extends Library implements AutoCloseable {
      * Gets the Array dimensions.
      *
      * @return The dimensions.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public long[] getDims() throws Exception {
         return nativeGetDims();
@@ -382,10 +403,11 @@ public class Array extends Library implements AutoCloseable {
      * @param dim The dimension along which the join occurs.
      * @param rhs Right-hand side array for the operation.
      * @return The result of joining the given arrays along the specified dimension.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array join(int dim, Array rhs) throws Exception {
         long ref = join(dim, rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -393,10 +415,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The sum of both arrays.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array add(Array rhs) throws Exception {
         long ref = add(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -404,10 +427,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The product of both arrays.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array mul(Array rhs) throws Exception {
         long ref = mul(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -415,10 +439,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The subtraction of both arrays.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array sub(Array rhs) throws Exception {
         long ref = sub(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -426,10 +451,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The division of both arrays.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array div(Array rhs) throws Exception {
         long ref = div(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -437,10 +463,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The modulo of this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array mod(Array rhs) throws Exception {
         long ref = mod(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -448,10 +475,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param exponent Exponent for the power operation.
      * @return The power of this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array pow(Array exponent) throws Exception {
         long ref = pow(exponent.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -459,10 +487,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array lt(Array rhs) throws Exception {
         long ref = lt(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -470,10 +499,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array gt(Array rhs) throws Exception {
         long ref = gt(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -481,10 +511,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array le(Array rhs) throws Exception {
         long ref = le(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -492,10 +523,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array ge(Array rhs) throws Exception {
         long ref = ge(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -503,10 +535,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array eq(Array rhs) throws Exception {
         long ref = eq(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -514,10 +547,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of comparing element-wise this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array ne(Array rhs) throws Exception {
         long ref = ne(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -525,10 +559,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of an AND operation of this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array bitAnd(Array rhs) throws Exception {
         long ref = bitAnd(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -536,10 +571,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of an OR operation of this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array bitOr(Array rhs) throws Exception {
         long ref = bitOr(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -547,10 +583,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of an eXclusive-OR operation of this array with the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array bitXor(Array rhs) throws Exception {
         long ref = bitXor(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -559,10 +596,11 @@ public class Array extends Library implements AutoCloseable {
      * @param n Number of bits to be shifted.
      * @return The result of a left bit shift operation to this array as many times as specified in the
      * parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array bitShiftL(int n) throws Exception {
         long ref = nativeBitShiftL(n);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -571,20 +609,22 @@ public class Array extends Library implements AutoCloseable {
      * @param n Number of bits to be shifted.
      * @return The result of a right bit shift operation to this array as many times as specified in the
      * parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array bitShiftR(int n) throws Exception {
         long ref = nativeBitShiftR(n);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
      * Logical NOT operation to this array.
      *
      * @return The result of a logical NOT operation to this array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array not() throws Exception {
         long ref = nativeNot();
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -592,16 +632,18 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param conjugate If true a conjugate transposition is performed.
      * @return The transposed (conjugate) array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array transpose(boolean conjugate) throws Exception {
         long ref = nativeTranspose(conjugate);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
      * Transposes this array without conjugating it.
      *
      * @return The transposed array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array transpose() throws Exception {
         return transpose(false);
@@ -612,10 +654,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param index The column to be retrieved.
      * @return The specified column of this array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array col(int index) throws Exception {
         long ref = nativeCol(index);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -624,10 +667,11 @@ public class Array extends Library implements AutoCloseable {
      * @param first Start of the subset of columns to be retrieved.
      * @param last  End of the subset of columns to be retrieved.
      * @return The subset of columns of this array starting at first and finishing at last, both inclusive.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array cols(int first, int last) throws Exception {
         long ref = nativeCols(first, last);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -635,10 +679,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param index The row to be retrieved.
      * @return The specified row of this array.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array row(int index) throws Exception {
         long ref = nativeRow(index);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -647,10 +692,11 @@ public class Array extends Library implements AutoCloseable {
      * @param first Start of the subset of rows to be retrieved.
      * @param last  End of the subset of rows to be retrieved.
      * @return The subset of rows of this array starting at first and finishing at last, both inclusive.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array rows(int first, int last) throws Exception {
         long ref = nativeRows(first, last);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -658,20 +704,22 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param rhs Right-hand side array for the operation.
      * @return The result of a matrix multiplication of both arrays.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array matmul(Array rhs) throws Exception {
         long ref = matmul(rhs.reference);
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
      * Performs a deep copy of this array. Both the data stored in the device and all the object properties in Java.
      *
      * @return A deep copy of this array.
+     * @throws java.lang.Exception If the native function call fails.
      */
-    public Array copy() throws Exception {
+    private Array copy() throws Exception {
         long ref = nativeCopy();
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     /**
@@ -679,10 +727,11 @@ public class Array extends Library implements AutoCloseable {
      *
      * @param type Target type of the output array.
      * @return The result of changing the type of the input array to the one passed as parameter.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public Array as(Dtype type) throws Exception {
         long ref = as(type.ordinal());
-        return new Array(ref);
+        return fromNative(ref);
     }
 
     @Override

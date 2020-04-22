@@ -30,7 +30,8 @@ public class RegressionTest {
         float[] timeSeriesYss = {0.2217416f, 0.06344161f, 0.77944375f, 0.72174137f, 0.19413884f, 0.51146167f,
                                  0.06880307f, 0.39414268f, 0.98172767f, 0.30490851f};
         long[] dims = {10, 1, 1, 1};
-        try (Array xss = new Array(timeSeriesXss, dims); Array yss = new Array(timeSeriesYss, dims)) {
+        try (Array xss = Array.fromPrimitiveArray(timeSeriesXss, dims);
+             Array yss = Array.fromPrimitiveArray(timeSeriesYss, dims)) {
             Array[] result = Regression.linear(xss, yss);
             float[] slope = result[0].getData();
             float[] intercept = result[1].getData();
@@ -61,7 +62,8 @@ public class RegressionTest {
                                  0.77944375f, 0.72174137f, 0.19413884f, 0.51146167f, 0.06880307f, 0.39414268f,
                                  0.98172767f, 0.30490851f};
         long[] dims = {10, 2, 1, 1};
-        try (Array xss = new Array(timeSeriesXss, dims); Array yss = new Array(timeSeriesYss, dims)) {
+        try (Array xss = Array.fromPrimitiveArray(timeSeriesXss, dims);
+             Array yss = Array.fromPrimitiveArray(timeSeriesYss, dims)) {
             Array[] result = Regression.linear(xss, yss);
             float[] slope = result[0].getData();
             float[] intercept = result[1].getData();

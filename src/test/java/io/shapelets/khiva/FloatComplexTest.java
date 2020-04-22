@@ -19,8 +19,8 @@ public class FloatComplexTest {
     @Test
     public void testConstructor() {
         FloatComplex fc = new FloatComplex();
-        assertEquals(fc.getReal(), 0, DELTA);
-        assertEquals(fc.getImag(), 0, DELTA);
+        assertEquals(0, fc.getReal(), DELTA);
+        assertEquals(0, fc.getImag(), DELTA);
     }
 
     @Test
@@ -28,8 +28,8 @@ public class FloatComplexTest {
         FloatComplex fc = new FloatComplex();
         fc.setReal(1f);
         fc.setImag(2f);
-        assertEquals(fc.getReal(), 1, DELTA);
-        assertEquals(fc.getImag(), 2, DELTA);
+        assertEquals(1, fc.getReal(), DELTA);
+        assertEquals(2, fc.getImag(), DELTA);
     }
 
     @Test
@@ -37,8 +37,8 @@ public class FloatComplexTest {
         FloatComplex fc = new FloatComplex();
         fc.setReal(1f);
         fc.setImag(2f);
-        assertEquals(fc.toString(), "1.0 + 2.0i");
+        assertEquals("1.0 + 2.0i", fc.toString());
         fc.setImag(-2f);
-        assertEquals(fc.toString(), "1.0 - 2.0i");
+        assertEquals("1.0 - 2.0i", fc.toString());
     }
 }

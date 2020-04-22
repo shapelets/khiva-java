@@ -35,6 +35,7 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return The covariance matrix of the time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array covariance(Array tss) throws Exception {
         return covariance(tss, true);
@@ -46,10 +47,11 @@ public class Statistics extends Library {
      * @param tss      Array containing the input time series.
      * @param unbiased Determines whether it divides by n - 1 (if false) or n (if true).
      * @return The covariance matrix of the time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array covariance(Array tss, boolean unbiased) throws Exception {
         long ref = covariance(tss.getReference(), unbiased);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -57,10 +59,11 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return The kurtosis of tss.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array kurtosis(Array tss) throws Exception {
         long ref = kurtosis(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -94,10 +97,11 @@ public class Statistics extends Library {
      *             one indicates the number of time series.
      * @param lags Number of lags being tested.
      * @return The updated ref and the Ljung-Box statistic test.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array ljungBox(Array tss, long lags) throws Exception {
         long ref = ljungBox(tss.getReference(), lags);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -106,10 +110,11 @@ public class Statistics extends Library {
      * @param tss Array containing the input time series.
      * @param k   The specific moment to be calculated.
      * @return The kth moment of the given time series.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array moment(Array tss, int k) throws Exception {
         long ref = moment(tss.getReference(), k);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -118,6 +123,7 @@ public class Statistics extends Library {
      * @param tss Array containing the input time series.
      * @param q   Percentile(s) at which to extract score(s). One or many.
      * @return Values at the given quantile.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array quantile(Array tss, Array q) throws Exception {
         return quantile(tss, q, 1e8f);
@@ -130,10 +136,11 @@ public class Statistics extends Library {
      * @param q         Percentile(s) at which to extract score(s). One or many.
      * @param precision Number of decimals expected.
      * @return Values at the given quantile.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array quantile(Array tss, Array q, float precision) throws Exception {
         long ref = quantile(tss.getReference(), q.getReference(), precision);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -143,6 +150,7 @@ public class Statistics extends Library {
      * @param quantiles Number of quantiles to extract. From 0 to 1, step 1/quantiles.
      * @return Array with a matrix with the categories, one category per row, the start of the category in the first
      * column and the end in the second category.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array quantilesCut(Array tss, float quantiles) throws Exception {
         return quantilesCut(tss, quantiles, 1e-8f);
@@ -157,10 +165,11 @@ public class Statistics extends Library {
      * @param precision Number of decimals expected.
      * @return Array with a matrix with the categories, one category per row, the start of the category in the first
      * column and the end in the second category.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array quantilesCut(Array tss, float quantiles, float precision) throws Exception {
         long ref = quantilesCut(tss.getReference(), quantiles, precision);
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -168,10 +177,11 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return The sample standard deviation.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sampleStdev(Array tss) throws Exception {
         long ref = sampleStdev(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -180,9 +190,10 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return Array containing the skewness of each time series in tss.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array skewness(Array tss) throws Exception {
         long ref = skewness(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 }

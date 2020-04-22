@@ -29,10 +29,11 @@ public class Clustering extends Library {
      * @param tolerance     The maximum error tolerance.
      * @param maxIterations The maximum number of iterations.
      * @return An Array of arrays with the resulting centroids and labels.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) throws Exception {
         long[] refs = kMeans(tss.getReference(), k, tolerance, maxIterations);
-        return new Array[]{new Array(refs[0]), new Array(refs[1])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 
     /**
@@ -46,9 +47,10 @@ public class Clustering extends Library {
      * @param tolerance     The maximum error tolerance.
      * @param maxIterations The maximum number of iterations.
      * @return An Array of arrays with the resulting centroids and labels.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) throws Exception {
         long[] refs = kShape(tss.getReference(), k, tolerance, maxIterations);
-        return new Array[]{new Array(refs[0]), new Array(refs[1])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 }

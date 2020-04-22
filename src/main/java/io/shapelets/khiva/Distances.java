@@ -34,10 +34,11 @@ public class Distances extends Library {
      * @return Array with an upper triangular matrix where each position corresponds to the distance between two
      * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance
      * between time series 0 and time series 1.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array euclidean(Array tss) throws Exception {
         long ref = euclidean(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -48,10 +49,11 @@ public class Distances extends Library {
      * @return Array with an upper triangular matrix where each position corresponds to the distance between
      * two time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the
      * distance between time series 0 and time series 1.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array dtw(Array tss) throws Exception {
         long ref = dtw(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -63,10 +65,11 @@ public class Distances extends Library {
      * distance between two time series. Diagonal elements will be zero. For example: Position row 0 column 1 records
      * the
      * distance between time series 0 and time series 1.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array hamming(Array tss) throws Exception {
         long ref = hamming(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -79,10 +82,11 @@ public class Distances extends Library {
      * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance between
      * time
      * series 0 and time series 1.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array sbd(Array tss) throws Exception {
         long ref = sbd(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -94,10 +98,11 @@ public class Distances extends Library {
      * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance between
      * time
      * series 0 and time series 1.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array manhattan(Array tss) throws Exception {
         long ref = manhattan(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -107,9 +112,10 @@ public class Distances extends Library {
      * @return Array with an upper triangular matrix where each position corresponds to the distance between two
      * time series. Diagonal elements will be zero. For example: Position row 0 column 1 records the distance
      * between time series 0 and time series 1.
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array squaredEuclidean(Array tss) throws Exception {
         long ref = squaredEuclidean(tss.getReference());
-        return new Array(ref);
+        return Array.fromNative(ref);
     }
 }

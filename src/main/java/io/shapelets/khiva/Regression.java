@@ -31,10 +31,11 @@ public class Regression extends Library {
      * Test with t-distribution of the test statistic.
      * stderrest Standard error of the estimated gradient.
      * }
+     * @throws java.lang.Exception If the native function call fails.
      */
     public static Array[] linear(Array xss, Array yss) throws Exception {
         long[] refs = linear(xss.getReference(), yss.getReference());
-        return new Array[]{new Array(refs[0]), new Array(refs[1]), new Array(refs[2]), new Array(refs[3]),
-                           new Array(refs[4])};
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1]), Array.fromNative(refs[2]), Array.fromNative(refs[3]),
+                           Array.fromNative(refs[4])};
     }
 }
