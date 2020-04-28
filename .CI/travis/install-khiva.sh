@@ -17,7 +17,7 @@ cmake --version
 python3 --version
 
 # Cloning Github repo into khiva-library folder
-git clone -b v0.5.0 --depth 1 --recurse-submodules https://github.com/shapelets/khiva.git khiva-library
+git clone --depth 1 --recurse-submodules https://github.com/shapelets/khiva.git khiva-library
 cd khiva-library
 mkdir -p build && cd build
 conan profile new --detect --force default
