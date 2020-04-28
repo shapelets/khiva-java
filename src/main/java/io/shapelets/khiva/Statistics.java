@@ -14,29 +14,30 @@ package io.shapelets.khiva;
  */
 public class Statistics extends Library {
 
-    private native static long[] covariance(long ref, boolean unbiased) throws Exception;
+    private native static long covariance(long ref, boolean unbiased);
 
-    private native static long[] moment(long ref, int k) throws Exception;
+    private native static long moment(long ref, int k);
 
-    private native static long[] sampleStdev(long ref) throws Exception;
+    private native static long sampleStdev(long ref);
 
-    private native static long[] kurtosis(long ref) throws Exception;
+    private native static long kurtosis(long ref);
 
-    private native static long[] ljungBox(long ref, long lags) throws Exception;
+    private native static long ljungBox(long ref, long lags);
 
-    private native static long[] skewness(long ref) throws Exception;
+    private native static long skewness(long ref);
 
-    private native static long[] quantile(long ref, long refQ, float precision) throws Exception;
+    private native static long quantile(long ref, long refQ, float precision);
 
-    private native static long[] quantilesCut(long ref, float quantiles, float precision) throws Exception;
+    private native static long quantilesCut(long ref, float quantiles, float precision);
 
     /**
      * Returns the covariance matrix of the time series contained in tss.
      *
      * @param tss Array containing the input time series.
      * @return The covariance matrix of the time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array covariance(Array tss) throws Exception {
+    public static Array covariance(Array tss) {
         return covariance(tss, true);
     }
 
@@ -46,11 +47,11 @@ public class Statistics extends Library {
      * @param tss      Array containing the input time series.
      * @param unbiased Determines whether it divides by n - 1 (if false) or n (if true).
      * @return The covariance matrix of the time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array covariance(Array tss, boolean unbiased) throws Exception {
-        long[] refs = covariance(tss.getReference(), unbiased);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array covariance(Array tss, boolean unbiased) {
+        long ref = covariance(tss.getReference(), unbiased);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -58,15 +59,16 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return The kurtosis of tss.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array kurtosis(Array tss) throws Exception {
-        long[] refs = kurtosis(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array kurtosis(Array tss) {
+        long ref = kurtosis(tss.getReference());
+        return Array.fromNative(ref);
     }
 
     /**
-     * The Ljung-Box test checks that data whithin the time series are independently distributed (i.e. the correlations in
+     * The Ljung-Box test checks that data whithin the time series are independently distributed (i.e. the
+     * correlations in
      * the population from which the sample is taken are 0, so that any observed correlations in the data result from
      * randomness of the sampling process). Data are no independently distributed, if they exhibit serial correlation.
      * <p>
@@ -90,15 +92,16 @@ public class Statistics extends Library {
      * [1] G. M. Ljung  G. E. P. Box (1978). On a measure of lack of fit in time series models.
      * Biometrika, Volume 65, Issue 2, 1 August 1978, Pages 297-303.
      *
-     * @param tss  Expects an input array whose dimension zero is the length of the time series (all the same) and dimension
+     * @param tss  Expects an input array whose dimension zero is the length of the time series (all the same) and
+     *             dimension
      *             one indicates the number of time series.
      * @param lags Number of lags being tested.
      * @return The updated ref and the Ljung-Box statistic test.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array ljungBox(Array tss, long lags) throws Exception {
-        long[] refs = ljungBox(tss.getReference(), lags);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array ljungBox(Array tss, long lags) {
+        long ref = ljungBox(tss.getReference(), lags);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -107,11 +110,11 @@ public class Statistics extends Library {
      * @param tss Array containing the input time series.
      * @param k   The specific moment to be calculated.
      * @return The kth moment of the given time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array moment(Array tss, int k) throws Exception {
-        long[] refs = moment(tss.getReference(), k);
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array moment(Array tss, int k) {
+        long ref = moment(tss.getReference(), k);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -120,8 +123,9 @@ public class Statistics extends Library {
      * @param tss Array containing the input time series.
      * @param q   Percentile(s) at which to extract score(s). One or many.
      * @return Values at the given quantile.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array quantile(Array tss, Array q) throws Exception {
+    public static Array quantile(Array tss, Array q) {
         return quantile(tss, q, 1e8f);
     }
 
@@ -132,12 +136,11 @@ public class Statistics extends Library {
      * @param q         Percentile(s) at which to extract score(s). One or many.
      * @param precision Number of decimals expected.
      * @return Values at the given quantile.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array quantile(Array tss, Array q, float precision) throws Exception {
-        long[] refs = quantile(tss.getReference(), q.getReference(), precision);
-        tss.setReference(refs[0]);
-        q.setReference(refs[1]);
-        return new Array(refs[2]);
+    public static Array quantile(Array tss, Array q, float precision) {
+        long ref = quantile(tss.getReference(), q.getReference(), precision);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -147,8 +150,9 @@ public class Statistics extends Library {
      * @param quantiles Number of quantiles to extract. From 0 to 1, step 1/quantiles.
      * @return Array with a matrix with the categories, one category per row, the start of the category in the first
      * column and the end in the second category.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array quantilesCut(Array tss, float quantiles) throws Exception {
+    public static Array quantilesCut(Array tss, float quantiles) {
         return quantilesCut(tss, quantiles, 1e-8f);
 
     }
@@ -161,11 +165,11 @@ public class Statistics extends Library {
      * @param precision Number of decimals expected.
      * @return Array with a matrix with the categories, one category per row, the start of the category in the first
      * column and the end in the second category.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array quantilesCut(Array tss, float quantiles, float precision) throws Exception {
-        long[] refs = quantilesCut(tss.getReference(), quantiles, precision);
-        tss.setReference(refs[0]);
-        return new Array((refs[1]));
+    public static Array quantilesCut(Array tss, float quantiles, float precision) {
+        long ref = quantilesCut(tss.getReference(), quantiles, precision);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -173,11 +177,11 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return The sample standard deviation.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array sampleStdev(Array tss) throws Exception {
-        long[] refs = sampleStdev(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array sampleStdev(Array tss) {
+        long ref = sampleStdev(tss.getReference());
+        return Array.fromNative(ref);
     }
 
     /**
@@ -186,10 +190,10 @@ public class Statistics extends Library {
      *
      * @param tss Array containing the input time series.
      * @return Array containing the skewness of each time series in tss.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array skewness(Array tss) throws Exception {
-        long[] refs = skewness(tss.getReference());
-        tss.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array skewness(Array tss) {
+        long ref = skewness(tss.getReference());
+        return Array.fromNative(ref);
     }
 }

@@ -14,9 +14,9 @@ package io.shapelets.khiva;
  */
 public class Clustering extends Library {
 
-    private native static long[] kMeans(long tss, int k, float tolerance, int maxIterations) throws Exception;
+    private native static long[] kMeans(long tss, int k, float tolerance, int maxIterations);
 
-    private native static long[] kShape(long tss, int k, float tolerance, int maxIterations) throws Exception;
+    private native static long[] kShape(long tss, int k, float tolerance, int maxIterations);
 
     /**
      * Calculates the KMeans algorithm.
@@ -29,12 +29,11 @@ public class Clustering extends Library {
      * @param tolerance     The maximum error tolerance.
      * @param maxIterations The maximum number of iterations.
      * @return An Array of arrays with the resulting centroids and labels.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) throws Exception {
+    public static Array[] kMeans(Array tss, int k, float tolerance, int maxIterations) {
         long[] refs = kMeans(tss.getReference(), k, tolerance, maxIterations);
-        tss.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2])};
-        return result;
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 
     /**
@@ -48,11 +47,10 @@ public class Clustering extends Library {
      * @param tolerance     The maximum error tolerance.
      * @param maxIterations The maximum number of iterations.
      * @return An Array of arrays with the resulting centroids and labels.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) throws Exception {
+    public static Array[] kShape(Array tss, int k, float tolerance, int maxIterations) {
         long[] refs = kShape(tss.getReference(), k, tolerance, maxIterations);
-        tss.setReference(refs[0]);
-        Array[] result = {new Array(refs[1]), new Array(refs[2])};
-        return result;
+        return new Array[]{Array.fromNative(refs[0]), Array.fromNative(refs[1])};
     }
 }

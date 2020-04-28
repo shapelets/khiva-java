@@ -83,7 +83,7 @@ public class FloatComplex {
         if (imag < 0) str = str + " - ";
         else str = str + " + ";
 
-        return str + String.valueOf(Math.abs(imag)) + "i";
+        return str + Math.abs(imag) + "i";
     }
 
     /**

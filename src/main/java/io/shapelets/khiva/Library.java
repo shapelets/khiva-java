@@ -15,17 +15,8 @@ package io.shapelets.khiva;
  */
 public class Library {
 
-    private static String OS;
-
     static {
-        OS = System.getProperty("os.name").toLowerCase();
-        if (OS.indexOf("mac") >= 0) {
-            System.load("/usr/local/lib/libkhiva_jni.dylib");
-        } else if (OS.indexOf("win") >= 0) {
-            System.load("C:\\Program Files\\Khiva\\v0\\lib\\khiva_jni.dll");
-        } else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0) {
-            System.load("/usr/local/lib/libkhiva_jni.so");
-        }
+        System.loadLibrary("khiva_jni");
     }
 
     /**
@@ -72,8 +63,6 @@ public class Library {
          */
         public static Backend getBackendFromOrdinal(int ordinal) {
             switch (ordinal) {
-                case 0:
-                    return Backend.KHIVA_BACKEND_DEFAULT;
                 case 1:
                     return Backend.KHIVA_BACKEND_CPU;
                 case 2:
@@ -86,27 +75,29 @@ public class Library {
         }
     }
 
-    private native static String backendInfo() throws Exception;
+    private native static String backendInfo();
 
-    private native static void setBackend(int backend) throws Exception;
+    private native static void setBackend(int backend);
 
-    private native static void setDevice(int device) throws Exception;
+    private native static void setDevice(int device);
 
-    private native static int getBackends() throws Exception;
+    private native static int getBackends();
 
-    private native static int getDeviceID() throws Exception;
+    private native static int getDeviceID();
 
-    private native static int getBackend() throws Exception;
+    private native static int getBackend();
 
-    private native static int getDeviceCount() throws Exception;
+    private native static int getDeviceCount();
 
-    private native static String version() throws Exception;
+    private native static String version();
 
 
     /**
      * Prints information from the current backend.
+     *
+     * @throws KhivaException If the native function call fails.
      */
-    public static void printBackendInfo() throws Exception {
+    public static void printBackendInfo() {
         System.out.println(backendInfo());
     }
 
@@ -114,8 +105,9 @@ public class Library {
      * Gets information from the current backend.
      *
      * @return String with information from the active backend.
+     * @throws KhivaException If the native function call fails.
      */
-    public static String getBackendInfo() throws Exception {
+    public static String getBackendInfo() {
         return backendInfo();
     }
 
@@ -123,8 +115,9 @@ public class Library {
      * Sets the Khiva backend.
      *
      * @param khivaBE selected backend.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void setKhivaBackend(Backend khivaBE) throws Exception {
+    public static void setKhivaBackend(Backend khivaBE) {
         setBackend(khivaBE.getKhivaOrdinal());
     }
 
@@ -132,8 +125,9 @@ public class Library {
      * Sets the Khiva device.
      *
      * @param device Device selected.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void setKhivaDevice(int device) throws Exception {
+    public static void setKhivaDevice(int device) {
         setDevice(device);
     }
 
@@ -142,8 +136,9 @@ public class Library {
      * Gets the available backends.
      *
      * @return The available backends.
+     * @throws KhivaException If the native function call fails.
      */
-    public static int getKhivaBackends() throws Exception {
+    public static int getKhivaBackends() {
         return getBackends();
     }
 
@@ -151,8 +146,9 @@ public class Library {
      * Get the device id.
      *
      * @return The device id.
+     * @throws KhivaException If the native function call fails.
      */
-    public static int getKhivaDeviceID() throws Exception {
+    public static int getKhivaDeviceID() {
         return getDeviceID();
     }
 
@@ -160,8 +156,9 @@ public class Library {
      * Gets the active backend.
      *
      * @return The active backend.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Backend getKhivaBackend() throws Exception {
+    public static Backend getKhivaBackend() {
         return Backend.getBackendFromOrdinal(getBackend());
     }
 
@@ -169,8 +166,9 @@ public class Library {
      * Gets the devices count.
      *
      * @return The devices count.
+     * @throws KhivaException If the native function call fails.
      */
-    public static int getKhivaDeviceCount() throws Exception {
+    public static int getKhivaDeviceCount() {
         return getDeviceCount();
     }
 
@@ -178,8 +176,9 @@ public class Library {
      * Gets the vesion of the library.
      *
      * @return A string with the khiva version.
+     * @throws KhivaException If the native function call fails.
      */
-    public static String getKhivaVersion() throws Exception {
+    public static String getKhivaVersion() {
         return version();
     }
 }

@@ -14,7 +14,7 @@ package io.shapelets.khiva;
  */
 public class Linalg extends Library {
 
-    private native static long[] lls(long refA, long refB) throws Exception;
+    private native static long lls(long refA, long refB);
 
     /**
      * Calculates the minimum norm least squares solution \(x\) \((\left\lVert{A·x - b}\right\rVert^2)\) to
@@ -26,11 +26,10 @@ public class Linalg extends Library {
      * @param arrA Coefficients of the linear equation problem to solve.
      * @param arrB Array with the measured values.
      * @return Contains the solution to the linear equation problem minimizing the norm 2.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array lls(Array arrA, Array arrB) throws Exception {
-        long[] refs = lls(arrA.getReference(), arrB.getReference());
-        arrA.setReference(refs[0]);
-        arrB.setReference(refs[1]);
-        return new Array(refs[2]);
+    public static Array lls(Array arrA, Array arrB) {
+        long ref = lls(arrA.getReference(), arrB.getReference());
+        return Array.fromNative(ref);
     }
 }

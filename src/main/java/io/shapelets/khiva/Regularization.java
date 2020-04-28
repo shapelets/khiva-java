@@ -14,7 +14,7 @@ package io.shapelets.khiva;
  */
 public class Regularization extends Library {
 
-    private native static long[] groupBy(long ref, int aggregationFunction, int nColumnsKey, int nColumnsValue) throws Exception;
+    private native static long groupBy(long ref, int aggregationFunction, int nColumnsKey, int nColumnsValue);
 
     /**
      * Group by operation in the input array using nColumnsKey columns as group keys and nColumnsValue columns as
@@ -35,8 +35,9 @@ public class Regularization extends Library {
      *                            default : mean
      *                            }
      * @return Array with the values of the group keys aggregated using the aggregationFunction.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array groupBy(Array arr, int aggregationFunction) throws Exception {
+    public static Array groupBy(Array arr, int aggregationFunction) {
         return groupBy(arr, aggregationFunction, 1, 1);
     }
 
@@ -60,8 +61,9 @@ public class Regularization extends Library {
      *                            }
      * @param nColumnsKey         Number of columns conforming the key.
      * @return Array with the values of the group keys aggregated using the aggregationFunction.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey) throws Exception {
+    public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey) {
         return groupBy(arr, aggregationFunction, nColumnsKey, 1);
     }
 
@@ -87,10 +89,11 @@ public class Regularization extends Library {
      * @param nColumnsValue       Number of columns conforming the value (they are expected to be consecutive to the
      *                            column keys).
      * @return Array with the values of the group keys aggregated using the aggregationFunction.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey, int nColumnsValue) throws Exception {
-        long[] refs = groupBy(arr.getReference(), aggregationFunction, nColumnsKey, nColumnsValue);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array groupBy(Array arr, int aggregationFunction, int nColumnsKey, int nColumnsValue)
+        {
+        long ref = groupBy(arr.getReference(), aggregationFunction, nColumnsKey, nColumnsValue);
+        return Array.fromNative(ref);
     }
 }

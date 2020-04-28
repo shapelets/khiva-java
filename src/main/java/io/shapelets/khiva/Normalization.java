@@ -14,21 +14,21 @@ package io.shapelets.khiva;
  */
 public class Normalization extends Library {
 
-    private native static long[] znorm(long ref, double epsilon) throws Exception;
+    private native static long znorm(long ref, double epsilon);
 
-    private native static long znormInPlace(long ref, double epsilon) throws Exception;
+    private native static void znormInPlace(long ref, double epsilon);
 
-    private native static long[] maxMinNorm(long ref, double high, double low, double epsilon) throws Exception;
+    private native static long maxMinNorm(long ref, double high, double low, double epsilon);
 
-    private native static long maxMinNormInPlace(long ref, double high, double low, double epsilon) throws Exception;
+    private native static void maxMinNormInPlace(long ref, double high, double low, double epsilon);
 
-    private native static long[] decimalScalingNorm(long ref) throws Exception;
+    private native static long decimalScalingNorm(long ref);
 
-    private native static long decimalScalingNormInPlace(long ref) throws Exception;
+    private native static void decimalScalingNormInPlace(long ref);
 
-    private native static long[] meanNorm(long ref) throws Exception;
+    private native static long meanNorm(long ref);
 
-    private native static long meanNormInPlace(long ref) throws Exception;
+    private native static void meanNormInPlace(long ref);
 
 
     /**
@@ -37,21 +37,21 @@ public class Normalization extends Library {
      * @param arr Array containing the input time series.
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have been normalized by
      * dividing each number by \(10^j\), where j is the number of integer digits of the max number in the time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array decimalScalingNorm(Array arr) throws Exception {
-        long[] refs = decimalScalingNorm(arr.getReference());
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array decimalScalingNorm(Array arr) {
+        long ref = decimalScalingNorm(arr.getReference());
+        return Array.fromNative(ref);
     }
 
     /**
      * Same as decimalScalingNorm, but it performs the operation in place, without allocating further memory.
      *
      * @param arr Array containing the input time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void decimalScalingNormInPlace(Array arr) throws Exception {
-        long ref = decimalScalingNormInPlace(arr.getReference());
-        arr.setReference(ref);
+    public static void decimalScalingNormInPlace(Array arr) {
+        decimalScalingNormInPlace(arr.getReference());
     }
 
     /**
@@ -61,8 +61,9 @@ public class Normalization extends Library {
      * @param arr Array containing the input time series.
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array maxMinNorm(Array arr) throws Exception {
+    public static Array maxMinNorm(Array arr) {
         return maxMinNorm(arr, 1.0, 0.0, 0.00000001);
     }
 
@@ -74,8 +75,9 @@ public class Normalization extends Library {
      * @param high Maximum final value (Defaults to 1.0).
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array maxMinNorm(Array arr, double high) throws Exception {
+    public static Array maxMinNorm(Array arr, double high) {
         return maxMinNorm(arr, high, 0.0, 0.00000001);
     }
 
@@ -88,8 +90,9 @@ public class Normalization extends Library {
      * @param low  Minimum final value (Defaults to 0.0).
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array maxMinNorm(Array arr, double high, double low) throws Exception {
+    public static Array maxMinNorm(Array arr, double high, double low) {
         return maxMinNorm(arr, high, low, 0.00000001);
     }
 
@@ -104,19 +107,20 @@ public class Normalization extends Library {
      *                those time series that may be constant or near constant.
      * @return Array with the same dimensions as ref, whose values (time series in dimension 0) have
      * been normalized by maximum and minimum values, and scaled as per high and low parameters.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array maxMinNorm(Array arr, double high, double low, double epsilon) throws Exception {
-        long[] refs = maxMinNorm(arr.getReference(), high, low, epsilon);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array maxMinNorm(Array arr, double high, double low, double epsilon) {
+        long ref = maxMinNorm(arr.getReference(), high, low, epsilon);
+        return Array.fromNative(ref);
     }
 
     /**
      * Same as maxMinNorm, but it performs the operation in place, without allocating further memory.
      *
      * @param arr Array containing the input time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void maxMinNormInPlace(Array arr) throws Exception {
+    public static void maxMinNormInPlace(Array arr) {
         maxMinNormInPlace(arr, 1.0, 0.0, 0.00000001);
     }
 
@@ -125,8 +129,9 @@ public class Normalization extends Library {
      *
      * @param arr  Array containing the input time series.
      * @param high Maximum final value (Defaults to 1.0).
+     * @throws KhivaException If the native function call fails.
      */
-    public static void maxMinNormInPlace(Array arr, double high) throws Exception {
+    public static void maxMinNormInPlace(Array arr, double high) {
         maxMinNormInPlace(arr, high, 0.0, 0.00000001);
     }
 
@@ -136,8 +141,9 @@ public class Normalization extends Library {
      * @param arr  Array containing the input time series.
      * @param low  Minimum final value (Defaults to 0.0).
      * @param high Maximum final value (Defaults to 1.0).
+     * @throws KhivaException If the native function call fails.
      */
-    public static void maxMinNormInPlace(Array arr, double high, double low) throws Exception {
+    public static void maxMinNormInPlace(Array arr, double high, double low) {
         maxMinNormInPlace(arr, high, low, 0.00000001);
     }
 
@@ -149,10 +155,10 @@ public class Normalization extends Library {
      * @param low     Minimum final value (Defaults to 0.0).
      * @param epsilon epsilon Minimum standard deviation to consider.  It acts as a gatekeeper for
      *                those time series that may be constant or near constant.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void maxMinNormInPlace(Array arr, double high, double low, double epsilon) throws Exception {
-        long ref = maxMinNormInPlace(arr.getReference(), high, low, epsilon);
-        arr.setReference(ref);
+    public static void maxMinNormInPlace(Array arr, double high, double low, double epsilon) {
+        maxMinNormInPlace(arr.getReference(), high, low, epsilon);
     }
 
     /**
@@ -166,11 +172,11 @@ public class Normalization extends Library {
      * @return An array with the same dimensions as tss, whose values (time series in dimension 0) have been
      * normalized by substracting the mean from each number and dividing each number by \(max(x) - min(x)\), in the
      * time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array meanNorm(Array arr) throws Exception {
-        long[] refs = meanNorm(arr.getReference());
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array meanNorm(Array arr) {
+        long ref = meanNorm(arr.getReference());
+        return Array.fromNative(ref);
     }
 
     /**
@@ -181,10 +187,10 @@ public class Normalization extends Library {
      * \]
      *
      * @param arr Array containing the input time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void meanNormInPlace(Array arr) throws Exception {
-        long ref = meanNormInPlace(arr.getReference());
-        arr.setReference(ref);
+    public static void meanNormInPlace(Array arr) {
+        meanNormInPlace(arr.getReference());
     }
 
     /**
@@ -193,8 +199,9 @@ public class Normalization extends Library {
      * @param arr Array containing the input time series.
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
      * one as standard deviation.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array znorm(Array arr) throws Exception {
+    public static Array znorm(Array arr) {
         return znorm(arr, 0.00000001);
     }
 
@@ -206,11 +213,11 @@ public class Normalization extends Library {
      *                those time series that may be constant or near constant.
      * @return Array with the same dimensions as arr where the time series have been adjusted for zero mean and
      * one as standard deviation.
+     * @throws KhivaException If the native function call fails.
      */
-    public static Array znorm(Array arr, double epsilon) throws Exception {
-        long[] refs = znorm(arr.getReference(), epsilon);
-        arr.setReference(refs[0]);
-        return new Array(refs[1]);
+    public static Array znorm(Array arr, double epsilon) {
+        long ref = znorm(arr.getReference(), epsilon);
+        return Array.fromNative(ref);
     }
 
     /**
@@ -218,8 +225,9 @@ public class Normalization extends Library {
      * in place (without allocating further memory).
      *
      * @param arr Array containing the input time series.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void znormInPlace(Array arr) throws Exception {
+    public static void znormInPlace(Array arr) {
         znormInPlace(arr, 0.00000001);
     }
 
@@ -230,9 +238,9 @@ public class Normalization extends Library {
      * @param arr     Array containing the input time series.
      * @param epsilon epsilon Minimum standard deviation to consider. It acts as a gatekeeper for
      *                those time series that may be constant or near constant.
+     * @throws KhivaException If the native function call fails.
      */
-    public static void znormInPlace(Array arr, double epsilon) throws Exception {
-        long ref = znormInPlace(arr.getReference(), epsilon);
-        arr.setReference(ref);
+    public static void znormInPlace(Array arr, double epsilon) {
+        znormInPlace(arr.getReference(), epsilon);
     }
 }

@@ -9,41 +9,35 @@
 
 package io.shapelets.khiva;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class DistancesTest {
 
     private static final double DELTA = 1e-6;
 
     @BeforeClass
-    public static void setUp() {
-        try {
-            Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void setUp() throws Exception {
+        Library.setKhivaBackend(Library.Backend.KHIVA_BACKEND_CPU);
     }
 
     @Test
     public void testEuclidean() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         long[] dims = {4, 3, 1, 1};
-        try (
-                Array arrayOfTimeSeries = new Array(timeSeries, dims);
-                Array b = Distances.euclidean(arrayOfTimeSeries)
-        ) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims); Array b = Distances.euclidean(arrayOfTimeSeries)) {
             float[] result = b.getData();
-            Assert.assertEquals(result[0], 0, DELTA);
-            Assert.assertEquals(result[1], 0, DELTA);
-            Assert.assertEquals(result[2], 0, DELTA);
-            Assert.assertEquals(result[3], 8, DELTA);
-            Assert.assertEquals(result[4], 0, DELTA);
-            Assert.assertEquals(result[5], 0, DELTA);
-            Assert.assertEquals(result[6], 16, DELTA);
-            Assert.assertEquals(result[7], 8, DELTA);
-            Assert.assertEquals(result[8], 0, DELTA);
+            assertEquals(0, result[0], DELTA);
+            assertEquals(0, result[1], DELTA);
+            assertEquals(0, result[2], DELTA);
+            assertEquals(8, result[3], DELTA);
+            assertEquals(0, result[4], DELTA);
+            assertEquals(0, result[5], DELTA);
+            assertEquals(16, result[6], DELTA);
+            assertEquals(8, result[7], DELTA);
+            assertEquals(0, result[8], DELTA);
         }
     }
 
@@ -51,15 +45,13 @@ public class DistancesTest {
     public void testDwt() throws Exception {
         float[] timeSeries = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
         long[] dims = {5, 5, 1, 1};
-        try (
-                Array arrayOfTimeSeries = new Array(timeSeries, dims);
-                Array resultArray = Distances.dtw(arrayOfTimeSeries)
-        ) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
+             Array resultArray = Distances.dtw(arrayOfTimeSeries)) {
             float[] result = resultArray.getData();
             float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 10, 5, 0, 0, 0, 15, 10, 5, 0, 0, 20, 15, 10, 5, 0};
-            Assert.assertEquals(expectedResult.length, result.length, DELTA);
+            assertEquals(expectedResult.length, result.length, DELTA);
             for (int i = 0; i < result.length; i++) {
-                Assert.assertEquals(expectedResult[i], result[i], DELTA);
+                assertEquals(expectedResult[i], result[i], DELTA);
             }
         }
     }
@@ -68,15 +60,12 @@ public class DistancesTest {
     public void testHamming() throws Exception {
         float[] timeSeries = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
         long[] dims = {5, 5, 1, 1};
-        try (
-                Array a = new Array(timeSeries, dims);
-                Array b = Distances.hamming(a)
-        ) {
+        try (Array a = Array.fromPrimitiveArray(timeSeries, dims); Array b = Distances.hamming(a)) {
             float[] result = b.getData();
             float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 5, 0, 0, 0, 5, 5, 5, 0, 0, 5, 5, 5, 5, 0};
-            Assert.assertEquals(expectedResult.length, result.length, DELTA);
+            assertEquals(expectedResult.length, result.length, DELTA);
             for (int i = 0; i < result.length; i++) {
-                Assert.assertEquals(expectedResult[i], result[i], DELTA);
+                assertEquals(expectedResult[i], result[i], DELTA);
             }
         }
     }
@@ -85,15 +74,12 @@ public class DistancesTest {
     public void testManhattan() throws Exception {
         float[] timeSeries = {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
         long[] dims = {5, 5, 1, 1};
-        try (
-                Array a = new Array(timeSeries, dims);
-                Array b = Distances.manhattan(a)
-        ) {
+        try (Array a = Array.fromPrimitiveArray(timeSeries, dims); Array b = Distances.manhattan(a)) {
             float[] result = b.getData();
             float[] expectedResult = {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 10, 5, 0, 0, 0, 15, 10, 5, 0, 0, 20, 15, 10, 5, 0};
-            Assert.assertEquals(expectedResult.length, result.length, DELTA);
+            assertEquals(expectedResult.length, result.length, DELTA);
             for (int i = 0; i < result.length; i++) {
-                Assert.assertEquals(expectedResult[i], result[i], DELTA);
+                assertEquals(expectedResult[i], result[i], DELTA);
             }
         }
     }
@@ -102,15 +88,12 @@ public class DistancesTest {
     public void testSBD() throws Exception {
         float[] timeSeries = {1, 2, 3, 4, 5, 1, 1, 0, 1, 1, 10, 12, 0, 0, 1};
         long[] dims = {5, 3, 1, 1};
-        try (
-                Array a = new Array(timeSeries, dims);
-                Array b = Distances.sbd(a)
-        ) {
+        try (Array a = Array.fromPrimitiveArray(timeSeries, dims); Array b = Distances.sbd(a)) {
             float[] result = b.getData();
             float[] expectedResult = {0, 0, 0, 0.505025f, 0, 0, 0.458583f, 0.564093f, 0};
-            Assert.assertEquals(expectedResult.length, result.length, DELTA);
+            assertEquals(expectedResult.length, result.length, DELTA);
             for (int i = 0; i < result.length; i++) {
-                Assert.assertEquals(expectedResult[i], result[i], DELTA);
+                assertEquals(expectedResult[i], result[i], DELTA);
             }
         }
     }
@@ -119,20 +102,18 @@ public class DistancesTest {
     public void testSquaredEuclidean() throws Exception {
         float[] timeSeries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         long[] dims = {4, 3, 1, 1};
-        try (
-                Array arrayOfTimeSeries = new Array(timeSeries, dims);
-                Array b = Distances.squaredEuclidean(arrayOfTimeSeries)
-        ) {
+        try (Array arrayOfTimeSeries = Array.fromPrimitiveArray(timeSeries, dims);
+             Array b = Distances.squaredEuclidean(arrayOfTimeSeries)) {
             float[] result = b.getData();
-            Assert.assertEquals(result[0], 0, DELTA);
-            Assert.assertEquals(result[1], 0, DELTA);
-            Assert.assertEquals(result[2], 0, DELTA);
-            Assert.assertEquals(result[3], 64, DELTA);
-            Assert.assertEquals(result[4], 0, DELTA);
-            Assert.assertEquals(result[5], 0, DELTA);
-            Assert.assertEquals(result[6], 256, DELTA);
-            Assert.assertEquals(result[7], 64, DELTA);
-            Assert.assertEquals(result[8], 0, DELTA);
+            assertEquals(0, result[0], DELTA);
+            assertEquals(0, result[1], DELTA);
+            assertEquals(0, result[2], DELTA);
+            assertEquals(64, result[3], DELTA);
+            assertEquals(0, result[4], DELTA);
+            assertEquals(0, result[5], DELTA);
+            assertEquals(256, result[6], DELTA);
+            assertEquals(64, result[7], DELTA);
+            assertEquals(0, result[8], DELTA);
         }
     }
 }

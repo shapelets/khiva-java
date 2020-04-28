@@ -7,14 +7,18 @@
 image:
     - Visual Studio 2017
 environment:
-    GENERATOR: "Visual Studio 15 Win64"
-    BOOST_PATH: C:\Libraries\boost_1_67_0
+    GENERATOR: "Visual Studio 15 2017 Win64"
+    BOOST_PATH: C:\Libraries\boost_1_69_0
     AF_PATH: C:\Program Files\ArrayFire\v3
+    AF_DISABLE_GRAPHICS: 1
     KHIVA_PATH: C:\Program Files\Khiva\v0
-    PATH: $(AF_PATH)\lib;$(KHIVA_PATH)\lib;C:\Python36-x64;C:\Python36-x64\Scripts;$(PATH)
+    KHIVALIB_DIR: $(KHIVA_PATH)\lib
+    VCPKG_ROOT: C:\Tools\vcpkg
     matrix:
-        - JAVA_HOME: C:\Program Files\Java\jdk9
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+          PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
+        - JAVA_HOME: C:\Program Files\Java\jdk11
+          PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
 matrix:
     fast_finish: true
 cache:
@@ -23,42 +27,31 @@ cache:
     - C:\Users\appveyor\.m2
     - C:\ProgramData\chocolatey\bin
     - C:\ProgramData\chocolatey\lib
-
 clone_folder: C:\khiva-java
 platform:
     - x64
 before_build:
-    - SET PATH=%JAVA_HOME%\bin;%PATH%
-    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "https://www.dropbox.com/s/13wnbd1qynjmw0i/ArrayFire-v3.6.2.zip?dl=1" -FileName ArrayFire-v3.6.2.zip }
-    - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ 7z x ArrayFire-v3.6.2.zip -o"C:\Program Files" }
-    - reg add HKCU\Software\Kitware\CMake\Packages\ArrayFire /v ArrayFire_CMake_DIR /d "C:\Program Files\ArrayFire\v3\cmake" /f
-    - vcpkg install --triplet x64-windows gtest eigen3
-    - ps: if ($env:INSTALL_KHIVA_METHOD -eq "installer"){
-            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ appveyor DownloadFile "https://github.com/shapelets/khiva/releases/download/v0.1.0/khiva-v0.1.0-unattended.exe" -FileName khiva-v0.1.0-unattended.exe };
-            if(!(Test-Path -Path "C:\Program Files\Khiva" )){ .\khiva-v0.1.0-unattended.exe /S };
-          }else{
-            git clone -q https://github.com/shapelets/khiva.git C:\khiva-library;
-
-            cd C:\khiva-library;
-            git submodule -q update --init;
-            mkdir build;
-            cd build;
-            cmake .. -DCMAKE_TOOLCHAIN_FILE=C:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DBOOST_ROOT="$($env:BOOST_PATH)" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF -DKHIVA_ONLY_CPU_BACKEND=ON -G"$env:GENERATOR";
-          }
-    - cmake --build . --config Release -- /m
-    - cmake --build . --config Release --target INSTALL
-
-    - cd C:\khiva-java
-    - start /wait choco install maven
-    - pip install codecov
-    - java -version
+    - ps: |
+        env
+        java -version
+        python --version
+        pip install -U pip
+        pip install codecov
+        if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
+        if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
+        vcpkg install --triplet x64-windows gtest eigen3
+        git clone --depth 1 --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library
+        cd C:\khiva-library
+        mkdir build
+        cd build
+        cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
+        cmake --build . --config Release --target install -- /m
+        cd C:\khiva-java
 build_script:
-    - mvn compile
-    - mvn javadoc:javadoc
-test_script:
-    - mvn test
+    - ps: mvn clean package
 on_finish:
-    - codecov -F Windows -f target/site/jacoco/jacoco.xml
+    # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    - cmd: codecov -F Windows -f C:\khiva-java\target\site\jacoco\jacoco.xml
     - ps: |
         $files = Get-ChildItem -Path .\target\surefire-reports -File -Filter *.xml
         foreach ($file in $files) {
