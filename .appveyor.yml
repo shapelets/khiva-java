@@ -48,10 +48,12 @@ before_build:
       cmake --build . --config Release --target install -- /m
       cd C:\khiva-java
 build_script:
-    - ps: mvn clean package
+  - mvn clean package --batch-mode -DskipTest
+test_script:
+  - mvn clean install --batch-mode
 on_finish:
     # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-    - cmd: codecov -F Windows -f C:\khiva-java\target\site\jacoco\jacoco.xml
+    # - cmd: codecov -F Windows -f C:\khiva-java\target\site\jacoco\jacoco.xml
     - ps: |
         $files = Get-ChildItem -Path .\target\surefire-reports -File -Filter *.xml
         foreach ($file in $files) {
