@@ -14,6 +14,7 @@ environment:
     KHIVA_PATH: C:\Program Files\Khiva\v0
     KHIVALIB_DIR: $(KHIVA_PATH)\lib
     VCPKG_ROOT: C:\Tools\vcpkg
+    PATH: $(AF_PATH)\lib;C:\Python36-x64;C:\Python36-x64\Scripts;$(PATH)
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
           PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
