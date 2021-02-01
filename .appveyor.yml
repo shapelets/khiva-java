@@ -31,22 +31,24 @@ clone_folder: C:\khiva-java
 platform:
     - x64
 before_build:
-    - ps: |
-        env
-        java -version
-        python --version
-        pip install -U pip
-        pip install codecov
-        if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "http://arrayfire.s3.amazonaws.com/3.6.2/ArrayFire-v3.6.2.exe" }
-        if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ .\ArrayFire-v3.6.2.exe /S }
-        vcpkg install --triplet x64-windows gtest eigen3
-        git clone --depth 1 --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library
-        cd C:\khiva-library
-        mkdir build
-        cd build
-        cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
-        cmake --build . --config Release --target install -- /m
-        cd C:\khiva-java
+  - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "https://www.dropbox.com/s/13wnbd1qynjmw0i/ArrayFire-v3.6.2.zip?dl=1" -FileName ArrayFire-v3.6.2.zip }
+  - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ 7z x ArrayFire-v3.6.2.zip -o"C:\Program Files" }
+  - reg add HKCU\Software\Kitware\CMake\Packages\ArrayFire /v ArrayFire_CMake_DIR /d "C:\Program Files\ArrayFire\v3\cmake" /f
+  - vcpkg install --triplet x64-windows gtest eigen3 boost-math benchmark
+  - ps: |
+      Start-Process "choco" "install nsis" -NoNewWindow -Wait
+      Start-Process "choco" "install doxygen.install" -NoNewWindow -Wait
+      Start-Process "choco" "install graphviz" -NoNewWindow -Wait
+      python -m pip install --upgrade pip
+      pip3 install sphinx==1.7.5 breathe==4.9.1 sphinx_rtd_theme==0.4.0
+  - git clone --depth 1 --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library    
+  - cd C:\khiva-library
+  - ps: |
+      mkdir build
+      cd build
+      cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
+      cmake --build . --config Release --target install -- /m
+      cd C:\khiva-java
 build_script:
     - ps: mvn clean package
 on_finish:
