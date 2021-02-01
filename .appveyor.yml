@@ -14,7 +14,7 @@ environment:
     KHIVA_PATH: C:\Program Files\Khiva\v0
     KHIVALIB_DIR: $(KHIVA_PATH)\lib
     VCPKG_ROOT: C:\Tools\vcpkg
-    PATH: $(AF_PATH)\lib;C:\Python36-x64;C:\Python36-x64\Scripts;$(PATH)
+    PATH: $(AF_PATH)\lib;C:\Python37-x64;C:\Python37-x64\Scripts;$(PATH)
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
           PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
@@ -41,7 +41,7 @@ before_build:
       Start-Process "choco" "install doxygen.install" -NoNewWindow -Wait
       Start-Process "choco" "install graphviz" -NoNewWindow -Wait
       python -m pip install --upgrade pip
-      pip3 install sphinx==1.7.5 breathe==4.9.1 sphinx_rtd_theme==0.4.0
+      pip install sphinx==1.7.5 breathe==4.9.1 sphinx_rtd_theme==0.4.0
   - git clone --depth 1 --recurse-submodules -q https://github.com/shapelets/khiva.git C:\khiva-library    
   - cd C:\khiva-library
   - ps: |
