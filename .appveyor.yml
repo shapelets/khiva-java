@@ -5,9 +5,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 image:
-    - Visual Studio 2017
+    - Visual Studio 2019
 environment:
-    GENERATOR: "Visual Studio 15 2017 Win64"
+    GENERATOR: "Visual Studio 16 2019"
     BOOST_PATH: C:\Libraries\boost_1_69_0
     AF_PATH: C:\Program Files\ArrayFire\v3
     AF_DISABLE_GRAPHICS: 1
