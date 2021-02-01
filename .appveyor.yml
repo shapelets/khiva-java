@@ -14,12 +14,9 @@ environment:
     KHIVA_PATH: C:\Program Files\Khiva\v0
     KHIVALIB_DIR: $(KHIVA_PATH)\lib
     VCPKG_ROOT: C:\Tools\vcpkg
-    PATH: $(AF_PATH)\lib;C:\Python37-x64;C:\Python37-x64\Scripts;$(PATH)
     matrix:
         - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-          PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
         - JAVA_HOME: C:\Program Files\Java\jdk11
-          PATH: $(JAVA_HOME)\bin;$(AF_PATH)\lib;$(KHIVALIB_DIR);$(PATH)
 matrix:
     fast_finish: true
 cache:
@@ -32,6 +29,7 @@ clone_folder: C:\khiva-java
 platform:
     - x64
 before_build:
+  - SET PATH=%KHIVALIB_DIR%;%JAVA_HOME%;%AF_PATH%\lib;C:\Python37-x64;C:\Python37-x64\Scripts;%PATH%
   - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "https://www.dropbox.com/s/13wnbd1qynjmw0i/ArrayFire-v3.6.2.zip?dl=1" -FileName ArrayFire-v3.6.2.zip }
   - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ 7z x ArrayFire-v3.6.2.zip -o"C:\Program Files" }
   - reg add HKCU\Software\Kitware\CMake\Packages\ArrayFire /v ArrayFire_CMake_DIR /d "C:\Program Files\ArrayFire\v3\cmake" /f
