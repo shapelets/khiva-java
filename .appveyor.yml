@@ -35,7 +35,7 @@ before_build:
   - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ appveyor DownloadFile "https://www.dropbox.com/s/13wnbd1qynjmw0i/ArrayFire-v3.6.2.zip?dl=1" -FileName ArrayFire-v3.6.2.zip }
   - ps: if(!(Test-Path -Path "C:\Program Files\ArrayFire" )){ 7z x ArrayFire-v3.6.2.zip -o"C:\Program Files" }
   - reg add HKCU\Software\Kitware\CMake\Packages\ArrayFire /v ArrayFire_CMake_DIR /d "C:\Program Files\ArrayFire\v3\cmake" /f
-  - vcpkg install --triplet x64-windows gtest eigen3 boost-math benchmark
+  - vcpkg install --triplet x64-windows gtest eigen3 benchmark
   - ps: |
       Start-Process "choco" "install nsis" -NoNewWindow -Wait
       Start-Process "choco" "install doxygen.install" -NoNewWindow -Wait
@@ -47,7 +47,7 @@ before_build:
   - ps: |
       mkdir build
       cd build
-      cmake .. -G"$env:GENERATOR" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
+      cmake .. -G"$env:GENERATOR" -DBOOST_ROOT="$env:BOOST_PATH" -DArrayFire_DIR="$env:AF_PATH/cmake" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DBOOST_ROOT="$env:BOOST_PATH" -DKHIVA_USE_CONAN=OFF -DKHIVA_BUILD_DOCUMENTATION=OFF -DKHIVA_BUILD_BENCHMARKS=OFF -DKHIVA_BUILD_EXAMPLES=OFF -DKHIVA_BUILD_TESTS=OFF;
       cmake --build . --config Release --target install -- /m
       cd C:\khiva-java
 build_script:
